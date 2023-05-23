@@ -1,4 +1,4 @@
-# Quiver : A Meta-Tool for Kali Linux
+# Quiver : A Meta-Tool for Arch Linux
 
 Quiver is an organized namespace of shell functions that pre-fill commands in your terminal so that you can ditch your reliance on notes, copying, pasting, editing, copying and pasting again. Quiver helps you remember how to use every tool in your arsenal and doesn't hide them behind scripting that can be cumbersome to maintain or update. Instead you can use Quiver to build a composable, on-the-fly workflow for every situation. 
 
@@ -24,7 +24,7 @@ After months of hard work during lockdown, I am happy to introduce the 1.0 relea
 * Content serving commands
 * Built-in logbook for on-the-fly notes, saving commands
 * Render markdown notes to the command line
-* Kali Linux system management
+* Arch Linux system management
 * Update notification and install
 * Installers for dependencies
 
@@ -34,7 +34,7 @@ Quiver requires the following:
 
 * ZSH (apt-get install zsh)
 * oh-my-zsh (optional requirement but recommended: https://ohmyz.sh/)
-* Kali Linux (https://kali.org)
+* Arch Linux (https://archlinux.org/)
 
 Clone the repo to your OMZ custom plugins folder.
 
