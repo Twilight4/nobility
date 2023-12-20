@@ -34,7 +34,6 @@ qq-install-pentest-tools
 qq-install-protonvpn
 qq-install-nmap-elasticsearch-nse
 qq-install-link-finder
-qq-install-bat
 
 DOC
 }
@@ -42,7 +41,7 @@ DOC
 ##### Helpers
 
 __addpath() {
-    echo "export PATH=\$PATH:$1" | tee -a ~/.zshrc
+    echo "export PATH=\$PATH:$1" | tee -a ~/.config/zsh/.zshrc
     export PATH=$PATH:$1
 }
 
@@ -260,14 +259,16 @@ qq-install-s3scanner() {
 
         #after commands
         pushd $p
-        pip3 install -r requirements.txt
+        cat requirements.txt
+        echo "Install tools listed in requirements using pacman"
         popd
         __addpath $p
     else
         __warn "already installed in $p"
         pushd $p 
         git pull
-        pip3 install -r requirements.txt
+        cat requirements.txt
+        echo "Install tools listed in requirements using pacman"
         popd
     fi
 }
@@ -280,7 +281,6 @@ qq-install-gf() {
     go get -u github.com/tomnomnom/gf
     echo "source \$GOPATH/src/github.com/tomnomnom/gf/gf-completion.zsh" >> $HOME/.zshrc
     cp -r $GOPATH/src/github.com/tomnomnom/gf/examples $HOME/.gf
-
 }
 
 qq-install-git-secrets() {
@@ -321,7 +321,6 @@ qq-install-gitrob() {
     dep ensure
     go build
     popd
-
 }
 
 qq-install-pentest-tools() {
@@ -350,8 +349,7 @@ qq-install-protonvpn() {
     local name="protonvpn"
     __info "$name"
 
-    sudo apt install -y openvpn dialog python3-pip python3-setuptools
-    sudo pip3 install protonvpn-cli
+    sudo pacman -S --noconfirm --needed openvpn dialog python-pip python-setuptools protonvpn-cli
     __warn "ProtonVPN username and password required"
     print -z "sudo protonvpn init"
 }
@@ -395,7 +393,8 @@ qq-install-link-finder() {
         #after commands
         pushd $p 
         sudo python3 setup.py install
-        pip3 install -r requirements.txt 
+        cat requirements.txt
+        echo "Install tools listed in requirements using pacman"
         popd
 
     else
@@ -403,19 +402,8 @@ qq-install-link-finder() {
         pushd $p 
         git pull
         python3 setup.py install
-        pip3 install -r requirements.txt 
+        cat requirements.txt
+        echo "Install tools listed in requirements using pacman"
         popd
     fi
 }
-
-qq-install-bat() {
-    local name="bat"
-    __info "$name"
-
-    cd $HOME
-    wget https://github.com/sharkdp/bat/releases/download/v0.15.0/bat_0.15.0_amd64.deb 
-    sudo dpkg -i bat_0.15.0_amd64.deb
-    rm bat_0.15.0_amd64.deb
-    cd -
-}
-
