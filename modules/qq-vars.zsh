@@ -3,7 +3,6 @@
 ############################################################# 
 # qq-vars
 #############################################################
-
 qq-vars-help() {
   cat << "DOC"
 
@@ -113,11 +112,10 @@ qq-vars-load() {
 alias qvl="qq-vars-load"
 
 
-
 ############################################################# 
 # __PROJECT
 #############################################################
-export __PROJECT=""
+export __PROJECT="~/desktop/projects/"
 
 qq-vars-set-project() {
   __ask "Set the full path to the project root directory where all command output will be directed"
@@ -127,7 +125,6 @@ qq-vars-set-project() {
 
   __PROJECT=$d
   mkdir -p ${__PROJECT}
-  
 }
 
 __check-project() { [[ -z "${__PROJECT}" ]] && qq-vars-set-project }
@@ -146,7 +143,7 @@ qq-vars-set-logbook() {
 
   mkdir -p $d
 
-  __LOGBOOK="${d}/logbook.md"
+  __LOGBOOK="${d}/logbook.org"
   
   if [[ -f "${__LOGBOOK}" ]]; then
       __warn "${__LOGBOOK} already exists, set as active log"
@@ -179,6 +176,7 @@ qq-vars-set-iface() {
 
 __check-iface() { [[ -z "${__IFACE}" ]] && qq-vars-set-iface }
 
+
 ############################################################# 
 # __DOMAIN
 #############################################################
@@ -198,6 +196,7 @@ qq-vars-set-network() { __prefill __NETWORK NETWORK ${__NETWORK} }
 
 __check-network() { [[ -z "${__NETWORK}" ]] && qq-vars-set-network }
 
+
 ############################################################# 
 # __RHOST
 #############################################################
@@ -205,12 +204,14 @@ export __RHOST=""
 
 qq-vars-set-rhost() { __prefill __RHOST RHOST ${__RHOST} }
 
+
 ############################################################# 
 # __RPORT
 #############################################################
 export __RPORT=""
 
 qq-vars-set-rport() { __prefill __RPORT RPORT ${__RPORT} }
+
 
 ############################################################# 
 # __LHOST
@@ -226,6 +227,7 @@ qq-vars-set-lhost() {
     __prefill __LHOST LHOST ${__LHOST}
   fi
 }
+
 
 ############################################################# 
 # __LPORT
@@ -296,7 +298,6 @@ qq-vars-set-passlist() {
   __ask "Choose a passlist: "
   __PASSLIST=$(__menu $(find  /usr/share/seclists/Passwords | sort))
 }
-
 
 # Helpers
 export __THREADS

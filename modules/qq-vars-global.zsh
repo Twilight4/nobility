@@ -3,7 +3,6 @@
 ############################################################# 
 # qq-vars-global
 #############################################################
-
 qq-vars-global-help() {
     cat << "DOC"
 
@@ -50,8 +49,10 @@ qq-vars-global() {
     echo "$(__cyan ALIASES: ) ${__ALIASES}"
 }
 
-########## __IMPACKET
 
+############################################################# 
+# __IMPACKET
+#############################################################
 export __IMPACKET=$(cat ${__GLOBALS}/IMPACKET 2> /dev/null || echo "/usr/share/doc/python3-impacket/examples/")
 
 qq-vars-global-set-impacket() {
@@ -62,8 +63,10 @@ qq-vars-global-set-impacket() {
 
 __check-impacket() { [[ -z "${__PROJECT}" ]] && qq-vars-global-set-impacket }
 
-########## __EXT_PHP
 
+############################################################# 
+# __EXT_PHP
+#############################################################
 export __EXT_PHP=$(cat ${__GLOBALS}/EXT_PHP 2> /dev/null || echo "php,phtml,pht,xml,inc,log,sql,cgi")
 
 qq-vars-global-set-ext-php() {
@@ -74,8 +77,10 @@ qq-vars-global-set-ext-php() {
 
 __check-ext-php()  { [[ -z "${__EXT_PHP}" ]] && qq-vars-global-set-ext-php } 
 
-########## __EXT_DOCS
 
+############################################################# 
+# __EXT_DOCS
+#############################################################
 export __EXT_DOCS=$(cat ${__GLOBALS}/EXT_DOC 2> /dev/null || echo "doc,docx,pdf,xls,xlsx,txt,rtf,odt,ppt,pptx,pps,xml")
 
 qq-vars-global-set-ext-docs() {
@@ -86,8 +91,10 @@ qq-vars-global-set-ext-docs() {
 
 __check-ext-docs()  { [[ -z "${__EXT_DOCS}" ]] && qq-vars-global-set-ext-docs } 
 
-########## __API_GITHUB
 
+############################################################# 
+# __API_GITHUB
+#############################################################
 export __API_GITHUB="$(cat ${__GLOBALS}/API_GITHUB 2> /dev/null)"
 
 qq-vars-global-set-api-github() {
@@ -98,8 +105,10 @@ qq-vars-global-set-api-github() {
 
 __check-api-github()  { [[ -z "${__API_GITHUB}" ]] && qq-vars-global-set-api-github } 
 
-########## __API_GOOGLE_DOMAINS
 
+############################################################# 
+# __API_GOOGLE_DOMAINS
+#############################################################
 export __API_GOOGLE_DOMAINS="$(cat ${__GLOBALS}/API_GOOGLE_DOMAINS 2> /dev/null)"
 
 qq-vars-global-set-api-google-domains() {
@@ -113,8 +122,9 @@ qq-vars-global-set-api-google-domains() {
 __check-api-github()  { [[ -z "${__API_GITHUB}" ]] && qq-vars-global-set-api-github } 
 
 
-########## __RESOLVERS
-
+############################################################# 
+# __RESOLVERS
+#############################################################
 export __RESOLVERS=$(cat ${__GLOBALS}/RESOLVERS 2> /dev/null || echo "${__PAYLOADS}/resolvers.txt")
 
 qq-vars-global-set-resolvers() {
@@ -126,8 +136,9 @@ qq-vars-global-set-resolvers() {
 __check-resolvers() { [[ -z "${__RESOLVERS}" ]] && qq-vars-global-set-resolvers }
 
 
-########## __NOTES
-
+############################################################# 
+# __NOTES
+#############################################################
 export __NOTES="$(cat ${__GLOBALS}/NOTES 2> /dev/null)"
 
 qq-vars-global-set-notes() {
@@ -138,8 +149,10 @@ qq-vars-global-set-notes() {
 
 __check-notes() { [[ -z "${__NOTES}" ]] && qq-vars-global-set-notes }
 
-########## __MNU_UA
 
+############################################################# 
+# __MNU_UA
+#############################################################
 export __MNU_UA="$(cat ${__GLOBALS}/MNU_UA 2> /dev/null || echo "${__PAYLOADS}/user-agents.txt")"
 
 qq-vars-global-set-mnu-ua() {
@@ -148,8 +161,10 @@ qq-vars-global-set-mnu-ua() {
     echo "${__MNU_UA}" > ${__GLOBALS}/MNU_UA
 }
 
-########## __MNU_WORDLISTS
 
+############################################################# 
+# __MNU_WORDLISTS
+#############################################################
 export __MNU_WORDLISTS="$(cat ${__GLOBALS}/MNU_WORDLISTS 2> /dev/null || echo "${__PAYLOADS}/wordlists.txt")"
 
 qq-vars-global-set-mnu-wordlists() {
@@ -158,8 +173,10 @@ qq-vars-global-set-mnu-wordlists() {
     echo "${__MNU_WORDLISTS}" > ${__GLOBALS}/MNU_WORDLISTS
 }
 
-########## __TCP_PORTS
 
+############################################################# 
+# __TCP_PORTS
+#############################################################
 export __TCP_PORTS="$(cat ${__GLOBALS}/TCP_PORTS 2> /dev/null || echo "${__PAYLOADS}/tcp-ports.txt")"
 
 qq-vars-global-set-tcp-ports() {
@@ -168,8 +185,10 @@ qq-vars-global-set-tcp-ports() {
     echo "${__TCP_PORTS}" > ${__GLOBALS}/TCP_PORTS
 }
 
-########## __SHELL_SSL_CERT
 
+############################################################# 
+# __SHELL_SSL_CERT
+#############################################################
 export __SHELL_SSL_CERT="$(cat ${__GLOBALS}/SHELL_SSL_CERT 2> /dev/null || echo "${__PAYLOADS}/aka.ms.pem")"
 
 qq-vars-global-set-shell-ssl-cert() {
@@ -178,8 +197,9 @@ qq-vars-global-set-shell-ssl-cert() {
     echo "${__SHELL_SSL_CERT}" > ${__GLOBALS}/SHELL_SSL_CERT
 }
 
-########## __ALIASES
-
+############################################################# 
+# __ALIASES
+#############################################################
 export __ALIASES="$(cat ${__GLOBALS}/ALIASES 2> /dev/null || echo "${__PAYLOADS}/aliases.rc")"
 
 qq-vars-global-set-aliases() {
