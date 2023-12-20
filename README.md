@@ -35,18 +35,15 @@ Quiver requires the following:
 * [oh-my-zsh](https://ohmyz.sh/)
 * [Arch Linux](https://archlinux.org/)
 
-Clone the repo to your oh-my-zsh custom plugins folder.
 
 ```bash
-
+# Clone the repo to your oh-my-zsh custom plugins folder.
 git clone https://github.com/Twilight/quiver-arch.git ~/.oh-my-zsh/custom/plugins/quiver-arch
 
 # Edit `~/.zshrc` to load the plugin.
-
 plugins=(git quiver)
 
 # Source `.zshrc` to load the plugin and you're done. On first load, Quiver will install a few core packages.
-
 source ~/.zshrc
 
 ```
