@@ -123,7 +123,7 @@ qq-install-git-pull-tools() {
 }
 
 qq-install-dev(){
-    __cyan "This will python3, php, npm and libraries."
+    __cyan "This will install php, npm and libraries."
     __ask "CONTINUE?"
     if __check-proceed
     then
@@ -138,8 +138,8 @@ qq-install-golang() {
 
     if [[ -z "$(echo $GOPATH)" ]]
     then
-        echo "export GOPATH=\$HOME/go" | tee -a $HOME/.zshrc
-        echo "export PATH=\$PATH:/usr/local/go/bin:\$GOPATH/bin" | tee -a $HOME/.zshrc
+        echo "export GOPATH=\$HOME/go" | tee -a $HOME/.config/zsh/.zshrc
+        echo "export PATH=\$PATH:/usr/local/go/bin:\$GOPATH/bin" | tee -a $HOME/.config/zsh/.zshrc
         export GOPATH=$HOME/go
         export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
     fi 
@@ -154,7 +154,7 @@ qq-install-node() {
 
     if ! $(echo $PATH | grep -q "npm-global")
     then
-        echo "export PATH=\$PATH:\$HOME/.npm-global" | tee -a $HOME/.zshrc
+        echo "export PATH=\$PATH:\$HOME/.npm-global" | tee -a $HOME/.config/zsh/.zshrc
         export PATH=$PATH:$HOME/.npm-global
     fi
 }
@@ -233,14 +233,16 @@ qq-install-github-search() {
 
         #after commands
         pushd $p
-        pip3 install -r requirements.txt
+        cat requirements.txt
+        echo "Install tools listed in requirements using pacman"
         popd
         __addpath $p
     else
         __warn "already installed in $p"
         pushd $p 
         git pull
-        pip3 install -r requirements.txt
+        cat requirements.txt
+        echo "Install tools listed in requirements using pacman"
         popd
     fi
 }
