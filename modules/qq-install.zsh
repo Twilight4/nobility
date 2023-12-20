@@ -17,7 +17,6 @@ Commands
 qq-install-all:                Installs all dependecies in all modules, calling qq-*-install 
 qq-install-git-pull-tools:     Updates all install tools that are git repos
 qq-install-dev:                Installs pyhton3, php, npm and libraries
-qq-install-essentials:         Installs useful utilities
 qq-install-golang:             Installs golang and environment variables needed for "go get"
 
 Tools
@@ -128,16 +127,7 @@ qq-install-dev(){
     __ask "CONTINUE?"
     if __check-proceed
     then
-        __pkgs python3 python3-pip php php-curl libldns-dev libssl-dev libcurl4-openssl-dev npm
-    fi
-}
-
-qq-install-essentials(){
-    __cyan "This common utilities such as jq, tmux, tree, dtach and more."
-    __ask "CONTINUE?"
-    if __check-proceed
-    then
-        __pkgs jq pigz fonts-powerline unzip tmux dtach tree
+        __pkgs python-pip php php-curl libldns-dev libssl-dev libcurl4-openssl-dev npm
     fi
 }
 
