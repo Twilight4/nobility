@@ -38,7 +38,7 @@ Each namespace has its own install and help commands.
  Utility
  ---------
  qq-encoding-                   Used for encoding / decoding data
- qq-kali-                       Variety of commands for managing Kali linux
+ qq-arch-                       Variety of commands for managing Arch linux
 
  Engagement / Project / Bounty
  -----------------------------

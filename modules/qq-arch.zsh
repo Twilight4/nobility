@@ -8,7 +8,7 @@ qq-arch-help() {
 
 qq-arch
 ----------
-The qq-kali namespace provides commands that assist with managing Kali linux.
+The qq-arch namespace provides commands that assist with managing Arch linux.
 
 Commands
 --------
