@@ -1,4 +1,4 @@
-# Quiver : A Meta-Tool for Arch Linux
+# Quiver
 
 This is continuation of a unmaintained project named [Quiver](https://github.com/stevemcilwain/quiver) created by Steve Mcilwain. Quiver has been re-factored and re-structured to work on Arch-based Linux systems with the main focus on red-teaming/network-pentesting. Quiver is an organized namespace of shell functions that pre-fill commands in your terminal so that you can ditch your reliance on notes, copying, pasting, editing, copying and pasting again. Quiver doesn't cover all tools, it's my own curated collection which I am still adding to and updating in order to automate my workflow. I focus on tools I use and that are maintained and current. Quiver helps you remember how to use every tool in your arsenal and doesn't hide them behind scripting that can be cumbersome to maintain or update. Instead you can use Quiver to build a composable, on-the-fly workflow for every situation. 
 
