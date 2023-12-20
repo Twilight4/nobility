@@ -18,27 +18,27 @@ as the list of favorite user-agents or wordlists (qq-vars-global-help).
 
 Variables
 ---------
-__PROJECT:     the root directory used for all output, ex: /projects/example
-__LOGBOOK:     the logbook.md markdown file used in qq-log commands 
-__IFACE:       the interface to use for commands, ex: eth0
-__DOMAIN:      the domain to use for commands, ex: example.org
-__NETWORK:     the subnet to use for commands, ex: 10.1.2.0/24
-__RHOST:       the remote host or target, ex: 10.1.2.3, example: target.example.org
-__RPORT:       the remote port; ex: 80
-__LHOST:       the accessible local IP address, ex: 10.1.2.3
-__LPORT:       the accessible local PORT, ex: 4444
-__URL:         a target URL, example: https://target.example.org
-__UA:          the user agent to use for commands, ex: googlebot
-__WORDLIST:    path to a wordlist file, ex: /usr/share/wordlists/example.txt
-__PASSLIST:    path to a wordlist for password brute forcing, ex: /usr/share/wordlists/rockyou.txt
+__PROJECT     the root directory used for all output, ex: /projects/example
+__LOGBOOK     the logbook.md markdown file used in qq-log commands 
+__IFACE       the interface to use for commands, ex: eth0
+__DOMAIN      the domain to use for commands, ex: example.org
+__NETWORK     the subnet to use for commands, ex: 10.1.2.0/24
+__RHOST       the remote host or target, ex: 10.1.2.3, example: target.example.org
+__RPORT       the remote port; ex: 80
+__LHOST       the accessible local IP address, ex: 10.1.2.3
+__LPORT       the accessible local PORT, ex: 4444
+__URL         a target URL, example: https://target.example.org
+__UA          the user agent to use for commands, ex: googlebot
+__WORDLIST    path to a wordlist file, ex: /usr/share/wordlists/example.txt
+__PASSLIST    path to a wordlist for password brute forcing, ex: /usr/share/wordlists/rockyou.txt
 
 Commands
 --------
-qq-vars:           alias qv, list all current variable values
-qq-vars-save:      alias qvs, save all current variable values ($HOME/.quiver)
-qq-vars-load:      alias qvl, restores all current variable values ($HOME/.quiver)
-qq-vars-clear:     clears all current variable values
-qq-vars-set-*:     used to set each individual variable
+qq-vars           alias qv, list all current variable values
+qq-vars-save      alias qvs, save all current variable values ($HOME/.quiver)
+qq-vars-load      alias qvl, restores all current variable values ($HOME/.quiver)
+qq-vars-clear     clears all current variable values
+qq-vars-set-*     used to set each individual variable
 
 DOC
 }
@@ -113,8 +113,10 @@ qq-vars-load() {
 alias qvl="qq-vars-load"
 
 
-########## __PROJECT
 
+############################################################# 
+# __PROJECT
+#############################################################
 export __PROJECT=""
 
 qq-vars-set-project() {
@@ -130,8 +132,10 @@ qq-vars-set-project() {
 
 __check-project() { [[ -z "${__PROJECT}" ]] && qq-vars-set-project }
 
-########## __LOGBOOK
 
+############################################################# 
+# __LOGBOOK
+#############################################################
 export __LOGBOOK=""
 
 qq-vars-set-logbook() {
@@ -156,8 +160,10 @@ qq-vars-set-logbook() {
 
 __check-logbook() { [[ -z "${__LOGBOOK}" ]] && qq-vars-set-logbook }
 
-########## __IFACE
 
+############################################################# 
+# __IFACE
+#############################################################
 export __IFACE=""
 
 qq-vars-set-iface() {
@@ -173,8 +179,9 @@ qq-vars-set-iface() {
 
 __check-iface() { [[ -z "${__IFACE}" ]] && qq-vars-set-iface }
 
-########## __DOMAIN
-
+############################################################# 
+# __DOMAIN
+#############################################################
 export __DOMAIN=""
 
 qq-vars-set-domain() { __prefill __DOMAIN DOMAIN ${__DOMAIN} }
@@ -182,28 +189,32 @@ qq-vars-set-domain() { __prefill __DOMAIN DOMAIN ${__DOMAIN} }
 __check-domain() { [[ -z "${__DOMAIN}" ]] && qq-vars-set-domain }
 
 
-########## __NETWORK
-
+############################################################# 
+# __NETWORK
+#############################################################
 export __NETWORK=""
 
 qq-vars-set-network() { __prefill __NETWORK NETWORK ${__NETWORK} }
 
 __check-network() { [[ -z "${__NETWORK}" ]] && qq-vars-set-network }
 
-########## __RHOST
-
+############################################################# 
+# __RHOST
+#############################################################
 export __RHOST=""
 
 qq-vars-set-rhost() { __prefill __RHOST RHOST ${__RHOST} }
 
-########## __RPORT
-
+############################################################# 
+# __RPORT
+#############################################################
 export __RPORT=""
 
 qq-vars-set-rport() { __prefill __RPORT RPORT ${__RPORT} }
 
-########## __LHOST
-
+############################################################# 
+# __LHOST
+#############################################################
 export __LHOST=""
 
 qq-vars-set-lhost() {
@@ -216,15 +227,17 @@ qq-vars-set-lhost() {
   fi
 }
 
-########## __LPORT
-
+############################################################# 
+# __LPORT
+#############################################################
 export __LPORT=""
 
 qq-vars-set-lport() { __prefill __LPORT LPORT ${__LPORT} }
 
 
-########## __URL
-
+############################################################# 
+# __URL
+#############################################################
 export __URL=""
 
 qq-vars-set-url() { 
@@ -232,8 +245,10 @@ qq-vars-set-url() {
   __URL=$(echo ${u} | sed 's/\/$//')
 }
 
-########## __UA
 
+############################################################# 
+# __UA
+#############################################################
 export __UA="Mozilla/5.0"
 
 qq-vars-set-ua() {
@@ -244,8 +259,10 @@ qq-vars-set-ua() {
 
 __check-ua() { [[ -z "${__UA}" ]] && qq-vars-set-ua }
 
-########## __WORDLIST
 
+############################################################# 
+# __WORDLIST
+#############################################################
 export __WORDLIST=""
 
 qq-vars-set-wordlist() {
@@ -269,8 +286,10 @@ qq-vars-set-wordlist-dns() {
   __WORDLIST=$(__menu $(find  /usr/share/seclists/Discovery/DNS | sort))
 }
 
-########## __PASSLIST
 
+############################################################# 
+# __PASSLIST
+#############################################################
 export __PASSLIST="/usr/share/wordlists/rockyou.txt"
 
 qq-vars-set-passlist() {
@@ -279,8 +298,7 @@ qq-vars-set-passlist() {
 }
 
 
-# helpers
-
+# Helpers
 export __THREADS
 __check-threads() { __askvar __THREADS THREADS }
 
