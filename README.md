@@ -1,6 +1,6 @@
 # Quiver : A Meta-Tool for Arch Linux
 
-This is continuation of a project named Quiver created by Steve Mcilwain which now re-factored and re-structured to work on Arch-based Linux systems focuses primarily on red-teaming/network-pentesting. Quiver is an organized namespace of shell functions that pre-fill commands in your terminal so that you can ditch your reliance on notes, copying, pasting, editing, copying and pasting again. Quiver doesn't cover all tools, it's my own curated collection which I am still adding to and updating. I focus on tools I use and that are maintained and current. Quiver helps you remember how to use every tool in your arsenal and doesn't hide them behind scripting that can be cumbersome to maintain or update. Instead you can use Quiver to build a composable, on-the-fly workflow for every situation. 
+This is continuation of a project named [Quiver](https://github.com/stevemcilwain/quiver) created by Steve Mcilwain which now re-factored and re-structured to work on Arch-based Linux systems with the main focus on red-teaming/network-pentesting. Quiver is an organized namespace of shell functions that pre-fill commands in your terminal so that you can ditch your reliance on notes, copying, pasting, editing, copying and pasting again. Quiver doesn't cover all tools, it's my own curated collection which I am still adding to and updating. I focus on tools I use and that are maintained and current. Quiver helps you remember how to use every tool in your arsenal and doesn't hide them behind scripting that can be cumbersome to maintain or update. Instead you can use Quiver to build a composable, on-the-fly workflow for every situation. 
 
 # Release 1.1
 This is a first release after forking quiver repository and modifying base settings to make all modules work on Arch-based Linux systems.
@@ -39,20 +39,13 @@ Clone the repo to your oh-my-zsh custom plugins folder.
 
 ```bash
 
-git clone https://github.com/stevemcilwain/quiver.git ~/.oh-my-zsh/custom/plugins/quiver
+git clone https://github.com/Twilight/quiver-arch.git ~/.oh-my-zsh/custom/plugins/quiver-arch
 
-```
-Edit `~/.zshrc` to load the plugin.
-
-```
+# Edit `~/.zshrc` to load the plugin.
 
 plugins=(git quiver)
 
-```
-
-Source `.zshrc` to load the plugin and you're done. On first load, Quiver will install a few core packages.
-
-```
+# Source `.zshrc` to load the plugin and you're done. On first load, Quiver will install a few core packages.
 
 source ~/.zshrc
 
