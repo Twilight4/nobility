@@ -1,12 +1,11 @@
 # Quiver : A Meta-Tool for Arch Linux
 
-Quiver is an organized namespace of shell functions that pre-fill commands in your terminal so that you can ditch your reliance on notes, copying, pasting, editing, copying and pasting again. Quiver helps you remember how to use every tool in your arsenal and doesn't hide them behind scripting that can be cumbersome to maintain or update. Instead you can use Quiver to build a composable, on-the-fly workflow for every situation. 
+This is continuation of a project named Quiver created by Steve Mcilwain which now re-factored and re-structured to work on Arch-based Linux systems focuses primarily on red-teaming/network-pentesting. Quiver is an organized namespace of shell functions that pre-fill commands in your terminal so that you can ditch your reliance on notes, copying, pasting, editing, copying and pasting again. Quiver doesn't cover all tools, it's my own curated collection which I am still adding to and updating. I focus on tools I use and that are maintained and current. Quiver helps you remember how to use every tool in your arsenal and doesn't hide them behind scripting that can be cumbersome to maintain or update. Instead you can use Quiver to build a composable, on-the-fly workflow for every situation. 
 
-Quiver doesn't cover all tools, it's my own curated collection which I am still adding to and updating. There are so many tools for many different types of engagements and targets, so I jsut try to focus on tools that are maintained and current. Feel free to ask for the inclusion of tools you prefer in the issues list.
+# Release 1.1
+This is a first release after forking quiver repository and modifying base settings to make all modules work on Arch-based Linux systems.
+I will be slowly upgrading the scripts and going to a direction of my area of focus, red-teaming/network-pentesting.
 
-# Release 1.0 
-
-After months of hard work during lockdown, I am happy to introduce the 1.0 release of Quiver! This version contains many improvements over previous versions such as per-namespace help and installers, auto-fill variables such as RHOST, RPORT, LHOST, LPORT, PROJECT, WORDLIST, URL and global configuration settings for customizing settings like a menu of your favorite wordlists. If you've been using Quiver before now, then many of the changes in 1.0 are breaking changes. Please familiarize yourself with the new commands using `qq-help`. If you previously were storing Quiver values in .zshrc, most of these can now be stored as global vars using `qq-vars-global`. 
 
 * [RELEASES.md](RELEASES.md)
 
