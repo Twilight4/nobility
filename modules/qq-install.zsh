@@ -45,12 +45,12 @@ __addpath() {
     export PATH=$PATH:$1
 }
 
-__pkgs(){
+__pkgs() {
     __info "checking for and installing dependencies..."
     for pkg in "$@"
     do
-    __info "$pkg"
-        dpkg -l | grep -qw $pkg && __warn "already installed" || sudo apt-get -y install $pkg
+        __info "$pkg"
+        pacman -Qq $pkg 2>/dev/null && __warn "already installed" || sudo pacman -S --noconfirm $pkg
     done 
 }
 
@@ -86,7 +86,6 @@ qq-install-all() {
         qq-enum-web-ssl-install
         qq-enum-web-install
         qq-exploit-install
-        #qq-kali-install
         qq-notes-install
         qq-log-install
         qq-pivot-install
@@ -98,7 +97,6 @@ qq-install-all() {
         qq-recon-subs-install
         qq-shell-handlers-msf-install
         qq-shell-handlers-install
-        #qq-shell-tty-install
         qq-srv-install
         __info "Install finished"
     fi
@@ -130,8 +128,10 @@ qq-install-dev(){
     fi
 }
 
-##### Individual Tools
 
+######################################################
+# Individual Tools
+######################################################
 qq-install-golang() {
     __pkgs golang
 

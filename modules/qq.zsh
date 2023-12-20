@@ -121,8 +121,10 @@ qq-debug() {
     cat ${__LOGFILE}
 }
 
-##### Output Helpers
 
+############################################################# 
+# Output Helpers
+#############################################################
 __cyan() echo "$fg[cyan]$@ $reset_color"
 __green() echo "$fg[green]$@ $reset_color"
 __blue() echo "$fg[blue]$@ $reset_color"
@@ -134,8 +136,10 @@ __ok() __green "[+] $@"
 __warn() __yellow "[!] $@"
 __err() __red "[X] $@"
 
-##### Input Helpers
 
+############################################################# 
+# Input Helpers
+#############################################################
 __ask() __yellow "$@"
 __prompt() __cyan "[?] $@"
 
@@ -186,8 +190,9 @@ __menu() {
     echo ${o}
 }
 
-##### String Helpers
-
+############################################################# 
+# String Helpers
+#############################################################
 __trim-slash() { echo $1 | sed 's/\/$//' }
 __trim-quotes() { echo $1 | tr -d \" }
 __trim-newline() { echo $1 | tr -d "\n"}
@@ -201,8 +206,10 @@ __rand() {
     fi  
 }
 
-##### Tool Helpers
 
+############################################################# 
+# Tool Helpers
+#############################################################
 __msf() {
     local msfcmd=$(cat $@)
     print -z "msfconsole -n -q -x \"${msfcmd}\" "
