@@ -31,19 +31,19 @@ I will be slowly upgrading the scripts and going to a direction of my area of fo
 
 Quiver requires the following:
 
-* Zsh
-* [oh-my-zsh](https://ohmyz.sh/)
+* [Zsh](https://github.com/zsh-users/zsh)
+* [Oh-my-zsh](https://ohmyz.sh/)
 * [Arch Linux](https://archlinux.org/)
 
 
 ```bash
-# Clone the repo to your oh-my-zsh custom plugins folder.
+# Clone the repo to your oh-my-zsh custom plugins folder
 git clone https://github.com/Twilight/quiver-arch.git ~/.oh-my-zsh/custom/plugins/quiver-arch
 
-# Edit `~/.zshrc` to load the plugin.
+# Edit `~/.zshrc` to load the plugin
 plugins=(git quiver)
 
-# Source `.zshrc` to load the plugin and you're done. On first load, Quiver will install a few core packages.
+# Source `.zshrc` to load the plugin and you're done. On first load, Quiver will install a few core packages
 source ~/.zshrc
 
 ```
