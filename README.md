@@ -31,18 +31,18 @@ I will be slowly upgrading the scripts and going to a direction of my area of fo
 
 Quiver requires the following:
 
-* ZSH (apt-get install zsh)
-* oh-my-zsh (optional requirement but recommended: https://ohmyz.sh/)
-* Arch Linux (https://archlinux.org/)
+* Zsh
+* [oh-my-zsh](https://ohmyz.sh/)
+* [Arch Linux](https://archlinux.org/)
 
-Clone the repo to your OMZ custom plugins folder.
+Clone the repo to your oh-my-zsh custom plugins folder.
 
 ```bash
 
 git clone https://github.com/stevemcilwain/quiver.git ~/.oh-my-zsh/custom/plugins/quiver
 
 ```
-Edit ~/.zshrc to load the plugin.
+Edit `~/.zshrc` to load the plugin.
 
 ```
 
@@ -50,7 +50,7 @@ plugins=(git quiver)
 
 ```
 
-Source .zshrc to load the plugin and you're done. On first load, Quiver will install a few core packages.
+Source `.zshrc` to load the plugin and you're done. On first load, Quiver will install a few core packages.
 
 ```
 
@@ -64,67 +64,60 @@ Quiver organizes commands into namespaces starting with `qq-`, such as `qq-enum-
 To see an overview of all namespaces simply use `qq-help`. Each namespace also has it's own help command, such as `qq-enum-web-help` that provides a listing of available commands. All commands support tab completion and search. 
 
 ## Installing Dependencies
-
 Every namespace was a qq-<namespace>-install command that will install all of the tools relavent to that namespace. You can install just the tools you need, or use `qq-install-all` to run the installers of all namespaces.
 
 ## Workflow
-
 Quiver is meant to provide a composable, on-the-fly workflow. It replaces the common painful raw workflow of reading your notes, finding a command, copy, paste, replace the values with target values, copy, paste, run. Some rely heavily on completely automated scripts or frameworks that run all the commands for a workflow and output well-formatted data. While these scripts are great for many use cases, they can often be brittle, hide the underlying tools and techniques and be cumbersom to modify. Instead, Quiver gives you a happy medium, you can run commands quickly and easy with well-organized output, composing your workflow as you go depending on the targets and context. 
 
 ## Example Workflow
-
-Here is an example workflow for bug bounty hunting:
-
 ### Prep
 
 ```bash
 
-# if you have markdown notes, configure the path 
+# If you have markdown notes, configure the path 
 qq-vars-global-set-notes
 
-# set some session variables for the bounty target 
+# Set some session variables for the bounty target 
 qq-vars-set-project 
 qq-vars-set-domain 
 
-# generate scope files from the bounty url
+# Generate scope files from the bounty url
 qq-project-rescope
 
-# save vars for other terminal sessions, qq-vars-load
+# Save vars for other terminal sessions, qq-vars-load
 qq-vars-save
 
 ```
 
 ### Passive Recon
-
 ```bash
 
-# search for target files
+# Search for target files
 qq-recon-org-files
 
-# search downloaded files for urls
+# Search downloaded files for URLs
 qq-recon-org-files-urls
 
-# mine github repos for secrets
+# Mine github repos for secrets
 qq-recon-github-gitrob
 
-# check dns records
+# Check DNS records
 qq-enum-dns-dnsrecon
 
-# look for ASNs and networks
+# Look for ASNs and networks
 qq-recon-networks-amass-asns
 qq-recon-networks-bgpview-ipv4
 
-# get subdomains
+# Get subdomains
 qq-recon-subs-subfinder
 
-# resolve and parse subdomains
+# Resolve and parse subdomains
 qq-recon-subs-resolve-massdns
 qq-recon-subs-resolve-parse
 
 ```
 
 ### Active Web Enumeration
-
 ```bash
 
 # Download out robots.txt
