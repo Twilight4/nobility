@@ -3,7 +3,6 @@
 ############################################################# 
 # qq-enum-web
 #############################################################
-
 qq-enum-web-help() {
     cat << "DOC"
 
@@ -60,8 +59,10 @@ qq-enum-web-waf() {
     print -z "wafw00f ${__URL} -o $(__urlpath)/waf.txt"
 }
 
-# vhosts
 
+############################################################# 
+# vhosts
+#############################################################
 qq-enum-web-vhosts-gobuster() {
     __check-project
     qq-vars-set-url
@@ -70,8 +71,10 @@ qq-enum-web-vhosts-gobuster() {
     print -z "gobuster vhost -u ${__URL} -w ${w} -a \"${__UA}\" -t ${__THREADS} -o $(__urlpath)/vhosts.txt"
 }
 
-# screens
 
+############################################################# 
+# screens
+#############################################################
 qq-enum-web-eyewitness() {
     __check-project
     qq-vars-set-url
@@ -79,8 +82,10 @@ qq-enum-web-eyewitness() {
     print -z "eyewitness --web --no-dns --no-prompt --single ${__URL} -d $(__urlpath)/screens --user-agent \"${__UA}\" "
 }
 
-# apps
 
+############################################################# 
+# apps
+#############################################################
 qq-enum-web-wordpress() {
     __check-project
     qq-vars-set-url

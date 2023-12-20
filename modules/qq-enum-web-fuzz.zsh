@@ -3,7 +3,6 @@
 ############################################################# 
 # qq-enum-web-fuzz
 #############################################################
-
 qq-enum-web-fuzz-help() {
     cat << "DOC"
 
@@ -40,8 +39,10 @@ qq-enum-web-fuzz-auth-basic-payloads() {
     print -z "file=\"${f}\"; while IFS= read line; do; echo -n \"${__USER}:\$line\" | base64 ; done <\"\$file\" > payloads.b64"
 }
 
-# ffuf
 
+############################################################# 
+# ffuf
+#############################################################
 qq-enum-web-fuzz-auth-basic-ffuf() {
     qq-vars-set-url
     __ask "Select file containing authorization header payloads"
@@ -65,8 +66,10 @@ qq-enum-web-fuzz-auth-post-ffuf() {
     print -z "ffuf -t ${__THREADS}  -p \"0.1\" -w ${__PASSLIST}  -H \"Content-Type: application/x-www-form-urlencoded\" -X POST -d \"${uf}=${uv}&${pf}=FUZZ\" -u ${__URL} -fs 75 "
 }
 
-# wfuzz
 
+############################################################# 
+# wfuzz
+#############################################################
 qq-enum-web-fuzz-auth-post-wfuzz() {
     qq-vars-set-url
     local uf && __askvar uf USER_FIELD
