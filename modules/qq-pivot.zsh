@@ -3,7 +3,6 @@
 ############################################################# 
 # qq-pivot
 #############################################################
-
 qq-pivot-help() {
     cat << "DOC"
 
@@ -13,11 +12,11 @@ The pivot namespace provides commands for using ssh to proxy and pivot.
 
 Commands
 --------
-qq-pivot-install:                      installs dependencies
-qq-pivot-mount-remote-sshfs:           mounts a remote directory to local /mnt path using sshfs
-qq-pivot-ssh-dynamic-proxy:            uses remote as a dynamic proxy
-qq-pivot-ssh-remote-to-local:          forwards remote port to local port
-qq-pivot-ssh-remote-to-local-burp:     forwards remote port 8080 to local port 8080
+qq-pivot-install                      installs dependencies
+qq-pivot-mount-remote-sshfs           mounts a remote directory to local /mnt path using sshfs
+qq-pivot-ssh-dynamic-proxy            uses remote as a dynamic proxy
+qq-pivot-ssh-remote-to-local          forwards remote port to local port
+qq-pivot-ssh-remote-to-local-burp     forwards remote port 8080 to local port 8080
 
 DOC
 }

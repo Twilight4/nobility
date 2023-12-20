@@ -3,7 +3,6 @@
 ############################################################# 
 # qq-shell-handlers
 #############################################################
-
 qq-shell-handlers-help() {
     cat << "DOC"
 
@@ -29,8 +28,10 @@ qq-shell-handlers-install() {
     __pkgs netcat socat
 }
 
-# netcat
 
+############################################################# 
+# netcat
+#############################################################
 qq-shell-handlers-nc() {
     qq-vars-set-lport
     print -z "nc -nlvp ${__LPORT}"
@@ -46,8 +47,10 @@ qq-shell-handlers-nc-udp() {
     print -z "nc -nlvu ${__LPORT}"
 }
 
-# socat
 
+############################################################# 
+# socat
+#############################################################
 qq-shell-handlers-socat() {
     qq-vars-set-lport
     print -z "socat file:`tty`,raw,echo=0 tcp-listen:${__LPORT}"

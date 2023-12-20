@@ -3,7 +3,6 @@
 ############################################################# 
 # qq-project-custom
 #############################################################
-
 qq-project-custom-help() {
     cat << "DOC"
 
@@ -14,15 +13,15 @@ directory structures and variables for users that have specific requirements.
 
 Variables
 ---------
-__PROJECT_ZD_CONSULTANT:     a global variable for consultant name used in ZD projects
-__PROJECT_ZD_ROOT:           a global variable for the project root folder used in ZD projects
+__PROJECT_ZD_CONSULTANT     a global variable for consultant name used in ZD projects
+__PROJECT_ZD_ROOT           a global variable for the project root folder used in ZD projects
 
 Commands
 --------
-qq-project-custom-zd-start:              scaffolds directory structure and logbook for "zd" projects
-qq-project-custom-zd-end:                zips and removes directories and data for "zd" projects
-qq-project-custom-zd-root-set:           sets the __PROJECT_ZD_ROOT variable
-qq-project-custom-zd-consultant-set:     sets the __PROJECT_ZD_CONSULTANT variable
+qq-project-custom-zd-start              scaffolds directory structure and logbook for "zd" projects
+qq-project-custom-zd-end                zips and removes directories and data for "zd" projects
+qq-project-custom-zd-root-set           sets the __PROJECT_ZD_ROOT variable
+qq-project-custom-zd-consultant-set     sets the __PROJECT_ZD_CONSULTANT variable
 
 DOC
 }

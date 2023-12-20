@@ -3,7 +3,6 @@
 ############################################################# 
 # qq-recon-subs
 #############################################################
-
 qq-recon-subs-help() {
     cat << "DOC"
 
@@ -19,23 +18,23 @@ qq-recon-subs-install: installs dependencies
 
 Commands - enumeration
 ----------------------
-qq-recon-subs-amass-enum:       enumerate subdomains into amass db (api keys help)
-qq-recon-subs-amass-diff:       track changes between last 2 enumerations using amass db
-qq-recon-subs-amass-names:      list gathered subs in the amass db
-qq-recon-subs-crt.sh:           gather subdomains from crt.sh
-qq-recon-subs-subfinder:        gather subdomains from sources (api keys help)
-qq-recon-subs-assetfinder:      gather subdomains from sources (api keys help)
-qq-recon-subs-wayback:          gather subdomains from Wayback Machine
+qq-recon-subs-amass-enum       enumerate subdomains into amass db (api keys help)
+qq-recon-subs-amass-diff       track changes between last 2 enumerations using amass db
+qq-recon-subs-amass-names      list gathered subs in the amass db
+qq-recon-subs-crt.sh           gather subdomains from crt.sh
+qq-recon-subs-subfinder        gather subdomains from sources (api keys help)
+qq-recon-subs-assetfinder      gather subdomains from sources (api keys help)
+qq-recon-subs-wayback          gather subdomains from Wayback Machine
 
 Commands - brute force
 ----------------------
-qq-recon-subs-brute-massdns:    try to resolve a list of subdomains generated for brute forcing
-qq-recon-subs-gen-wordlist:     generate a wordlist of possible sub domains 
+qq-recon-subs-brute-massdns    try to resolve a list of subdomains generated for brute forcing
+qq-recon-subs-gen-wordlist     generate a wordlist of possible sub domains 
 
 Commands - processing
 ---------------------
-qq-recon-subs-resolve-massdns:   resolve a file of subdomains using massdns
-qq-recon-subs-resolve-parse:     parse resolved.txt into A, CNAME and IP's
+qq-recon-subs-resolve-massdns   resolve a file of subdomains using massdns
+qq-recon-subs-resolve-parse     parse resolved.txt into A, CNAME and IP's
 
 DOC
 }

@@ -3,7 +3,6 @@
 ############################################################# 
 # qq-recon-networks
 #############################################################
-
 qq-recon-networks-help() {
     cat << "DOC"
 
@@ -52,4 +51,3 @@ qq-recon-networks-bgpview-ipv6() {
     mkdir ${__PROJECT}/networks
     print -z "curl -s https://api.bgpview.io/asn/${__ASN}/prefixes | jq -r '.data | .ipv6_prefixes | .[].prefix'  | tee -a ${__PROJECT}/networks/ipv6.txt"
 }
-
