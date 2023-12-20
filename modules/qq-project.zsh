@@ -3,7 +3,6 @@
 ############################################################# 
 # qq-project
 #############################################################
-
 qq-project-help() {
     cat << "DOC"
 
@@ -15,13 +14,13 @@ syncing data and managing a VPS.
 
 Commands
 --------
-qq-project-install:                        installs dependencies
-qq-project-scope:                          generate a scope regex by root word (matches all to the left and right)
-qq-project-rescope-txt:                    uses rescope to generate scope from a url
-qq-project-rescope-burp:                   uses rescope to generate burp scope (JSON) from a url
-qq-project-sync-remote-to-local:           sync data from a remote server directory to a local directory using SSHFS
-qq-project-sync-local-file-to-remote:      sync a local file to a remote server using rsync over SSH
-qq-project-google-domain-dyn:              update IP address using Google domains hosted dynamic record
+qq-project-install                        installs dependencies
+qq-project-scope                          generate a scope regex by root word (matches all to the left and right)
+qq-project-rescope-txt                    uses rescope to generate scope from a url
+qq-project-rescope-burp                   uses rescope to generate burp scope (JSON) from a url
+qq-project-sync-remote-to-local           sync data from a remote server directory to a local directory using SSHFS
+qq-project-sync-local-file-to-remote      sync a local file to a remote server using rsync over SSH
+qq-project-google-domain-dyn              update IP address using Google domains hosted dynamic record
 
 DOC
 }
