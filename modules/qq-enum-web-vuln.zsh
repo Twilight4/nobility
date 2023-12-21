@@ -12,14 +12,14 @@ The enum-web-vuln namespace contains commands for discovering web vulnerabilitie
 
 Commands
 --------
-qq-enum-web-vuln-install:              installs dependencies
-qq-enum-web-vuln-nikto:                scan a target for web vulnerabilities   
-qq-enum-web-vuln-nmap-rfi:             scan for potential rfi uri's
-qq-enum-web-vuln-shellshock-agent:     create a shellshock payload for user-agent
-qq-enum-web-vuln-shellshock-nc:        attempt shellshock with a reverse shell payload
-qq-enum-web-vuln-put-curl:             attempt to PUT a file with curl
-qq-enum-web-vuln-padbuster-check:      test for padbuster
-qq-enum-web-vuln-padbuster-forge:      exploit with padbuster
+qq-enum-web-vuln-install              installs dependencies
+qq-enum-web-vuln-nikto                scan a target for web vulnerabilities   
+qq-enum-web-vuln-nmap-rfi             scan for potential rfi uri's
+qq-enum-web-vuln-shellshock-agent     create a shellshock payload for user-agent
+qq-enum-web-vuln-shellshock-nc        attempt shellshock with a reverse shell payload
+qq-enum-web-vuln-put-curl             attempt to PUT a file with curl
+qq-enum-web-vuln-padbuster-check      test for padbuster
+qq-enum-web-vuln-padbuster-forge      exploit with padbuster
 
 DOC
 }

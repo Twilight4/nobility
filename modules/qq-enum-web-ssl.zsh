@@ -12,14 +12,14 @@ The enum-web-ssl namespace contains commands for enumerating SSL/TLS.
 
 Commands
 --------
-qq-enum-web-ssl-install:              installs dependencies
-qq-enum-web-ssl-tcpdump:              capture traffic to and from target
-qq-enum-web-ssl-der-to-crt:           convert a .der file to .crt
-qq-enum-web-ssl-crt-ca-install:       install a root certificate (.crt)
-qq-enum-web-ssl-certs:                display cert from a url
-qq-enum-web-ssl-cert-download:        download certs from a url
-qq-enum-web-ssl-testssl-full:
-qq-enum-web-ssl-testssl-ciphers:
+qq-enum-web-ssl-install              installs dependencies
+qq-enum-web-ssl-tcpdump              capture traffic to and from target
+qq-enum-web-ssl-der-to-crt           convert a .der file to .crt
+qq-enum-web-ssl-crt-ca-install       install a root certificate (.crt)
+qq-enum-web-ssl-certs                display cert from a url
+qq-enum-web-ssl-cert-download        download certs from a url
+qq-enum-web-ssl-testssl-full
+qq-enum-web-ssl-testssl-ciphers
 
 DOC
 }
