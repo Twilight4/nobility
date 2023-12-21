@@ -13,7 +13,7 @@ on PHP web servers
 
 Commands
 --------
-qq-enum-web-php-install:                 installs dependencies
+qq-enum-web-php-install                 installs dependencies
 qq-enum-web-php-ffuf:                    scan for PHP files
 qq-enum-web-php-rfi:                     exploit typical RFI params
 qq-enum-web-php-rfi-input 

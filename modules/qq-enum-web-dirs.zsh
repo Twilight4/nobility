@@ -12,12 +12,12 @@ The qq-enum-web-dirs namespace contains commands for discovering web content, di
 
 Commands
 --------
-qq-enum-web-dirs-install:      installs dependencies
-qq-enum-web-dirs-robots:       get robots.txt using curl
-qq-enum-web-dirs-parsero:      parse complex robots.txt with parsero
-qq-enum-web-dirs-wfuzz:        brute force dirs and files with wfuzz
-qq-enum-web-dirs-ffuf:         brute force dirs and files with ffuf
-qq-enum-web-dirs-gobuster:     brute force dirs and files with gobuster
+qq-enum-web-dirs-install      installs dependencies
+qq-enum-web-dirs-robots       get robots.txt using curl
+qq-enum-web-dirs-parsero      parse complex robots.txt with parsero
+qq-enum-web-dirs-wfuzz        brute force dirs and files with wfuzz
+qq-enum-web-dirs-ffuf         brute force dirs and files with ffuf
+qq-enum-web-dirs-gobuster     brute force dirs and files with gobuster
 
 DOC
 }

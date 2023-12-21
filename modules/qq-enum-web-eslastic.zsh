@@ -13,12 +13,12 @@ elastic search services.
 
 Commands
 --------
-qq-enum-web-elastic-install:     installs dependencies
-qq-enum-web-elastic-nmap:        scan the target using the elasticsearch nmap nse script
-qq-enum-web-elastic-health:      query the target using curl for cluster health
-qq-enum-web-elastic-indices:     query the target using curl for indices
-qq-enum-web-elastic-search:      query an index using curl
-qq-enum-web-elastic-all:         query for 1000 records in an index using curl
+qq-enum-web-elastic-install     installs dependencies
+qq-enum-web-elastic-nmap        scan the target using the elasticsearch nmap nse script
+qq-enum-web-elastic-health      query the target using curl for cluster health
+qq-enum-web-elastic-indices     query the target using curl for indices
+qq-enum-web-elastic-search      query an index using curl
+qq-enum-web-elastic-all         query for 1000 records in an index using curl
 
 DOC
 }

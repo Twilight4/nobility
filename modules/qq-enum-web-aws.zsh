@@ -13,10 +13,10 @@ and enumerating AWS hosted services.
 
 Commands
 --------
-qq-enum-web-aws-install:     installs dependencies
-qq-enum-web-aws-s3-ls:       use the awscli to list files in an S3 bucket
-qq-enum-web-aws-s3-write:    use the awscli to copy a local file to an S3 bucket
-qq-enum-web-aws-s3-scanner:  scan a list of buckets
+qq-enum-web-aws-install     installs dependencies
+qq-enum-web-aws-s3-ls       use the awscli to list files in an S3 bucket
+qq-enum-web-aws-s3-write    use the awscli to copy a local file to an S3 bucket
+qq-enum-web-aws-s3-scanner  scan a list of buckets
 
 DOC
 }
