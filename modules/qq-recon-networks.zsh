@@ -13,8 +13,8 @@ All network data is stored in $__PROJECT/networks.
 
 Commands
 --------
-qq-recon-networks-install:          installs dependencies
-qq-recon-networks-amass-asn:        find asns by domain
+qq-recon-networks-install          installs dependencies
+qq-recon-networks-amass-asn        find asns by domain
 qq-recon-networks-bgp:              use the bgp.he.net website to find asns and networks
 qq-recon-networks-bgpview-ipv4:     curl api.bgpview.io for ipv4 networks by asn
 qq-recon-networks-bgpview-ipv6:     curl api.bgpview.io for ipv6 networks by asn
