@@ -13,11 +13,11 @@ enumerating NFS services.
 
 Commands
 --------
-qq-enum-nfs-install:        installs dependencies
-qq-enum-nfs-nmap-sweep:     scan a network for services
-qq-enum-nfs-tcpdump:        capture traffic to and from a host
-qq-enum-nfs-show:           show remote NFS shares
-qq-enum-nfs-mount:          mount a remote NFS share locally
+qq-enum-nfs-install        installs dependencies
+qq-enum-nfs-nmap-sweep     scan a network for services
+qq-enum-nfs-tcpdump        capture traffic to and from a host
+qq-enum-nfs-show           show remote NFS shares
+qq-enum-nfs-mount          mount a remote NFS share locally
 
 DOC
 }

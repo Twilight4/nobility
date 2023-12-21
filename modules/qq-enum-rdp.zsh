@@ -13,13 +13,13 @@ and enumerating RDP remote desktop services.
 
 Commands
 --------
-qq-enum-rdp-install:                  installs dependencies
-qq-enum-rdp-nmap-sweep:               scan a network for services
-qq-enum-rdp-tcpdump:                  capture traffic to and from a host
-qq-enum-rdp-ncrack:                   brute force passwords for a user account
-qq-enum-rdp-bluekeep:                 bluekeep exploit reference
-qq-enum-rdp-msf-bluekeep-scan:        bluekeep metasploit scanner
-qq-enum-rdp-msf-bluekeep-exploit:     bluekeep metasploit exploit
+qq-enum-rdp-install                  installs dependencies
+qq-enum-rdp-nmap-sweep               scan a network for services
+qq-enum-rdp-tcpdump                  capture traffic to and from a host
+qq-enum-rdp-ncrack                   brute force passwords for a user account
+qq-enum-rdp-bluekeep                 bluekeep exploit reference
+qq-enum-rdp-msf-bluekeep-scan        bluekeep metasploit scanner
+qq-enum-rdp-msf-bluekeep-exploit     bluekeep metasploit exploit
 
 DOC
 }

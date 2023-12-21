@@ -13,19 +13,19 @@ enumerating Oracle services and databases.
 
 Commands
 --------
-qq-enum-oracle-install:           installs dependencies
-qq-enum-oracle-nmap-sweep:        scan a network for services
-qq-enum-oracle-tcpdump:           capture traffic to and from a host
-qq-enum-oracle-sqlplus:           sqlplus client
-qq-enum-oracle-odat:              odat anonymous enumeration
-qq-enum-oracle-odat-creds:        odat authenticated enumeration
-qq-enum-oracle-odat-passwords:    odat password brute
-qq-enum-oracle-version:           tnscmd version query
-qq-enum-oracle-status:            tnscmd status query
-qq-enum-oracle-sidguess:          tnscmd password brute force
-qq-enum-oracle-oscanner:          oscanner enumeration
-qq-enum-oracle-hydra-listener:    brute force passwords 
-qq-enum-oracle-hydra-sid:         brute force passwords
+qq-enum-oracle-install           installs dependencies
+qq-enum-oracle-nmap-sweep        scan a network for services
+qq-enum-oracle-tcpdump           capture traffic to and from a host
+qq-enum-oracle-sqlplus           sqlplus client
+qq-enum-oracle-odat              odat anonymous enumeration
+qq-enum-oracle-odat-creds        odat authenticated enumeration
+qq-enum-oracle-odat-passwords    odat password brute
+qq-enum-oracle-version           tnscmd version query
+qq-enum-oracle-status            tnscmd status query
+qq-enum-oracle-sidguess          tnscmd password brute force
+qq-enum-oracle-oscanner          oscanner enumeration
+qq-enum-oracle-hydra-listener    brute force passwords 
+qq-enum-oracle-hydra-sid         brute force passwords
 
 DOC
 }
