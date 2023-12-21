@@ -13,14 +13,14 @@ inputs of web applications
 
 Commands
 --------
-qq-enum-web-fuzz-install:                  installs dependencies
-qq-enum-web-fuzz-auth-basic-payloads:      generate base64 encoded credentials
-qq-enum-web-fuzz-auth-basic-ffuf:          brute force basic auth
-qq-enum-web-fuzz-auth-json-ffuf:           brute force basic auth with json post
-qq-enum-web-fuzz-auth-post-ffuf:           brute force auth with post
-qq-enum-web-fuzz-auth-post-wfuzz:          brute force auth with post
-qq-enum-web-brute-hydra-get:               brute force auth with get
-qq-enum-web-brute-hydra-form-post:         brute force auth with post
+qq-enum-web-fuzz-install                  installs dependencies
+qq-enum-web-fuzz-auth-basic-payloads      generate base64 encoded credentials
+qq-enum-web-fuzz-auth-basic-ffuf          brute force basic auth
+qq-enum-web-fuzz-auth-json-ffuf           brute force basic auth with json post
+qq-enum-web-fuzz-auth-post-ffuf           brute force auth with post
+qq-enum-web-fuzz-auth-post-wfuzz          brute force auth with post
+qq-enum-web-brute-hydra-get               brute force auth with get
+qq-enum-web-brute-hydra-form-post         brute force auth with post
 
 DOC
 }

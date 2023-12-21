@@ -13,11 +13,11 @@ javascript files and mining for urls and secrets.
 
 Commands
 --------
-qq-enum-web-js-install:             installs dependencies
-qq-enum-web-js-beautify:            beautify JS file
-qq-enum-web-js-link-finder-url:     run linkfinder on a file
-qq-enum-web-js-link-finder-domain:  run linkfinder on all files of a site
-qq-enum-web-js-curl:                enumerate links using curl
+qq-enum-web-js-install             installs dependencies
+qq-enum-web-js-beautify            beautify JS file
+qq-enum-web-js-link-finder-url     run linkfinder on a file
+qq-enum-web-js-link-finder-domain  run linkfinder on all files of a site
+qq-enum-web-js-curl                enumerate links using curl
 
 DOC
 }
