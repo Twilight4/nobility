@@ -12,12 +12,12 @@ The qq-enum-ftp namespace contains commands for scanning and enumerating FTP ser
 
 Commands
 --------
-qq-enum-ftp-install:           installs dependencies
-qq-enum-ftp-nmap-sweep:        scan a network for services
-qq-enum-ftp-tcpdump:           capture traffic to and from a host
-qq-enum-ftp-hydra:             brute force passwords for a user account
-qq-enum-ftp-lftp-grep:         search (grep) the target system
-qq-enum-ftp-wget-mirror:       mirror the FTP server locally
+qq-enum-ftp-install           installs dependencies
+qq-enum-ftp-nmap-sweep        scan a network for services
+qq-enum-ftp-tcpdump           capture traffic to and from a host
+qq-enum-ftp-hydra             brute force passwords for a user account
+qq-enum-ftp-lftp-grep         search (grep) the target system
+qq-enum-ftp-wget-mirror       mirror the FTP server locally
 
 DOC
 }
