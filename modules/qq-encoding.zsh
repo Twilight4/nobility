@@ -13,8 +13,8 @@ The encoding namespace provides commands for encoding and decoding values.
 
 Commands
 --------
-qq-encoding-file-to-b64:       encodes plain text file to base64, optional $1 as file
-qq-encoding-file-from-b64:     decodes base64 file to plain text, optional $1 as file
+qq-encoding-file-to-b64       encodes plain text file to base64, optional $1 as file
+qq-encoding-file-from-b64     decodes base64 file to plain text, optional $1 as file
 
 DOC
 }

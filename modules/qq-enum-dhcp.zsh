@@ -13,10 +13,10 @@ The qq-enum-dhcp namespace contains commands for scanning and enumerating DHCP s
 
 Commands
 --------
-qq-enum-dhcp-install:           installs dependencies
-qq-enum-dhcp-nmap-sweep:        scan a network for services
-qq-enum-dhcp-tcpdump:           capture traffic to and from a host
-qq-enum-dhcp-discover-nmap:     broadcast DHCP discover packets
+qq-enum-dhcp-install           installs dependencies
+qq-enum-dhcp-nmap-sweep        scan a network for services
+qq-enum-dhcp-tcpdump           capture traffic to and from a host
+qq-enum-dhcp-discover-nmap     broadcast DHCP discover packets
 
 DOC
 }
