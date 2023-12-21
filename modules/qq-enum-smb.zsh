@@ -13,21 +13,21 @@ and enumerating smb services.
 
 Commands
 --------
-qq-enum-smb-install:                  installs dependencies
-qq-enum-smb-nmap-sweep:               scan a network for services
-qq-enum-smb-tcpdump:                  capture traffic to and from a host
-qq-enum-smb-null-smbmap:              query with smbmap null session
-qq-enum-smb-user-smbmap:              query with smbmap authenticated session
-qq-enum-smb-null-enum4:               enumerate with enum4linux
-qq-enum-smb-null-smbclient-list:      list shares with a null session
-qq-enum-smb-null-smbclient-connect:   connect with a null session
-qq-enum-smb-user-smbclient-connect:   connect with an authenticated session
-qq-enum-user-smb-mount:               mount an SMB share
-qq-enum-smb-samrdump:                 dump info using impacket
-qq-enum-smb-responder:                spoof and get responses using responder
-qq-enum-smb-net-use-null:             print a net use statement for windows
-qq-enum-smb-nbtscan:                  scan a local network 
-qq-enum-smb-rpcclient:                use rcpclient for queries
+qq-enum-smb-install                  installs dependencies
+qq-enum-smb-nmap-sweep               scan a network for services
+qq-enum-smb-tcpdump                  capture traffic to and from a host
+qq-enum-smb-null-smbmap              query with smbmap null session
+qq-enum-smb-user-smbmap              query with smbmap authenticated session
+qq-enum-smb-null-enum4               enumerate with enum4linux
+qq-enum-smb-null-smbclient-list      list shares with a null session
+qq-enum-smb-null-smbclient-connect   connect with a null session
+qq-enum-smb-user-smbclient-connect   connect with an authenticated session
+qq-enum-user-smb-mount               mount an SMB share
+qq-enum-smb-samrdump                 dump info using impacket
+qq-enum-smb-responder                spoof and get responses using responder
+qq-enum-smb-net-use-null             print a net use statement for windows
+qq-enum-smb-nbtscan                  scan a local network 
+qq-enum-smb-rpcclient                use rcpclient for queries
 
 DOC
 }
