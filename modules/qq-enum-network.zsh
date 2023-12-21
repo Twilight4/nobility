@@ -13,18 +13,18 @@ a network.
 
 Commands
 --------
-qq-enum-network-install:              installs dependencies
-qq-enum-network-tcpdump:              capture traffic to and from a network
-qq-enum-network-tcpdump-bcasts:       capture ethernet broadcasts and multi-cast traffic
-qq-enum-network-nmap-ping-sweep:      sweep a network with ping requests
-qq-enum-network-nmap-syn-sweep:       sweep a network with TCP syn requests, top 1000 ports
-qq-enum-network-nmap-udp-sweep:       sweep a network with UDP requests, top 100 ports
-qq-enum-network-nmap-all-sweep:       sweep a network with TCP syn requests, all ports
-qq-enum-network-nmap-discovery:       sweep a network with TCP syn requests and scripts, top 100 ports
-qq-enum-network-masscan-top:          sweep a network with TCP requests, uses $__TCP_PORTS global var
-qq-enum-network-masscan-windows:      sweep a network for common Windows ports
-qq-enum-network-masscan-linux:        sweep a network for common Linux ports
-qq-enum-network-masscan-web:          sweep a network for common web server ports
+qq-enum-network-install              installs dependencies
+qq-enum-network-tcpdump              capture traffic to and from a network
+qq-enum-network-tcpdump-bcasts       capture ethernet broadcasts and multi-cast traffic
+qq-enum-network-nmap-ping-sweep      sweep a network with ping requests
+qq-enum-network-nmap-syn-sweep       sweep a network with TCP syn requests, top 1000 ports
+qq-enum-network-nmap-udp-sweep       sweep a network with UDP requests, top 100 ports
+qq-enum-network-nmap-all-sweep       sweep a network with TCP syn requests, all ports
+qq-enum-network-nmap-discovery       sweep a network with TCP syn requests and scripts, top 100 ports
+qq-enum-network-masscan-top          sweep a network with TCP requests, uses $__TCP_PORTS global var
+qq-enum-network-masscan-windows      sweep a network for common Windows ports
+qq-enum-network-masscan-linux        sweep a network for common Linux ports
+qq-enum-network-masscan-web          sweep a network for common web server ports
 
 DOC
 }

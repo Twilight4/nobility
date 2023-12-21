@@ -13,12 +13,12 @@ enumerating mysql server services and databases.
 
 Commands
 --------
-qq-enum-mysql-install:             installs dependencies
-qq-enum-mysql-nmap-sweep:          scan a network for services
-qq-enum-mysql-tcpdump:             capture traffic to and from a host
-qq-enum-mysql-client:              connect using the mysql client
-qq-enum-mysql-auth-bypass:         attempt auth bypass
-qq-enum-mysql-hydra:               brute force passwords for a user account
+qq-enum-mysql-install             installs dependencies
+qq-enum-mysql-nmap-sweep          scan a network for services
+qq-enum-mysql-tcpdump             capture traffic to and from a host
+qq-enum-mysql-client              connect using the mysql client
+qq-enum-mysql-auth-bypass         attempt auth bypass
+qq-enum-mysql-hydra               brute force passwords for a user account
 
 DOC
 }
