@@ -13,14 +13,14 @@ enumerating Active Directory DC, GC and LDAP servers.
 
 Commands
 --------
-qq-enum-ldap-install:        installs dependencies
-qq-enum-ldap-nmap-sweep:     scan a network for services
-qq-enum-ldap-tcpdump:        capture traffic to and from a host
-qq-enum-ldap-ctx:            query ldap naming contexts
-qq-enum-ldap-search-anon:    connect with anonymous bind and query ldap
-qq-enum-ldap-search-auth:    connect with authenticated bind and query ldap
-qq-enum-ldap-whoami:         send ldap whoami request
-qq-enum-ldap-hydra:          brute force passwords for a user account
+qq-enum-ldap-install        installs dependencies
+qq-enum-ldap-nmap-sweep     scan a network for services
+qq-enum-ldap-tcpdump        capture traffic to and from a host
+qq-enum-ldap-ctx            query ldap naming contexts
+qq-enum-ldap-search-anon    connect with anonymous bind and query ldap
+qq-enum-ldap-search-auth    connect with authenticated bind and query ldap
+qq-enum-ldap-whoami         send ldap whoami request
+qq-enum-ldap-hydra          brute force passwords for a user account
 
 DOC
 }

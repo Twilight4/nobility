@@ -13,11 +13,11 @@ enumerating kerberos records and servers.
 
 Commands
 --------
-qq-enum-kerb-install:        installs dependencies
-qq-enum-kerb-nmap-sweep:     scan a network for services
-qq-enum-kerb-tcpdump:        capture traffic to and from a host
-qq-enum-kerb-users:          enumerate domain users
-qq-enum-kerb-kerberoast:     get SPN for a service account
+qq-enum-kerb-install        installs dependencies
+qq-enum-kerb-nmap-sweep     scan a network for services
+qq-enum-kerb-tcpdump        capture traffic to and from a host
+qq-enum-kerb-users          enumerate domain users
+qq-enum-kerb-kerberoast     get SPN for a service account
 
 DOC
 }

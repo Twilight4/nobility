@@ -13,12 +13,12 @@ enumerating MS SQL Server services and databases.
 
 Commands
 --------
-qq-enum-mssql-install:             installs dependencies
-qq-enum-mssql-nmap-sweep:          scan a network for services
-qq-enum-mssql-tcpdump:             capture traffic to and from a host
-qq-enum-mssql-sqsh:                make an interactive database connection
-qq-enum-mssql-impacket-client:     connect using impacket as a sql client
-qq-enum-mssql-hydra:               brute force passwords for a user account
+qq-enum-mssql-install             installs dependencies
+qq-enum-mssql-nmap-sweep          scan a network for services
+qq-enum-mssql-tcpdump             capture traffic to and from a host
+qq-enum-mssql-sqsh                make an interactive database connection
+qq-enum-mssql-impacket-client     connect using impacket as a sql client
+qq-enum-mssql-hydra               brute force passwords for a user account
 
 DOC
 }
