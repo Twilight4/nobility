@@ -13,19 +13,19 @@ such as web, ftp, smb and other services for data exfil or transfer.
 
 Commands
 --------
-qq-srv-install:          install dependencies
-qq-srv-web:              hosts a python3 web server in current dir
-qq-srv-ftp:              hosts a python3 ftp server in current dir
-qq-srv-smb:              hosts an impacket smb server in current dir
-qq-srv-tftp:             starts the atftpd service in /srv/tftp
-qq-srv-smtp:             hosts a python3 smtp server in current dir
-qq-srv-updog:            hosts an updog web server in current dir
-qq-srv-nc-tar:           hosts a netcat server > tar file in current dir
-qq-srv-nc-file:          hosts a netcat server > file in current dir
-qq-srv-web-hosted:       hosts a python3 web server in /srv, port as $1
-qq-srv-php-hosted:       hosts a php web server in /srv, port as $1
-qq-srv-ftp-hosted:       hosts a python3 ftp server in /srv
-qq-srv-updog-hosted:     hosts an updog web server in /srv
+qq-srv-install          install dependencies
+qq-srv-web              hosts a python3 web server in current dir
+qq-srv-ftp              hosts a python3 ftp server in current dir
+qq-srv-smb              hosts an impacket smb server in current dir
+qq-srv-tftp             starts the atftpd service in /srv/tftp
+qq-srv-smtp             hosts a python3 smtp server in current dir
+qq-srv-updog            hosts an updog web server in current dir
+qq-srv-nc-tar           hosts a netcat server > tar file in current dir
+qq-srv-nc-file          hosts a netcat server > file in current dir
+qq-srv-web-hosted       hosts a python3 web server in /srv, port as $1
+qq-srv-php-hosted       hosts a php web server in /srv, port as $1
+qq-srv-ftp-hosted       hosts a python3 ftp server in /srv
+qq-srv-updog-hosted     hosts an updog web server in /srv
 
 DOC
 }
