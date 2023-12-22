@@ -13,12 +13,12 @@ command/reverse shells.
 
 Commands
 --------
-qq-shell-tty-python2:     command to spawn a tty shell
-qq-shell-tty-python3:     command to spawn a tty shell     
-qq-shell-tty-perl:        command to spawn a tty shell
-qq-shell-tty-ruby:        command to spawn a tty shell
-qq-shell-tty-lua:         command to spawn a tty shell
-qq-shell-tty-expect:      command to spawn a tty shell
+qq-shell-tty-python2     command to spawn a tty shell
+qq-shell-tty-python3     command to spawn a tty shell     
+qq-shell-tty-perl        command to spawn a tty shell
+qq-shell-tty-ruby        command to spawn a tty shell
+qq-shell-tty-lua         command to spawn a tty shell
+qq-shell-tty-expect      command to spawn a tty shell
 
 DOC
 }
