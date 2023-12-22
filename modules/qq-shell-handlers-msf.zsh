@@ -13,9 +13,9 @@ reverse shell connections using metasploit.
 
 Commands
 --------
-qq-shell-handlers-msf-install:            installs dependencies
-qq-shell-handlers-msf-ssl-gen:            impersonate a real SSL certificate for use in reverse shells
-qq-shell-handlers-msf-w64-multi-https:    multi-handler for staged windows/x64/meterpreter/reverse_https payload
+qq-shell-handlers-msf-install            installs dependencies
+qq-shell-handlers-msf-ssl-gen            impersonate a real SSL certificate for use in reverse shells
+qq-shell-handlers-msf-w64-multi-https    multi-handler for staged windows/x64/meterpreter/reverse_https payload
 
 DOC
 }
