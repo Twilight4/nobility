@@ -15,17 +15,17 @@ are used to supply arguments to commands in other modules.
 
 Variables
 ---------
-__IMPACKET:       full path to the python3 impacket examples directory
-__EXT_PHP:        a list of file extensions used on PHP webservers
-__EXT_DOCS:       a list of common documents file types
-__API_GITHUB:     your personal Github API key
-__RESOLVERS:      path to public resolvers file 
-__NOTES:          path to the directory containing your markdown notes for qq-notes
-__MNU_UA:         path to the file containing user-agent strings
-__MNU_WORDLISTS:  path to the file containing a list of favorite wordlists
-__TCP_PORTS:      path to the file of favorite TCP ports
-__SHELL_SSL_CERT: path to the file of an impersonated SSL cert used for reverse shell IDS evasion
-__ALIASES:        path to the file containing aliases that will be sourced
+__IMPACKET       full path to the python3 impacket examples directory
+__EXT_PHP        a list of file extensions used on PHP webservers
+__EXT_DOCS       a list of common documents file types
+__API_GITHUB     your personal Github API key
+__RESOLVERS      path to public resolvers file 
+__NOTES          path to the directory containing your markdown notes for qq-notes
+__MNU_UA         path to the file containing user-agent strings
+__MNU_WORDLISTS  path to the file containing a list of favorite wordlists
+__TCP_PORTS      path to the file of favorite TCP ports
+__SHELL_SSL_CERT path to the file of an impersonated SSL cert used for reverse shell IDS evasion
+__ALIASES        path to the file containing aliases that will be sourced
 
 Commands
 --------
