@@ -20,7 +20,7 @@ qq-enum-web-php-rfi-input               exploit LFI params with input
 qq-enum-web-php-lfi-proc-self-environ   exploit LFI params with self environment
 qq-enum-web-php-lfi-filter-resource     exploit LFI params with filter resource
 qq-enum-web-php-lfi-zip-jpg-shell       exploit LFI params for zip-jpg shell
-qq-enum-web-php-lfi-logfile
+qq-enum-web-php-lfi-logfile             exploit LFI params with logfile
 qq-enum-web-php-gen-htaccess            generate an htaccess file
 qq-enum-web-php-phpinfo                 generate phpinfo payload
 
