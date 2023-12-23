@@ -67,7 +67,7 @@ done
 
 source ${__ALIASES}
 
-# completion enhancement
+# Completion enhancement
 # zstyle ':completion:*' matcher-list 'r:|[-]=**'
 ZSTYLE_ORIG=`zstyle -L ':completion:\*' matcher-list`
 ZSTYLE_NEW="${ZSTYLE_ORIG} 'r:|[-]=**'"
