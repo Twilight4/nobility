@@ -15,10 +15,10 @@ Commands
 --------
 qq-shell-handlers-install        installs dependencies
 qq-shell-handlers-msf-ssl-gen    impersonate a real SSL certificate for use in reverse shells
-qq-shell-handlers-nc             
-qq-shell-handlers-ncrl           
-qq-shell-handlers-nc-udp
-qq-shell-handlers-socat
+qq-shell-handlers-nc             netcat shell handlers
+qq-shell-handlers-ncrl           ncrl shell handlers
+qq-shell-handlers-nc-udp         netcat udp shell
+qq-shell-handlers-socat          socat shell handlers
 
 DOC
 }
