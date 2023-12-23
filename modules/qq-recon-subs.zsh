@@ -14,7 +14,7 @@ You can sort unique this file in place with the "sfu" alias.
 
 Commands
 --------
-qq-recon-subs-install: installs dependencies
+qq-recon-subs-install          installs dependencies
 
 Commands - enumeration
 ----------------------
@@ -33,8 +33,8 @@ qq-recon-subs-gen-wordlist     generate a wordlist of possible sub domains
 
 Commands - processing
 ---------------------
-qq-recon-subs-resolve-massdns   resolve a file of subdomains using massdns
-qq-recon-subs-resolve-parse     parse resolved.txt into A, CNAME and IP's
+qq-recon-subs-resolve-massdns  resolve a file of subdomains using massdns
+qq-recon-subs-resolve-parse    parse resolved.txt into A, CNAME and IP's
 
 DOC
 }

@@ -14,9 +14,9 @@ You can sort unique this file in place with the "sfu" alias.
 
 Commands
 --------
-qq-recon-domains-install:          installs dependencies
-qq-recon-domains-amass-whois:      find domains with whois
-qq-recon-domains-amass-asn:        find domains by asn
+qq-recon-domains-install          installs dependencies
+qq-recon-domains-amass-whois      find domains with whois
+qq-recon-domains-amass-asn        find domains by asn
 
 DOC
 }

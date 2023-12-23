@@ -13,11 +13,11 @@ All output will be stored under $__PROJECT/source
 
 Commands
 --------
-qq-recon-github-install:        installs dependencies
-qq-recon-github-user-repos:     uses curl to get a list of repos for a github user
-qq-recon-github-endpoints:      gets a list of urls from all repos of a domain on github
-qq-recon-github-gitrob:         clones (in mem) repos and searches for github dorks
-qq-recon-github-api-set:        set github API key global variable
+qq-recon-github-install        installs dependencies
+qq-recon-github-user-repos     uses curl to get a list of repos for a github user
+qq-recon-github-endpoints      gets a list of urls from all repos of a domain on github
+qq-recon-github-gitrob         clones (in mem) repos and searches for github dorks
+qq-recon-github-api-set        set github API key global variable
 
 DOC
 }
