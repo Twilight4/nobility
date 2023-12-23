@@ -98,7 +98,8 @@ DOC
 }
 
 qq-update() {
-    cd $HOME/.oh-my-zsh/custom/plugins/quiver
+	cd $HOME/.config/zsh/plugins/quiver-arch
+    #cd $HOME/.oh-my-zsh/custom/plugins/quiver
     git pull
     rm $__REMOTE_VER
     rm $__REMOTE_CHK
@@ -107,7 +108,8 @@ qq-update() {
 }
 
 qq-status() {
-    cd $HOME/.oh-my-zsh/custom/plugins/quiver
+	cd $HOME/.config/zsh/plugins/quiver-arch
+    #cd $HOME/.oh-my-zsh/custom/plugins/quiver-arch
     git status | grep On | cut -d" " -f2,3
     cd - > /dev/null
 }
