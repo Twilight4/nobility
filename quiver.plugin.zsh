@@ -2,13 +2,11 @@
 
 autoload colors; colors
 
-# check for essential packages
-
+# Check for essential packages
 pacman -Qs rlwrap >/dev/null || sudo pacman -S --noconfirm rlwrap
 pacman -Qs git >/dev/null || sudo pacman -S --noconfirm git
 
-# check for directories
-
+# Check for directories
 mkdir -p $HOME/.quiver/{vars,globals}
 
 
