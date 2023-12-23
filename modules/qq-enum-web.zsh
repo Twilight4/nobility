@@ -13,16 +13,16 @@ http services.
 
 Commands
 --------
-qq-enum-web-install:                installs dependencies
-qq-enum-web-tcpdump:                capture traffic to and from a host
-qq-enum-web-nmap-sweep:             nmap sweep scan to discover web servers on a network
-qq-enum-web-whatweb:                enumerate web server and platform information
-qq-enum-web-waf:                    enumerate WAF information
-qq-enum-web-vhosts-gobuster:        brute force for virtual hosts
-qq-enum-web-eyewitness:             scrape screenshots from target URL
-qq-enum-web-wordpress:              enumerate Wordpress information
-qq-enum-web-headers:                grab headers from a target url using curl
-qq-enum-web-mirror:                 mirrors the target website locally
+qq-enum-web-install                installs dependencies
+qq-enum-web-tcpdump                capture traffic to and from a host
+qq-enum-web-nmap-sweep             nmap sweep scan to discover web servers on a network
+qq-enum-web-whatweb                enumerate web server and platform information
+qq-enum-web-waf                    enumerate WAF information
+qq-enum-web-vhosts-gobuster        brute force for virtual hosts
+qq-enum-web-eyewitness             scrape screenshots from target URL
+qq-enum-web-wordpress              enumerate Wordpress information
+qq-enum-web-headers                grab headers from a target url using curl
+qq-enum-web-mirror                 mirrors the target website locally
 
 DOC
 }
