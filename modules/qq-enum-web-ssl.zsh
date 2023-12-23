@@ -18,8 +18,8 @@ qq-enum-web-ssl-der-to-crt           convert a .der file to .crt
 qq-enum-web-ssl-crt-ca-install       install a root certificate (.crt)
 qq-enum-web-ssl-certs                display cert from a url
 qq-enum-web-ssl-cert-download        download certs from a url
-qq-enum-web-ssl-testssl-full
-qq-enum-web-ssl-testssl-ciphers
+qq-enum-web-ssl-testssl-full         fully test ssl cert
+qq-enum-web-ssl-testssl-ciphers      test ssl cert ciphets
 
 DOC
 }
