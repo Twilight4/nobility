@@ -2,25 +2,19 @@
 
 autoload colors; colors
 
-############################################################# 
-# quiver
-# Author: Steve Mcilwain
-# Contributors: 
-#############################################################
-
 # check for essential packages
 
-dpkg -l | grep -qw rlwrap || sudo apt-get -y install rlwrap
-dpkg -l | grep -qw git || sudo apt-get -y install git
+pacman -Qs rlwrap >/dev/null || sudo pacman -S --noconfirm rlwrap
+pacman -Qs git >/dev/null || sudo pacman -S --noconfirm git
 
 # check for directories
 
 mkdir -p $HOME/.quiver/{vars,globals}
 
+
 ############################################################# 
 # Constants
 #############################################################
-
 export __PLUGIN="${0:A:h}"
 export __VER=$(cat ${__PLUGIN}/VERSION)
 export __LOGFILE="${__PLUGIN}/log.txt"
@@ -33,10 +27,10 @@ export __PAYLOADS="$__PLUGIN/payloads"
 export __SCRIPTS="$__PLUGIN/scripts"
 export __TOOLS="$HOME/tools"
 
+
 ############################################################# 
 # Self Update
 #############################################################
-
 __version-check() {
 
   local seconds=$((60*60*24*1))
@@ -58,10 +52,10 @@ __version-check() {
 
 (__version-check &)
 
+
 ############################################################# 
 # Diagnostic Log
 #############################################################
-
 echo "Quiver ${__VER} in ${__PLUGIN}" > ${__LOGFILE}
 echo " " >> ${__LOGFILE}
 echo "[*] loading... " >> ${__LOGFILE}
@@ -83,10 +77,10 @@ eval ${ZSTYLE_NEW}
 
 echo "[*] quiver loaded." >> ${__LOGFILE}
 
+
 ############################################################# 
 # Shell Log
 #############################################################
-
 echo " "
 
 if [[ -f "$__REMOTE_VER" ]]; then
