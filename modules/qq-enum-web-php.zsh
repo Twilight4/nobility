@@ -16,8 +16,8 @@ Commands
 qq-enum-web-php-install                 installs dependencies
 qq-enum-web-php-ffuf                    scan for PHP files
 qq-enum-web-php-rfi                     exploit typical RFI params
-qq-enum-web-php-rfi-input 
-qq-enum-web-php-lfi-proc-self-environ
+qq-enum-web-php-rfi-input               exploit typical RFI params with input
+qq-enum-web-php-lfi-proc-self-environ   exploit typical RFI params with filter resource
 qq-enum-web-php-lfi-filter-resource
 qq-enum-web-php-lfi-zip-jpg-shell
 qq-enum-web-php-lfi-logfile
