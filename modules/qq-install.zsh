@@ -13,10 +13,10 @@ packages, repos and tools used in quiver.
 
 Commands
 --------
-qq-install-all:                Installs all dependecies in all modules, calling qq-*-install 
-qq-install-git-pull-tools:     Updates all install tools that are git repos
-qq-install-dev:                Installs pyhton3, php, npm and libraries
-qq-install-golang:             Installs golang and environment variables needed for "go get"
+qq-install-all                installs all dependecies in all modules, calling qq-*-install 
+qq-install-git-pull-tools     updates all install tools that are git repos
+qq-install-dev                installs pyhton3, php, npm and libraries
+qq-install-golang             installs golang and environment variables needed for "go get"
 
 Tools
 -----
