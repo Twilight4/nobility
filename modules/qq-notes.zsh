@@ -4,7 +4,7 @@
 # qq-notes
 #############################################################
 qq-notes-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-notes
 -------
@@ -14,11 +14,9 @@ stored in a directory specified by the __NOTES environment variable (qq-vars-glo
 Commands
 --------
 qq-notes-install     installs dependencies
-qq-notes             lists all notes in $__NOTES and cats output or searches notes by stage if argument is supplied
-qq-notes-edit        lists all notes in $__NOTES and edits or searches notes by stage if argument is supplied
-
-qq-notes-content     list all notes in $__NOTES or searches notes by content if $1 is supplied
-qq-notes-menu        display an interactive menu for reading notes
+qq-notes             select which note to output in $__NOTES or search by stage if argument is supplied
+qq-notes-content     select which note to output in $__NOTES with searching by content
+qq-notes-edit        list all notes in $__NOTES and edit selected note
 
 DOC
 }
@@ -101,6 +99,8 @@ qq-notes() {
 
 qq-notes-content() {
     __check-notes
+
+	# similar to frg funcction in fzf-scripts but just within the notes directory
     __info "Use \$1 to search content"
     select note in $(grep -rliw "$1" ${__NOTES}/*.org)
     do test -n ${note} && break
@@ -109,15 +109,15 @@ qq-notes-content() {
 	[[ ! -z ${note} ]] && sed -e 's/=\([^=]*\)=/\o033[1;32m\1\o033[0m/g; s/^\( \{0,6\}\)-/•/g' -e '/^\(:PROPERTIES:\|:ID:\|:END:\|#\+date:\)/d' ${note} | command bat --language=org --style=plain --color=always
 }
 
-qq-notes-menu() {
+qq-notes-edit() {
     __check-notes
-    pushd ${__NOTES} &> /dev/null
-    
-	selected-file=$(rg --files-with-matches --no-heading --no-line-number --with-filename --color=always --sort path -m1 "" *.org | fzf --tac --no-sort -d ':' --ansi --preview-window wrap --preview 'bat --style=plain --language=org --color=always ${1}' --reverse --bind "ctrl-q:preview-down,alt-q:preview-up,ctrl-f:preview-page-down,ctrl-b:preview-page-up")
-	
-	if [ -n "$selected_file" ]; then
-		eval $EDITOR "$selected_file"
+    pushd "${__NOTES}" &> /dev/null
+
+    selected_file=$(rg --files-with-matches --no-heading --no-line-number --with-filename --sort path -g '*.org' -m1 "" | fzf --tac --no-sort -d ':' --ansi --preview-window wrap --preview 'bat --style=plain --language=org --color=always ${1}' --reverse --bind "ctrl-q:preview-down,alt-q:preview-up,ctrl-f:preview-page-down,ctrl-b:preview-page-up" | sed 's/.*\///')
+
+    if [ -n "$selected_file" ]; then
+        eval "$EDITOR" "$selected_file"
     fi
-	
-	popd &> /dev/null
+
+    popd &> /dev/null
 }
