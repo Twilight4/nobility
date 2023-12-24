@@ -32,7 +32,7 @@ qq-notes-install() {
 qq-notes() {
     __check-notes
     __info "Use \$1 to search file names"
-    select note in $(ls -R --file-type ${__NOTES} | grep -ie ".md$" | grep -i "$1")
+    select note in $(\ls -R --file-type ${__NOTES} | grep -ie ".md$" | grep -i "$1")
     do test -n ${note} && break
     exit
     done
