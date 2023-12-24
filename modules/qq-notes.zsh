@@ -37,7 +37,7 @@ qq-notes() {
     exit
     done
     #[[ ! -z ${note} ]] && glow ${__NOTES}/${note}
-    [[ ! -z ${note} ]] && \bat --language=org --style=plain --color=always ${__NOTES}/${note}
+	[[ ! -z ${note} ]] && sed -e 's/=\([^=]*\)=/\o033[1;32m\1\o033[0m/g; s/^\( \{0,6\}\)-/•/g' -e '/^\(:PROPERTIES:\|:ID:\|:END:\|#\+date:\)/d' ${__NOTES}/${note} | \bat --language=org --style=plain --color=always
 }
 
 qq-notes-content() {
