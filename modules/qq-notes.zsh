@@ -43,33 +43,33 @@ qq-notes() {
         # If "ad" is provided, go to active-directory
         pushd "${__NOTES}/active-directory" &> /dev/null
     elif [ "$arg" = "ad-en" ]; then
-        pushd "${__NOTES}/active-directory/domain-enumeration" &> /dev/null
+        pushd "${__NOTES}/active-directory/1-domain-enumeration" &> /dev/null
     elif [ "$arg" = "ad-ex" ]; then
-        pushd "${__NOTES}/active-directory/exploitation" &> /dev/null
+        pushd "${__NOTES}/active-directory/2-exploitation" &> /dev/null
     elif [ "$arg" = "ad-pe" ]; then
-        pushd "${__NOTES}/active-directory/post-exploitation" &> /dev/null
+        pushd "${__NOTES}/active-directory/3-post-exploitation" &> /dev/null
     elif [ "$arg" = "pen" ]; then
         # If "pen" is provided, go to network-pentest directory
         pushd "${__NOTES}/network-pentest" &> /dev/null
     elif [ "$arg" = "pen-en" ]; then
-        pushd "${__NOTES}/network-pentest/enumeration" &> /dev/null
+        pushd "${__NOTES}/network-pentest/1-enumeration" &> /dev/null
     elif [ "$arg" = "pen-ex" ]; then
-        pushd "${__NOTES}/network-pentest/exploitation" &> /dev/null
+        pushd "${__NOTES}/network-pentest/2-exploitation" &> /dev/null
     elif [ "$arg" = "pen-pe" ]; then
-        pushd "${__NOTES}/network-pentest/post-exploitation" &> /dev/null
+        pushd "${__NOTES}/network-pentest/3-post-exploitation" &> /dev/null
     elif [ "$arg" = "red" ]; then
         # If "red" is provided, go to red-team directory
         pushd "${__NOTES}/red-team" &> /dev/null
     elif [ "$arg" = "red-re" ]; then
-        pushd "${__NOTES}/red-team/recon" &> /dev/null
+        pushd "${__NOTES}/red-team/1-recon" &> /dev/null
     elif [ "$arg" = "red-we" ]; then
-        pushd "${__NOTES}/red-team/weaponization" &> /dev/null
+        pushd "${__NOTES}/red-team/2-weaponization" &> /dev/null
     elif [ "$arg" = "red-in" ]; then
-        pushd "${__NOTES}/red-team/initial-access" &> /dev/null
+        pushd "${__NOTES}/red-team/3-initial-access" &> /dev/null
     elif [ "$arg" = "red-pe" ]; then
-        pushd "${__NOTES}/red-team/post-exploitation" &> /dev/null
+        pushd "${__NOTES}/red-team/4-post-exploitation" &> /dev/null
     elif [ "$arg" = "red-ao" ]; then
-        pushd "${__NOTES}/red-team/action-on-objectives" &> /dev/null
+        pushd "${__NOTES}/red-team/5-action-on-objectives" &> /dev/null
     else
         # Otherwise, go to the default notes directory
         pushd "${__NOTES}" &> /dev/null
