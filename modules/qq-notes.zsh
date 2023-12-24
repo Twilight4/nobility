@@ -25,7 +25,12 @@ qq-notes-install() {
     __info "Running $0..."
     __pkgs fzf ripgrep
     qq-install-bat
-	git clone --depth 1 git@github.com:Twilight4/org.git ~/documents/org
+	
+	if [ ! -d "$HOME/documents/org" ]; then
+		git clone --depth 1 git@github.com:Twilight4/org.git ~/documents/org && echo "Repository cloned successfully."
+	else
+		echo "Repository already exists."
+	fi
 }
 
 qq-notes() {
