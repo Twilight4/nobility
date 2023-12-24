@@ -19,7 +19,7 @@ __PLUGIN      Full path to the Quiver oh-my-zsh plugin directory
 
 Commands
 --------
-qq-update        git pull the latest (MASTER branch) version of Quiver
+qq-update        git pull the latest (MAIN branch) version of Quiver
 qq-status        check the current status of the locally cloned Quiver repository
 qq-whatsnew      display the latest release notes
 qq-debug         display the local diagnostic log
