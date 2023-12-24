@@ -30,7 +30,7 @@ qq-notes-install() {
 }
 
 qq-notes() {
-    __notes-check
+    __check-notes
     __info "Use \$1 to search file names"
     select note in $(ls -R --file-type ${__NOTES} | grep -ie ".md$" | grep -i "$1")
     do test -n ${note} && break
@@ -40,7 +40,7 @@ qq-notes() {
 }
 
 qq-notes-content() {
-    __notes-check
+    __check-notes
     __info "Use \$1 to search content"
     select note in $(grep -rliw "$1" ${__NOTES}/*.md)
     do test -n ${note} && break
@@ -50,7 +50,7 @@ qq-notes-content() {
 }
 
 qq-notes-menu() {
-    __notes-check
+    __check-notes
     pushd ${__NOTES} &> /dev/null
     rg --no-heading --no-line-number --with-filename --color=always --sort path -m1 "" *.md | fzf --tac --no-sort -d ':' --ansi --preview-window wrap --preview 'bat --style=plain --color=always ${1}'
     popd &> /dev/null
