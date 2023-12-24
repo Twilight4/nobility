@@ -18,7 +18,7 @@ as the list of favorite user-agents or wordlists (qq-vars-global-help).
 Variables
 ---------
 __PROJECT     the root directory used for all output, ex: /projects/example
-__LOGBOOK     the logbook.md markdown file used in qq-log commands 
+__LOGBOOK     the logbook.org org-mode file used in qq-log commands 
 __IFACE       the interface to use for commands, ex: eth0
 __DOMAIN      the domain to use for commands, ex: example.org
 __NETWORK     the subnet to use for commands, ex: 10.1.2.0/24

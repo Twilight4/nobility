@@ -87,7 +87,6 @@ qq-install-all() {
         qq-enum-web-install
         qq-exploit-install
         qq-notes-install
-        qq-log-install
         qq-pivot-install
         qq-project-install
         qq-recon-domains-install

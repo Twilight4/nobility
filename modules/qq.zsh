@@ -32,7 +32,7 @@ Each namespace has its own install and help commands.
  Install and Configuration
  -------------------------
  qq-install-                    Installers for commonly used applications and global installer for all dependencies
- qq-notes-                      Configure and read your markdown notes
+ qq-notes-                      Configure and read your org notes
  qq-vars-global-                Persistent environment variables used in all commands, all sessions
 
  Utility

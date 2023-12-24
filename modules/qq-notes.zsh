@@ -8,7 +8,7 @@ qq-notes-help() {
 
 qq-notes
 -------
-The notes namespace provides searching and reading of markdown notes that are
+The notes namespace provides searching and reading of org-mode notes that are
 stored in a directory specified by the __NOTES environment variable (qq-vars-global).
 
 Commands

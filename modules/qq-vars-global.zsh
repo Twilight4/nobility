@@ -20,7 +20,7 @@ __EXT_PHP        a list of file extensions used on PHP webservers
 __EXT_DOCS       a list of common documents file types
 __API_GITHUB     your personal Github API key
 __RESOLVERS      path to public resolvers file 
-__NOTES          path to the directory containing your markdown notes for qq-notes
+__NOTES          path to the directory containing your org-mode notes for qq-notes
 __MNU_UA         path to the file containing user-agent strings
 __MNU_WORDLISTS  path to the file containing a list of favorite wordlists
 __TCP_PORTS      path to the file of favorite TCP ports
@@ -142,7 +142,7 @@ __check-resolvers() { [[ -z "${__RESOLVERS}" ]] && qq-vars-global-set-resolvers 
 export __NOTES="$(cat ${__GLOBALS}/NOTES 2> /dev/null)"
 
 qq-vars-global-set-notes() {
-    __ask "Set the full path to the directory containing markdown notes."
+    __ask "Set the full path to the directory containing org-mode notes."
     __askpath __NOTES DIR $HOME
     echo "${__NOTES}" > ${__GLOBALS}/NOTES
 }
