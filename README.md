@@ -28,7 +28,7 @@ Quiver requires the following:
 
 ```bash
 # Clone the repo to your oh-my-zsh custom plugins folder
-git clone https://github.com/Twilight/quiver-arch.git ~/.oh-my-zsh/custom/plugins/quiver-arch
+git clone https://github.com/Twilight4/quiver-arch.git ~/.oh-my-zsh/custom/plugins/quiver-arch
 
 # Edit `~/.zshrc` to load the plugin
 plugins=(git quiver)
