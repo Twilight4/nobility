@@ -34,8 +34,7 @@ qq-notes() {
     do test -n ${note} && break
     exit
     done
-    #[[ ! -z ${note} ]] && glow ${__NOTES}/${note}
-	[[ ! -z ${note} ]] && sed -e 's/=\([^=]*\)=/\o033[1;32m\1\o033[0m/g; s/^\( \{0,6\}\)-/•/g' -e '/^\(:PROPERTIES:\|:ID:\|:END:\|#\+date:\)/d' ${__NOTES}/${note} | \bat --language=org --style=plain --color=always
+	[[ ! -z ${note} ]] && sed -e 's/=\([^=]*\)=/\o033[1;32m\1\o033[0m/g; s/^\( \{0,6\}\)-/•/g' -e '/^\(:PROPERTIES:\|:ID:\|:END:\|#\+date:\)/d' ${__NOTES}/${note} | command bat --language=org --style=plain --color=always
 }
 
 qq-notes-content() {
@@ -45,7 +44,7 @@ qq-notes-content() {
     do test -n ${note} && break
     exit
     done
-    [[ ! -z ${note} ]] && glow ${note}
+	[[ ! -z ${note} ]] && sed -e 's/=\([^=]*\)=/\o033[1;32m\1\o033[0m/g; s/^\( \{0,6\}\)-/•/g' -e '/^\(:PROPERTIES:\|:ID:\|:END:\|#\+date:\)/d' ${note} | command bat --language=org --style=plain --color=always
 }
 
 qq-notes-menu() {
