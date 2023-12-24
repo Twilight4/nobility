@@ -7,7 +7,7 @@ pacman -Qs rlwrap >/dev/null || sudo pacman -S --noconfirm rlwrap
 pacman -Qs git >/dev/null || sudo pacman -S --noconfirm git
 
 # Check for directories
-mkdir -p $HOME/.quiver/{vars,globals}
+mkdir -p $HOME/.quiver-arch/{vars,globals}
 
 
 ############################################################# 
@@ -19,8 +19,8 @@ export __LOGFILE="${__PLUGIN}/log.txt"
 export __REMOTE_CHK="${__PLUGIN}/remote_checked.txt"
 export __REMOTE_VER="${__PLUGIN}/remote_ver.txt"
 export __STATUS=$(cd ${__PLUGIN} && git status | grep On | cut -d" " -f2,3)
-export __VARS=$HOME/.quiver/vars
-export __GLOBALS=$HOME/.quiver/globals
+export __VARS=$HOME/.quiver-arch/vars
+export __GLOBALS=$HOME/.quiver-arch/globals
 export __PAYLOADS="$__PLUGIN/payloads"
 export __SCRIPTS="$__PLUGIN/scripts"
 export __TOOLS="$HOME/tools"
@@ -42,7 +42,7 @@ __version-check() {
 
   date -R > $__REMOTE_CHK
 
-  echo "$(curl -s https://raw.githubusercontent.com/stevemcilwain/quiver/master/VERSION)" > $__REMOTE_VER
+  echo "$(curl -s https://raw.githubusercontent.com/Twilight4/quiver-arch/main/VERSION)" > $__REMOTE_VER
   
   echo "[*] Version checked and stored in:  $__REMOTE_VER" >> ${__LOGFILE}
 
