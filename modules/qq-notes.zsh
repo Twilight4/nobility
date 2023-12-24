@@ -32,17 +32,18 @@ qq-notes-install() {
 qq-notes() {
     __check-notes
     __info "Use \$1 to search file names"
-    select note in $(\ls -R --file-type ${__NOTES} | grep -ie ".md$" | grep -i "$1")
+    select note in $(\ls -R --file-type ${__NOTES} | grep -ie ".org$" | grep -i "$1")
     do test -n ${note} && break
     exit
     done
-    [[ ! -z ${note} ]] && glow ${__NOTES}/${note}
+    #[[ ! -z ${note} ]] && glow ${__NOTES}/${note}
+    [[ ! -z ${note} ]] && \bat --language=org --style=plain --color=always ${__NOTES}/${note}
 }
 
 qq-notes-content() {
     __check-notes
     __info "Use \$1 to search content"
-    select note in $(grep -rliw "$1" ${__NOTES}/*.md)
+    select note in $(grep -rliw "$1" ${__NOTES}/*.org)
     do test -n ${note} && break
     exit
     done
@@ -52,6 +53,6 @@ qq-notes-content() {
 qq-notes-menu() {
     __check-notes
     pushd ${__NOTES} &> /dev/null
-    rg --no-heading --no-line-number --with-filename --color=always --sort path -m1 "" *.md | fzf --tac --no-sort -d ':' --ansi --preview-window wrap --preview 'bat --style=plain --color=always ${1}'
+    rg --no-heading --no-line-number --with-filename --color=always --sort path -m1 "" *.org | fzf --tac --no-sort -d ':' --ansi --preview-window wrap --preview 'bat --style=plain --color=always ${1}' --reverse --bind "ctrl-q:preview-down,alt-q:preview-up,ctrl-f:preview-page-down,ctrl-b:preview-page-up"
     popd &> /dev/null
 }
