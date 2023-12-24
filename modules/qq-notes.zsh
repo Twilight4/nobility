@@ -24,8 +24,6 @@ DOC
 qq-notes-install() {
     __info "Running $0..."
     __pkgs fzf ripgrep
-    qq-install-golang
-    go get -u github.com/charmbracelet/glow
     qq-install-bat
 }
 
