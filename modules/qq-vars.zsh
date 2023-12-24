@@ -149,7 +149,7 @@ qq-vars-set-logbook() {
       __warn "${__LOGBOOK} already exists, set as active log"
   else
       touch ${__LOGBOOK}
-      echo "# Logbook" >> ${__LOGBOOK}
+      echo "* Logbook" >> ${__LOGBOOK}
       echo " " >> ${__LOGBOOK}
       __ok "${__LOGBOOK} created."
   fi

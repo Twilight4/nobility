@@ -31,7 +31,7 @@ alias qls="qq-log-set"
 qq-log-cat() {
     __check-logbook
     __info "${__LOGBOOK}"
-    glow ${__LOGBOOK}
+    sed -e 's/=\([^=]*\)=/\o033[1;32m\1\o033[0m/g; s/^\( \{0,6\}\)-/•/g' -e '/^\(:PROPERTIES:\|:ID:\|:END:\|#\+date:\)/d' ${__LOGBOOK} | command bat --language=org --style=plain --color=always
 }
 alias qlc="qq-log-cat"
 

@@ -56,6 +56,12 @@ qq-notes-content() {
 qq-notes-menu() {
     __check-notes
     pushd ${__NOTES} &> /dev/null
-    rg --no-heading --no-line-number --with-filename --color=always --sort path -m1 "" *.org | fzf --tac --no-sort -d ':' --ansi --preview-window wrap --preview 'bat --style=plain --language=org --color=always ${1}' --reverse --bind "ctrl-q:preview-down,alt-q:preview-up,ctrl-f:preview-page-down,ctrl-b:preview-page-up"
-    popd &> /dev/null
+    
+	selected-file=$(rg --files-with-matches --no-heading --no-line-number --with-filename --color=always --sort path -m1 "" *.org | fzf --tac --no-sort -d ':' --ansi --preview-window wrap --preview 'bat --style=plain --language=org --color=always ${1}' --reverse --bind "ctrl-q:preview-down,alt-q:preview-up,ctrl-f:preview-page-down,ctrl-b:preview-page-up")
+	
+	if [ -n "$selected_file" ]; then
+		eval $EDITOR "$selected_file"
+    fi
+	
+	popd &> /dev/null
 }
