@@ -4,7 +4,7 @@
 # qq-enum-nfs
 #############################################################
 qq-enum-nfs-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-enum-nfs
 -----------

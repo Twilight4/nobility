@@ -4,7 +4,7 @@
 # qq-enum-mmysql
 #############################################################
 qq-enum-mysql-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-enum-mysql
 -------------

@@ -4,7 +4,7 @@
 # qq-enum-web-fuzz
 #############################################################
 qq-enum-web-fuzz-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-enum-web-fuzz
 --------------

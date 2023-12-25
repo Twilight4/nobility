@@ -4,7 +4,7 @@
 # qq-recon-org
 #############################################################
 qq-recon-org-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-recon-org
 ------------

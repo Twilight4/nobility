@@ -4,7 +4,7 @@
 # qq-enum-web-ssl
 #############################################################
 qq-enum-web-ssl-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-enum-web-ssl
 ----------------

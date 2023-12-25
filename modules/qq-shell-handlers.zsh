@@ -4,7 +4,7 @@
 # qq-shell-handlers
 #############################################################
 qq-shell-handlers-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-shell-handlers
 -----------------

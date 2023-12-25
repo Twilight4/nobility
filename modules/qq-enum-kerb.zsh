@@ -4,7 +4,7 @@
 # qq-enum-kerb
 #############################################################
 qq-enum-kerb-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-enum-kerb
 ------------

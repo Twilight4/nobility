@@ -4,7 +4,7 @@
 # qq-enum-oracle
 #############################################################
 qq-enum-oracle-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-enum-oracle
 --------------s

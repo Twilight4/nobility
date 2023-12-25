@@ -4,7 +4,7 @@
 # qq-enum-web-elastic
 #############################################################
 qq-enum-web-elastic-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-enum-web-elastic
 -------------------

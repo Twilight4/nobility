@@ -4,7 +4,7 @@
 # qq-shell-handlers-msf
 #############################################################
 qq-shell-handlers-msf-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-shell-handlers-msf
 ---------------------

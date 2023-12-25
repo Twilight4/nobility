@@ -4,7 +4,7 @@
 # qq-shell-tty
 #############################################################
 qq-shell-tty-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-shell-tty
 ------------

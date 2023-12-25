@@ -4,7 +4,7 @@
 # qq-enum-smb
 #############################################################
 qq-enum-smb-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-enum-smb
 ------------

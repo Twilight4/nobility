@@ -4,7 +4,7 @@
 # qq-vars
 #############################################################
 qq-vars-help() {
-  cat << "DOC"
+  cat << "DOC" | bat --plain --language=help
 
 qq-vars
 -------

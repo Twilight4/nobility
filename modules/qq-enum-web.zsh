@@ -4,7 +4,7 @@
 # qq-enum-web
 #############################################################
 qq-enum-web-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-enum-web
 -----------

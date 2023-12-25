@@ -4,7 +4,7 @@
 # qq-enum-web-php
 #############################################################
 qq-enum-web-php-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-enum-web-php
 ----------------

@@ -4,7 +4,7 @@
 # qq-enum-network
 #############################################################
 qq-enum-network-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-enum-network
 -------------

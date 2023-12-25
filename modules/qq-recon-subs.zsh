@@ -4,7 +4,7 @@
 # qq-recon-subs
 #############################################################
 qq-recon-subs-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-recon-subs
 -------------

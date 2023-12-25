@@ -4,7 +4,7 @@
 # qq-install
 #############################################################
 qq-install-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-install
 ----------

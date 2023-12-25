@@ -4,7 +4,7 @@
 # qq-enum-pop3
 #############################################################
 qq-enum-pop3-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-enum-pop3
 ------------

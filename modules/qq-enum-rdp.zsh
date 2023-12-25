@@ -4,7 +4,7 @@
 # qq-enum-rdp
 #############################################################
 qq-enum-rdp-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-enum-rdp
 ------------

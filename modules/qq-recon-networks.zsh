@@ -4,7 +4,7 @@
 # qq-recon-networks
 #############################################################
 qq-recon-networks-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-recon-networks
 -------------

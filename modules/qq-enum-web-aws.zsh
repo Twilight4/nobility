@@ -4,7 +4,7 @@
 # qq-enum-web-aws
 #############################################################
 qq-enum-web-aws-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-enum-web-aws
 ---------------

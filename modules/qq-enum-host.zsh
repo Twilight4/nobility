@@ -4,7 +4,7 @@
 # qq-enum-host
 #############################################################
 qq-enum-host-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-enum-host
 -------------

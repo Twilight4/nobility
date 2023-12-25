@@ -4,7 +4,7 @@
 # qq-enum-web-js
 #############################################################
 qq-enum-web-js-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-enum-web-js
 --------------

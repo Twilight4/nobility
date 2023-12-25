@@ -4,7 +4,7 @@
 # qq-recon-domains
 #############################################################
 qq-recon-domains-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-recon-domains
 -------------

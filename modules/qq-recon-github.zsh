@@ -4,7 +4,7 @@
 # qq-recon-github
 #############################################################
 qq-recon-github-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-recon-github
 ------------

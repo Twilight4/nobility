@@ -4,7 +4,7 @@
 # qq-project-custom
 #############################################################
 qq-project-custom-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-project-custom
 -----------------

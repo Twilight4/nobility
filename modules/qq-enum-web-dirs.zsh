@@ -4,7 +4,7 @@
 # qq-enum-web-dirs
 #############################################################
 qq-enum-web-dirs-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-enum-web-dirs
 ----------------

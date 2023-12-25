@@ -4,7 +4,7 @@
 # qq-enum-ldap
 #############################################################
 qq-enum-ldap-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-enum-ldap
 ------------

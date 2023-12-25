@@ -4,7 +4,7 @@
 # qq-enum-web-vuln
 #############################################################
 qq-enum-web-vuln-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-enum-web-vuln
 ----------------
