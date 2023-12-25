@@ -13,6 +13,7 @@ The qq-arch namespace provides commands that assist with managing Arch linux.
 Commands
 --------
 qq-arch-pkg-query            query if a package is installed or not  
+qq-arch-flush-iptables       flushes ip tables
 qq-arch-ps-grep              search list of processes
 qq-arch-ps-dtach             run a script in the background
 qq-arch-path-add             add a new path to the PATH environment variable
@@ -33,6 +34,30 @@ qq-arch-pkg-query() {
     do
     pacman -Q | grep -qw $pkg && __ok "${pkg} is installed" || __warn "${pkg} not installed"
     done 
+}
+
+qq-arch-flush-iptables() {
+    echo ""
+    echo ">>> Before flush <<<"
+    echo "" 
+    iptables -L
+    iptables -F
+    iptables -X
+    iptables -t nat -F
+    iptables -t nat -X
+    iptables -t mangle -F
+    iptables -t mangle -X
+    iptables -t raw -F
+    iptables -t raw -X
+    iptables -P INPUT ACCEPT
+    iptables -P FORWARD ACCEPT
+    iptables -P OUTPUT ACCEPT
+    echo ""
+    echo ""
+    echo ">>> After flush <<<"
+    echo "" 
+    iptables -L
+    echo ""
 }
 
 qq-arch-ps-grep() { 
