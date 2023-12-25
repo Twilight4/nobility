@@ -19,6 +19,7 @@ DOC
 }
 
 qq-metasploit-listener() {
+    __check-project
     qq-vars-set-lhost
     qq-vars-set-lport
 
@@ -106,6 +107,7 @@ qq-metasploit-listener() {
 }
 
 qq-metasploit-payload() {
+    __check-project
     qq-vars-set-lhost
     qq-vars-set-lport
 

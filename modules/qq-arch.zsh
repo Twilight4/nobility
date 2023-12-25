@@ -14,6 +14,12 @@ Commands
 --------
 qq-arch-pkg-query            query if a package is installed or not  
 qq-arch-flush-iptables       flushes ip tables
+qq-arch-get-gateway          get router IP address
+qq-arch-get-hosts            get list of host IP addresses found via nmap
+qq-arch-get-hostnames        get list of host names using nmap and the IP of a known DNS server
+qq-arch-download-html        download IP and print with html2text
+qq-arch-scan-tcp             scan IP with masscan
+qq-arch-scan-udp             scan IP with nmap
 qq-arch-ps-grep              search list of processes
 qq-arch-ps-dtach             run a script in the background
 qq-arch-path-add             add a new path to the PATH environment variable
@@ -58,6 +64,62 @@ qq-arch-flush-iptables() {
     echo "" 
     iptables -L
     echo ""
+}
+
+qq-arch-get-gateway() {
+   INTERFACE=${1:-tap0}
+   ip route | grep via | grep "$INTERFACE" | cut -d" " -f3 
+}
+
+qq-arch-get-hosts() {
+    PORT=${1:-"none"}
+    NETWORK=${2:-"10.11.1.0"}
+    PATTERN="Nmap scan report for ${NETWORK:0:-1}"
+    get_ip() {
+        cut -d" " -f5 $1
+    }
+    if [[ $PORT == "none" ]]; then
+        nmap "$NETWORK"/24 -sn | grep "$PATTERN" | get_ip
+    else
+        nmap "$NETWORK"/24 -p "$PORT" --open | grep "$PATTERN" | get_ip
+    fi
+}
+
+qq-arch-get-hostnames() {
+    DNS=$1
+    NETWORK=${2:-"10.11.1.0"}
+    PATTERN="Nmap scan report for "
+    get_ip() {
+        cut -d" " -f5- $1
+    }
+    if [[ ${#1} -gt 0 ]]; then
+        nmap "$NETWORK"/24 --dns-server "$DNS" -sn | grep "$PATTERN" | get_ip
+    else
+        echo "DNS server address required"
+    fi
+}
+
+qq-arch-download-html() { 
+	curl -s "${1:-$RHOST}:${80:-$RPORT}" | html2text -style pretty; 
+}
+
+qq-arch-scan-tcp() {
+    IP=${1:-${__RHOST}
+    INTERFACE=${2:-"tap0"}
+    SAVEPATH=$(create_scan_directory "$IP")
+    run() {
+        masscan "$1" -e "$INTERFACE" --router-ip "$(qq-arch-get-gateway "$INTERFACE")" -p 0-65535 --rate 500 -oL "$SAVEPATH"/ports
+    }
+    run "$IP"
+}
+
+qq-arch-scan-udp() {
+    IP=${1:-$RHOST}
+    SAVEPATH=$(create_scan_directory "$IP")
+    run() {
+        nmap -sU -T4 --open --max-retries 1 "$1" -oX "$SAVEPATH"/ports-udp.xml
+    }
+    run "$IP"
 }
 
 qq-arch-ps-grep() { 

@@ -18,6 +18,7 @@ qq-enum-web-tcpdump                capture traffic to and from a host
 qq-enum-web-nmap-sweep             nmap sweep scan to discover web servers on a network
 qq-enum-web-whatweb                enumerate web server and platform information
 qq-enum-web-waf                    enumerate WAF information
+qq-enum-web-snmp                   create host list and scan IP with WORDLIST
 qq-enum-web-vhosts-gobuster        brute force for virtual hosts
 qq-enum-web-eyewitness             scrape screenshots from target URL
 qq-enum-web-wordpress              enumerate Wordpress information
@@ -59,6 +60,16 @@ qq-enum-web-waf() {
     print -z "wafw00f ${__URL} -o $(__urlpath)/waf.txt"
 }
 
+qq-enum-web-snmp() {
+    __check-project
+    STRINGS="/usr/share/seclists/Discovery/SNMP/snmp-onesixtyone.txt"
+    WORDLIST=${2:-STRINGS}
+    NETWORK=${3:-"10.11.1.0"}
+    HOSTS=$(mktemp --suffix "-$0-hosts-$(date +%Y%m%d)")
+    qq-arch-get-hosts "none" "$NETWORK" > "$HOSTS"
+    onesixtyone -i "$HOSTS" -c "$STRINGS"
+}
+
 
 ############################################################# 
 # vhosts
@@ -73,7 +84,7 @@ qq-enum-web-vhosts-gobuster() {
 
 
 ############################################################# 
-# screens
+# screenshots
 #############################################################
 qq-enum-web-eyewitness() {
     __check-project
