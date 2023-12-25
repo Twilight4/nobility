@@ -4,7 +4,7 @@
 # qq-enum-dhcp
 #############################################################
 qq-enum-dhcp-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-enum-dhcp
 -------------

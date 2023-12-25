@@ -4,7 +4,7 @@
 # qq-enum-ftp
 #############################################################
 qq-enum-ftp-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-enum-ftp
 -------------

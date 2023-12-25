@@ -4,7 +4,7 @@
 # qq-enum-dns
 #############################################################
 qq-enum-dns-help() {
-    cat << "DOC"
+    cat << "DOC" | bat --plain --language=help
 
 qq-enum-dns
 -------------
