@@ -25,9 +25,9 @@ Nobility requires the following:
 * [Oh-my-zsh](https://ohmyz.sh/) (optional)
 * [Arch Linux](https://archlinux.org/)
 
-
+## Installation using Oh-my-zsh
 ```bash
-# Clone the repo to your oh-my-zsh custom plugins folder
+# Clone the repo to your oh-my-zsh custom plugins directory
 git clone https://github.com/Twilight4/nobility.git ~/.oh-my-zsh/custom/plugins/nobility
 
 # Edit `~/.zshrc` to load the plugin
@@ -35,6 +35,18 @@ plugins=(git nobility)
 
 # Source `.zshrc` to load the plugin and you're done. On first load, nobility will install a few core packages
 source ~/.zshrc
+```
+
+## Manual installation
+```bash
+# Clone the repo to your zsh directory
+git clone https://github.com/Twilight4/nobility.git ~/.config/zsh/nobility
+
+# Source the plugin in `~/.zshrc`
+echo 'source ~/.config/zsh/nobility/nobility.plugin.zsh' ~/.config/zsh/.zshrc
+
+# # Source `.zshrc` to load the plugin
+source ~/.config/zsh/.zshrc
 ```
 
 # Getting Started
