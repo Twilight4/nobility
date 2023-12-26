@@ -6,15 +6,15 @@ Nobility is an organized colletion of shell functions designed to streamline you
 * **Prefilled Commands**: Streamlines terminal interactions by automatically prefilling commands
 * **Organized Commands**: Well-organized commands with tab auto-completion
 * **Seamless Integration**: ZSH/Oh-My-ZSH shell plugin ensures easy integration into your environment
-* **Customizable** Settings: Tailor Nobility to your preferences with customizable settings and global variables
+* **Customizable Settings**: Tailor Nobility to your preferences with customizable settings and global variables
 * **Recon Phase**: Access OSINT commands for efficient information gathering
-* **Enumeration** Phase: Effortlessly enumerate common services, saving time in penetration testing
+* **Enumeration Phase**: Effortlessly enumerate common services, saving time in penetration testing
 * **Exploit Phase**: Assistance in compiling exploits for simplified vulnerability exploitation
-* **Reverse Shell** Handlers: Manage reverse shell handlers easily, enhancing network-pentesting capabilities
-* **Content Serving** Commands: Serve content effortlessly, making file sharing and testing straightforward
+* **Reverse Shell Handlers**: Manage reverse shell handlers easily, enhancing network-pentesting capabilities
+* **Content Serving Commands**: Serve content effortlessly, making file sharing and testing straightforward
 * **Built-in Logbook**: Keep on-the-fly notes and save commands with Quiver's built-in logbook feature
 * **Org Mode Rendering**: Render Org mode notes directly to the command line for a streamlined reading experience
-* **Arch Linux System** Management: Optimized for Arch Linux systems, simplifying system management tasks
+* **Arch Linux System Management**: Optimized for Arch Linux systems, simplifying system management tasks
 * **Update Notifications**: Stay informed with update notifications for the latest features and improvements
 * **Dependency Installers**: Includes installers for dependencies, ensuring a smooth and hassle-free setup process
 
@@ -35,18 +35,17 @@ plugins=(git nobility)
 
 # Source `.zshrc` to load the plugin and you're done. On first load, nobility will install a few core packages
 source ~/.zshrc
-
 ```
 
 # Getting Started
-nobility organizes commands into namespaces starting with `nb-`, such as `nb-enum-web` or `nb-recon-domains`.
-To see an overview of all namespaces simply use `nb-help`. Each namespace also has it's own help command, such as `nb-enum-web-help` that provides a listing of available commands. All commands support tab completion and search. 
+Nobility categorizes commands into namespaces, denoted by the `nb-` prefix, exemplified by commands like `nb-enum-web` or `nb-recon-domains`.
+To see an overview of all namespaces simply use `nb-help` command. Each namespace features its own dedicated help command, such as `nb-enum-web-help` which provides a listing of available commands. All commands support tab completion and search. 
 
 ## Installing Dependencies
-Every namespace was a `nb-namespace-install` command that will install all of the tools relevant to that namespace. You can install just the tools you need, or use `nb-install-all` to run the installers of all namespaces.
+To set up the necessary dependencies for each namespace, execute the `nb-namespace-install` command. This command ensures the installation of all tools relevant to the specified namespace. For installation of tools across all namespaces, use the `nb-install-all` command.
 
 ## Workflow
-nobility is meant to provide a composable, on-the-fly workflow. It replaces the common painful raw workflow of reading your notes, finding a command, copy, paste, replace the values with target values, copy, paste, run. Some rely heavily on completely automated scripts or frameworks that run all the commands for a workflow and output well-formatted data. While these scripts are great for many use cases, they can often be brittle, hide the underlying tools and techniques and be cumbersome to modify. Instead, nobility gives you a happy medium, you can run commands quickly and easy with well-organized output, composing your workflow as you go depending on the targets and context. 
+Nobility is designed to offer a sophisticated and flexible workflow. It eliminates the conventional, tedious process of manually navigating through notes, searching for commands, copying, pasting, and adjusting values before execution. In contrast to heavily automated scripts or frameworks that execute entire workflows, often obfuscating the underlying tools and techniques whcih are cumbersome to modify, nobility strikes a balance. Embracing the principles of the KISS philisophy (Keep It Stupid Simple), each module within nobility is deliberately small and distinct, minimizing unnecessary complications. This design allows you to quickly execute individual commands, providing well-organized output. This approach enables you to compose your workflow dynamically, adapting to specific targets and contextual requirements. This flexibility is achieved without the brittleness and complexity associated with fully automated solutions.
 
 ## Example Workflow
 ### Preparation
