@@ -50,25 +50,22 @@ Nobility is designed to offer a sophisticated and flexible workflow. It eliminat
 ## Example Workflow
 ### Preparation
 ```bash
-
-# If you have markdown notes, configure the path 
+# If you have org-mode notes, configure the path 
 nb-vars-global-set-notes
 
-# Set some session variables for the bounty target 
+# Set some session variables for the target 
 nb-vars-set-project 
 nb-vars-set-domain 
 
-# Generate scope files from the bounty url
+# Generate scope files from the target url
 nb-project-rescope
 
 # Save vars for other terminal sessions, nb-vars-load
 nb-vars-save
-
 ```
 
 ### Passive Recon
 ```bash
-
 # Search for target files
 nb-recon-org-files
 
@@ -91,12 +88,10 @@ nb-recon-subs-subfinder
 # Resolve and parse subdomains
 nb-recon-subs-resolve-massdns
 nb-recon-subs-resolve-parse
-
 ```
 
 ### Active Web Enumeration
 ```bash
-
 # Download out robots.txt
 nb-enum-web-dirs-robots
 
@@ -114,5 +109,4 @@ nb-enum-web-dirs-ffuf
 
 # Read your notes
 nb-notes
-
 ```
