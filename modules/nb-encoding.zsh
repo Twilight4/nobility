@@ -1,25 +1,25 @@
 #!/usr/bin/env zsh
 
 ############################################################# 
-# qq-encoding
+# nb-encoding
 #############################################################
 
-qq-encoding-help() {
+nb-encoding-help() {
     cat << "DOC" | bat --plain --language=help
 
-qq-encoding
+nb-encoding
 ----------
 The encoding namespace provides commands for encoding and decoding values.
 
 Commands
 --------
-qq-encoding-file-to-b64       encodes plain text file to base64, optional $1 as file
-qq-encoding-file-from-b64     decodes base64 file to plain text, optional $1 as file
+nb-encoding-file-to-b64       encodes plain text file to base64, optional $1 as file
+nb-encoding-file-from-b64     decodes base64 file to plain text, optional $1 as file
 
 DOC
 }
 
-qq-encoding-file-to-b64() {
+nb-encoding-file-to-b64() {
     if [ "$#" -eq  "1" ]
     then
         print -z "cat $1 | base64 > $1.b64"
@@ -29,7 +29,7 @@ qq-encoding-file-to-b64() {
     fi
 }
 
-qq-encoding-file-from-b64() {
+nb-encoding-file-from-b64() {
     if [ "$#" -eq  "1" ]
     then
         print -z "cat $1 | base64 -d > $1.txt"

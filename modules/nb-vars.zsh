@@ -1,24 +1,24 @@
 #!/usr/bin/env zsh
 
 ############################################################# 
-# qq-vars
+# nb-vars
 #############################################################
-qq-vars-help() {
+nb-vars-help() {
   cat << "DOC" | bat --plain --language=help
 
-qq-vars
+nb-vars
 -------
 The vars namespace manages environment variables used in other functions. These
-variables are set per session, but can be saved with qq-vars-save and reloaded
-with qq-vars-load. The values are stored as files in .nobility/vars.
+variables are set per session, but can be saved with nb-vars-save and reloaded
+with nb-vars-load. The values are stored as files in .nobility/vars.
 
-The menu options for some of the variables can be set using qq-vars-global, such
-as the list of favorite user-agents or wordlists (qq-vars-global-help).
+The menu options for some of the variables can be set using nb-vars-global, such
+as the list of favorite user-agents or wordlists (nb-vars-global-help).
 
 Variables
 ---------
 __PROJECT     the root directory used for all output, ex: /projects/example
-__LOGBOOK     the logbook.org org-mode file used in qq-log commands 
+__LOGBOOK     the logbook.org org-mode file used in nb-log commands 
 __IFACE       the interface to use for commands, ex: eth0
 __DOMAIN      the domain to use for commands, ex: example.org
 __NETWORK     the subnet to use for commands, ex: 10.1.2.0/24
@@ -33,16 +33,16 @@ __PASSLIST    path to a wordlist for password brute forcing, ex: /usr/share/word
 
 Commands
 --------
-qq-vars           alias qv, list all current variable values
-qq-vars-save      alias qvs, save all current variable values ($HOME/.nobility)
-qq-vars-load      alias qvl, restores all current variable values ($HOME/.nobility)
-qq-vars-clear     clears all current variable values
-qq-vars-set-*     used to set each individual variable
+nb-vars           alias qv, list all current variable values
+nb-vars-save      alias qvs, save all current variable values ($HOME/.nobility)
+nb-vars-load      alias qvl, restores all current variable values ($HOME/.nobility)
+nb-vars-clear     clears all current variable values
+nb-vars-set-*     used to set each individual variable
 
 DOC
 }
 
-qq-vars() {
+nb-vars() {
   echo "$(__cyan __PROJECT: ) ${__PROJECT}"
   echo "$(__cyan __LOGBOOK: ) ${__LOGBOOK}"
   echo "$(__cyan __IFACE: ) ${__IFACE}"
@@ -57,9 +57,9 @@ qq-vars() {
   echo "$(__cyan __WORDLIST: ) ${__WORDLIST}"
   echo "$(__cyan __PASSLIST: ) ${__PASSLIST}"
 }
-alias qv="qq-vars"
+alias qv="nb-vars"
 
-qq-vars-clear() {
+nb-vars-clear() {
   __PROJECT=""
   __LOGBOOK=""
   __IFACE=""
@@ -75,7 +75,7 @@ qq-vars-clear() {
   __PASSLIST=""
 }
 
-qq-vars-save() {
+nb-vars-save() {
   echo "${__PROJECT}" > $__VARS/PROJECT
   echo "${__LOGBOOK}" > $__VARS/LOGBOOK
   echo "${__IFACE}" > $__VARS/IFACE
@@ -89,11 +89,11 @@ qq-vars-save() {
   echo "${__UA}" > $__VARS/UA
   echo "${__WORDLIST}" > $__VARS/WORDLIST
   echo "${__PASSLIST}" > $__VARS/PASSLIST
-  qq-vars
+  nb-vars
 }
-alias qvs="qq-vars-save"
+alias qvs="nb-vars-save"
 
-qq-vars-load() {
+nb-vars-load() {
     __PROJECT=$(cat $__VARS/PROJECT) 
     __LOGBOOK=$(cat $__VARS/LOGBOOK)
     __IFACE=$(cat $__VARS/IFACE)
@@ -107,9 +107,9 @@ qq-vars-load() {
     __UA=$(cat $__VARS/UA)
     __WORDLIST=$(cat $__VARS/WORDLIST)
     __PASSLIST=$(cat $__VARS/PASSLIST)
-    qq-vars
+    nb-vars
 }
-alias qvl="qq-vars-load"
+alias qvl="nb-vars-load"
 
 
 ############################################################# 
@@ -117,7 +117,7 @@ alias qvl="qq-vars-load"
 #############################################################
 export __PROJECT="~/desktop/projects/"
 
-qq-vars-set-project() {
+nb-vars-set-project() {
   __ask "Set the full path to the project root directory where all command output will be directed"
   
   local d && __askpath d "PROJECT DIR" ${__PROJECT}
@@ -127,7 +127,7 @@ qq-vars-set-project() {
   mkdir -p ${__PROJECT}
 }
 
-__check-project() { [[ -z "${__PROJECT}" ]] && qq-vars-set-project }
+__check-project() { [[ -z "${__PROJECT}" ]] && nb-vars-set-project }
 
 
 ############################################################# 
@@ -135,7 +135,7 @@ __check-project() { [[ -z "${__PROJECT}" ]] && qq-vars-set-project }
 #############################################################
 export __LOGBOOK=""
 
-qq-vars-set-logbook() {
+nb-vars-set-logbook() {
   __ask "Set the full path to the directory of the logbook file (filename not included)."
   
   local d=$(__askpath DIR $HOME)
@@ -155,7 +155,7 @@ qq-vars-set-logbook() {
   fi
 }
 
-__check-logbook() { [[ -z "${__LOGBOOK}" ]] && qq-vars-set-logbook }
+__check-logbook() { [[ -z "${__LOGBOOK}" ]] && nb-vars-set-logbook }
 
 
 ############################################################# 
@@ -163,7 +163,7 @@ __check-logbook() { [[ -z "${__LOGBOOK}" ]] && qq-vars-set-logbook }
 #############################################################
 export __IFACE=""
 
-qq-vars-set-iface() {
+nb-vars-set-iface() {
   if [[ -z "${__IFACE}" ]]
   then
     __ask "Choose an interface: "
@@ -174,7 +174,7 @@ qq-vars-set-iface() {
 
 }
 
-__check-iface() { [[ -z "${__IFACE}" ]] && qq-vars-set-iface }
+__check-iface() { [[ -z "${__IFACE}" ]] && nb-vars-set-iface }
 
 
 ############################################################# 
@@ -182,9 +182,9 @@ __check-iface() { [[ -z "${__IFACE}" ]] && qq-vars-set-iface }
 #############################################################
 export __DOMAIN=""
 
-qq-vars-set-domain() { __prefill __DOMAIN DOMAIN ${__DOMAIN} }
+nb-vars-set-domain() { __prefill __DOMAIN DOMAIN ${__DOMAIN} }
 
-__check-domain() { [[ -z "${__DOMAIN}" ]] && qq-vars-set-domain }
+__check-domain() { [[ -z "${__DOMAIN}" ]] && nb-vars-set-domain }
 
 
 ############################################################# 
@@ -192,9 +192,9 @@ __check-domain() { [[ -z "${__DOMAIN}" ]] && qq-vars-set-domain }
 #############################################################
 export __NETWORK=""
 
-qq-vars-set-network() { __prefill __NETWORK NETWORK ${__NETWORK} }
+nb-vars-set-network() { __prefill __NETWORK NETWORK ${__NETWORK} }
 
-__check-network() { [[ -z "${__NETWORK}" ]] && qq-vars-set-network }
+__check-network() { [[ -z "${__NETWORK}" ]] && nb-vars-set-network }
 
 
 ############################################################# 
@@ -202,7 +202,7 @@ __check-network() { [[ -z "${__NETWORK}" ]] && qq-vars-set-network }
 #############################################################
 export __RHOST=""
 
-qq-vars-set-rhost() { __prefill __RHOST RHOST ${__RHOST} }
+nb-vars-set-rhost() { __prefill __RHOST RHOST ${__RHOST} }
 
 
 ############################################################# 
@@ -210,7 +210,7 @@ qq-vars-set-rhost() { __prefill __RHOST RHOST ${__RHOST} }
 #############################################################
 export __RPORT=""
 
-qq-vars-set-rport() { __prefill __RPORT RPORT ${__RPORT} }
+nb-vars-set-rport() { __prefill __RPORT RPORT ${__RPORT} }
 
 
 ############################################################# 
@@ -218,7 +218,7 @@ qq-vars-set-rport() { __prefill __RPORT RPORT ${__RPORT} }
 #############################################################
 export __LHOST=""
 
-qq-vars-set-lhost() {
+nb-vars-set-lhost() {
   if [[ -z $__LHOST ]]
   then
     __ask "Choose a local IP address: " 
@@ -234,7 +234,7 @@ qq-vars-set-lhost() {
 #############################################################
 export __LPORT=""
 
-qq-vars-set-lport() { __prefill __LPORT LPORT ${__LPORT} }
+nb-vars-set-lport() { __prefill __LPORT LPORT ${__LPORT} }
 
 
 ############################################################# 
@@ -242,7 +242,7 @@ qq-vars-set-lport() { __prefill __LPORT LPORT ${__LPORT} }
 #############################################################
 export __URL=""
 
-qq-vars-set-url() { 
+nb-vars-set-url() { 
   local u && __prefill u URL ${__URL}
   __URL=$(echo ${u} | sed 's/\/$//')
 }
@@ -253,13 +253,13 @@ qq-vars-set-url() {
 #############################################################
 export __UA="Mozilla/5.0"
 
-qq-vars-set-ua() {
+nb-vars-set-ua() {
   IFS=$'\n'
   __ask "Choose a user agent: " 
   __UA=$(__menu $(cat  ${__MNU_UA}))
 }
 
-__check-ua() { [[ -z "${__UA}" ]] && qq-vars-set-ua }
+__check-ua() { [[ -z "${__UA}" ]] && nb-vars-set-ua }
 
 
 ############################################################# 
@@ -267,7 +267,7 @@ __check-ua() { [[ -z "${__UA}" ]] && qq-vars-set-ua }
 #############################################################
 export __WORDLIST=""
 
-qq-vars-set-wordlist() {
+nb-vars-set-wordlist() {
   if [[ -z $__WORDLIST ]]
   then
     __ask "Choose a wordlist: "
@@ -278,12 +278,12 @@ qq-vars-set-wordlist() {
   fi
 }
 
-qq-vars-set-wordlist-web() {
+nb-vars-set-wordlist-web() {
   __ask "Choose a wordlist: "
   __WORDLIST=$(__menu $(find  /usr/share/seclists/Discovery/Web-Content | sort))
 }
 
-qq-vars-set-wordlist-dns() {
+nb-vars-set-wordlist-dns() {
   __ask "Choose a wordlist: "
   __WORDLIST=$(__menu $(find  /usr/share/seclists/Discovery/DNS | sort))
 }
@@ -294,7 +294,7 @@ qq-vars-set-wordlist-dns() {
 #############################################################
 export __PASSLIST="/usr/share/wordlists/rockyou.txt"
 
-qq-vars-set-passlist() {
+nb-vars-set-passlist() {
   __ask "Choose a passlist: "
   __PASSLIST=$(__menu $(find  /usr/share/seclists/Passwords | sort))
 }

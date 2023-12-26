@@ -1,27 +1,27 @@
 #!/usr/bin/env zsh
 
 ############################################################# 
-# qq-notes
+# nb-notes
 #############################################################
-qq-notes-help() {
+nb-notes-help() {
     cat << "DOC" | bat --plain --language=help
 
-qq-notes
+nb-notes
 -------
 The notes namespace provides searching and reading of org-mode notes that are
-stored in a directory specified by the __NOTES environment variable (qq-vars-global).
+stored in a directory specified by the __NOTES environment variable (nb-vars-global).
 
 Commands
 --------
-qq-notes-install     installs dependencies
-qq-notes             select which note to output in $__NOTES or search by stage if argument is supplied
-qq-notes-content     select which note to output in $__NOTES with searching by content
-qq-notes-edit        list all notes in $__NOTES and edit selected note
+nb-notes-install     installs dependencies
+nb-notes             select which note to output in $__NOTES or search by stage if argument is supplied
+nb-notes-content     select which note to output in $__NOTES with searching by content
+nb-notes-edit        list all notes in $__NOTES and edit selected note
 
 DOC
 }
 
-qq-notes-install() {
+nb-notes-install() {
     __info "Running $0..."
     __pkgs fzf ripgrep
 	
@@ -32,7 +32,7 @@ qq-notes-install() {
 	fi
 }
 
-qq-notes() {
+nb-notes() {
     __check-notes
 	
 	arg="$1"
@@ -96,7 +96,7 @@ qq-notes() {
 	popd &> /dev/null
 }
 
-qq-notes-content() {
+nb-notes-content() {
     __check-notes
 
 	# similar to frg funcction in fzf-scripts but just within the notes directory
@@ -108,7 +108,7 @@ qq-notes-content() {
 	[[ ! -z ${note} ]] && sed -e 's/=\([^=]*\)=/\o033[1;32m\1\o033[0m/g; s/^\( \{0,6\}\)-/•/g' -e '/^\(:PROPERTIES:\|:ID:\|:END:\|#\+date:\)/d' ${note} | command bat --language=org --style=plain --color=always
 }
 
-qq-notes-edit() {
+nb-notes-edit() {
     __check-notes
     pushd "${__NOTES}" &> /dev/null
 

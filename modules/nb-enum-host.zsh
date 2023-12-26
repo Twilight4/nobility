@@ -1,95 +1,95 @@
 #!/usr/bin/env zsh
 
 ############################################################# 
-# qq-enum-host
+# nb-enum-host
 #############################################################
-qq-enum-host-help() {
+nb-enum-host-help() {
     cat << "DOC" | bat --plain --language=help
 
-qq-enum-host
+nb-enum-host
 -------------
-The qq-enum-host namespace contains commands for scanning and enumerating
+The nb-enum-host namespace contains commands for scanning and enumerating
 an individual host.
 
 Commands
 --------
-qq-enum-host-install                 installs dependencies
-qq-enum-host-tcpdump                 capture traffic to and from a host
-qq-enum-host-nmap-top                syn scan of the top 1000 ports
-qq-enum-host-nmap-top-discovery      syn scan of the top 1000 ports with versioning and scripts
-qq-enum-host-nmap-all                syn scan all ports 
-qq-enum-host-nmap-all-discovery      syn scan all ports with versioning and scripts
-qq-enum-host-nmap-udp                udp scan top 100 ports
-qq-enum-host-masscan-all-tcp         scan all tcp ports
-qq-enum-host-masscan-all-udp         scan all udp ports
-qq-enum-host-nmap-lse-grep           search nmap lse scripts
+nb-enum-host-install                 installs dependencies
+nb-enum-host-tcpdump                 capture traffic to and from a host
+nb-enum-host-nmap-top                syn scan of the top 1000 ports
+nb-enum-host-nmap-top-discovery      syn scan of the top 1000 ports with versioning and scripts
+nb-enum-host-nmap-all                syn scan all ports 
+nb-enum-host-nmap-all-discovery      syn scan all ports with versioning and scripts
+nb-enum-host-nmap-udp                udp scan top 100 ports
+nb-enum-host-masscan-all-tcp         scan all tcp ports
+nb-enum-host-masscan-all-udp         scan all udp ports
+nb-enum-host-nmap-lse-grep           search nmap lse scripts
 
 DOC
 }
 
-qq-enum-host-install() {
+nb-enum-host-install() {
     __info "Running $0..."
     __pkgs tcpdump nmap masscan curl
 }
 
-qq-enum-host-tcpdump() {
+nb-enum-host-tcpdump() {
     __check-project
     __check-iface
-    qq-vars-set-rhost
+    nb-vars-set-rhost
     print -z "sudo tcpdump -i ${__IFACE} host ${__RHOST} -w $(__hostpath)/tcpdump.pcap"
 }
 
-qq-enum-host-nmap-top(){
+nb-enum-host-nmap-top(){
     __check-project
-    qq-vars-set-rhost
+    nb-vars-set-rhost
     print -z "sudo nmap -vvv -Pn -sS --top-ports 1000 --open ${__RHOST} -oA $(__hostpath)/nmap-top"
 }
 
-qq-enum-host-nmap-top-discovery(){
+nb-enum-host-nmap-top-discovery(){
     __check-project
-    qq-vars-set-rhost
+    nb-vars-set-rhost
     print -z "sudo nmap -vvv -Pn -sS --top-ports 1000 --open -sC -sV ${__RHOST} -oA $(__hostpath)/nmap-top-discovery"
 }
 
-qq-enum-host-nmap-all() {
+nb-enum-host-nmap-all() {
     __check-project
-    qq-vars-set-rhost
+    nb-vars-set-rhost
     print -z "sudo nmap -vvv -Pn -sS -p- -T4 --open ${__RHOST} -oA $(__hostpath)/nmap-all"
 }
 
-qq-enum-host-nmap-all-discovery() {
+nb-enum-host-nmap-all-discovery() {
     __check-project
-    qq-vars-set-rhost
+    nb-vars-set-rhost
     print -z "sudo nmap -vvv -Pn -sS -p- -sC -sV --open ${__RHOST} -oA $(__hostpath)/nmap-all-discovery"
 }
 
-qq-enum-host-nmap-udp() {
+nb-enum-host-nmap-udp() {
     __check-project
-    qq-vars-set-rhost
+    nb-vars-set-rhost
     print -z "sudo nmap -v -Pn -sU --top-ports 100 -sV -sC --open ${__RHOST} -oA $(__hostpath)/nmap-udp"
 }
 
-qq-enum-host-masscan-all-tcp() {
+nb-enum-host-masscan-all-tcp() {
     __check-iface
     __check-project
-    qq-vars-set-rhost
+    nb-vars-set-rhost
     print -z "masscan -p1-65535 --open-only ${__RHOST} --rate=1000 -e ${__IFACE} -oL $(__hostpath)/masscan-all-tcp.txt"
 }
 
-qq-enum-host-masscan-all-udp() {
+nb-enum-host-masscan-all-udp() {
     __check-iface
     __check-project
-    qq-vars-set-rhost
+    nb-vars-set-rhost
     print -z "masscan -pU:1-65535 --open-only ${__RHOST} --rate=1000 -e ${__IFACE} -oL $(__hostpath)/masscan-all-udp.txt"
 }
 
-qq-enum-host-nmap-lse-grep() {
+nb-enum-host-nmap-lse-grep() {
     local q && __askvar q QUERY
     print -z "ls /usr/share/nmap/scripts/* | grep -ie \"${q}\" "
 }
 
-qq-enum-host-ip() {
+nb-enum-host-ip() {
     __check-project
-    qq-vars-set-rhost
+    nb-vars-set-rhost
     print -z "curl -s \"https://iplist.cc/api/${__RHOST}\" | tee $(__hostpath/ip.json) "
 }

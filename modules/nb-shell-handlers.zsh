@@ -1,29 +1,29 @@
 #!/usr/bin/env zsh
 
 ############################################################# 
-# qq-shell-handlers
+# nb-shell-handlers
 #############################################################
-qq-shell-handlers-help() {
+nb-shell-handlers-help() {
     cat << "DOC" | bat --plain --language=help
 
-qq-shell-handlers
+nb-shell-handlers
 -----------------
 The shell-handlers namespace provides commands for spawning reverse shell
 connections.
 
 Commands
 --------
-qq-shell-handlers-install        installs dependencies
-qq-shell-handlers-msf-ssl-gen    impersonate a real SSL certificate for use in reverse shells
-qq-shell-handlers-nc             netcat shell handlers
-qq-shell-handlers-ncrl           ncrl shell handlers
-qq-shell-handlers-nc-udp         netcat udp shell
-qq-shell-handlers-socat          socat shell handlers
+nb-shell-handlers-install        installs dependencies
+nb-shell-handlers-msf-ssl-gen    impersonate a real SSL certificate for use in reverse shells
+nb-shell-handlers-nc             netcat shell handlers
+nb-shell-handlers-ncrl           ncrl shell handlers
+nb-shell-handlers-nc-udp         netcat udp shell
+nb-shell-handlers-socat          socat shell handlers
 
 DOC
 }
 
-qq-shell-handlers-install() {
+nb-shell-handlers-install() {
     __info "Running $0..."
     __pkgs netcat socat
 }
@@ -32,18 +32,18 @@ qq-shell-handlers-install() {
 ############################################################# 
 # netcat
 #############################################################
-qq-shell-handlers-nc() {
-    qq-vars-set-lport
+nb-shell-handlers-nc() {
+    nb-vars-set-lport
     print -z "nc -nlvp ${__LPORT}"
 }
 
-qq-shell-handlers-ncrl() {
-    qq-vars-set-lport
+nb-shell-handlers-ncrl() {
+    nb-vars-set-lport
     print -z "rlwrap nc -nlvp ${__LPORT}"
 }
 
-qq-shell-handlers-nc-udp() {
-    qq-vars-set-lport
+nb-shell-handlers-nc-udp() {
+    nb-vars-set-lport
     print -z "nc -nlvu ${__LPORT}"
 }
 
@@ -51,7 +51,7 @@ qq-shell-handlers-nc-udp() {
 ############################################################# 
 # socat
 #############################################################
-qq-shell-handlers-socat() {
-    qq-vars-set-lport
+nb-shell-handlers-socat() {
+    nb-vars-set-lport
     print -z "socat file:`tty`,raw,echo=0 tcp-listen:${__LPORT}"
 }

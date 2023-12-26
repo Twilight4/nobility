@@ -1,38 +1,38 @@
 #!/usr/bin/env zsh
 
 ############################################################# 
-# qq-install
+# nb-install
 #############################################################
-qq-install-help() {
+nb-install-help() {
     cat << "DOC" | bat --plain --language=help
 
-qq-install
+nb-install
 ----------
-The qq-install namespace provides commands that assist with installing
+The nb-install namespace provides commands that assist with installing
 packages, repos and tools used in nobility.
 
 Commands
 --------
-qq-install-all                installs all dependecies in all modules, calling qq-*-install 
-qq-install-git-pull-tools     updates all install tools that are git repos
-qq-install-dev                installs pyhton3, php, npm and libraries
-qq-install-golang             installs golang and environment variables needed for "go get"
+nb-install-all                installs all dependecies in all modules, calling nb-*-install 
+nb-install-git-pull-tools     updates all install tools that are git repos
+nb-install-dev                installs pyhton3, php, npm and libraries
+nb-install-golang             installs golang and environment variables needed for "go get"
 
 Tools
 -----
 These installers are for individual tools.
 
-qq-install-wordlist-commonspeak
-qq-install-wordlist-nerdlist
-qq-install-massdns
-qq-install-github-search
-qq-install-s3scanner
-qq-install-git-secrets
-qq-install-gitrob
-qq-install-pentest-tools
-qq-install-protonvpn
-qq-install-nmap-elasticsearch-nse
-qq-install-link-finder
+nb-install-wordlist-commonspeak
+nb-install-wordlist-nerdlist
+nb-install-massdns
+nb-install-github-search
+nb-install-s3scanner
+nb-install-git-secrets
+nb-install-gitrob
+nb-install-pentest-tools
+nb-install-protonvpn
+nb-install-nmap-elasticsearch-nse
+nb-install-link-finder
 
 DOC
 }
@@ -54,54 +54,54 @@ __pkgs() {
     done 
 }
 
-qq-install-all() {
+nb-install-all() {
     __cyan "This will install/update all modules."
     __cyan "Ensure you have free disk space before proceeding."
     __ask "CONTINUE?"
     if __check-proceed
     then
         __info "Installing all modules..."
-        #qq-encoding-install
-        qq-enum-dhcp-install
-        qq-enum-dns-install
-        qq-enum-ftp-install
-        qq-enum-host-install
-        qq-enum-kerb-install
-        qq-enum-ldap-install
-        qq-enum-mssql-install
-        qq-enum-mysql-install
-        qq-enum-network-install
-        qq-enum-nfs-install
-        qq-enum-oracle-install
-        qq-enum-pop3-install
-        qq-enum-rdp-install
-        qq-enum-smb-install
-        qq-enum-web-aws-install
-        qq-enum-web-dirs-install
-        qq-enum-web-elastic-install
-        qq-enum-web-fuzz-install
-        qq-enum-web-js-install
-        qq-enum-web-vuln-install
-        qq-enum-web-php-install
-        qq-enum-web-ssl-install
-        qq-enum-web-install
-        qq-exploit-install
-        qq-notes-install
-        qq-pivot-install
-        qq-project-install
-        qq-recon-domains-install
-        qq-recon-github-install
-        qq-recon-networks-install
-        qq-recon-org-install
-        qq-recon-subs-install
-        qq-shell-handlers-msf-install
-        qq-shell-handlers-install
-        qq-srv-install
+        #nb-encoding-install
+        nb-enum-dhcp-install
+        nb-enum-dns-install
+        nb-enum-ftp-install
+        nb-enum-host-install
+        nb-enum-kerb-install
+        nb-enum-ldap-install
+        nb-enum-mssql-install
+        nb-enum-mysql-install
+        nb-enum-network-install
+        nb-enum-nfs-install
+        nb-enum-oracle-install
+        nb-enum-pop3-install
+        nb-enum-rdp-install
+        nb-enum-smb-install
+        nb-enum-web-aws-install
+        nb-enum-web-dirs-install
+        nb-enum-web-elastic-install
+        nb-enum-web-fuzz-install
+        nb-enum-web-js-install
+        nb-enum-web-vuln-install
+        nb-enum-web-php-install
+        nb-enum-web-ssl-install
+        nb-enum-web-install
+        nb-exploit-install
+        nb-notes-install
+        nb-pivot-install
+        nb-project-install
+        nb-recon-domains-install
+        nb-recon-github-install
+        nb-recon-networks-install
+        nb-recon-org-install
+        nb-recon-subs-install
+        nb-shell-handlers-msf-install
+        nb-shell-handlers-install
+        nb-srv-install
         __info "Install finished"
     fi
 }
 
-qq-install-git-pull-tools() {
+nb-install-git-pull-tools() {
     __cyan "This will git-pull all repos in ${__TOOLS}."
     __ask "CONTINUE?"
     if __check-proceed
@@ -118,7 +118,7 @@ qq-install-git-pull-tools() {
     fi
 }
 
-qq-install-dev(){
+nb-install-dev(){
     __cyan "This will install php, npm and libraries."
     __ask "CONTINUE?"
     if __check-proceed
@@ -131,7 +131,7 @@ qq-install-dev(){
 ######################################################
 # Individual Tools
 ######################################################
-qq-install-golang() {
+nb-install-golang() {
     __pkgs golang
 
     if [[ -z "$(echo $GOPATH)" ]]
@@ -143,7 +143,7 @@ qq-install-golang() {
     fi 
 }
 
-qq-install-node() {
+nb-install-node() {
     __pkgs nodejs npm
 
     cd $HOME
@@ -157,7 +157,7 @@ qq-install-node() {
     fi
 }
 
-qq-install-wordlist-commonspeak() {
+nb-install-wordlist-commonspeak() {
     local name="commonspeak2"
     local url="https://github.com/assetnote/commonspeak2-wordlists.git"
     local p="$__TOOLS/$name"
@@ -175,7 +175,7 @@ qq-install-wordlist-commonspeak() {
     fi
 }
 
-qq-install-wordlist-nerdlist() {
+nb-install-wordlist-nerdlist() {
     local name="nerdlist"
     local url="https://github.com/tarahmarie/nerdlist.git"
     local p="$__TOOLS/$name"
@@ -193,7 +193,7 @@ qq-install-wordlist-nerdlist() {
     fi
 }
 
-qq-install-massdns() {
+nb-install-massdns() {
     local name="massdns"
     local url="https://github.com/blechschmidt/massdns.git"
     local p="$__TOOLS/$name"
@@ -218,7 +218,7 @@ qq-install-massdns() {
     fi
 }
 
-qq-install-github-search() {
+nb-install-github-search() {
     local name="github-search"
     local url="https://github.com/gwen001/github-search.git"
     local p="$__TOOLS/$name"
@@ -245,7 +245,7 @@ qq-install-github-search() {
     fi
 }
 
-qq-install-s3scanner() {
+nb-install-s3scanner() {
     local name="S3Scanner"
     local url="https://github.com/sa7mon/S3Scanner.git"
     local p="$__TOOLS/$name"
@@ -272,7 +272,7 @@ qq-install-s3scanner() {
     fi
 }
 
-qq-install-gf() {
+nb-install-gf() {
     local name="gf"
 
     __info "$name"
@@ -282,7 +282,7 @@ qq-install-gf() {
     cp -r $GOPATH/src/github.com/tomnomnom/gf/examples $HOME/.gf
 }
 
-qq-install-git-secrets() {
+nb-install-git-secrets() {
     local name="git-secrets"
     local url="https://github.com/awslabs/git-secrets.git"
     local p="$__TOOLS/$name"
@@ -308,7 +308,7 @@ qq-install-git-secrets() {
     fi
 }
 
-qq-install-gitrob() {
+nb-install-gitrob() {
 
     local name="gitrob"
 
@@ -322,7 +322,7 @@ qq-install-gitrob() {
     popd
 }
 
-qq-install-pentest-tools() {
+nb-install-pentest-tools() {
     local name="pentest-tools"
     local url="https://github.com/gwen001/pentest-tools.git"
     local p="$__TOOLS/$name"
@@ -344,7 +344,7 @@ qq-install-pentest-tools() {
     fi
 }
 
-qq-install-protonvpn() {
+nb-install-protonvpn() {
     local name="protonvpn"
     __info "$name"
 
@@ -353,7 +353,7 @@ qq-install-protonvpn() {
     print -z "sudo protonvpn init"
 }
 
-qq-install-nmap-elasticsearch-nse() {
+nb-install-nmap-elasticsearch-nse() {
     local name="nmap-elasticsearch-nse"
     local url="https://github.com/theMiddleBlue/nmap-elasticsearch-nse.git"
     local p="$__TOOLS/$name"
@@ -378,7 +378,7 @@ qq-install-nmap-elasticsearch-nse() {
     fi
 }
 
-qq-install-link-finder() {
+nb-install-link-finder() {
     local name="LinkFinder"
     local url="https://github.com/GerbenJavado/LinkFinder.git"
     local p="$__TOOLS/$name"

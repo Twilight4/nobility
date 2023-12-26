@@ -1,14 +1,14 @@
 #!/usr/bin/env zsh
 
 ############################################################# 
-# qq-project-custom
+# nb-project-custom
 #############################################################
-qq-project-custom-help() {
+nb-project-custom-help() {
     cat << "DOC" | bat --plain --language=help
 
-qq-project-custom
+nb-project-custom
 -----------------
-The qq-project-custom namespace provides commands to setup custom project
+The nb-project-custom namespace provides commands to setup custom project
 directory structures and variables for users that have specific requirements.
 
 Variables
@@ -18,10 +18,10 @@ __PROJECT_ZD_ROOT           a global variable for the project root folder used i
 
 Commands
 --------
-qq-project-custom-zd-start              scaffolds directory structure and logbook for "zd" projects
-qq-project-custom-zd-end                zips and removes directories and data for "zd" projects
-qq-project-custom-zd-root-set           sets the __PROJECT_ZD_ROOT variable
-qq-project-custom-zd-consultant-set     sets the __PROJECT_ZD_CONSULTANT variable
+nb-project-custom-zd-start              scaffolds directory structure and logbook for "zd" projects
+nb-project-custom-zd-end                zips and removes directories and data for "zd" projects
+nb-project-custom-zd-root-set           sets the __PROJECT_ZD_ROOT variable
+nb-project-custom-zd-consultant-set     sets the __PROJECT_ZD_CONSULTANT variable
 
 DOC
 }
@@ -33,27 +33,27 @@ export __PROJECT_ZD_ROOT="$(cat ${__GLOBALS}/__PROJECT_ZD_ROOT 2> /dev/null)"
 __check-project-zd() {
     if [[ -z $__PROJECT_ZD_CONSULTANT ]]
     then
-        qq-project-custom-zd-root-set
+        nb-project-custom-zd-root-set
     fi
     if [[ -z $__PROJECT_ZD_ROOT ]]
     then
-        qq-project-custom-zd-consultant-set
+        nb-project-custom-zd-consultant-set
     fi
 }
 
-qq-project-custom-zd-root-set() {
+nb-project-custom-zd-root-set() {
     __warn "Enter the full path to the root folder of your projects."
     __prefill __PROJECT_ZD_ROOT DIR $HOME
     echo "${__PROJECT_ZD_ROOT}" > ${__GLOBALS}/PROJECT_ZD_ROOT
 }
 
-qq-project-custom-zd-consultant-set() {
+nb-project-custom-zd-consultant-set() {
     __warn "Enter consultant name below."
     __askvar __PROJECT_ZD_CONSULTANT NAME 
     echo "${__PROJECT_ZD_CONSULTANT}" > ${__GLOBALS}/PROJECT_ZD_CONSULTANT
 }
 
-qq-project-custom-zd-start() {
+nb-project-custom-zd-start() {
 
     __check-project-zd
 
@@ -73,7 +73,7 @@ qq-project-custom-zd-start() {
     local setlog && read "setlog?$fg[cyan]Add a log file for this project (y/n)?:$reset_color "
     case "$setlog" in 
         y|Y ) 
-            qq-log-set
+            nb-log-set
             ;;
         n|N ) 
             echo "no"
@@ -84,7 +84,7 @@ qq-project-custom-zd-start() {
     esac   
 }
 
-qq-project-custom-zd-end() {
+nb-project-custom-zd-end() {
 
     __check-project-zd
 

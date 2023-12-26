@@ -1,27 +1,27 @@
 #!/usr/bin/env zsh
 
 ############################################################# 
-# qq-metasploit
+# nb-metasploit
 #############################################################
-qq-metasploit-help() {
+nb-metasploit-help() {
     cat << "DOC" | bat --plain --language=help
 
-qq-metasploit
+nb-metasploit
 -------------
-The qq-metasploit namespace contains commands for metasploit framework.
+The nb-metasploit namespace contains commands for metasploit framework.
 
 Commands
 --------
-qq-metasploit-listener         set up metasploit listener
-qq-metasploit-payload          set up metasploit payload
+nb-metasploit-listener         set up metasploit listener
+nb-metasploit-payload          set up metasploit payload
 
 DOC
 }
 
-qq-metasploit-listener() {
+nb-metasploit-listener() {
     __check-project
-    qq-vars-set-lhost
-    qq-vars-set-lport
+    nb-vars-set-lhost
+    nb-vars-set-lport
 
     clear
     f_banner
@@ -106,10 +106,10 @@ qq-metasploit-listener() {
     msfconsole -q -r /tmp/listener.rc
 }
 
-qq-metasploit-payload() {
+nb-metasploit-payload() {
     __check-project
-    qq-vars-set-lhost
-    qq-vars-set-lport
+    nb-vars-set-lhost
+    nb-vars-set-lport
 
     clear
     f_banner

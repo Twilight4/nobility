@@ -1,43 +1,43 @@
 #!/usr/bin/env zsh
 
 ############################################################# 
-# qq-enum-dhcp
+# nb-enum-dhcp
 #############################################################
-qq-enum-dhcp-help() {
+nb-enum-dhcp-help() {
     cat << "DOC" | bat --plain --language=help
 
-qq-enum-dhcp
+nb-enum-dhcp
 -------------
-The qq-enum-dhcp namespace contains commands for scanning and enumerating DHCP servers.
+The nb-enum-dhcp namespace contains commands for scanning and enumerating DHCP servers.
 
 Commands
 --------
-qq-enum-dhcp-install           installs dependencies
-qq-enum-dhcp-nmap-sweep        scan a network for services
-qq-enum-dhcp-tcpdump           capture traffic to and from a host
-qq-enum-dhcp-discover-nmap     broadcast DHCP discover packets
+nb-enum-dhcp-install           installs dependencies
+nb-enum-dhcp-nmap-sweep        scan a network for services
+nb-enum-dhcp-tcpdump           capture traffic to and from a host
+nb-enum-dhcp-discover-nmap     broadcast DHCP discover packets
 
 DOC
 }
 
-qq-enum-dhcp-install() {
+nb-enum-dhcp-install() {
     __info "Running $0..."
     __pkgs tcpdump nmap 
 }
 
-qq-enum-dhcp-sweep-nmap() {
+nb-enum-dhcp-sweep-nmap() {
     __check-project
-    qq-vars-set-network
+    nb-vars-set-network
     print -z "sudo nmap -n -Pn -sU -p67 ${__NETWORK} -oA $(__netpath)/dhcp-sweep"
 }
 
-qq-enum-dhcp-tcpdump() {
+nb-enum-dhcp-tcpdump() {
     __check-project
-    qq-vars-set-iface
-    qq-vars-set-rhost
+    nb-vars-set-iface
+    nb-vars-set-rhost
     print -z "sudo tcpdump -i ${__IFACE} host ${__RHOST} and udp port 67 and port 68 -w $(__hostpath)/dhcp.pcap"
 }
 
-qq-enum-dhcp-discover-nmap() {
+nb-enum-dhcp-discover-nmap() {
     print -z "sudo nmap -v --script broadcast-dhcp-discover"
 }

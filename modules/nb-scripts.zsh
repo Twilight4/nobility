@@ -1,12 +1,12 @@
 #!/usr/bin/env zsh
 
 ############################################################# 
-# qq-scripts
+# nb-scripts
 #############################################################
-# qq-scripts-help() {
+# nb-scripts-help() {
 #   cat << "DOC" | bat --plain --language=help
 
-# qq-scripts
+# nb-scripts
 # -------
 # The scripts namespace runs scripts from the nobility
 # scripts directory.
@@ -15,20 +15,20 @@
 
 # Commands
 # --------
-# qq-scripts-recon: a zsh recon script
-# qq-scripts-webrecon: a zsh webrecon script
+# nb-scripts-recon: a zsh recon script
+# nb-scripts-webrecon: a zsh webrecon script
 
 # DOC
 # }
 
-# qq-scripts-recon() {
+# nb-scripts-recon() {
 #   local d && read "d?$(__cyan DOMAIN: )"
 #   local o && read "o?$(__cyan ORG: )"
 #   local w && read "out?$(__cyan WORKING\(DIR\): )"
 #   print -z "zsh ${__SCRIPTS}/recon.zsh ${d} \"${o}\" \"${w}\""
 # }
 
-# qq-scripts-webrecon() {
+# nb-scripts-webrecon() {
 #   local f=$(rlwrap -S "$(__cyan FILE:\(DOMAINS\))" -e '' -c -o cat)
 #   local w && read "out?$(__cyan WORKING\(DIR\): )"
 #   pushd ${w}

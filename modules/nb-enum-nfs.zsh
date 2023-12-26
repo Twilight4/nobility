@@ -1,52 +1,52 @@
 #!/usr/bin/env zsh
 
 ############################################################# 
-# qq-enum-nfs
+# nb-enum-nfs
 #############################################################
-qq-enum-nfs-help() {
+nb-enum-nfs-help() {
     cat << "DOC" | bat --plain --language=help
 
-qq-enum-nfs
+nb-enum-nfs
 -----------
-The qq-enum-nfs namespace contains commands for scanning and 
+The nb-enum-nfs namespace contains commands for scanning and 
 enumerating NFS services.
 
 Commands
 --------
-qq-enum-nfs-install        installs dependencies
-qq-enum-nfs-nmap-sweep     scan a network for services
-qq-enum-nfs-tcpdump        capture traffic to and from a host
-qq-enum-nfs-show           show remote NFS shares
-qq-enum-nfs-mount          mount a remote NFS share locally
+nb-enum-nfs-install        installs dependencies
+nb-enum-nfs-nmap-sweep     scan a network for services
+nb-enum-nfs-tcpdump        capture traffic to and from a host
+nb-enum-nfs-show           show remote NFS shares
+nb-enum-nfs-mount          mount a remote NFS share locally
 
 DOC
 }
 
-qq-enum-nfs-install() {
+nb-enum-nfs-install() {
     __info "Running $0..."
     __pkgs tcpdump nmap nfs-common
 }
 
-qq-enum-nfs-nmap-sweep() {
+nb-enum-nfs-nmap-sweep() {
     __check-project
-    qq-vars-set-network
+    nb-vars-set-network
     print -z "sudo nmap -n -Pn -sS -sU -p U:111,T:111,U:2049,T:2049 ${__NETWORK} -oA $(__netpath)/nfs-sweep"
 }
 
-qq-enum-nfs-tcpdump() {
+nb-enum-nfs-tcpdump() {
     __check-project
-    qq-vars-set-iface
-    qq-vars-set-rhost
+    nb-vars-set-iface
+    nb-vars-set-rhost
     print -z "sudo tcpdump -i ${__IFACE} host ${__RHOST} and tcp port 111 and port 2049 -w $(__hostpath)/nfs.pcap"
 }
 
-qq-enum-nfs-show() {
-    qq-vars-set-rhost
+nb-enum-nfs-show() {
+    nb-vars-set-rhost
     print -z "showmount -e ${__RHOST}"
 }
 
-qq-enum-nfs-mount() {
-    qq-vars-set-rhost
+nb-enum-nfs-mount() {
+    nb-vars-set-rhost
     local share && __askvar share SHARE
     mkdir -p /mnt/${share}
     print -z "mount -t nfs ${__RHOST}:/${share} /mnt/${share} -o nolock"

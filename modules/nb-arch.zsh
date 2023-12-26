@@ -1,41 +1,41 @@
 #!/usr/bin/env zsh
 
 ############################################################# 
-# qq-arch
+# nb-arch
 #############################################################
-qq-arch-help() {
+nb-arch-help() {
     cat << "DOC" | bat --plain --language=help
 
-qq-arch
+nb-arch
 ----------
-The qq-arch namespace provides commands that assist with managing Arch linux.
+The nb-arch namespace provides commands that assist with managing Arch linux.
 
 Commands
 --------
-qq-arch-pkg-query            query if a package is installed or not  
-qq-arch-new-project          create a new project and go there
-qq-arch-flush-iptables       flushes ip tables
-qq-arch-get-gateway          get router IP address
-qq-arch-get-hosts            get list of host IP addresses found via nmap
-qq-arch-get-hostnames        get list of host names using nmap and the IP of a known DNS server
-qq-arch-download-html        download IP and print with html2text
-qq-arch-scan-tcp             scan IP with masscan
-qq-arch-scan-udp             scan IP with nmap
-qq-arch-ps-grep              search list of processes
-qq-arch-ps-dtach             run a script in the background
-qq-arch-path-add             add a new path to the PATH environment variable
-qq-arch-file-replace         replace an existing value in a file
-qq-arch-file-dos-to-unix     convert file with dos endings to unix
-qq-arch-file-unix-to-dos     convert file with unix endings to dos
-qq-arch-file-sort-uniq       sort a file uniq in place 
-qq-arch-file-sort-uniq-ip    sort a file of IP addresses uniq in place
-qq-arch-sudoers-easy         removes the requirment for sudo for common commands like nmap
-qq-arch-sudoers-harden       removes sudo exclusions
+nb-arch-pkg-query            query if a package is installed or not  
+nb-arch-new-project          create a new project and go there
+nb-arch-flush-iptables       flushes ip tables
+nb-arch-get-gateway          get router IP address
+nb-arch-get-hosts            get list of host IP addresses found via nmap
+nb-arch-get-hostnames        get list of host names using nmap and the IP of a known DNS server
+nb-arch-download-html        download IP and print with html2text
+nb-arch-scan-tcp             scan IP with masscan
+nb-arch-scan-udp             scan IP with nmap
+nb-arch-ps-grep              search list of processes
+nb-arch-ps-dtach             run a script in the background
+nb-arch-path-add             add a new path to the PATH environment variable
+nb-arch-file-replace         replace an existing value in a file
+nb-arch-file-dos-to-unix     convert file with dos endings to unix
+nb-arch-file-unix-to-dos     convert file with unix endings to dos
+nb-arch-file-sort-uniq       sort a file uniq in place 
+nb-arch-file-sort-uniq-ip    sort a file of IP addresses uniq in place
+nb-arch-sudoers-easy         removes the requirment for sudo for common commands like nmap
+nb-arch-sudoers-harden       removes sudo exclusions
 
 DOC
 }
 
-qq-arch-pkg-query() {
+nb-arch-pkg-query() {
     local query && __askvar query PACKAGE 
     for pkg in "${query}"
     do
@@ -43,7 +43,7 @@ qq-arch-pkg-query() {
     done 
 }
 
-qq-arch-new-project() {
+nb-arch-new-project() {
     # Check if project name is provided
     if [ -z "$1" ]; then
         echo "Usage: nproj company-name"
@@ -82,7 +82,7 @@ qq-arch-new-project() {
     echo "Project '$proj_name' created with assessment type '$assessment_type'."
 }
 
-qq-arch-flush-iptables() {
+nb-arch-flush-iptables() {
     echo ""
     echo ">>> Before flush <<<"
     echo "" 
@@ -106,12 +106,12 @@ qq-arch-flush-iptables() {
     echo ""
 }
 
-qq-arch-get-gateway() {
+nb-arch-get-gateway() {
    INTERFACE=${1:-tap0}
    ip route | grep via | grep "$INTERFACE" | cut -d" " -f3 
 }
 
-qq-arch-get-hosts() {
+nb-arch-get-hosts() {
     PORT=${1:-"none"}
     NETWORK=${2:-"10.11.1.0"}
     PATTERN="Nmap scan report for ${NETWORK:0:-1}"
@@ -125,7 +125,7 @@ qq-arch-get-hosts() {
     fi
 }
 
-qq-arch-get-hostnames() {
+nb-arch-get-hostnames() {
     DNS=$1
     NETWORK=${2:-"10.11.1.0"}
     PATTERN="Nmap scan report for "
@@ -139,21 +139,21 @@ qq-arch-get-hostnames() {
     fi
 }
 
-qq-arch-download-html() { 
+nb-arch-download-html() { 
 	curl -s "${1:-$RHOST}:${80:-$RPORT}" | html2text -style pretty; 
 }
 
-qq-arch-scan-tcp() {
+nb-arch-scan-tcp() {
     IP=${1:-${__RHOST}
     INTERFACE=${2:-"tap0"}
     SAVEPATH=$(create_scan_directory "$IP")
     run() {
-        masscan "$1" -e "$INTERFACE" --router-ip "$(qq-arch-get-gateway "$INTERFACE")" -p 0-65535 --rate 500 -oL "$SAVEPATH"/ports
+        masscan "$1" -e "$INTERFACE" --router-ip "$(nb-arch-get-gateway "$INTERFACE")" -p 0-65535 --rate 500 -oL "$SAVEPATH"/ports
     }
     run "$IP"
 }
 
-qq-arch-scan-udp() {
+nb-arch-scan-udp() {
     IP=${1:-$RHOST}
     SAVEPATH=$(create_scan_directory "$IP")
     run() {
@@ -162,59 +162,59 @@ qq-arch-scan-udp() {
     run "$IP"
 }
 
-qq-arch-ps-grep() { 
+nb-arch-ps-grep() { 
     local query && __askvar query QUERY 
     print -z "ps aux | grep -v grep | grep -i -e VSZ -e ${query}" 
 }
 
-qq-arch-ps-dtach() { 
+nb-arch-ps-dtach() { 
     __ask "Enter full path to script to run dtach'd"
     local p && __askpath p PATH $(pwd)
     dtach -A ${p} /bin/zsh 
 }
 
-qq-qrch-path-add() { 
+nb-qrch-path-add() { 
     __ask "Enter new path to append to current PATH"
     local p && __askpath p PATH /   
     print -z "echo \"export PATH=\$PATH:${p}\" | tee -a $HOME/.zshrc" 
 }
 
-qq-arch-file-replace() {
+nb-arch-file-replace() {
     local replace && __askvar replace REPLACE
     local with && __askvar with WITH
     local file && __askpath file FILE $(pwd)
     print -z "sed 's/${replace}/${with}/g' ${file} > ${file}"
 } 
 
-qq-arch-file-dos-to-unix() { 
+nb-arch-file-dos-to-unix() { 
     local file=$1 
     [[ -z "${file}" ]] && __askpath file FILE $(pwd)
     print -z "tr -d \"\015\" < ${file} > ${file}.unix"
 }
 
-qq-arch-file-unix-to-dos() {
+nb-arch-file-unix-to-dos() {
     local file=$1 
     [[ -z "${file}" ]] && __askpath file FILE $(pwd)
     print -z "sed -e 's/$/\r/' ${file} > ${file}.dos"
 }
 
-qq-arch-file-sort-uniq() {
+nb-arch-file-sort-uniq() {
     local file=$1 
     [[ -z "${file}" ]] && __askpath file FILE $(pwd)
     print -z "cat ${file} | sort -u -o ${file}"
 }
 
-qq-arch-file-sort-uniq-ip() { 
+nb-arch-file-sort-uniq-ip() { 
     local file=$1 
     [[ -z "${file}" ]] && __askpath file FILE $(pwd)
     print -z "cat ${file} | sort -u | sort -V -o ${file}"
 }
 
-qq-arch-sudoers-easy() {
+nb-arch-sudoers-easy() {
     __warn "This is dangerous for OPSEC! Remove when done."
     print -z "echo \"$USER ALL=(ALL:ALL) NOPASSWD: /usr/bin/nmap, /usr/bin/masscan, /usr/sbin/tcpdump\" | sudo tee /etc/sudoers.d/$(whoami)"
 }
 
-qq-arch-sudoers-harden() {
+nb-arch-sudoers-harden() {
     print -z "sudo rm /etc/sudoers.d/$(whoami)"
 }

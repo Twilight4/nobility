@@ -1,52 +1,52 @@
 #!/usr/bin/env zsh
 
 ############################################################# 
-# qq-recon-github
+# nb-recon-github
 #############################################################
-qq-recon-github-help() {
+nb-recon-github-help() {
     cat << "DOC" | bat --plain --language=help
 
-qq-recon-github
+nb-recon-github
 ------------
 The recon-github namespace provides commands for the recon of github repos.
 All output will be stored under $__PROJECT/source
 
 Commands
 --------
-qq-recon-github-install        installs dependencies
-qq-recon-github-user-repos     uses curl to get a list of repos for a github user
-qq-recon-github-endpoints      gets a list of urls from all repos of a domain on github
-qq-recon-github-gitrob         clones (in mem) repos and searches for github dorks
-qq-recon-github-api-set        set github API key global variable
+nb-recon-github-install        installs dependencies
+nb-recon-github-user-repos     uses curl to get a list of repos for a github user
+nb-recon-github-endpoints      gets a list of urls from all repos of a domain on github
+nb-recon-github-gitrob         clones (in mem) repos and searches for github dorks
+nb-recon-github-api-set        set github API key global variable
 
 DOC
 }
 
-qq-recon-github-install() {
+nb-recon-github-install() {
     __info "Running $0..."
     __pkgs curl jq python3 
-    qq-install-golang
-    qq-install-github-search
-    qq-install-git-secrets
-    qq-install-gitrob
+    nb-install-golang
+    nb-install-github-search
+    nb-install-git-secrets
+    nb-install-gitrob
 }
 
-qq-recon-github-user-repos() {
+nb-recon-github-user-repos() {
     __check-project
     __check-user
     mkdir -p ${__PROJECT}/source
     print -z "curl -s \"https://api.github.com/users/${__USER}/repos?per_page=1000\" | jq '.[].git_url' | tee -a ${__PROJECT}/source/${__USER}.txt "
 }
 
-qq-recon-github-endpoints() {
+nb-recon-github-endpoints() {
     __check-api-github
     __check-project
-    qq-vars-set-domain
+    nb-vars-set-domain
     mkdir -p ${__PROJECT}/source
     print -z "github-endpoints.py -t ${__API_GITHUB} -d ${__DOMAIN} | tee -a ${__PROJECT}/source/${__DOMAIN}.endpoints.txt "
 }
 
-qq-recon-github-gitrob() {
+nb-recon-github-gitrob() {
     __check-api-github
     __check-project
     __check-user
