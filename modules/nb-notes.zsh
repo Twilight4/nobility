@@ -85,7 +85,7 @@ nb-notes() {
 	# don't do ls after cd
 	export ENHANCD_HOOK_AFTER_CD=""
 
-	# select a directory of notes using fzf
+	# select a directory of notes using fzf (enhancd)
 	cd .
 
 	# select with preview which note to output
@@ -104,8 +104,11 @@ nb-notes() {
 nb-notes-content() {
     __check-notes
 
+    pushd "${__NOTES}" &> /dev/null
+
     # select by content which note to output
-	selected_file=$(find ~/documents/org/roam/ -type f -exec rg --files-with-matches --no-messages "$1" {} +\
+	if [ ! "$#" -gt 0 ]; then return 1; fi
+	selected_file=$(rg --files-with-matches --no-messages "$1" \
     | fzf --preview "highlight -O ansi -l {} 2> /dev/null \
     | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' \
     || rg --ignore-case --pretty --context 10 '$1' {}")
@@ -114,6 +117,8 @@ nb-notes-content() {
 	if [[ -n "$selected_file" ]]; then
 		sed -e 's/=\([^=]*\)=/\o033[1;32m\1\o033[0m/g; s/^\( \{0,6\}\)-/•/g' -e '/^\(:PROPERTIES:\|:ID:\|:END:\|#\+date:\)/d' "$selected_file" | command bat --language=org --style=plain --color=always
 	fi
+
+	popd &> /dev/null
 }
 
 nb-notes-edit() {
