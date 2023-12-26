@@ -43,7 +43,7 @@ source ~/.zshrc
 git clone https://github.com/Twilight4/nobility.git ~/.config/zsh/nobility
 
 # Source the plugin in `~/.zshrc`
-echo 'source ~/.config/zsh/nobility/nobility.plugin.zsh' ~/.config/zsh/.zshrc
+echo 'source ~/.config/zsh/nobility/nobility.plugin.zsh' >> ~/.config/zsh/.zshrc
 
 # # Source `.zshrc` to load the plugin
 source ~/.config/zsh/.zshrc
