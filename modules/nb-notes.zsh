@@ -99,13 +99,16 @@ nb-notes() {
 nb-notes-content() {
     __check-notes
 
-	# similar to frg funcction in fzf-scripts but just within the notes directory
-    __info "Use \$1 to search content"
-    select note in $(grep -rliw "$1" ${__NOTES}/*.org)
-    do test -n ${note} && break
-    exit
-    done
-	[[ ! -z ${note} ]] && sed -e 's/=\([^=]*\)=/\o033[1;32m\1\o033[0m/g; s/^\( \{0,6\}\)-/•/g' -e '/^\(:PROPERTIES:\|:ID:\|:END:\|#\+date:\)/d' ${note} | command bat --language=org --style=plain --color=always
+    # select by content which note to output
+	selected_file=$(find ~/documents/org/roam/ -type f -exec rg --files-with-matches --no-messages "$1" {} +\
+    | fzf --preview "highlight -O ansi -l {} 2> /dev/null \
+    | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' \
+    || rg --ignore-case --pretty --context 10 '$1' {}")
+
+	# if file selected, output it
+	if [[ -n "$selected_file" ]]; then
+		sed -e 's/=\([^=]*\)=/\o033[1;32m\1\o033[0m/g; s/^\( \{0,6\}\)-/•/g' -e '/^\(:PROPERTIES:\|:ID:\|:END:\|#\+date:\)/d' "$file" | command bat --language=org --style=plain --color=always
+	fi
 }
 
 nb-notes-edit() {
