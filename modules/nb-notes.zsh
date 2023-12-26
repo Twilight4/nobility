@@ -35,6 +35,8 @@ nb-notes-install() {
 nb-notes() {
     __check-notes
 
+    pushd "${__NOTES}" &> /dev/null
+
     # Check if at least one argument is provided
     if [ $# -gt 0 ]; then
         arg="$1"
