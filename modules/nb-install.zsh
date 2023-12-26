@@ -9,7 +9,7 @@ qq-install-help() {
 qq-install
 ----------
 The qq-install namespace provides commands that assist with installing
-packages, repos and tools used in quiver.
+packages, repos and tools used in nobility.
 
 Commands
 --------

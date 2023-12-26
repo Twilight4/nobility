@@ -14,19 +14,19 @@ using the qq-<namespace>-install commands or install all dependencies using qq-i
 
 Variables
 ---------
-__VERSION     Current version of the Quiver plugin
-__PLUGIN      Full path to the Quiver oh-my-zsh plugin directory
+__VERSION     Current version of the nobility plugin
+__PLUGIN      Full path to the nobility oh-my-zsh plugin directory
 
 Commands
 --------
-qq-update        git pull the latest (MAIN branch) version of Quiver
-qq-status        check the current status of the locally cloned Quiver repository
+qq-update        git pull the latest (MAIN branch) version of nobility
+qq-status        check the current status of the locally cloned nobility repository
 qq-whatsnew      display the latest release notes
 qq-debug         display the local diagnostic log
 
 Namespaces
 ----------
-Quiver is organized in a tree of namespaces that are accessible via "qq-" with tab completion and search.
+nobility is organized in a tree of namespaces that are accessible via "qq-" with tab completion and search.
 Each namespace has its own install and help commands.
 
  Install and Configuration
@@ -98,8 +98,8 @@ DOC
 }
 
 qq-update() {
-	cd $HOME/.config/zsh/plugins/quiver-arch
-    #cd $HOME/.oh-my-zsh/custom/plugins/quiver
+	cd $HOME/.config/zsh/plugins/nobility
+    #cd $HOME/.oh-my-zsh/custom/plugins/nobility
     git pull
     rm $__REMOTE_VER
     rm $__REMOTE_CHK
@@ -108,8 +108,8 @@ qq-update() {
 }
 
 qq-status() {
-	cd $HOME/.config/zsh/plugins/quiver-arch
-    #cd $HOME/.oh-my-zsh/custom/plugins/quiver-arch
+	cd $HOME/.config/zsh/plugins/nobility
+    #cd $HOME/.oh-my-zsh/custom/plugins/nobility
     git status | grep On | cut -d" " -f2,3
     cd - > /dev/null
 }

@@ -9,7 +9,7 @@ qq-vars-global-help() {
 qq-vars-global
 --------------
 The vars global namespace manages environment variables used in other functions
-that are saved between sessions.  Values are stored as files the .quiver-arch/globals
+that are saved between sessions.  Values are stored as files the .nobility/globals
 directory and can contain sensitive information like API keys. These variables
 are used to supply arguments to commands in other modules.
 

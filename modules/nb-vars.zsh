@@ -10,7 +10,7 @@ qq-vars
 -------
 The vars namespace manages environment variables used in other functions. These
 variables are set per session, but can be saved with qq-vars-save and reloaded
-with qq-vars-load. The values are stored as files in .quiver-arch/vars.
+with qq-vars-load. The values are stored as files in .nobility/vars.
 
 The menu options for some of the variables can be set using qq-vars-global, such
 as the list of favorite user-agents or wordlists (qq-vars-global-help).
@@ -34,8 +34,8 @@ __PASSLIST    path to a wordlist for password brute forcing, ex: /usr/share/word
 Commands
 --------
 qq-vars           alias qv, list all current variable values
-qq-vars-save      alias qvs, save all current variable values ($HOME/.quiver)
-qq-vars-load      alias qvl, restores all current variable values ($HOME/.quiver)
+qq-vars-save      alias qvs, save all current variable values ($HOME/.nobility)
+qq-vars-load      alias qvl, restores all current variable values ($HOME/.nobility)
 qq-vars-clear     clears all current variable values
 qq-vars-set-*     used to set each individual variable
 

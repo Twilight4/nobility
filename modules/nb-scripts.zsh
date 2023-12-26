@@ -8,7 +8,7 @@
 
 # qq-scripts
 # -------
-# The scripts namespace runs scripts from the quiver
+# The scripts namespace runs scripts from the nobility
 # scripts directory.
 
 # ** IN DEVELOPMENT, NOT READY FOR USE **

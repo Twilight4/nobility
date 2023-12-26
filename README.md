@@ -12,7 +12,7 @@ Nobility is an organized colletion of shell functions designed to streamline you
 * **Exploit Phase**: Assistance in compiling exploits for simplified vulnerability exploitation
 * **Reverse Shell Handlers**: Manage reverse shell handlers easily, enhancing network-pentesting capabilities
 * **Content Serving Commands**: Serve content effortlessly, making file sharing and testing straightforward
-* **Built-in Logbook**: Keep on-the-fly notes and save commands with Quiver's built-in logbook feature
+* **Built-in Logbook**: Keep on-the-fly notes and save commands with Nobility's built-in logbook feature
 * **Org Mode Rendering**: Render Org mode notes directly to the command line for a streamlined reading experience
 * **Arch Linux System Management**: Optimized for Arch Linux systems, simplifying system management tasks
 * **Update Notifications**: Stay informed with update notifications for the latest features and improvements

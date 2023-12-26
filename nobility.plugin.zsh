@@ -7,7 +7,7 @@ pacman -Qs rlwrap >/dev/null || sudo pacman -S --noconfirm rlwrap
 pacman -Qs git >/dev/null || sudo pacman -S --noconfirm git
 
 # Check for directories
-mkdir -p $HOME/.quiver-arch/{vars,globals}
+mkdir -p $HOME/.nobility/{vars,globals}
 
 
 ############################################################# 
@@ -19,8 +19,8 @@ export __LOGFILE="${__PLUGIN}/log.txt"
 export __REMOTE_CHK="${__PLUGIN}/remote_checked.txt"
 export __REMOTE_VER="${__PLUGIN}/remote_ver.txt"
 export __STATUS=$(cd ${__PLUGIN} && git status | grep On | cut -d" " -f2,3)
-export __VARS=$HOME/.quiver-arch/vars
-export __GLOBALS=$HOME/.quiver-arch/globals
+export __VARS=$HOME/.nobility/vars
+export __GLOBALS=$HOME/.nobility/globals
 export __PAYLOADS="$__PLUGIN/payloads"
 export __SCRIPTS="$__PLUGIN/scripts"
 export __TOOLS="$HOME/tools"
@@ -42,7 +42,7 @@ __version-check() {
 
   date -R > $__REMOTE_CHK
 
-  echo "$(curl -s https://raw.githubusercontent.com/Twilight4/quiver-arch/main/VERSION)" > $__REMOTE_VER
+  echo "$(curl -s https://raw.githubusercontent.com/Twilight4/nobility/main/VERSION)" > $__REMOTE_VER
   
   echo "[*] Version checked and stored in:  $__REMOTE_VER" >> ${__LOGFILE}
 
@@ -54,7 +54,7 @@ __version-check() {
 ############################################################# 
 # Diagnostic Log
 #############################################################
-echo "Quiver ${__VER} in ${__PLUGIN}" > ${__LOGFILE}
+echo "Nobility ${__VER} in ${__PLUGIN}" > ${__LOGFILE}
 echo " " >> ${__LOGFILE}
 echo "[*] loading... " >> ${__LOGFILE}
 
@@ -73,7 +73,7 @@ ZSTYLE_ORIG=`zstyle -L ':completion:\*' matcher-list`
 ZSTYLE_NEW="${ZSTYLE_ORIG} 'r:|[-]=**'"
 eval ${ZSTYLE_NEW}
 
-echo "[*] quiver loaded." >> ${__LOGFILE}
+echo "[*] nobility loaded." >> ${__LOGFILE}
 
 
 ############################################################# 
@@ -91,11 +91,11 @@ if [[ -f "$__REMOTE_VER" ]]; then
 
     echo "[*] Remote version is |${rv}|" >> ${__LOGFILE}
 
-    [[ "$rv" == "$__VER" ]] && __info "Quiver is up to date" || __warn "Quiver update available: $rv, use qq-update to install"
+    [[ "$rv" == "$__VER" ]] && __info "Nobility is up to date" || __warn "Nobility update available: $rv, use qq-update to install"
 
   fi
 
 fi
 
-__info "Quiver ${__VER} ZSH plugin loaded "
+__info "Nobility ${__VER} ZSH plugin loaded "
 
