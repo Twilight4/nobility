@@ -3,20 +3,20 @@
 Nobility is an organized colletion of shell functions designed to streamline your terminal interactions, liberating you from the hassle of juggling notes, endless copying and pasting, and tedious command editing. This tool is tailored for Arch-based Linux systems, with a focus on enhancing red-teaming and network-pentesting endeavors. Nobility doesn't cover all tools, it's my own curated collection which I am still adding to and updating in order to automate my workflow. I focus on tools I use and that are maintained and current. Nobility helps you remember how to use every tool in your arsenal and doesn't hide them behind scripting that can be cumbersome to maintain or update. Instead you can use nobility to build a composable, on-the-fly workflow for every situation. 
 
 # Key Features
-* Prefilled Commands: Streamlines terminal interactions by automatically prefilling commands
-* Organized Commands: Well-organized commands with tab auto-completion
-* Seamless Integration: ZSH/Oh-My-ZSH shell plugin ensures easy integration into your environment
-* Customizable Settings: Tailor Nobility to your preferences with customizable settings and global variables
-* Recon Phase: Access OSINT commands for efficient information gathering
-* Enumeration Phase: Effortlessly enumerate common services, saving time in penetration testing
-* Exploit Phase: Assistance in compiling exploits for simplified vulnerability exploitation
-* Reverse Shell Handlers: Manage reverse shell handlers easily, enhancing network-pentesting capabilities
-* Content serving commands
-* Built-in logbook for on-the-fly notes, saving commands
-* Render markdown notes to the command line
-* Arch Linux system management
-* Update notification and install
-* Installers for dependencies
+* **Prefilled Commands**: Streamlines terminal interactions by automatically prefilling commands
+* **Organized Commands**: Well-organized commands with tab auto-completion
+* **Seamless Integration**: ZSH/Oh-My-ZSH shell plugin ensures easy integration into your environment
+* **Customizable** Settings: Tailor Nobility to your preferences with customizable settings and global variables
+* **Recon Phase**: Access OSINT commands for efficient information gathering
+* **Enumeration** Phase: Effortlessly enumerate common services, saving time in penetration testing
+* **Exploit Phase**: Assistance in compiling exploits for simplified vulnerability exploitation
+* **Reverse Shell** Handlers: Manage reverse shell handlers easily, enhancing network-pentesting capabilities
+* **Content Serving** Commands: Serve content effortlessly, making file sharing and testing straightforward
+* **Built-in Logbook**: Keep on-the-fly notes and save commands with Quiver's built-in logbook feature
+* **Org Mode Rendering**: Render Org mode notes directly to the command line for a streamlined reading experience
+* **Arch Linux System** Management: Optimized for Arch Linux systems, simplifying system management tasks
+* **Update Notifications**: Stay informed with update notifications for the latest features and improvements
+* **Dependency Installers**: Includes installers for dependencies, ensuring a smooth and hassle-free setup process
 
 # Installation
 Nobility requires the following:
