@@ -22,7 +22,7 @@ Nobility is an organized colletion of shell functions designed to streamline you
 Nobility requires the following:
 
 * [Zsh](https://github.com/zsh-users/zsh)
-* [Oh-my-zsh](https://ohmyz.sh/)
+* [Oh-my-zsh](https://ohmyz.sh/) (optional)
 * [Arch Linux](https://archlinux.org/)
 
 
