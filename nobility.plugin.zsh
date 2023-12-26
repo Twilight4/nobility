@@ -58,9 +58,9 @@ echo "Nobility ${__VER} in ${__PLUGIN}" > ${__LOGFILE}
 echo " " >> ${__LOGFILE}
 echo "[*] loading... " >> ${__LOGFILE}
 
-#Source all qq scripts
+#Source all nb scripts
 
-for f in ${0:A:h}/modules/qq* ; do
+for f in ${0:A:h}/modules/nb* ; do
   echo "[+] sourcing $f ... "  >> ${__LOGFILE}
   source $f >> ${__LOGFILE} 2>&1
 done
@@ -91,7 +91,7 @@ if [[ -f "$__REMOTE_VER" ]]; then
 
     echo "[*] Remote version is |${rv}|" >> ${__LOGFILE}
 
-    [[ "$rv" == "$__VER" ]] && __info "Nobility is up to date" || __warn "Nobility update available: $rv, use qq-update to install"
+    [[ "$rv" == "$__VER" ]] && __info "Nobility is up to date" || __warn "Nobility update available: $rv, use nb-update to install"
 
   fi
 
