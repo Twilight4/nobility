@@ -1,6 +1,6 @@
 # Nobility
 
-Nobility is an organized namespace of shell functions that pre-fill commands in your terminal so that you can ditch your reliance on notes, copying, pasting, editing, copying and pasting again. Nobility works on Arch-based Linux systems with the main focus on red-teaming/network-pentesting. Nobility doesn't cover all tools, it's my own curated collection which I am still adding to and updating in order to automate my workflow. I focus on tools I use and that are maintained and current. Nobility helps you remember how to use every tool in your arsenal and doesn't hide them behind scripting that can be cumbersome to maintain or update. Instead you can use Quiver to build a composable, on-the-fly workflow for every situation. 
+Nobility is an organized namespace of shell functions that pre-fill commands in your terminal so that you can ditch your reliance on notes, copying, pasting, editing, copying and pasting again. Nobility works on Arch-based Linux systems with the main focus on red-teaming/network-pentesting. Nobility doesn't cover all tools, it's my own curated collection which I am still adding to and updating in order to automate my workflow. I focus on tools I use and that are maintained and current. Nobility helps you remember how to use every tool in your arsenal and doesn't hide them behind scripting that can be cumbersome to maintain or update. Instead you can use nobility to build a composable, on-the-fly workflow for every situation. 
 
 # Features
 * Prefills the commands within a terminal
@@ -28,25 +28,25 @@ Nobility requires the following:
 
 ```bash
 # Clone the repo to your oh-my-zsh custom plugins folder
-git clone https://github.com/Twilight4/quiver-arch.git ~/.oh-my-zsh/custom/plugins/quiver-arch
+git clone https://github.com/Twilight4/nobility.git ~/.oh-my-zsh/custom/plugins/nobility
 
 # Edit `~/.zshrc` to load the plugin
 plugins=(git nobility)
 
-# Source `.zshrc` to load the plugin and you're done. On first load, Quiver will install a few core packages
+# Source `.zshrc` to load the plugin and you're done. On first load, nobility will install a few core packages
 source ~/.zshrc
 
 ```
 
 # Getting Started
-Quiver organizes commands into namespaces starting with `nb-`, such as `nb-enum-web` or `nb-recon-domains`.
+nobility organizes commands into namespaces starting with `nb-`, such as `nb-enum-web` or `nb-recon-domains`.
 To see an overview of all namespaces simply use `nb-help`. Each namespace also has it's own help command, such as `nb-enum-web-help` that provides a listing of available commands. All commands support tab completion and search. 
 
 ## Installing Dependencies
 Every namespace was a `nb-namespace-install` command that will install all of the tools relevant to that namespace. You can install just the tools you need, or use `nb-install-all` to run the installers of all namespaces.
 
 ## Workflow
-Quiver is meant to provide a composable, on-the-fly workflow. It replaces the common painful raw workflow of reading your notes, finding a command, copy, paste, replace the values with target values, copy, paste, run. Some rely heavily on completely automated scripts or frameworks that run all the commands for a workflow and output well-formatted data. While these scripts are great for many use cases, they can often be brittle, hide the underlying tools and techniques and be cumbersome to modify. Instead, Quiver gives you a happy medium, you can run commands quickly and easy with well-organized output, composing your workflow as you go depending on the targets and context. 
+nobility is meant to provide a composable, on-the-fly workflow. It replaces the common painful raw workflow of reading your notes, finding a command, copy, paste, replace the values with target values, copy, paste, run. Some rely heavily on completely automated scripts or frameworks that run all the commands for a workflow and output well-formatted data. While these scripts are great for many use cases, they can often be brittle, hide the underlying tools and techniques and be cumbersome to modify. Instead, nobility gives you a happy medium, you can run commands quickly and easy with well-organized output, composing your workflow as you go depending on the targets and context. 
 
 ## Example Workflow
 ### Preparation
