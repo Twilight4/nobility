@@ -64,7 +64,8 @@ nb-notes() {
         shift
     else
         # If no argument is provided, use fzf to select a directory from the first layer
-        selected_directory=$(find . -maxdepth 1 -type d -not -name "." | sed 's|^\./||' | fzf --select-1 --exit-0 --reverse --preview 'exa --tree --group-directories-first --git-ignore --level 2 {}')
+        selected_directory=$(find . -maxdepth 1 -type d -not -name "." | sed 's|^\./||' | fzf --select-1 --exit-0 \
+        --reverse --preview 'exa --tree --group-directories-first --git-ignore --level 2 {}')
 
         # If a directory is selected, change to it
         if [ -n "$selected_directory" ]; then
