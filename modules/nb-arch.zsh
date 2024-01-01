@@ -46,7 +46,7 @@ nb-arch-pkg-query() {
 nb-arch-new-project() {
     # Check if project name is provided
     if [ -z "$1" ]; then
-        echo "Usage: nproj company-name"
+        echo "Usage: nb-arch-new-project company-name"
         return 1
     fi
 
