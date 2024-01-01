@@ -115,9 +115,11 @@ nb-arch-get-hosts() {
     PORT=${1:-"none"}
     NETWORK=${2:-"10.11.1.0"}
     PATTERN="Nmap scan report for ${NETWORK:0:-1}"
+
     get_ip() {
         cut -d" " -f5 $1
     }
+	
     if [[ $PORT == "none" ]]; then
         nmap "$NETWORK"/24 -sn | grep "$PATTERN" | get_ip
     else
@@ -129,9 +131,11 @@ nb-arch-get-hostnames() {
     DNS=$1
     NETWORK=${2:-"10.11.1.0"}
     PATTERN="Nmap scan report for "
+
     get_ip() {
         cut -d" " -f5- $1
     }
+
     if [[ ${#1} -gt 0 ]]; then
         nmap "$NETWORK"/24 --dns-server "$DNS" -sn | grep "$PATTERN" | get_ip
     else
@@ -147,9 +151,11 @@ nb-arch-scan-tcp() {
     IP=${1:-${__RHOST}
     INTERFACE=${2:-"tap0"}
     SAVEPATH=$(create_scan_directory "$IP")
+	
     run() {
         masscan "$1" -e "$INTERFACE" --router-ip "$(nb-arch-get-gateway "$INTERFACE")" -p 0-65535 --rate 500 -oL "$SAVEPATH"/ports
     }
+	
     run "$IP"
 }
 
