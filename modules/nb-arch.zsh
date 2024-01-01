@@ -162,9 +162,11 @@ nb-arch-scan-tcp() {
 nb-arch-scan-udp() {
     IP=${1:-$RHOST}
     SAVEPATH=$(create_scan_directory "$IP")
+	
     run() {
         nmap -sU -T4 --open --max-retries 1 "$1" -oX "$SAVEPATH"/ports-udp.xml
     }
+	
     run "$IP"
 }
 
@@ -218,6 +220,7 @@ nb-arch-file-sort-uniq-ip() {
 
 nb-arch-sudoers-easy() {
     __warn "This is dangerous for OPSEC! Remove when done."
+	
     print -z "echo \"$USER ALL=(ALL:ALL) NOPASSWD: /usr/bin/nmap, /usr/bin/masscan, /usr/sbin/tcpdump\" | sudo tee /etc/sudoers.d/$(whoami)"
 }
 
