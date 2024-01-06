@@ -47,12 +47,8 @@ nb-notes() {
             "ad-en") pushd "${__NOTES}/active-directory/1-domain-enumeration" &> /dev/null ;;
             "ad-ex") pushd "${__NOTES}/active-directory/2-exploitation" &> /dev/null ;;
             "ad-pe") pushd "${__NOTES}/active-directory/3-post-exploitation" &> /dev/null ;;
-            "pen") pushd "${__NOTES}/network-pentest" &> /dev/null ;;
-            "pen-en") pushd "${__NOTES}/network-pentest/1-enumeration" &> /dev/null ;;
-            "pen-ex") pushd "${__NOTES}/network-pentest/2-exploitation" &> /dev/null ;;
-            "pen-pe") pushd "${__NOTES}/network-pentest/3-post-exploitation" &> /dev/null ;;
             "red") pushd "${__NOTES}/red-team" &> /dev/null ;;
-            "red-re") pushd "${__NOTES}/red-team/1-recon" &> /dev/null ;;
+            "red-os") pushd "${__NOTES}/red-team/1-osint" &> /dev/null ;;
             "red-we") pushd "${__NOTES}/red-team/2-weaponization" &> /dev/null ;;
             "red-in") pushd "${__NOTES}/red-team/3-initial-access" &> /dev/null ;;
             "red-pe") pushd "${__NOTES}/red-team/4-post-exploitation" &> /dev/null ;;
