@@ -43,5 +43,5 @@ nb-enum-web-aws-s3-scanner() {
     __ask "Select a file that contains a list of S3 buckets"
     local f && __askpath f FILE $(pwd)
     __info "Use -d to dump buckets to local path"
-    print -z "python3 ${__TOOLS}/S3Scanner/s3scanner.py ${f}"
+    print -z "python ${__TOOLS}/S3Scanner/s3scanner.py ${f}"
 } 

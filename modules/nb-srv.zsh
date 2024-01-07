@@ -14,17 +14,17 @@ such as web, ftp, smb and other services for data exfil or transfer.
 Commands
 --------
 nb-srv-install          install dependencies
-nb-srv-web              hosts a python3 web server in current dir
-nb-srv-ftp              hosts a python3 ftp server in current dir
+nb-srv-web              hosts a python web server in current dir
+nb-srv-ftp              hosts a python ftp server in current dir
 nb-srv-smb              hosts an impacket smb server in current dir
 nb-srv-tftp             starts the atftpd service in /srv/tftp
-nb-srv-smtp             hosts a python3 smtp server in current dir
+nb-srv-smtp             hosts a python smtp server in current dir
 nb-srv-updog            hosts an updog web server in current dir
 nb-srv-nc-tar           hosts a netcat server > tar file in current dir
 nb-srv-nc-file          hosts a netcat server > file in current dir
-nb-srv-web-hosted       hosts a python3 web server in /srv, port as $1
+nb-srv-web-hosted       hosts a python web server in /srv, port as $1
 nb-srv-php-hosted       hosts a php web server in /srv, port as $1
-nb-srv-ftp-hosted       hosts a python3 ftp server in /srv
+nb-srv-ftp-hosted       hosts a python ftp server in /srv
 nb-srv-updog-hosted     hosts an updog web server in /srv
 
 DOC
@@ -47,11 +47,11 @@ nb-srv-web-hosted() {
     if [ "$#" -eq  "1" ]
     then
         pushd /srv &> /dev/null
-        sudo python3 -m http.server $1
+        sudo python -m http.server $1
         popd &> /dev/null
     else
         pushd /srv &> /dev/null
-        sudo python3 -m http.server 80
+        sudo python -m http.server 80
         popd &> /dev/null
     fi
 }
