@@ -16,13 +16,15 @@ Commands
 nb-shell-handlers-msf-install            installs dependencies
 nb-shell-handlers-msf-ssl-gen            impersonate a real SSL certificate for use in reverse shells
 nb-shell-handlers-msf-w64-multi-https    multi-handler for staged windows/x64/meterpreter/reverse_https payload
+nb-shell-handlers-msf-listener           set up metasploit listener
+nb-shell-handlers-msf-payload            set up metasploit payload
 
 DOC
 }
 
 nb-shell-handlers-install-msf() {
     __info "Running $0..."
-    __pkgs metasploit-framework
+    __pkgs metasploit
 }
 
 nb-shell-handlers-msf-ssl-gen() {
