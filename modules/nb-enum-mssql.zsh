@@ -52,7 +52,8 @@ nb-enum-mssql-impacket-client() {
     nb-vars-set-rhost
     __check-user
     local db && __askvar db DATABASE
-    print -z "python3 ${__IMPACKET}/mssqlclient.py ${__USER}@${__RHOST} -db ${db} -windows-auth "
+    #print -z "python ${__IMPACKET}/mssqlclient.py ${__USER}@${__RHOST} -db ${db} -windows-auth "
+	print -z "mssqlclient.py ${__USER}@${__RHOST} -db ${db} -windows-auth "
 }
 
 nb-enum-mssql-hydra() {

@@ -24,7 +24,7 @@ DOC
 
 nb-ad-kerb-install() {
     __info "Running $0..."
-    __pkgs tcpdump nmap impacket-scripts   
+    __pkgs tcpdump nmap impacket
 }
 
 nb-ad-kerb-nmap-sweep() {

@@ -15,7 +15,7 @@ are used to supply arguments to commands in other modules.
 
 Variables
 ---------
-__IMPACKET       full path to the python3 impacket examples directory
+__IMPACKET       full path to the python impacket examples directory
 __EXT_PHP        a list of file extensions used on PHP webservers
 __EXT_DOCS       a list of common documents file types
 __API_GITHUB     your personal Github API key
