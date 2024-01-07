@@ -10,6 +10,7 @@ Nobility is an organized colletion of shell functions designed to streamline you
 * **Recon Phase**: Access OSINT commands for efficient information gathering
 * **Enumeration Phase**: Effortlessly enumerate common services, saving time in penetration testing
 * **Exploit Phase**: Assistance in compiling exploits for simplified vulnerability exploitation
+* **AD Phase**: Assistance in **Active Directory** types of attacks
 * **Reverse Shell Handlers**: Manage reverse shell handlers easily, enhancing network-pentesting capabilities
 * **Content Serving Commands**: Serve content effortlessly, making file sharing and testing straightforward
 * **Built-in Logbook**: Keep on-the-fly notes and save commands with Nobility's built-in logbook feature
