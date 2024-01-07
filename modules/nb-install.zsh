@@ -391,7 +391,7 @@ nb-install-link-finder() {
 
         #after commands
         pushd $p 
-        sudo python3 setup.py install
+        sudo python setup.py install
         cat requirements.txt
         echo "Install tools listed in requirements using pacman"
         popd
@@ -400,7 +400,7 @@ nb-install-link-finder() {
         __warn "already installed in $p"
         pushd $p 
         git pull
-        python3 setup.py install
+        python setup.py install
         cat requirements.txt
         echo "Install tools listed in requirements using pacman"
         popd

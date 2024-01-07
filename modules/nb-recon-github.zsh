@@ -24,7 +24,7 @@ DOC
 
 nb-recon-github-install() {
     __info "Running $0..."
-    __pkgs curl jq python3 
+    __pkgs curl jq python 
     nb-install-golang
     nb-install-github-search
     nb-install-git-secrets
