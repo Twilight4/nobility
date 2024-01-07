@@ -58,14 +58,12 @@ source ~/.config/zsh/.zshrc
 ```
 
 # Getting Started
-Nobility categorizes commands into namespaces, denoted by the `nb-` prefix, exemplified by commands like `nb-enum-web` or `nb-recon-domains`.
+Nobility categorizes commands into namespaces, denoted by the `nb-` prefix, exemplified by commands like `nb-enum-web` or `nb-recon-domains`. To see an overview of all namespaces simply use `nb-help` command. 
 
-To see an overview of all namespaces simply use `nb-help` command. Each namespace features its own dedicated help command, such as `nb-enum-web-help` which provides a listing of available commands. All commands support tab completion and search. 
+Each namespace features its own dedicated help command, such as `nb-enum-web-help` which provides a listing of available commands. All commands support tab completion and search. 
 
 ## Installing Dependencies
-To set up the necessary dependencies for each namespace, execute the `nb-namespace-install` command. 
-
-This command ensures the installation of all tools relevant to the specified namespace. For installation of tools across all namespaces, use the `nb-install-all` command.
+To set up the necessary dependencies for each namespace, execute the `nb-namespace-install` command. This command ensures the installation of all tools relevant to the specified namespace. For installation of tools across all namespaces, use the `nb-install-all` command.
 
 # Workflow
 Nobility is designed to offer a sophisticated and flexible workflow. It eliminates the conventional, tedious process of manually navigating through notes, searching for commands, copying, pasting, and adjusting values before execution. 
