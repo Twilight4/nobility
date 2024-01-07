@@ -3,21 +3,21 @@
 ############################################################# 
 # nb-enum-kerb
 #############################################################
-nb-enum-kerb-help() {
+nb-ad-kerb-help() {
     cat << "DOC" | bat --plain --language=help
 
-nb-enum-kerb
+nb-ad-kerb
 ------------
 The nb-enum-kerb namespace contains commands for scanning and 
 enumerating kerberos records and servers.
 
 Commands
 --------
-nb-enum-kerb-install        installs dependencies
-nb-enum-kerb-nmap-sweep     scan a network for services
-nb-enum-kerb-tcpdump        capture traffic to and from a host
-nb-enum-kerb-users          enumerate domain users
-nb-enum-kerb-kerberoast     get SPN for a service account
+nb-ad-kerb-install        installs dependencies
+nb-ad-kerb-nmap-sweep     scan a network for services
+nb-ad-kerb-tcpdump        capture traffic to and from a host
+nb-ad-kerb-users          enumerate domain users
+nb-ad-kerb-kerberoast     get SPN for a service account
 
 DOC
 }
@@ -43,7 +43,7 @@ nb-enum-kerb-tcpdump() {
 nb-enum-kerb-users() {
     nb-vars-set-rhost
     local realm && __askvar realm REALM
-    print -z "nmap -vvv -p 88 --script krb5-enum-users --script-args krb5-enum-users.realm=${realm},userdb=/usr/share/seclists/Usernames/Names/names.txt ${__RHOST}"
+    print -z "nmap -v -p 88 --script krb5-enum-users --script-args krb5-enum-users.realm=${realm},userdb=/usr/share/seclists/Usernames/Names/names.txt ${__RHOST}"
 }
 
 nb-enum-kerb-kerberoast() {
