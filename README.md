@@ -1,9 +1,11 @@
 # Nobility
 
 Nobility is an organized colletion of shell functions designed to streamline your terminal interactions, liberating you from the hassle of juggling notes, endless copying and pasting, and tedious command editing. 
+
 This tool is tailored for Arch-based Linux systems, with a focus on enhancing red-teaming and network-pentesting endeavors. 
 Nobility doesn't cover all tools, it's my own curated collection which I am still adding to and updating in order to automate my workflow. 
 I focus on tools I use and that are maintained and current. 
+
 Nobility helps you remember how to use every tool in your arsenal and doesn't hide them behind scripting that can be cumbersome to maintain or update. 
 Instead you can use nobility to build a composable, on-the-fly workflow for every situation. 
 
