@@ -15,7 +15,6 @@ are used to supply arguments to commands in other modules.
 
 Variables
 ---------
-__IMPACKET       full path to the python impacket examples directory
 __EXT_PHP        a list of file extensions used on PHP webservers
 __EXT_DOCS       a list of common documents file types
 __API_GITHUB     your personal Github API key
@@ -36,7 +35,6 @@ DOC
 }
 
 nb-vars-global() {
-    echo "$(__cyan IMPACKET: ) ${__IMPACKET}"
     echo "$(__cyan EXT_PHP: ) ${__EXT_PHP}"
     echo "$(__cyan EXT_DOCS: ) ${__EXT_DOCS}"
     echo "$(__cyan API_GITHUB: ) ${__API_GITHUB}"
@@ -48,20 +46,6 @@ nb-vars-global() {
     echo "$(__cyan SHELL_SSL_CERT: ) ${__SHELL_SSL_CERT}"
     echo "$(__cyan ALIASES: ) ${__ALIASES}"
 }
-
-
-############################################################# 
-# __IMPACKET
-#############################################################
-export __IMPACKET=$(cat ${__GLOBALS}/IMPACKET 2> /dev/null || echo "/usr/share/doc/python3-impacket/examples/")
-
-nb-vars-global-set-impacket() {
-    __ask "Set the full path to the python3-impacket/examples directory."
-    __askpath __IMPACKET DIR /
-    echo "${__IMPACKET}" > ${__GLOBALS}/IMPACKET
-}
-
-__check-impacket() { [[ -z "${__PROJECT}" ]] && nb-vars-global-set-impacket }
 
 
 ############################################################# 

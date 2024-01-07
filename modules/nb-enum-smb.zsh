@@ -95,7 +95,7 @@ nb-enum-user-smb-mount() {
 
 nb-enum-smb-samrdump() {
   nb-vars-set-rhost
-  print -z "python3 ${__IMPACKET}/samrdump.py ${__RHOST}"
+  print -z "samrdump.py ${__RHOST}"
 }
 
 nb-enum-smb-responder() {
