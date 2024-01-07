@@ -34,7 +34,7 @@ DOC
 
 nb-enum-smb-install() {
   __info "Running $0..."
-  __pkgs nmap tcpdump smbmap enum4linux smbclient impacket-scripts responder nbtscan rpcclient
+  __pkgs nmap tcpdump smbmap enum4linux smbclient impacket responder nbtscan rpcclient
 }
 
 nb-enum-smb-nmap-sweep() {

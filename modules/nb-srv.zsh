@@ -33,8 +33,7 @@ DOC
 nb-srv-install() {
     __info "Running $0..."
     __pkgs netcat atftpd 
-    __pkgs php python3 python3-pip python3-smb python3-pyftpdlib impacket-scripts
-    sudo pip3 install updog
+    __pkgs php python python-pip python-smb python-pyftpdlib impacket python-updog
 }
 
 nb-srv-web() print -z "sudo python -m http.server 80"
@@ -74,7 +73,7 @@ nb-srv-php-hosted() {
 nb-srv-ftp-hosted() {
     __info "Serving content from /srv"
     pushd /srv &> /dev/null
-    sudo python3 -m pyftpdlib -p 21 -w
+    sudo python -m pyftpdlib -p 21 -w
     popd &> /dev/null
 }
 

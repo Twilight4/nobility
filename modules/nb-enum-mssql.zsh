@@ -25,7 +25,7 @@ DOC
 
 nb-enum-mssql-install() {
     __info "Running $0..."
-    __pkgs tcpdump nmap sqsh impacket-scripts hydra
+    __pkgs tcpdump nmap sqsh impacket hydra
 }
 
 nb-enum-mssql-nmap-sweep() {
@@ -52,7 +52,6 @@ nb-enum-mssql-impacket-client() {
     nb-vars-set-rhost
     __check-user
     local db && __askvar db DATABASE
-    #print -z "python ${__IMPACKET}/mssqlclient.py ${__USER}@${__RHOST} -db ${db} -windows-auth "
 	print -z "mssqlclient.py ${__USER}@${__RHOST} -db ${db} -windows-auth "
 }
 
