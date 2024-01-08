@@ -28,8 +28,8 @@ __ALIASES        path to the file containing aliases that will be sourced
 
 Commands
 --------
-nb-vars-global:            list all current global variable values
-nb-vars-global-set-*:      used to set and save each individual variable
+nb-vars-global            list all current global variable values
+nb-vars-global-set-*      used to set and save each individual variable
 
 DOC
 }

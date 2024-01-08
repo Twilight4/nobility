@@ -181,7 +181,7 @@ nb-arch-ps-dtach() {
     dtach -A ${p} /bin/zsh 
 }
 
-nb-qrch-path-add() { 
+nb-arch-path-add() { 
     __ask "Enter new path to append to current PATH"
     local p && __askpath p PATH /   
     print -z "echo \"export PATH=\$PATH:${p}\" | tee -a $HOME/.zshrc" 
