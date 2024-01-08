@@ -13,11 +13,12 @@ enumerating Active Directory DC, GC and LDAP servers.
 
 Commands
 --------
-nb-ad-smb-relay-install        installs dependencies
-nb-ad-smb-relay-enum           identify hosts without smb signing
-nb-ad-smb-relay-responder      capture and replay the SMB requests
-nb-ad-smb-relay-multirelay     query ldap naming contexts
-nb-ad-smb-relay-ntlmrelay      connect with anonymous bind and query ldap
+nb-ad-smb-relay-install              installs dependencies
+nb-ad-smb-relay-enum                 identify hosts without smb signing
+nb-ad-smb-relay-responder            capture and replay the SMB requests
+nb-ad-smb-relay-ntlmrelay-shell      get interactive shell
+nb-ad-smb-relay-ntlmrelay-command    execute a shell command on a target host using ntlmrelayx.py
+nb-ad-smb-relay-multirelay-command   execute a shell command on a target host using multirelay.py
 
 DOC
 }
