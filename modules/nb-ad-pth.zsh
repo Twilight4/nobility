@@ -31,8 +31,8 @@ nb-ad-pth-install() {
 
 nb-ad-pth-pass() {
     __check-project
-    __ask "Enter a domain"
-	__check-domain
+    __ask "Enter target AD domain (must also be set in your hosts file)"
+    nb-vars-set-domain
     __ask "Enter a user account"
 	__check-user
 	__ask "Enter a password for authentication"
