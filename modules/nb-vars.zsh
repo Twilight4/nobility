@@ -310,6 +310,9 @@ __check-user() { __askvar __USER USER }
 export __PASS
 __check-pass() { __askvar __PASS PASS }
 
+export __HASH
+__check-hash() { __askvar __HASH HASH }
+
 export __SHARE
 __check-share() { __askvar __SHARE SHARE }
 
