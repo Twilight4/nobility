@@ -22,3 +22,28 @@ nb-ad-smb-relay-multirelay-command   execute a shell command on a target host us
 
 DOC
 }
+
+nb-ad-smb-relay-install() {
+    __info "Running $0..."
+    __pkgs crackmapexec
+}
+
+nb-ad-smb-relay-enum() {
+
+}
+
+nb-ad-smb-relay-responder() {
+
+}
+
+nb-ad-smb-relay-ntlmrelay-shell() {
+
+}
+
+nb-ad-smb-relay-ntlmrelay-command() {
+
+}
+
+nb-ad-smb-relay-multirelay-command() {
+
+}
