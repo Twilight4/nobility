@@ -38,8 +38,8 @@ nb-ad-asrep-roast-brute(){
 nb-ad-asrep-roast-crack(){
 	__ask "Enter the hash"
 	__check-hash
-	__ask "Enter a users passlist"
+	__ask "Enter a password wordlist"
 	nb-vars-set-passlist
 
-	print -z "hashcat -m 18200 -a 0 ${__HASH} ${__PASLIST}"
+	print -z "hashcat -m 18200 -a 0 ${__HASH} ${__PASSLIST}"
 }
