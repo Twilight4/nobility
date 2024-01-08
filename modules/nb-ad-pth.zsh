@@ -31,14 +31,14 @@ nb-ad-pth-install() {
 
 nb-ad-pth-pass() {
     __check-project
-    __ask "Enter a distinguished name (DN), such as: DC=example,DC=com"
-    local dn && __askvar dn DN
+    __ask "Enter a domain"
+	__check-domain
     __ask "Enter a user account"
 	__check-user
 	__ask "Enter a password for authentication"
 	__check-pass
     nb-vars-set-network
-    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${dn} -p ${PASS}"
+    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p ${__PASS}"
 }
 
 nb-ad-pth-exploit() {
