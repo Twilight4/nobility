@@ -30,25 +30,37 @@ nb-ad-pth-install() {
 }
 
 nb-ad-pth-pass() {
+    __check-project
+    nb-vars-set-network
 
 }
 
 nb-ad-pth-exploit() {
+    __check-project
+    nb-vars-set-network
 
 }
 
 nb-ad-pth-sam() {
+    __check-project
+    nb-vars-set-network
 
 }
 
 nb-ad-pth-enum() {
+    __check-project
+    nb-vars-set-network
 
 }
 
 nb-ad-pth-lsa() {
+    __check-project
+    nb-vars-set-network
 
 }
 
-nb-ad-pth-lsassy  () {
+nb-ad-pth-lsassy() {
+    __check-project
+    nb-vars-set-network
 
 }

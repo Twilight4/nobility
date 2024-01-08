@@ -127,6 +127,7 @@ nb-vars-set-project() {
   mkdir -p ${__PROJECT}
 }
 
+# Check if output dir exists, if not, set it
 __check-project() { [[ -z "${__PROJECT}" ]] && nb-vars-set-project }
 
 
