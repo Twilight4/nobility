@@ -1,13 +1,14 @@
 #!/usr/bin/env zsh
 
 ############################################################# 
-# nb-ad-pass-the-hash
+# nb-ad-pth
 #############################################################
-nb-ad-pass-the-hash-help() {
+nb-ad-pth-help() {
     cat << "DOC" | bat --plain --language=help
 
-nb-enum-kerb
+nb-ad-pth
 ------------
+nb-ad-pth
 
 Commands
 --------
