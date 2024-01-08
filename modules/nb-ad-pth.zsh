@@ -8,7 +8,8 @@ nb-ad-pth-help() {
 
 nb-ad-pth
 ------------
-The
+The nb-ad-pth namespace contains commands for pass-the-hash
+attack on Active Directory DC server.
 
 Commands
 --------
@@ -21,4 +22,33 @@ nb-ad-pth-lsa             use CME to dump LSA
 nb-ad-pth-lsassy          use CME to dump LSASSY
 
 DOC
+}
+
+nb-ad-pth-install() {
+    __info "Running $0..."
+    __pkgs crackmapexec
+}
+
+nb-ad-pth-pass() {
+
+}
+
+nb-ad-pth-exploit() {
+
+}
+
+nb-ad-pth-sam() {
+
+}
+
+nb-ad-pth-enum() {
+
+}
+
+nb-ad-pth-lsa() {
+
+}
+
+nb-ad-pth-lsassy  () {
+
 }
