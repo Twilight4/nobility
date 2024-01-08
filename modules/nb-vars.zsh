@@ -307,6 +307,9 @@ __check-threads() { __askvar __THREADS THREADS }
 export __USER
 __check-user() { __askvar __USER USER }
 
+export __PASS
+__check-pass() { __askvar __PASS PASS }
+
 export __SHARE
 __check-share() { __askvar __SHARE SHARE }
 
