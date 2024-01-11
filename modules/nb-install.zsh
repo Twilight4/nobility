@@ -26,7 +26,6 @@ nb-install-wordlist-commonspeak
 nb-install-wordlist-nerdlist
 nb-install-github-search
 nb-install-git-secrets
-nb-install-gitrob
 nb-install-pentest-tools
 nb-install-protonvpn
 nb-install-nmap-elasticsearch-nse

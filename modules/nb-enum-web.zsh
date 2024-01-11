@@ -30,9 +30,7 @@ DOC
 
 nb-enum-web-install() {
     __info "Running $0..."
-    __pkgs tcpdump nmap whatweb wafw00f gobuster eyewitness wpscan wget curl seclists wordlists 
-    go get -u github.com/jaeles-project/gospider
-    go get -u github.com/hakluke/hakrawler
+    __pkgs tcpdump nmap whatweb wafw00f gobuster eyewitness wpscan wget curl seclists wordlists hakrawler gospider
 }
 
 nb-enum-web-nmap-sweep() {
