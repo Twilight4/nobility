@@ -29,10 +29,7 @@ DOC
 
 nb-enum-web-php-install() {
     __info "Running $0..."
-    __pkgs curl seclists wordlists
-    nb-install-golang
-    go get -u github.com/ffuf/ffuf
-    go get -v -u github.com/tomnomnom/httprobe
+    __pkgs curl seclists wordlists ffuf httprobe
 }
 
 nb-enum-web-php-ffuf() {
