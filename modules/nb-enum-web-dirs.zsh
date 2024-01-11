@@ -24,10 +24,7 @@ DOC
 
 nb-enum-web-dirs-install() {
     __info "Running $0..."
-    __pkgs parsero gobuster wfuzz curl seclists wordlists 
-    nb-install-golang
-    go get -u github.com/ffuf/ffuf
-    go get -v -u github.com/tomnomnom/httprobe
+    __pkgs parsero gobuster wfuzz curl seclists wordlists ffuf httprobe
 }
 
 nb-enum-web-dirs-robots() {
