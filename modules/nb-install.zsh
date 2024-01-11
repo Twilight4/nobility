@@ -256,19 +256,6 @@ nb-install-git-secrets() {
     fi
 }
 
-nb-install-gitrob() {
-    local name="gitrob"
-
-    __info "$name"
-
-    go get -u github.com/golang/dep/cmd/dep
-    go get -u github.com/codeEmitter/gitrob
-    pushd ~/go/src/github.com/codeEmitter/gitrob
-    dep ensure
-    go build
-    popd
-}
-
 nb-install-pentest-tools() {
     local name="pentest-tools"
     local url="https://github.com/gwen001/pentest-tools.git"
