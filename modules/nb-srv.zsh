@@ -36,11 +36,25 @@ nb-srv-install() {
     __pkgs php python python-pip python-smb python-pyftpdlib impacket python-updog
 }
 
-nb-srv-web() print -z "sudo python -m http.server 80"
-nb-srv-ftp() print -z "sudo python -m pyftpdlib -p 21 -w"
-nb-srv-smb() print -z "sudo impacket-smbserver -smb2supp F ."
-nb-srv-tftp() print -z "sudo service atftpd start"
-nb-srv-smtp() print -z "sudo python -m smtpd -c DebuggingServer -n 0.0.0.0:25"
+nb-srv-web() {
+	print -z "sudo python -m http.server 80"
+}
+
+nb-srv-ftp() {
+	print -z "sudo python -m pyftpdlib -p 21 -w"
+}
+
+nb-srv-smb() {
+	print -z "sudo impacket-smbserver -smb2supp F ."
+}
+
+nb-srv-tftp() {
+	print -z "sudo service atftpd start"
+}
+
+nb-srv-smtp() {
+	print -z "sudo python -m smtpd -c DebuggingServer -n 0.0.0.0:25"
+}
 
 nb-srv-web-hosted() {
     __info "Serving content from /srv"
