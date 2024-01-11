@@ -33,9 +33,9 @@ __PASSLIST    path to a wordlist for password brute forcing, ex: /usr/share/word
 
 Commands
 --------
-nb-vars           alias qv, list all current variable values
-nb-vars-save      alias qvs, save all current variable values ($HOME/.nobility)
-nb-vars-load      alias qvl, restores all current variable values ($HOME/.nobility)
+nb-vars           list all current variable values
+nb-vars-save      save all current variable values ($HOME/.nobility)
+nb-vars-load      restores all current variable values ($HOME/.nobility)
 nb-vars-clear     clears all current variable values
 nb-vars-set-*     used to set each individual variable
 
@@ -57,7 +57,6 @@ nb-vars() {
   echo "$(__cyan __WORDLIST: ) ${__WORDLIST}"
   echo "$(__cyan __PASSLIST: ) ${__PASSLIST}"
 }
-alias qv="nb-vars"
 
 nb-vars-clear() {
   __PROJECT=""
@@ -91,7 +90,6 @@ nb-vars-save() {
   echo "${__PASSLIST}" > $__VARS/PASSLIST
   nb-vars
 }
-alias qvs="nb-vars-save"
 
 nb-vars-load() {
     __PROJECT=$(cat $__VARS/PROJECT) 
