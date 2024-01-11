@@ -107,7 +107,6 @@ nb-vars-load() {
     __PASSLIST=$(cat $__VARS/PASSLIST)
     nb-vars
 }
-alias qvl="nb-vars-load"
 
 
 ############################################################# 
