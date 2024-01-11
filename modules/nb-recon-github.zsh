@@ -24,11 +24,10 @@ DOC
 
 nb-recon-github-install() {
     __info "Running $0..."
-    __pkgs curl jq python 
+    __pkgs curl jq python gitrob
     nb-install-golang
     nb-install-github-search
     nb-install-git-secrets
-    nb-install-gitrob
 }
 
 nb-recon-github-user-repos() {
@@ -44,15 +43,4 @@ nb-recon-github-endpoints() {
     nb-vars-set-domain
     mkdir -p ${__PROJECT}/source
     print -z "github-endpoints.py -t ${__API_GITHUB} -d ${__DOMAIN} | tee -a ${__PROJECT}/source/${__DOMAIN}.endpoints.txt "
-}
-
-nb-recon-github-gitrob() {
-    __check-api-github
-    __check-project
-    __check-user
-    local d=${__PROJECT}/source/${__USER}
-    mkdir -p $d
-    cp $HOME/go/src/github.com/codeEmitter/gitrob/filesignatures.json $d
-    __info "Gitrob UI: http://127.0.0.1:9393/"
-    print -z "pushd $d ;gitrob -in-mem-clone -save \"$d/output.json\" -github-access-token $__API_GITHUB ${__USER} && popd"
 }
