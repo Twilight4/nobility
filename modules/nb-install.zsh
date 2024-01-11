@@ -66,8 +66,8 @@ nb-install-all() {
         nb-enum-dns-install
         nb-enum-ftp-install
         nb-enum-host-install
-        nb-enum-kerb-install
-        nb-enum-ldap-install
+        nb-ad-kerb-install
+        nb-ad-ldap-install
         nb-enum-mssql-install
         nb-enum-mysql-install
         nb-enum-network-install
@@ -309,7 +309,6 @@ nb-install-git-secrets() {
 }
 
 nb-install-gitrob() {
-
     local name="gitrob"
 
     __info "$name"
