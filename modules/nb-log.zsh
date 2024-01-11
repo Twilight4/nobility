@@ -49,4 +49,3 @@ nb-log() {
     echo " " >> ${__LOGBOOK}
 
 }
-alias ql="nb-log"

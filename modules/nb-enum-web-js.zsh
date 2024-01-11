@@ -24,7 +24,8 @@ DOC
 
 nb-enum-web-js-install() {
     __info "Running $0..."
-    __pkgs jsbeautifier nb-install-link-finder
+    __pkgs jsbeautifier
+	nb-install-link-finder
     nb-install-node
     npm i -g eslint
 }
