@@ -10,6 +10,7 @@ nb-recon-subs
 -------------
 The recon namespace provides commands to recon vertical sub-domains of a root domain.
 All subdomains for a domain will be stored in $__PROJECT/amass and $__PROJECT/domains/$DOMAIN/subs.txt.
+You can sort unique this file in place with the "sfu" alias.
 
 Commands
 --------

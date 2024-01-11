@@ -15,7 +15,7 @@ Commands
 --------
 nb-install-all                installs all dependecies in all modules, calling nb-*-install 
 nb-install-git-pull-tools     updates all install tools that are git repos
-nb-install-dev                installs pyhton3, php, npm and libraries
+nb-install-dev                installs python, php, npm and libraries
 nb-install-golang             installs golang and environment variables needed for "go get"
 
 Tools
