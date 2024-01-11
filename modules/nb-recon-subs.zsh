@@ -41,10 +41,7 @@ DOC
 nb-recon-subs-install() {
     __info "Running $0..."
     __pkgs gobuster amass curl wordlists seclists dnsrecon dnsutils
-
-	paru -S subfinder assetfinder waybackurls
-
-    nb-install-massdns
+	__pkgs subfinder assetfinder waybackurls massdns
 }
 
 nb-recon-subs-amass-enum() {

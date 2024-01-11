@@ -68,6 +68,9 @@ nb-install-all() {
         nb-enum-host-install
         nb-ad-kerb-install
         nb-ad-ldap-install
+		nb-ad-pth-install
+		nb-ad-smb-relay-install
+		nb-ad-asrep-roast-install
         nb-enum-mssql-install
         nb-enum-mysql-install
         nb-enum-network-install
