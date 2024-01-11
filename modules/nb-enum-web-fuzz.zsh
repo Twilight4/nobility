@@ -27,11 +27,8 @@ DOC
 
 nb-enum-web-fuzz-install() {
     __info "Running $0..."
-    __pkgs seclists wordlists wfuzz hydra
-    nb-install-golang
-    go get -u github.com/ffuf/ffuf
+    __pkgs seclists wordlists wfuzz hydra ffuf
 }
-
 
 nb-enum-web-fuzz-auth-basic-payloads() {
     nb-vars-set-wordlist
