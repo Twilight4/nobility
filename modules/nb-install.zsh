@@ -24,9 +24,7 @@ These installers are for individual tools.
 
 nb-install-wordlist-commonspeak
 nb-install-wordlist-nerdlist
-nb-install-massdns
 nb-install-github-search
-nb-install-s3scanner
 nb-install-git-secrets
 nb-install-gitrob
 nb-install-pentest-tools
@@ -196,61 +194,9 @@ nb-install-wordlist-nerdlist() {
     fi
 }
 
-nb-install-massdns() {
-    local name="massdns"
-    local url="https://github.com/blechschmidt/massdns.git"
-    local p="$__TOOLS/$name"
-
-    __info "$name"
-
-    if [[ ! -d $p ]]
-    then
-        git clone $url $p
-
-        #after commands
-        pushd $p
-        make
-        popd
-        __addpath $p/bin
-    else
-        __warn "already installed in $p"
-        pushd $p 
-        git pull
-        make
-        popd
-    fi
-}
-
 nb-install-github-search() {
     local name="github-search"
     local url="https://github.com/gwen001/github-search.git"
-    local p="$__TOOLS/$name"
-
-    __info "$name"
-
-    if [[ ! -d $p ]]
-    then
-        git clone $url $p
-
-        #after commands
-        pushd $p
-        cat requirements.txt
-        echo "Install tools listed in requirements using pacman"
-        popd
-        __addpath $p
-    else
-        __warn "already installed in $p"
-        pushd $p 
-        git pull
-        cat requirements.txt
-        echo "Install tools listed in requirements using pacman"
-        popd
-    fi
-}
-
-nb-install-s3scanner() {
-    local name="S3Scanner"
-    local url="https://github.com/sa7mon/S3Scanner.git"
     local p="$__TOOLS/$name"
 
     __info "$name"

@@ -23,8 +23,7 @@ DOC
 
 nb-enum-web-aws-install() {
     __info "Running $0..."
-    __pkgs awscli
-    nb-install-s3scanner
+    __pkgs awscli s3scanner
 }
 
 nb-enum-web-aws-s3-ls() {
