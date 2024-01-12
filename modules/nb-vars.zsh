@@ -112,7 +112,7 @@ nb-vars-load() {
 ############################################################# 
 # __PROJECT
 #############################################################
-export __PROJECT="~/desktop/projects/"
+export __PROJECT="$HOME/desktop/projects/"
 
 nb-vars-set-project() {
   __ask "Set the full path to the project root directory where all command output will be directed"
@@ -131,7 +131,7 @@ __check-project() { [[ -z "${__PROJECT}" ]] && nb-vars-set-project }
 ############################################################# 
 # __LOGBOOK
 #############################################################
-export __LOGBOOK="~/documents/org/projects/logbook"
+export __LOGBOOK="$HOME/documents/org/projects/logbook/logbook.org"
 
 nb-vars-set-logbook() {
   __ask "Set the full path to the directory of the logbook file (filename not included)."
