@@ -14,9 +14,10 @@ a directory specified by the __LOGBOOK variable.
 Commands
 --------
 nb-log            appends $@ to an entry in the logbook
+nb-log-set        creates or uses existing logbook.org in the path specified
 nb-log-cat        cats the logbook
 nb-log-edit       edits the logbook using $EDITOR
-nb-log-set        creates or uses existing logbook.org in the path specified
+nb-log-edit       deletes the logbook
 
 DOC
 }
