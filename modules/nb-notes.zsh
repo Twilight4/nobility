@@ -14,6 +14,7 @@ stored in a directory specified by the __NOTES environment variable (nb-vars-glo
 Commands
 --------
 nb-notes-install     installs dependencies
+nb-notes-clone       clone my personal notes
 nb-notes             select directory to enter in $__NOTES
 nb-notes-cat         select note to output
 nb-notes-content     select note to output with searching by content
@@ -25,7 +26,9 @@ DOC
 nb-notes-install() {
     __info "Running $0..."
     __pkgs fzf ripgrep
-	
+}
+
+nb-notes-clone() {
 	if [ ! -d "$HOME/documents/org" ]; then
 		git clone --depth 1 git@github.com:Twilight4/org.git ~/documents/org && echo "Repository cloned successfully."
 	else
