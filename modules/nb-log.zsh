@@ -33,7 +33,7 @@ nb-log-cat() {
 
 nb-log-edit() {
     __check-logbook
-    $EDITOR ${__LOGBOOK}
+    eval $EDITOR ${__LOGBOOK}
 }
 
 nb-log() {
