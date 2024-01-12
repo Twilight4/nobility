@@ -9,16 +9,14 @@ nb-log-help() {
 nb-log
 -------------
 The log namespace provides commands that create a logbook in
-a directory specified by the __LOGBOOK variable. Use nb-log to append entries
-to the logbook. Display the log with nb-log-cat. Edit the log
-with nb-log-edit.
+a directory specified by the __LOGBOOK variable.
 
 Commands
 --------
-nb-log              appends $@ to an entry in the logbook
-nb-log-cat          cats the logbook
-nb-log-edit         edits the logbook using $EDITOR
-nb-log-set          creates or uses existing logbook.org in the path specified
+nb-log            appends $@ to an entry in the logbook
+nb-log-cat        cats the logbook
+nb-log-edit       edits the logbook using $EDITOR
+nb-log-set        creates or uses existing logbook.org in the path specified
 
 DOC
 }
