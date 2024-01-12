@@ -14,9 +14,10 @@ stored in a directory specified by the __NOTES environment variable (nb-vars-glo
 Commands
 --------
 nb-notes-install     installs dependencies
-nb-notes             select which note to output in $__NOTES or search by stage if argument is supplied
-nb-notes-content     select which note to output in $__NOTES with searching by content
-nb-notes-edit        list all notes in $__NOTES and edit selected note
+nb-notes             select directory to enter in $__NOTES
+nb-notes-cat         select note to output
+nb-notes-content     select note to output with searching by content
+nb-notes-edit        select note to edit
 
 DOC
 }
@@ -34,32 +35,9 @@ nb-notes-install() {
 
 nb-notes() {
     __check-notes
-
     pushd "${__NOTES}" &> /dev/null
 
-    # Check if at least one argument is provided
-    if [ $# -gt 0 ]; then
-        arg="$1"
-
-        # Check if the argument is one of the predefined shortcuts
-        case "$arg" in
-            "ad") pushd "${__NOTES}/active-directory" &> /dev/null ;;
-            "ad-en") pushd "${__NOTES}/active-directory/1-domain-enumeration" &> /dev/null ;;
-            "ad-ex") pushd "${__NOTES}/active-directory/2-exploitation" &> /dev/null ;;
-            "ad-pe") pushd "${__NOTES}/active-directory/3-post-exploitation" &> /dev/null ;;
-            "red") pushd "${__NOTES}/red-team" &> /dev/null ;;
-            "red-os") pushd "${__NOTES}/red-team/1-osint" &> /dev/null ;;
-            "red-we") pushd "${__NOTES}/red-team/2-weaponization" &> /dev/null ;;
-            "red-in") pushd "${__NOTES}/red-team/3-initial-access" &> /dev/null ;;
-            "red-pe") pushd "${__NOTES}/red-team/4-post-exploitation" &> /dev/null ;;
-            "red-ao") pushd "${__NOTES}/red-team/5-action-on-objectives" &> /dev/null ;;
-            *) pushd "${__NOTES}" &> /dev/null ;; # Default case
-        esac
-
-        # Shift the processed argument
-        shift
-    else
-        # If no argument is provided, use fzf to select a directory from the first layer
+        # Use fzf to select a directory from the first layer
         selected_directory=$(find . -maxdepth 1 -type d -not -name "." | sed 's|^\./||' | fzf --select-1 --exit-0 \
         --reverse --preview 'exa --tree --group-directories-first --git-ignore --level 2 {}')
 
@@ -74,10 +52,15 @@ nb-notes() {
     fi
 
 	# don't do ls after cd
-	export ENHANCD_HOOK_AFTER_CD=""
+	#export ENHANCD_HOOK_AFTER_CD=""
 
-	# select a directory of notes using fzf (enhancd)
-	cd .
+	# return to directory
+	popd &> /dev/null
+}
+
+nb-notes-cat() {
+    __check-notes
+    pushd "${__NOTES}" &> /dev/null
 
 	# select with preview which note to output
 	selected_file=$(find . -type f | fzf --query="$1" --no-multi --select-1 --exit-0 \
@@ -87,14 +70,13 @@ nb-notes() {
 	if [[ -n "$selected_file" ]]; then
 		sed -e 's/^\* .*$/\x1b[94m&\x1b[0m/' -e 's/^\*\*.*$/\x1b[96m&\x1b[0m/' -e 's/=\([^=]*\)=/\o033[1;32m\1\o033[0m/g; s/^\( \{0,6\}\)-/•/g' -e '/^\(:PROPERTIES:\|:ID:\|:END:\|#\+date:\)/d' "$selected_file" | command bat --language=org --style=plain --color=always
 	fi
-	
+
 	# return to directory
 	popd &> /dev/null
 }
 
 nb-notes-content() {
     __check-notes
-
     pushd "${__NOTES}" &> /dev/null
 
     # select by content which note to output
