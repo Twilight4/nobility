@@ -44,7 +44,7 @@ nb-log-clear() {
 nb-log() {
     __check-logbook
 
-    local stamp=$(date +'%m-%d-%Y : %r')
+    local stamp=$(date +'%d-%m-%Y : %r')
     echo "*** ${stamp}" >> ${__LOGBOOK}
     echo "- =$@=" >> ${__LOGBOOK}
     echo " " >> ${__LOGBOOK}
