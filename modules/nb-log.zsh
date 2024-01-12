@@ -57,7 +57,7 @@ nb-log-scan() {
     local stamp=$(date +'%A %d-%m-%Y : %T %Z')
     echo " " >> ${__LOGBOOK}
 	echo "*** ${stamp}" >> ${__LOGBOOK}
-    echo "#+begin_src bash" >> ${__LOGBOOK}
+    echo "#+begin_src sh" >> ${__LOGBOOK}
     echo "$@" >> ${__LOGBOOK}
 	echo "#+end_src" >> ${__LOGBOOK}
 }
