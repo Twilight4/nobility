@@ -14,10 +14,11 @@ a directory specified by the __LOGBOOK variable.
 Commands
 --------
 nb-log            appends $@ to an entry in the logbook
+nb-log-scan       pastes from clipboard to an entry in the logbook in code format (using wl-clipboard)
 nb-log-set        creates or uses existing logbook.org in the path specified
 nb-log-cat        cats the logbook
 nb-log-edit       edits the logbook using $EDITOR
-nb-log-edit       deletes the logbook
+nb-log-clear      deletes the logbook
 
 DOC
 }
@@ -58,6 +59,7 @@ nb-log-scan() {
     echo " " >> ${__LOGBOOK}
 	echo "*** ${stamp}" >> ${__LOGBOOK}
     echo "#+begin_src bash" >> ${__LOGBOOK}
-    echo "$@" >> ${__LOGBOOK}
+	echo "$(wl-paste)" >> ${__LOGBOOK}
+    #echo "$@" >> ${__LOGBOOK}
 	echo "#+end_src" >> ${__LOGBOOK}
 }
