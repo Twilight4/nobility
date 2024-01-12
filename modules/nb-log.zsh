@@ -40,10 +40,9 @@ nb-log() {
     __check-logbook
 
     local stamp=$(date +'%m-%d-%Y : %r')
-    echo "## ${stamp}" >> ${__LOGBOOK}
-    echo "\`\`\`" >> ${__LOGBOOK}
+    echo "*** ${stamp}" >> ${__LOGBOOK}
+    echo "\`\`\`shell" >> ${__LOGBOOK}
     echo "$@" >> ${__LOGBOOK}
     echo "\`\`\`" >> ${__LOGBOOK}
     echo " " >> ${__LOGBOOK}
-
 }
