@@ -52,10 +52,11 @@ nb-arch-new-project() {
 
     # Ask for assessment type
     echo "Assessment types:"
-    echo "2. external-pentest"
+    echo "1. external-pentest"
 	echo "2. internal-pentest"
-    echo "1. red-team"
-    echo "3. social-engineering pentest"
+    echo "3. red-team-engagement"
+    echo "4. social-engineering-pentest"
+	echo "5. wireless-pentest"
 
     # Read assessment choice
     echo -n "Enter assessment type number: "
