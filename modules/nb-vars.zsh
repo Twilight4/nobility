@@ -131,7 +131,7 @@ __check-project() { [[ -z "${__PROJECT}" ]] && nb-vars-set-project }
 ############################################################# 
 # __LOGBOOK
 #############################################################
-export __LOGBOOK=""
+export __LOGBOOK="~/documents/org/projects/logbook"
 
 nb-vars-set-logbook() {
   __ask "Set the full path to the directory of the logbook file (filename not included)."
