@@ -52,18 +52,21 @@ nb-arch-new-project() {
 
     # Ask for assessment type
     echo "Assessment types:"
+    echo "2. external-pentest"
+	echo "2. internal-pentest"
     echo "1. red-team"
-    echo "2. network-pentest"
-    echo "3. osint"
+    echo "3. social-engineering pentest"
 
     # Read assessment choice
     echo -n "Enter assessment type number: "
     read assessment_choice
 
     case $assessment_choice in
-        1) assessment_type="red-team";;
-        2) assessment_type="network-pentest";;
-        3) assessment_type="osint";;
+        1) assessment_type="external-pentest";;
+		2) assessment_type="internal-pentest";;
+        3) assessment_type="red-team-engagement";;
+		4) assessment_type="social-engineering-pentest";;
+        5) assessment_type="wireless-pentest";;
         *) echo -e "\nInvalid choice. Aborting."; return 1;;
     esac
 
