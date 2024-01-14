@@ -17,7 +17,7 @@ Instead you can use nobility to build a composable, on-the-fly workflow for ever
 * **Recon Phase**: Access OSINT commands for efficient information gathering
 * **Enumeration Phase**: Effortlessly enumerate common services, saving time in penetration testing
 * **Exploit Phase**: Assistance in compiling exploits for simplified vulnerability exploitation
-* **AD Phase**: Assistance in **Active Directory** types of attacks
+* **AD Phase**: Assistance in **Active Directory** types of attack
 * **Reverse Shell Handlers**: Manage reverse shell handlers easily, enhancing network-pentesting capabilities
 * **Content Serving Commands**: Serve content effortlessly, making file sharing and testing straightforward
 * **Built-in Logbook**: Keep on-the-fly notes and save commands with Nobility's built-in logbook feature
