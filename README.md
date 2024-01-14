@@ -33,7 +33,7 @@ Nobility requires the following:
 * [Zsh](https://github.com/zsh-users/zsh)
 * [Oh-my-zsh](https://ohmyz.sh/) (optional)
 
-## Installation using Oh-my-zsh
+## Installation with Oh-my-zsh
 ```bash
 # Clone the repo to your oh-my-zsh custom plugins directory
 git clone https://github.com/Twilight4/nobility.git ~/.oh-my-zsh/custom/plugins/nobility
