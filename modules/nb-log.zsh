@@ -19,6 +19,7 @@ nb-log-cat        cats the logbook
 nb-log-edit       edits the logbook using $EDITOR
 nb-log-clear      deletes the logbook
 nb-log-scan       pastes from clipboard to an entry in the logbook in code format (uses wl-clipboard)
+nb-log-append     append additional information to the last logbook entry
 nb-log-full       asks for full detailed logs for an entry
 
 DOC
@@ -111,6 +112,10 @@ nb-log-scan() {
   echo "#+end_src" >> ${__LOGBOOK}
 
   __info "Log entry added to ${__LOGBOOK}"
+}
+
+nb-log-append() {
+
 }
 
 nb-log-full() {
