@@ -58,10 +58,10 @@ nb-log() {
         # Log the information to the logbook.org file
         echo " " >> ${__LOGBOOK}
         echo "*** $title" >> ${__LOGBOOK}
-	    echo "#+date: ${stamp}" >> ${__LOGBOOK}
-		echo " "
+	      echo "#+date: ${stamp}" >> ${__LOGBOOK}
+		    echo " "
     else
-		echo " "
+		    echo " "
         __warn "No title provided. Exiting."
 		return
     fi
@@ -72,12 +72,12 @@ nb-log() {
     if [[ -n "$description" ]]; then
         echo " " >> ${__LOGBOOK}
         echo "Description: =$description=" >> ${__LOGBOOK}
-		__info "Description logged to ${__LOGBOOK}"
-		echo " "
+		    __info "Description logged to ${__LOGBOOK}"
+		    echo " "
     else
-		echo " "
+		    echo " "
         __warn "No description provided. Exiting"
-		return
+		    return
     fi
 
     __info "Log entry added to ${__LOGBOOK}"
@@ -96,21 +96,21 @@ nb-log-scan() {
         # Log the information to the logbook.org file
         echo " " >> ${__LOGBOOK}
         echo "*** $title" >> ${__LOGBOOK}
-	    echo "#+date: ${stamp}" >> ${__LOGBOOK}
-		echo " "
+	      echo "#+date: ${stamp}" >> ${__LOGBOOK}
+		    echo " "
     else
-		echo " "
+		    echo " "
         __warn "No title provided. Exiting."
-		return
+		    return
     fi
 
 	# Paste the contents of clipboard to logbook.org file in source block
 	echo " " >> ${__LOGBOOK}
-    echo "#+begin_src bash" >> ${__LOGBOOK}
+  echo "#+begin_src bash" >> ${__LOGBOOK}
 	echo "$(wl-paste)" >> ${__LOGBOOK}
 	echo "#+end_src" >> ${__LOGBOOK}
 
-    __info "Log entry added to ${__LOGBOOK}"
+  __info "Log entry added to ${__LOGBOOK}"
 }
 
 nb-log-full() {
