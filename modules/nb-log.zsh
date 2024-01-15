@@ -72,7 +72,8 @@ nb-log() {
 
     if [[ -n "$description" ]]; then
       echo " " >> ${__LOGBOOK}
-      echo "Description: =$description=" >> ${__LOGBOOK}
+      echo "Description:" >> ${__LOGBOOK}
+      echo "  =$description=" >> ${__LOGBOOK}
       __info "Description logged to ${__LOGBOOK}"
       echo " "
     else
@@ -122,7 +123,8 @@ nb-log-append() {
 
     if [[ -n "$additional_info" ]]; then
       echo " " >> ${__LOGBOOK}
-      echo "Additional Information: =$additional_info=" >> ${__LOGBOOK}
+      echo "Additional Information:" >> ${__LOGBOOK}
+      echo "  =$additional_info=" >> ${__LOGBOOK}
       __info "Additional Information logged to ${__LOGBOOK}"
       echo " "
     else
@@ -165,7 +167,8 @@ nb-log-full() {
       echo " "
     else
       echo " "
-       __warn "No server IP provided. Skipping."
+      __warn "No server IP provided. Skipping."
+      echo " "
     fi
 
     __ask "Enter information about impact for the log entry (press Enter to skip)"
@@ -177,7 +180,8 @@ nb-log-full() {
       echo " "
     else
       echo " "
-       __warn "No information about impact provided. Skipping."
+      __warn "No information about impact provided. Skipping."
+      echo " "
     fi
 
     __ask "Enter information about triggered alerts for the log entry (press Enter to skip)"
@@ -190,6 +194,7 @@ nb-log-full() {
     else
       echo " "
       __warn "No information about triggered alerts provided. Skipping."
+      echo " "
     fi
 
     __ask "Provide attachments for the log entry (press Enter to skip)"
@@ -202,6 +207,7 @@ nb-log-full() {
     else
       echo " "
       __warn "No attachments provided. Skipping."
+      echo " "
     fi
 
     __ask "Enter description for the log entry (necessary)"
@@ -209,7 +215,8 @@ nb-log-full() {
 
     if [[ -n "$description" ]]; then
       echo " " >> ${__LOGBOOK}
-      echo "Description: =$description=" >> ${__LOGBOOK}
+      echo "Description:" >> ${__LOGBOOK}
+      echo "  =$description=" >> ${__LOGBOOK}
       __info "Description logged to ${__LOGBOOK}"
       echo " "
     else
