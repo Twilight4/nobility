@@ -70,9 +70,6 @@ nb-log-full() {
 
     local stamp=$(date +'%A %d-%m-%Y : %T %Z')
     echo " " >> ${__LOGBOOK}
-	echo "*** ${stamp}" >> ${__LOGBOOK}
-    echo "#+begin_src bash" >> ${__LOGBOOK}
-	echo "$(wl-paste)" >> ${__LOGBOOK}
-    #echo "$@" >> ${__LOGBOOK}
-	echo "#+end_src" >> ${__LOGBOOK}
+    echo "*** ${stamp}" >> ${__LOGBOOK}
+    echo "- =$@=" >> ${__LOGBOOK}
 }
