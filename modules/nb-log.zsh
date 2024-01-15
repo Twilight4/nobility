@@ -78,8 +78,7 @@ nb-log-full() {
 
     if [[ -n "$server_ip" ]]; then
         # Log the information to the logbook.org file
-        echo "Server IP: $server_ip" >> ${__LOGBOOK}
-		echo " "
+        echo "Server IP: =$server_ip=" >> ${__LOGBOOK}
         __info "Server information logged to ${__LOGBOOK}"
 		echo " "
     else
@@ -90,9 +89,6 @@ nb-log-full() {
 
     __ask "Enter additional description for the log entry (press Enter to skip)"
     local description && __askvar description DESCRIPTION
-
-    # Log the user intput information to the logbook.org file if provided
-    #echo "- =$@=" >> ${__LOGBOOK}
 
     if [[ -n "$description" ]]; then
         echo "Description: =$description=" >> ${__LOGBOOK}
