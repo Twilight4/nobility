@@ -94,8 +94,8 @@ nb-log-full() {
     if [[ -n "$title" ]]; then
         # Log the information to the logbook.org file
         echo "*** $title" >> ${__LOGBOOK}
-        #echo "*** ${stamp}" >> ${__LOGBOOK}
 	    echo "#+date: ${stamp}" >> ${__LOGBOOK}
+		echo " "
     else
 		echo " "
         __warn "No title provided. Exiting."
@@ -136,7 +136,7 @@ nb-log-full() {
 		echo " "
     else
 		echo " "
-        __warn "No information about triggered alerts provided." >> ${__LOGBOOK}
+        __warn "No information about triggered alerts provided." >> 
     fi
 
     __ask "Provide attachments for the log entry (press Enter to skip)"
@@ -148,10 +148,10 @@ nb-log-full() {
 		echo " "
     else
 		echo " "
-        __warn "No attachments provided." >> ${__LOGBOOK}
+        __warn "No attachments provided."
     fi
 
-    __ask "Enter description for the log entry (press Enter to skip)"
+    __ask "Enter description for the log entry (necessary)"
     local description && __askvar description DESCRIPTION
 
     if [[ -n "$description" ]]; then
@@ -161,7 +161,7 @@ nb-log-full() {
 		echo " "
     else
 		echo " "
-        __warn "No description provided." >> ${__LOGBOOK}
+        __warn "No description provided."
 		return
     fi
 
