@@ -56,11 +56,11 @@ nb-log() {
     local title && __askvar title TITLE
 
     if [[ -n "$title" ]]; then
-        # Log the information to the logbook.org file
-        echo " " >> ${__LOGBOOK}
-        echo "*** $title" >> ${__LOGBOOK}
-        echo "#+date: ${stamp}" >> ${__LOGBOOK}
-        echo " "
+      # Log the information to the logbook.org file
+      echo " " >> ${__LOGBOOK}
+      echo "*** $title" >> ${__LOGBOOK}
+      echo "#+date: ${stamp}" >> ${__LOGBOOK}
+      echo " "
     else
       echo " "
       __warn "No title provided. Exiting."
@@ -71,10 +71,10 @@ nb-log() {
     local description && __askvar description DESCRIPTION
 
     if [[ -n "$description" ]]; then
-        echo " " >> ${__LOGBOOK}
-        echo "Description: =$description=" >> ${__LOGBOOK}
-        __info "Description logged to ${__LOGBOOK}"
-        echo " "
+      echo " " >> ${__LOGBOOK}
+      echo "Description: =$description=" >> ${__LOGBOOK}
+      __info "Description logged to ${__LOGBOOK}"
+      echo " "
     else
       echo " "
       __warn "No description provided. Exiting"
@@ -94,15 +94,15 @@ nb-log-scan() {
     local title && __askvar title TITLE
 
     if [[ -n "$title" ]]; then
-        # Log the information to the logbook.org file
-        echo " " >> ${__LOGBOOK}
-        echo "*** $title" >> ${__LOGBOOK}
-        echo "#+date: ${stamp}" >> ${__LOGBOOK}
-        echo " "
+      # Log the information to the logbook.org file
+      echo " " >> ${__LOGBOOK}
+      echo "*** $title" >> ${__LOGBOOK}
+      echo "#+date: ${stamp}" >> ${__LOGBOOK}
+      echo " "
     else
-        echo " "
-        __warn "No title provided. Exiting."
-        return
+      echo " "
+      __warn "No title provided. Exiting."
+      return
     fi
 
   # Paste the contents of clipboard to logbook.org file in source block
@@ -144,11 +144,11 @@ nb-log-full() {
     local title && __askvar title TITLE
 
     if [[ -n "$title" ]]; then
-       # Log the information to the logbook.org file
-       echo " " >> ${__LOGBOOK}
-       echo "*** $title" >> ${__LOGBOOK}
-       echo "#+date: ${stamp}" >> ${__LOGBOOK}
-       echo " "
+      # Log the information to the logbook.org file
+      echo " " >> ${__LOGBOOK}
+      echo "*** $title" >> ${__LOGBOOK}
+      echo "#+date: ${stamp}" >> ${__LOGBOOK}
+      echo " "
     else
       echo " "
       __warn "No title provided. Exiting."
@@ -159,10 +159,10 @@ nb-log-full() {
     local server_ip && __askvar server_ip SERVER_IP
 
     if [[ -n "$server_ip" ]]; then
-       # Log the information to the logbook.org file
-       echo "#+server_ip: $server_ip" >> ${__LOGBOOK}
-       __info "Server IP logged to ${__LOGBOOK}"
-       echo " "
+      # Log the information to the logbook.org file
+      echo "#+server_ip: $server_ip" >> ${__LOGBOOK}
+      __info "Server IP logged to ${__LOGBOOK}"
+      echo " "
     else
       echo " "
        __warn "No server IP provided. Skipping."
@@ -172,9 +172,9 @@ nb-log-full() {
     local impact && __askvar impact IMPACT
 
     if [[ -n "$impact" ]]; then
-       echo "#+impact: $impact" >> ${__LOGBOOK}
-       __info "Information about impact logged to ${__LOGBOOK}"
-       echo " "
+      echo "#+impact: $impact" >> ${__LOGBOOK}
+      __info "Information about impact logged to ${__LOGBOOK}"
+      echo " "
     else
       echo " "
        __warn "No information about impact provided. Skipping."
