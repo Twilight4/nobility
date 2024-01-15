@@ -90,6 +90,18 @@ nb-log-full() {
     echo " " >> ${__LOGBOOK}
     echo "*** ${stamp}" >> ${__LOGBOOK}
 
+	__ask "Enter title (press Enter to skip)"
+	local title && __askvar title TITLE
+
+    if [[ -n "$title" ]]; then
+        # Log the information to the logbook.org file
+        echo "#+title: $title" >> ${__LOGBOOK}
+		echo " "
+    else
+		echo " "
+        __warn "No title provided."
+    fi
+
 	__ask "Enter server IP (press Enter to skip)"
 	local server_ip && __askvar server_ip SERVER_IP
 
