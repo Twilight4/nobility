@@ -115,7 +115,23 @@ nb-log-scan() {
 }
 
 nb-log-append() {
+    __check-logbook
 
+    __ask "Enter description for the log entry (necessary)"
+    local description && __askvar description DESCRIPTION
+
+    if [[ -n "$description" ]]; then
+      echo " " >> ${__LOGBOOK}
+      echo "Description: =$description=" >> ${__LOGBOOK}
+      __info "Description logged to ${__LOGBOOK}"
+      echo " "
+    else
+      echo " "
+      __warn "No description provided. Exiting"
+      return
+    fi
+
+    __info "Input appended to the last log entry in ${__LOGBOOK}"
 }
 
 nb-log-full() {
