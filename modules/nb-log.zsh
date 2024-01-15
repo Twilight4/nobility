@@ -104,7 +104,7 @@ nb-log-scan() {
         return
     fi
 
-	# Paste the contents of clipboard to logbook.org file in source block
+  # Paste the contents of clipboard to logbook.org file in source block
   echo " " >> ${__LOGBOOK}
   echo "#+begin_src bash" >> ${__LOGBOOK}
   echo "$(wl-paste)" >> ${__LOGBOOK}
