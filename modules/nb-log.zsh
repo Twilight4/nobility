@@ -68,6 +68,11 @@ nb-log-scan() {
 nb-log-full() {
     __check-logbook
 
+    # Log the timestamp to the logbook.org file
+    local stamp=$(date +'%A %d-%m-%Y : %T %Z')
+    echo " " >> ${__LOGBOOK}
+    echo "*** ${stamp}" >> ${__LOGBOOK}
+
 	__ask "Enter server IP (press Enter to skip)"
 	local server_ip && __askvar server_ip SERVER_IP
 
@@ -76,20 +81,24 @@ nb-log-full() {
         echo "Server IP: $server_ip" >> ${__LOGBOOK}
 		echo " "
         __info "Server information logged to ${__LOGBOOK}"
+		echo " "
     else
+		echo " "
         __warn "No server IP provided. Skipping log entry."
 		return
     fi
 
-
     __ask "Enter additional description for the log entry (press Enter to skip)"
     local description && __askvar description DESCRIPTION
 
-    # Log the timestamp to the logbook.org file
-    local stamp=$(date +'%A %d-%m-%Y : %T %Z')
-    echo " " >> ${__LOGBOOK}
-    echo "*** ${stamp}" >> ${__LOGBOOK}
-
     # Log the user intput information to the logbook.org file if provided
-    echo "- =$@=" >> ${__LOGBOOK}
+    #echo "- =$@=" >> ${__LOGBOOK}
+
+    if [[ -n "$description" ]]; then
+        echo "Description: =$description=" >> ${__LOGBOOK}
+    else
+        __warn "No additional information provided." >> ${__LOGBOOK}
+    fi
+
+    __info "Log entry added to ${__LOGBOOK}"
 }
