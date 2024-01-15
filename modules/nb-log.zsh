@@ -47,10 +47,21 @@ nb-log-clear() {
 nb-log() {
     __check-logbook
 
+    # Log the timestamp to the logbook.org file
     local stamp=$(date +'%A %d-%m-%Y : %T %Z')
     echo " " >> ${__LOGBOOK}
     echo "*** ${stamp}" >> ${__LOGBOOK}
-    echo "- =$@=" >> ${__LOGBOOK}
+
+    __ask "Enter description for the log entry (press Enter to skip)"
+    local description && __askvar description DESCRIPTION
+
+    if [[ -n "$description" ]]; then
+        echo "Description: =$description=" >> ${__LOGBOOK}
+    else
+        __warn "No description provided." >> ${__LOGBOOK}
+    fi
+
+    __info "Log entry added to ${__LOGBOOK}"
 }
 
 nb-log-scan() {
@@ -87,13 +98,13 @@ nb-log-full() {
 		return
     fi
 
-    __ask "Enter additional description for the log entry (press Enter to skip)"
+    __ask "Enter description for the log entry (press Enter to skip)"
     local description && __askvar description DESCRIPTION
 
     if [[ -n "$description" ]]; then
         echo "Description: =$description=" >> ${__LOGBOOK}
     else
-        __warn "No additional information provided." >> ${__LOGBOOK}
+        __warn "No description provided." >> ${__LOGBOOK}
     fi
 
     __info "Log entry added to ${__LOGBOOK}"
