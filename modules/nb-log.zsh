@@ -132,4 +132,15 @@ nb-log-full() {
     fi
 
     __info "Log entry added to ${__LOGBOOK}"
+
+    __ask "Provide attachments for the log entry (press Enter to skip)"
+    local attachments && __askvar attachments ALERTS
+
+    if [[ -n "$attachments" ]]; then
+        echo "Alerts triggered: =$attachments=" >> ${__LOGBOOK}
+    else
+        __warn "No attachments provided." >> ${__LOGBOOK}
+    fi
+
+    __info "Log entry added to ${__LOGBOOK}"
 }
