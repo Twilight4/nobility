@@ -13,7 +13,7 @@ a directory specified by the __LOGBOOK variable.
 
 Commands
 --------
-nb-log            appends $@ to an entry in the logbook
+nb-log            ask user for an log entry in the logbook
 nb-log-set        creates or uses existing logbook.org in the path specified
 nb-log-cat        cats the logbook
 nb-log-edit       edits the logbook using $EDITOR
@@ -78,11 +78,18 @@ nb-log-full() {
         __info "Server information logged to ${__LOGBOOK}"
     else
         __warn "No server IP provided. Skipping log entry."
+		return
     fi
 
 
+    __ask "Enter additional description for the log entry (press Enter to skip)"
+    local description && __askvar description DESCRIPTION
+
+    # Log the timestamp to the logbook.org file
     local stamp=$(date +'%A %d-%m-%Y : %T %Z')
     echo " " >> ${__LOGBOOK}
     echo "*** ${stamp}" >> ${__LOGBOOK}
+
+    # Log the user intput information to the logbook.org file if provided
     echo "- =$@=" >> ${__LOGBOOK}
 }
