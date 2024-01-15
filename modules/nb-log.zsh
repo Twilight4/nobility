@@ -95,7 +95,7 @@ nb-log-full() {
 
     if [[ -n "$server_ip" ]]; then
         # Log the information to the logbook.org file
-        echo "Server IP: =$server_ip=" >> ${__LOGBOOK}
+        echo "#+server_ip: $server_ip" >> ${__LOGBOOK}
         __info "Server information logged to ${__LOGBOOK}"
 		echo " "
     else
@@ -107,7 +107,7 @@ nb-log-full() {
     local description && __askvar description DESCRIPTION
 
     if [[ -n "$description" ]]; then
-        echo "Description: =$description=" >> ${__LOGBOOK}
+        echo "#+description: $description" >> ${__LOGBOOK}
     else
         __warn "No description provided." >> ${__LOGBOOK}
 		return
@@ -117,7 +117,7 @@ nb-log-full() {
     local impact && __askvar impact IMPACT
 
     if [[ -n "$impact" ]]; then
-        echo "Impact: =$impact=" >> ${__LOGBOOK}
+        echo "#+impact: $impact" >> ${__LOGBOOK}
     else
         __warn "No information about impact provided." >> ${__LOGBOOK}
     fi
@@ -126,7 +126,7 @@ nb-log-full() {
     local alerts && __askvar alerts ALERTS
 
     if [[ -n "$alerts" ]]; then
-        echo "Alerts triggered: =$alerts=" >> ${__LOGBOOK}
+        echo "#+alerts_triggered: $alerts" >> ${__LOGBOOK}
     else
         __warn "No information about triggered alerts provided." >> ${__LOGBOOK}
     fi
@@ -137,7 +137,7 @@ nb-log-full() {
     local attachments && __askvar attachments ALERTS
 
     if [[ -n "$attachments" ]]; then
-        echo "Alerts triggered: =$attachments=" >> ${__LOGBOOK}
+        echo "#+attachments: $attachments" >> ${__LOGBOOK}
     else
         __warn "No attachments provided." >> ${__LOGBOOK}
     fi
