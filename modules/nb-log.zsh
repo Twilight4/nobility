@@ -117,7 +117,7 @@ nb-log-scan() {
 nb-log-append() {
     __check-logbook
 
-    __ask "Enter additional information for the last entry"
+    __ask "Enter additional information for the last log entry"
     local additional_info && __askvar additional_info ADDITIONAL_INFO
 
     if [[ -n "$additional_info" ]]; then
