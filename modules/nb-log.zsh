@@ -68,20 +68,21 @@ nb-log-scan() {
 nb-log-full() {
     __check-logbook
 
-    local stamp=$(date +'%A %d-%m-%Y : %T %Z')
-    echo " " >> ${__LOGBOOK}
-    echo "*** ${stamp}" >> ${__LOGBOOK}
-    echo "- =$@=" >> ${__LOGBOOK}
-
-	__ask "Enter server IP (press Enter to skip): "
+	__ask "Enter server IP (press Enter to skip)"
 	local server_ip && __askvar server_ip SERVER_IP
 
     if [[ -n "$server_ip" ]]; then
         # Log the information to the logbook.org file
-		echo " " >> ${__LOGBOOK}
-        echo "$(date +"%Y-%m-%d %H:%M:%S") - Server IP: $server_ip" >> ${__LOGBOOK}
+        echo "Server IP: $server_ip" >> ${__LOGBOOK}
+		echo " "
         __info "Server information logged to ${__LOGBOOK}"
     else
         __warn "No server IP provided. Skipping log entry."
     fi
+
+
+    local stamp=$(date +'%A %d-%m-%Y : %T %Z')
+    echo " " >> ${__LOGBOOK}
+    echo "*** ${stamp}" >> ${__LOGBOOK}
+    echo "- =$@=" >> ${__LOGBOOK}
 }
