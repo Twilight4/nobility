@@ -19,6 +19,7 @@ nb-log-cat        cats the logbook
 nb-log-edit       edits the logbook using $EDITOR
 nb-log-clear      deletes the logbook
 nb-log-scan       pastes from clipboard to an entry in the logbook in code format (uses wl-clipboard)
+nb-log-full       asks for full detailed logs for an entry
 
 DOC
 }
@@ -64,7 +65,14 @@ nb-log-scan() {
 	echo "#+end_src" >> ${__LOGBOOK}
 }
 
-nb-full-log() {
+nb-log-full() {
     __check-logbook
 
+    local stamp=$(date +'%A %d-%m-%Y : %T %Z')
+    echo " " >> ${__LOGBOOK}
+	echo "*** ${stamp}" >> ${__LOGBOOK}
+    echo "#+begin_src bash" >> ${__LOGBOOK}
+	echo "$(wl-paste)" >> ${__LOGBOOK}
+    #echo "$@" >> ${__LOGBOOK}
+	echo "#+end_src" >> ${__LOGBOOK}
 }
