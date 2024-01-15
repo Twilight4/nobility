@@ -67,13 +67,17 @@ nb-log() {
 nb-log-scan() {
     __check-logbook
 
+    # Log the timestamp to the logbook.org file
     local stamp=$(date +'%A %d-%m-%Y : %T %Z')
     echo " " >> ${__LOGBOOK}
-	echo "*** ${stamp}" >> ${__LOGBOOK}
+    echo "*** ${stamp}" >> ${__LOGBOOK}
+
+	# Paste the contents of clipboard to logbook.org file in source block
     echo "#+begin_src bash" >> ${__LOGBOOK}
 	echo "$(wl-paste)" >> ${__LOGBOOK}
-    #echo "$@" >> ${__LOGBOOK}
 	echo "#+end_src" >> ${__LOGBOOK}
+
+    __info "Log entry added to ${__LOGBOOK}"
 }
 
 nb-log-full() {
