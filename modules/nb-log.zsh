@@ -117,10 +117,10 @@ nb-log-scan() {
 nb-log-append() {
     __check-logbook
 
-    __ask "Enter description for the log entry (necessary)"
-    local description && __askvar description DESCRIPTION
+    __ask "Enter additional information for the last entry"
+    local additional_info && __askvar additional_info ADDITIONAL_INFO
 
-    if [[ -n "$description" ]]; then
+    if [[ -n "$additional_info" ]]; then
       echo " " >> ${__LOGBOOK}
       echo "Description: =$description=" >> ${__LOGBOOK}
       __info "Description logged to ${__LOGBOOK}"
