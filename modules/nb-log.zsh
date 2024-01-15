@@ -122,12 +122,12 @@ nb-log-append() {
 
     if [[ -n "$additional_info" ]]; then
       echo " " >> ${__LOGBOOK}
-      echo "Description: =$description=" >> ${__LOGBOOK}
-      __info "Description logged to ${__LOGBOOK}"
+      echo "Additional Information: =$additional_info=" >> ${__LOGBOOK}
+      __info "Additional Information logged to ${__LOGBOOK}"
       echo " "
     else
       echo " "
-      __warn "No description provided. Exiting"
+      __warn "No additional information provided. Exiting"
       return
     fi
 
