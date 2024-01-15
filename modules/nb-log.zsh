@@ -87,19 +87,21 @@ nb-log-full() {
 
     # Log the timestamp to the logbook.org file
     local stamp=$(date +'%A %d-%m-%Y : %T %Z')
-    echo " " >> ${__LOGBOOK}
-    echo "*** ${stamp}" >> ${__LOGBOOK}
 
-	__ask "Enter title (press Enter to skip)"
+	__ask "Enter the title (necessary)"
 	local title && __askvar title TITLE
 
     if [[ -n "$title" ]]; then
         # Log the information to the logbook.org file
-        echo "#+title: $title" >> ${__LOGBOOK}
+        echo "*** $title" >> ${__LOGBOOK}
+        echo " " >> ${__LOGBOOK}
+        #echo "*** ${stamp}" >> ${__LOGBOOK}
+	    echo "#+date: ${stamp}" >> ${__LOGBOOK}
 		echo " "
     else
 		echo " "
-        __warn "No title provided."
+        __warn "No title provided. Exiting."
+		return
     fi
 
 	__ask "Enter server IP (press Enter to skip)"
@@ -138,7 +140,7 @@ nb-log-full() {
     fi
 
     __ask "Provide attachments for the log entry (press Enter to skip)"
-    local attachments && __askvar attachments ALERTS
+    local attachments && __askvar attachments ATTACHMENTS
 
     if [[ -n "$attachments" ]]; then
         echo "#+attachments: $attachments" >> ${__LOGBOOK}
