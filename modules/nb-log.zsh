@@ -113,5 +113,23 @@ nb-log-full() {
 		return
     fi
 
+    __ask "Enter impact information for the log entry (press Enter to skip)"
+    local impact && __askvar impact IMPACT
+
+    if [[ -n "$description" ]]; then
+        echo "Impact: =$impact=" >> ${__LOGBOOK}
+    else
+        __warn "No information about impact provided." >> ${__LOGBOOK}
+    fi
+
+    __ask "Enter description for the log entry (press Enter to skip)"
+    local description && __askvar description DESCRIPTION
+
+    if [[ -n "$description" ]]; then
+        echo "Description: =$description=" >> ${__LOGBOOK}
+    else
+        __warn "No description provided." >> ${__LOGBOOK}
+    fi
+
     __info "Log entry added to ${__LOGBOOK}"
 }
