@@ -66,19 +66,17 @@ nb-log() {
 		return
     fi
 
-    __ask "Enter description for the log entry (press Enter to skip)"
+    __ask "Enter description for the log entry (necessary)"
     local description && __askvar description DESCRIPTION
 
     if [[ -n "$description" ]]; then
-		# Log the timestamp to the logbook.org file
-		local stamp=$(date +'%A %d-%m-%Y : %T %Z')
-		echo " " >> ${__LOGBOOK}
-		echo "*** ${stamp}" >> ${__LOGBOOK}
-
-		# Log the provided description
+        echo " " >> ${__LOGBOOK}
         echo "Description: =$description=" >> ${__LOGBOOK}
+		__info "Description logged to ${__LOGBOOK}"
+		echo " "
     else
-        __warn "No description provided." >> ${__LOGBOOK}
+		echo " "
+        __warn "No description provided. Exiting"
 		return
     fi
 
