@@ -31,6 +31,7 @@ nb-log-set() {
 nb-log-cat() {
     __check-logbook
     __info "${__LOGBOOK}"
+	echo " "
 	sed -e 's/^\* .*$/\x1b[94m&\x1b[0m/' -e 's/^\*\*.*$/\x1b[96m&\x1b[0m/' -e 's/=\([^=]*\)=/\o033[1;32m\1\o033[0m/g; s/^\( \{0,6\}\)-/•/g' -e '/^\(:PROPERTIES:\|:ID:\|:END:\|#\+date:\)/d' -e '/^\(:PROPERTIES:\|:ID:\|:END:\|#\+date:\)/d' ${__LOGBOOK} | command bat --language=org --style=plain --color=always
 }
 
@@ -93,6 +94,7 @@ nb-log-full() {
 
     if [[ -n "$title" ]]; then
         # Log the information to the logbook.org file
+        echo " " >> ${__LOGBOOK}
         echo "*** $title" >> ${__LOGBOOK}
 	    echo "#+date: ${stamp}" >> ${__LOGBOOK}
 		echo " "
