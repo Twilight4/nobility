@@ -48,6 +48,24 @@ nb-log-clear() {
 nb-log() {
     __check-logbook
 
+    # Log the timestamp to the logbook.org file
+    local stamp=$(date +'%A %d-%m-%Y : %T %Z')
+
+	__ask "Enter the title (necessary)"
+	local title && __askvar title TITLE
+
+    if [[ -n "$title" ]]; then
+        # Log the information to the logbook.org file
+        echo " " >> ${__LOGBOOK}
+        echo "*** $title" >> ${__LOGBOOK}
+	    echo "#+date: ${stamp}" >> ${__LOGBOOK}
+		echo " "
+    else
+		echo " "
+        __warn "No title provided. Exiting."
+		return
+    fi
+
     __ask "Enter description for the log entry (press Enter to skip)"
     local description && __askvar description DESCRIPTION
 
@@ -72,10 +90,24 @@ nb-log-scan() {
 
     # Log the timestamp to the logbook.org file
     local stamp=$(date +'%A %d-%m-%Y : %T %Z')
-    echo " " >> ${__LOGBOOK}
-    echo "*** ${stamp}" >> ${__LOGBOOK}
+
+	__ask "Enter the title (necessary)"
+	local title && __askvar title TITLE
+
+    if [[ -n "$title" ]]; then
+        # Log the information to the logbook.org file
+        echo " " >> ${__LOGBOOK}
+        echo "*** $title" >> ${__LOGBOOK}
+	    echo "#+date: ${stamp}" >> ${__LOGBOOK}
+		echo " "
+    else
+		echo " "
+        __warn "No title provided. Exiting."
+		return
+    fi
 
 	# Paste the contents of clipboard to logbook.org file in source block
+	echo " " >> ${__LOGBOOK}
     echo "#+begin_src bash" >> ${__LOGBOOK}
 	echo "$(wl-paste)" >> ${__LOGBOOK}
 	echo "#+end_src" >> ${__LOGBOOK}
