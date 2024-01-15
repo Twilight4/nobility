@@ -110,6 +110,7 @@ nb-log-full() {
         echo "Description: =$description=" >> ${__LOGBOOK}
     else
         __warn "No description provided." >> ${__LOGBOOK}
+		return
     fi
 
     __info "Log entry added to ${__LOGBOOK}"
