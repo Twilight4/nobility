@@ -74,7 +74,7 @@ nb-log-full() {
     echo "- =$@=" >> ${__LOGBOOK}
 
 	__ask "Enter server IP (press Enter to skip): "
-    __askvar server_ip
+	local server_ip && __askvar server_ip SERVER_IP
 
     if [[ -n "$server_ip" ]]; then
         # Log the information to the logbook.org file
