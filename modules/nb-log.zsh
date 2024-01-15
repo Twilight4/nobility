@@ -98,7 +98,7 @@ nb-log-full() {
 		echo " "
     else
 		echo " "
-        __warn "No server IP provided. Skipping log entry."
+        __warn "No server IP provided."
 		return
     fi
 
