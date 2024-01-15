@@ -103,16 +103,6 @@ nb-log-full() {
         __warn "No server IP provided."
     fi
 
-    __ask "Enter description for the log entry (press Enter to skip)"
-    local description && __askvar description DESCRIPTION
-
-    if [[ -n "$description" ]]; then
-        echo "#+description: $description" >> ${__LOGBOOK}
-    else
-        __warn "No description provided." >> ${__LOGBOOK}
-		return
-    fi
-
     __ask "Enter information about impact for the log entry (press Enter to skip)"
     local impact && __askvar impact IMPACT
 
@@ -140,6 +130,16 @@ nb-log-full() {
         echo "#+attachments: $attachments" >> ${__LOGBOOK}
     else
         __warn "No attachments provided." >> ${__LOGBOOK}
+    fi
+
+    __ask "Enter description for the log entry (press Enter to skip)"
+    local description && __askvar description DESCRIPTION
+
+    if [[ -n "$description" ]]; then
+        echo "Description: =$description=" >> ${__LOGBOOK}
+    else
+        __warn "No description provided." >> ${__LOGBOOK}
+		return
     fi
 
     __info "Log entry added to ${__LOGBOOK}"
