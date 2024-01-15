@@ -112,7 +112,7 @@ nb-log-full() {
 		echo " "
     else
 		echo " "
-        __warn "No server IP provided."
+        __warn "No server IP provided. Skipping."
     fi
 
     __ask "Enter information about impact for the log entry (press Enter to skip)"
@@ -124,7 +124,7 @@ nb-log-full() {
 		echo " "
     else
 		echo " "
-        __warn "No information about impact provided." >> ${__LOGBOOK}
+        __warn "No information about impact provided. Skipping."
     fi
 
     __ask "Enter information about triggered alerts for the log entry (press Enter to skip)"
@@ -136,7 +136,7 @@ nb-log-full() {
 		echo " "
     else
 		echo " "
-        __warn "No information about triggered alerts provided." >> 
+        __warn "No information about triggered alerts provided. Skipping."
     fi
 
     __ask "Provide attachments for the log entry (press Enter to skip)"
@@ -148,7 +148,7 @@ nb-log-full() {
 		echo " "
     else
 		echo " "
-        __warn "No attachments provided."
+        __warn "No attachments provided. Skipping."
     fi
 
     __ask "Enter description for the log entry (necessary)"
@@ -161,7 +161,7 @@ nb-log-full() {
 		echo " "
     else
 		echo " "
-        __warn "No description provided."
+        __warn "No description provided. Exiting"
 		return
     fi
 
