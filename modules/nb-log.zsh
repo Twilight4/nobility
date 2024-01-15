@@ -72,4 +72,14 @@ nb-log-full() {
     echo " " >> ${__LOGBOOK}
     echo "*** ${stamp}" >> ${__LOGBOOK}
     echo "- =$@=" >> ${__LOGBOOK}
+
+    read -p "Enter server IP (press Enter to skip): " server_ip
+
+    if [[ -n "$server_ip" ]]; then
+        # Log the information to the logbook.org file
+        echo "$(date +"%Y-%m-%d %H:%M:%S") - Server IP: $server_ip" >> "${__LOGBOOK}"
+        echo "Server information logged to ${__LOGBOOK}"
+    else
+        echo "No server IP provided. Skipping log entry."
+    fi
 }
