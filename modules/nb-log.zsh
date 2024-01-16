@@ -16,10 +16,10 @@ Commands
 nb-log            ask user for an log entry in the logbook
 nb-log-set        creates or uses existing logbook.org in the path specified
 nb-log-cat        cats the logbook
-nb-log-edit       edits the logbook using $EDITOR
+nb-log-edit       edit the logbook using $EDITOR
 nb-log-clear      deletes the logbook
 nb-log-scan       pastes from clipboard to an entry in the logbook in code format (uses wl-clipboard)
-nb-log-append     append additional information to the last logbook entry
+nb-log-append     append additional information to the last logbook entry using $EDITOR in bullet points
 nb-log-full       asks for full detailed logs for an entry
 
 DOC
@@ -118,20 +118,12 @@ nb-log-scan() {
 nb-log-append() {
     __check-logbook
 
-    __ask "Enter additional information for the last log entry"
-    local additional_info && __askvar additional_info ADDITIONAL_INFO
-
-    if [[ -n "$additional_info" ]]; then
-      echo " " >> ${__LOGBOOK}
-      echo "Additional Information:" >> ${__LOGBOOK}
-      echo "  =$additional_info=" >> ${__LOGBOOK}
-      __info "Additional Information logged to ${__LOGBOOK}"
-      echo " "
-    else
-      echo " "
-      __warn "No additional information provided. Exiting"
-      return
-    fi
+    # Edit logbook
+    echo " " >> ${__LOGBOOK}
+    echo "Additional Information:" >> ${__LOGBOOK}
+    echo "  - " >> ${__LOGBOOK}
+    eval $EDITOR ${__LOGBOOK}
+    echo " "
 
     __info "Input appended to the last log entry in ${__LOGBOOK}"
 }
