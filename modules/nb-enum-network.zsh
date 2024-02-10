@@ -8,8 +8,7 @@ nb-enum-network-help() {
 
 nb-enum-network
 -------------
-The nb-enum-network namespace contains commands for scanning and enumerating
-a network.
+The nb-enum-network namespace contains commands for scanning and enumerating a network.
 
 Commands
 --------
