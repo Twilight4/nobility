@@ -8,8 +8,7 @@ nb-enum-nfs-help() {
 
 nb-enum-nfs
 -----------
-The nb-enum-nfs namespace contains commands for scanning and 
-enumerating NFS services.
+The nb-enum-nfs namespace contains commands for scanning and enumerating NFS services.
 
 Commands
 --------
