@@ -8,8 +8,7 @@ nb-ad-kerb-help() {
 
 nb-ad-kerb
 ------------
-The nb-ad-kerb namespace contains commands for scanning and 
-enumerating kerberos records and servers.
+The nb-ad-kerb namespace contains commands for scanning and enumerating kerberos records and servers.
 
 Commands
 --------
