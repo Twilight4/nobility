@@ -8,8 +8,7 @@ nb-enum-mysql-help() {
 
 nb-enum-mysql
 -------------
-The nb-enum-mysql namespace contains commands for scanning and 
-enumerating mysql server services and databases.
+The nb-enum-mysql namespace contains commands for scanning and enumerating mysql server services and databases.
 
 Commands
 --------
