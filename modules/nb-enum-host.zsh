@@ -8,8 +8,7 @@ nb-enum-host-help() {
 
 nb-enum-host
 -------------
-The nb-enum-host namespace contains commands for scanning and enumerating
-an individual host.
+The nb-enum-host namespace contains commands for scanning and enumerating an individual host.
 
 Commands
 --------
