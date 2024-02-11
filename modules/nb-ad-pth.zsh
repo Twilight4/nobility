@@ -8,8 +8,7 @@ nb-ad-pth-help() {
 
 nb-ad-pth
 ------------
-The nb-ad-pth namespace contains commands for pass-the-hash
-attack on Active Directory DC server.
+The nb-ad-pth namespace contains commands for pass-the-hash attack on Active Directory DC server.
 
 Commands
 --------
