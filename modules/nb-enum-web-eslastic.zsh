@@ -8,8 +8,7 @@ nb-enum-web-elastic-help() {
 
 nb-enum-web-elastic
 -------------------
-The nb-enum-web-elastic namespace contains commands for scanning and enumerating
-elastic search services.
+The nb-enum-web-elastic namespace contains commands for scanning and enumerating elastic search services.
 
 Commands
 --------

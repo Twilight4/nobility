@@ -8,8 +8,7 @@ nb-enum-web-js-help() {
 
 nb-enum-web-js
 --------------
-The nb-enum-web-js namespace contains commands for enumerating
-javascript files and mining for urls and secrets.
+The nb-enum-web-js namespace contains commands for enumerating javascript files and mining for urls and secrets.
 
 Commands
 --------

@@ -8,8 +8,7 @@ nb-enum-web-fuzz-help() {
 
 nb-enum-web-fuzz
 --------------
-The nb-enum-web-fuzz namespace contains commands for fuzzing
-inputs of web applications
+The nb-enum-web-fuzz namespace contains commands for fuzzing inputs of web applications
 
 Commands
 --------

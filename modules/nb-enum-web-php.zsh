@@ -8,8 +8,7 @@ nb-enum-web-php-help() {
 
 nb-enum-web-php
 ----------------
-The nb-enum-web-php namespace contains commands for discovering web content, directories and files
-on PHP web servers
+The nb-enum-web-php namespace contains commands for discovering web content, directories and files on PHP web servers.
 
 Commands
 --------
