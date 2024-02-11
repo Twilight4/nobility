@@ -8,8 +8,7 @@ nb-enum-oracle-help() {
 
 nb-enum-oracle
 --------------s
-The nb-enum-oracle namespace contains commands for scanning and 
-enumerating Oracle services and databases.
+The nb-enum-oracle namespace contains commands for scanning and enumerating Oracle services and databases.
 
 Commands
 --------
