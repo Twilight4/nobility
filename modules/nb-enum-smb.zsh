@@ -8,8 +8,7 @@ nb-enum-smb-help() {
 
 nb-enum-smb
 ------------
-The nb-enum-smb namespace contains commands for scanning
-and enumerating smb services.
+The nb-enum-smb namespace contains commands for scanning and enumerating smb services.
 
 Commands
 --------

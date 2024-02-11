@@ -8,8 +8,7 @@ nb-enum-web-aws-help() {
 
 nb-enum-web-aws
 ---------------
-The nb-enum-web-aws namespace contains commands for scanning 
-and enumerating AWS hosted services.
+The nb-enum-web-aws namespace contains commands for scanning and enumerating AWS hosted services.
 
 Commands
 --------
