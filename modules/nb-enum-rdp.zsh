@@ -8,8 +8,7 @@ nb-enum-rdp-help() {
 
 nb-enum-rdp
 ------------
-The nb-enum-rdp namespace contains commands for scanning
-and enumerating RDP remote desktop services.
+The nb-enum-rdp namespace contains commands for scanning and enumerating RDP remote desktop services.
 
 Commands
 --------

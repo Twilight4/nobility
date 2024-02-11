@@ -8,8 +8,7 @@ nb-enum-pop3-help() {
 
 nb-enum-pop3
 ------------
-The nb-enum-pop3 namespace contains commands for scanning 
-and enumerating POP3 email services.
+The nb-enum-pop3 namespace contains commands for scanning and enumerating POP3 email services.
 
 Commands
 --------
