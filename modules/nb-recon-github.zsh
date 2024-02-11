@@ -9,7 +9,7 @@ nb-recon-github-help() {
 nb-recon-github
 ------------
 The recon-github namespace provides commands for the recon of github repos.
-All output will be stored under $__PROJECT/source
+All output will be stored under $__PROJECT/source.
 
 Commands
 --------

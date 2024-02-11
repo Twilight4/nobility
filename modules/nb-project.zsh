@@ -8,8 +8,7 @@ nb-project-help() {
 
 nb-project
 ----------
-The project namespace provides commands that help with setting
-up scope for an engagement or bug bounty, as well as commands for
+The project namespace provides commands that help with setting up scope for an engagement or bug bounty, as well as commands for
 syncing data and managing a VPS.
 
 Commands
