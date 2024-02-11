@@ -8,8 +8,7 @@ nb-shell-handlers-help() {
 
 nb-shell-handlers
 -----------------
-The shell-handlers namespace provides commands for spawning reverse shell
-connections.
+The shell-handlers namespace provides commands for spawning reverse shell connections.
 
 Commands
 --------

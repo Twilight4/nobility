@@ -8,8 +8,7 @@ nb-srv-help() {
 
 nb-srv
 -------
-The srv namespace provides commands for hosting local services
-such as web, ftp, smb and other services for data exfil or transfer.
+The srv namespace provides commands for hosting local services such as web, ftp, smb and other services for data exfil or transfer.
 
 Commands
 --------

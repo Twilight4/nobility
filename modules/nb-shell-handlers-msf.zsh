@@ -8,8 +8,7 @@ nb-shell-handlers-msf-help() {
 
 nb-shell-handlers-msf
 ---------------------
-The shell-handlers-msf namespace provides commands for spawning 
-reverse shell connections using metasploit.
+The shell-handlers-msf namespace provides commands for spawning reverse shell connections using metasploit.
 
 Commands
 --------

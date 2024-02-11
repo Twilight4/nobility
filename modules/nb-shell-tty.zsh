@@ -8,8 +8,7 @@ nb-shell-tty-help() {
 
 nb-shell-tty
 ------------
-The shell-tty namespace provides commands for fixing interactive 
-command/reverse shells.
+The shell-tty namespace provides commands for fixing interactive command/reverse shells.
 
 Commands
 --------
