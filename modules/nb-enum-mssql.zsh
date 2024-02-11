@@ -8,8 +8,7 @@ nb-enum-mssql-help() {
 
 nb-enum-mssql
 -------------
-The nb-enum-mssql namespace contains commands for scanning and 
-enumerating MS SQL Server services and databases.
+The nb-enum-mssql namespace contains commands for scanning and enumerating MS SQL Server services and databases.
 
 Commands
 --------
