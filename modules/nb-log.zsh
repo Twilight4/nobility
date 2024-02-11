@@ -8,8 +8,7 @@ nb-log-help() {
 
 nb-log
 -------------
-The log namespace provides commands that create a logbook in
-a directory specified by the __LOGBOOK variable.
+The log namespace provides commands that create a logbook in a directory specified by the __LOGBOOK variable.
 
 Commands
 --------

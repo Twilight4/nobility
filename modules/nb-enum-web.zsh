@@ -8,8 +8,7 @@ nb-enum-web-help() {
 
 nb-enum-web
 -----------
-The nb-enum-web namespace contains commands for scanning and enumerating
-http services.
+The nb-enum-web namespace contains commands for scanning and enumerating http services.
 
 Commands
 --------

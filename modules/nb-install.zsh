@@ -8,8 +8,7 @@ nb-install-help() {
 
 nb-install
 ----------
-The nb-install namespace provides commands that assist with installing
-packages, repos and tools used in nobility.
+The nb-install namespace provides commands that assist with installing packages, repos and tools used in nobility.
 
 Commands
 --------
