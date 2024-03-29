@@ -26,7 +26,7 @@ nb-shell-tty-python2() {
     __ok "Copy the commands below and use on the remote system"
     cat << "DOC" 
 
-python -c 'import pty;pty.spawn("/bin/sh")' 
+python -c 'import pty;pty.spawn("/bin/bash")' 
 
 DOC
 }
@@ -35,7 +35,7 @@ nb-shell-tty-python3() {
     __ok "Copy the commands below and use on the remote system"
     cat << "DOC" 
 
-python3 -c 'import pty;pty.spawn("/bin/sh")'
+python3 -c 'import pty;pty.spawn("/bin/bash")'
 
 DOC
 }
