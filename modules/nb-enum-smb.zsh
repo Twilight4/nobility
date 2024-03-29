@@ -68,20 +68,20 @@ nb-enum-smb-null-enum4() {
 
 nb-enum-smb-null-smbclient-list() {
   nb-vars-set-rhost
-  print -r -z "smbclient -L \\\\\\\\${__RHOST} -N "
+  print -r -z "smbclient -L //${__RHOST} -N "
 }
 
 nb-enum-smb-null-smbclient-connect() {
   nb-vars-set-rhost
   __check-share
-  print -r -z "smbclient \\\\\\\\${__RHOST}\\\\${__SHARE} -N "
+  print -r -z "smbclient //${__RHOST}/${__SHARE} -N "
 }
 
 nb-enum-smb-user-smbclient-connect() {
   nb-vars-set-rhost
   __check-user
   __check-share
-  print -r -z "smbclient \\\\\\\\${__RHOST}\\\\${__SHARE} -U ${__USER} "
+  print -r -z "smbclient //${__RHOST}/${__SHARE} -U ${__USER} "
 }
 
 nb-enum-user-smb-mount() {
@@ -104,7 +104,7 @@ nb-enum-smb-responder() {
 
 nb-enum-smb-net-use-null() {
     nb-vars-set-rhost
-  __info "net use \\\\\\\\${__RHOST}\\IPC$ \"\" /u:\"\" "
+  __info "net use //${__RHOST}/IPC$ \"\" /u:\"\" "
 }
 
 nb-enum-smb-nbtscan() {
