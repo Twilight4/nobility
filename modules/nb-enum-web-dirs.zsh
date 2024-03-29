@@ -18,6 +18,7 @@ nb-enum-web-dirs-parsero      parse complex robots.txt with parsero
 nb-enum-web-dirs-wfuzz        brute force dirs and files with wfuzz
 nb-enum-web-dirs-ffuf         brute force dirs and files with ffuf
 nb-enum-web-dirs-gobuster     brute force dirs and files with gobuster
+nb-enum-web-dirs-dirb         brute force dirs and files with dirb
 
 DOC
 }
@@ -62,4 +63,12 @@ nb-enum-web-dirs-gobuster() {
     nb-vars-set-wordlist
     __check-threads
     print -z "gobuster dir -u ${__URL} -a \"${__UA}\" -t1 -k -w ${__WORDLIST} | tee $(__urlpath)/gobuster-dirs.txt "
+}
+
+nb-enum-web-dirs-dirb() {
+    __check-project
+    nb-vars-set-url
+    nb-vars-set-wordlist
+    __check-threads
+    print -z "dirb {__URL} ${__WORDLIST}"
 }
