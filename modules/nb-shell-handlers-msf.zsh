@@ -56,46 +56,40 @@ nb-shell-handlers-msf-listener() {
     nb-vars-set-lport
 
     clear
-    #f_banner
 
-    # Bind it to listener variable
-    echo -e "${BLUE}Metasploit Listeners${NC}"
-    echo
-    echo "1.   android/meterpreter/reverse_tcp"
-    echo "2.   cmd/windows/reverse_powershell"
-    echo "3.   java/jsp_shell_reverse_tcp"
-    echo "4.   linux/x64/meterpreter_reverse_https"
-    echo "5.   linux/x64/meterpreter_reverse_tcp"
-    echo "6.   linux/x64/shell/reverse_tcp"
-    echo "7.   osx/x64/meterpreter_reverse_https"
-    echo "8.   osx/x64/meterpreter_reverse_tcp"
-    echo "9.   php/meterpreter/reverse_tcp"
-    echo "10.  python/meterpreter_reverse_https"
-    echo "11.  python/meterpreter_reverse_tcp"
-    echo "12.  windows/x64/meterpreter_reverse_https"
-    echo "13.  windows/x64/meterpreter_reverse_tcp"
-    echo "14.  Previous menu"
-    echo
-    echo -n "Choice: "
-    read choice
-    
-    # Bind it to payload variable
+    echo "Choose a payload type:"
+    echo "1.  android/meterpreter/reverse_tcp"
+    echo "2.  cmd/windows/reverse_powershell"
+    echo "3.  java/jsp_shell_reverse_tcp"
+    echo "4.  linux/x64/meterpreter_reverse_https"
+    echo "5.  linux/x64/meterpreter_reverse_tcp"
+    echo "6.  linux/x64/shell/reverse_tcp"
+    echo "7.  osx/x64/meterpreter_reverse_https"
+    echo "8.  osx/x64/meterpreter_reverse_tcp"
+    echo "9.  php/meterpreter/reverse_tcp"
+    echo "10. python/meterpreter_reverse_https"
+    echo "11. python/meterpreter_reverse_tcp"
+    echo "12. windows/x64/meterpreter_reverse_https"
+    echo "13. windows/x64/meterpreter_reverse_tcp"
+    echo "14. Previous menu"
+
+    read -p "Enter your choice: " choice
     case $choice in
-         1) payload="android/meterpreter/reverse_tcp";;
-         2) payload="cmd/windows/reverse_powershell";;
-         3) payload="java/jsp_shell_reverse_tcp";;
-         4) payload="linux/x64/meterpreter_reverse_https";;
-         5) payload="linux/x64/meterpreter_reverse_tcp";;
-         6) payload="linux/x64/shell/reverse_tcp";;
-         7) payload="osx/x64/meterpreter_reverse_https";;
-         8) payload="osx/x64/meterpreter_reverse_tcp";;
-         9) payload="php/meterpreter/reverse_tcp";;
-         10) payload="python/meterpreter_reverse_https";;
-         11) payload="python/meterpreter_reverse_tcp";;
-         12) payload="windows/x64/meterpreter_reverse_https";;
-         13) payload="windows/x64/meterpreter_reverse_tcp";;
-         14) f_main;;
-         *) f_error;;
+        1) setup_listener android/meterpreter/reverse_tcp;;
+        2) setup_listener cmd/windows/reverse_powershell;;
+        3) setup_listener java/jsp_shell_reverse_tcp;;
+        4) setup_listener linux/x64/meterpreter_reverse_https;;
+        5) setup_listener linux/x64/meterpreter_reverse_tcp;;
+        6) setup_listener linux/x64/shell/reverse_tcp;;
+        7) setup_listener osx/x64/meterpreter_reverse_https;;
+        8) setup_listener osx/x64/meterpreter_reverse_tcp;;
+        9) setup_listener php/meterpreter/reverse_tcp;;
+        10) setup_listener python/meterpreter_reverse_https;;
+        11) setup_listener python/meterpreter_reverse_tcp;;
+        12) setup_listener windows/x64/meterpreter_reverse_https;;
+        13) setup_listener windows/x64/meterpreter_reverse_tcp;;
+        14) exit;;
+        *) echo "Invalid option";;
     esac
     
 
