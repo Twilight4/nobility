@@ -92,45 +92,17 @@ nb-shell-handlers-msf-listener() {
         *) echo "Invalid option";;
     esac
     
+    # Generate a random number for the file name
+    rand=$(shuf -i 1000-9999 -n 1)
+    rc_file="/tmp/msf_listener_$rand.rc"
 
+    echo "use exploit/multi/handler" > "$rc_file"
+    echo "set payload $payload" >> "$rc_file"
+    echo "set LHOST $LHOST" >> "$rc_file"
+    echo "set LPORT $LPORT" >> "$rc_file"
+    echo "exploit -j" >> "$rc_file"
 
-    #echo
-    #echo -n "LHOST: "
-    #read lhost
-    
-    # Check for no answer
-    #if [ -z $lhost ]; then
-    #     lhost=$ip
-    #     echo "[*] Using $ip"
-    #     echo
-    #fi
-    
-    #echo -n "LPORT: "
-    #read lport
-    
-    # Check for no answer
-    #if [ -z ${__LPORT} ]; then
-    #     lport=443
-    #     echo "[*] Using 443"
-    #fi
-    
-
-
-    # Check for root when binding to a low port
-    #if [[ ${__LPORT} -lt 1025 && "$(id -u)" != "0" ]]; then
-    #     echo "You must be root to bind to a port that low."
-    #     sleep 3
-    #     f_error
-    #fi
-    
-    cp $discover/resource/listener.rc /tmp/
-    
-    sed -i "s|aaa|$payload|g" /tmp/listener.rc
-    sed -i "s/bbb/$lhost/g" /tmp/listener.rc
-    sed -i "s/ccc/${__LPORT}/g" /tmp/listener.rc
-    
-    echo
-    msfconsole -q -r /tmp/listener.rc
+    msfconsole -q -r "$rc_file"
 }
 
 nb-shell-handlers-msf-payload() {
