@@ -13,7 +13,6 @@ The shell-handlers namespace provides commands for spawning reverse shell connec
 Commands
 --------
 nb-shell-handlers-install        installs dependencies
-nb-shell-handlers-msf-ssl-gen    impersonate a real SSL certificate for use in reverse shells
 nb-shell-handlers-nc             netcat shell handlers
 nb-shell-handlers-ncrl           ncrl shell handlers
 nb-shell-handlers-nc-udp         netcat udp shell
@@ -57,5 +56,7 @@ nb-shell-handlers-nc-udp() {
 #############################################################
 nb-shell-handlers-socat() {
     nb-vars-set-lport
-    print -z "socat file:`tty`,raw,echo=0 tcp-listen:${__LPORT}"
+
+    echo
+    socat file:`tty`,raw,echo=0 tcp-listen:${__LPORT}
 }
