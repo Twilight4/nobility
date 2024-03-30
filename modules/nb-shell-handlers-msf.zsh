@@ -90,7 +90,7 @@ nb-shell-handlers-msf-listener() {
         12) __PAYLOAD=windows/x64/meterpreter_reverse_https;;
         13) __PAYLOAD=windows/x64/meterpreter_reverse_tcp;;
         14) exit;;
-        *) __err "Invalid option";;
+        *) echo "Invalid option";;
     esac
     
     clear
@@ -139,7 +139,7 @@ nb-shell-handlers-msf-payload() {
               format="psh";;
          6) extention=".bin"
               format="raw";;
-        *) __err "Invalid option";;
+        *) echo "Invalid option";;
     esac
 
     clear
@@ -250,7 +250,7 @@ nb-shell-handlers-msf-payload() {
     # Check for no answer
     if [ -z $iterations ]; then
          iterations=1
-         __info "[*] Using 1"
+         echo "[*] Using 1"
     fi
     
     x=$(echo $payload | sed 's/\//-/g')
