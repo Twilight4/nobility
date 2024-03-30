@@ -163,7 +163,7 @@ nb-shell-handlers-msf-payload() {
     echo
     echo -n "Choice: "
     read choice
-    
+
     case $choice in
          1) payload="android/meterpreter/reverse_tcp"
               extention=".apk"
@@ -246,15 +246,10 @@ nb-shell-handlers-msf-payload() {
     echo -n "Iterations: "
     read iterations
     
-    # Check for no answer.
+    # Check for no answer
     if [ -z $iterations ]; then
          iterations=1
          echo "[*] Using 1"
-    fi
-    
-    # Check for valid number that is reasonable.
-    if [[ $iterations -lt 0 || $iterations -gt 20 ]]; then
-         f_error
     fi
     
     x=$(echo $payload | sed 's/\//-/g')
@@ -270,10 +265,6 @@ nb-shell-handlers-msf-payload() {
          if [ -z $template ]; then
               template=/usr/share/windows-resources/binaries/whoami.exe
               echo '[*] Using /usr/share/windows-resources/binaries/whoami.exe'
-         fi
-    
-         if [ ! -f $template ]; then
-              f_error
          fi
     
          echo
