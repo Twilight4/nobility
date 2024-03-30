@@ -54,6 +54,7 @@ nb-shell-handlers-msf-listener() {
     __check-project
     nb-vars-set-lhost
     nb-vars-set-lport
+    payload=$1
 
     clear
 
@@ -98,8 +99,8 @@ nb-shell-handlers-msf-listener() {
 
     echo "use exploit/multi/handler" > "$rc_file"
     echo "set payload $payload" >> "$rc_file"
-    echo "set LHOST $LHOST" >> "$rc_file"
-    echo "set LPORT $LPORT" >> "$rc_file"
+    echo "set LHOST ${__LHOST}" >> "$rc_file"
+    echo "set LPORT ${__LPORT}" >> "$rc_file"
     echo "exploit -j" >> "$rc_file"
 
     msfconsole -q -r "$rc_file"
