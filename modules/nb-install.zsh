@@ -353,7 +353,7 @@ nb-install-link-finder() {
     fi
 }
 
-nb-install-winpeas {
+nb-install-winpeas() {
     __cyan "This will install WinPEASx64.exe"
     __ask "CONTINUE?"
     if __check-proceed
@@ -362,7 +362,7 @@ nb-install-winpeas {
     fi
 }
 
-nb-install-linpeas {
+nb-install-linpeas() {
     __cyan "This will install LinPEAS.sh"
     __ask "CONTINUE?"
     if __check-proceed
