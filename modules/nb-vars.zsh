@@ -220,7 +220,7 @@ nb-vars-set-lhost() {
   if [[ -z $__LHOST ]]
   then
     __ask "Choose a local IP address: " 
-    __LHOST=$(__menu $(ip addr list | grep -e "inet " | cut -d' ' -f6 | cut -d'/' -f1))
+    __LHOST=$(__menu $(\ip addr list | grep -e "inet " | cut -d' ' -f6 | cut -d'/' -f1))
   else
     __prefill __LHOST LHOST ${__LHOST}
   fi
