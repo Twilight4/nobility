@@ -3,8 +3,13 @@
 autoload colors; colors
 
 # Check for essential packages
-pacman -Qs rlwrap >/dev/null || sudo pacman -S --noconfirm rlwrap
-pacman -Qs git >/dev/null || sudo pacman -S --noconfirm git
+if command -v pacman &> /dev/null; then
+    pacman -Qs rlwrap >/dev/null || sudo pacman -S --noconfirm rlwrap
+    pacman -Qs git >/dev/null || sudo pacman -S --noconfirm git
+elif command -v apt-get &> /dev/null; then
+    dpkg -l | grep -qw rlwrap || sudo apt-get -y install rlwrap
+    dpkg -l | grep -qw git || sudo apt-get -y install git
+fi
 
 # Check for directories
 mkdir -p $HOME/.nobility/{vars,globals}

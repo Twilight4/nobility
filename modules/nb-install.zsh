@@ -43,11 +43,22 @@ __addpath() {
 
 __pkgs() {
     __info "checking for and installing dependencies..."
-    for pkg in "$@"
-    do
-        __info "$pkg"
-        pacman -Qq $pkg 2>/dev/null && __warn "already installed" || sudo pacman -S --noconfirm $pkg
-    done 
+
+    if command -v pacman &>/dev/null; then
+        __info "Using pacman package manager."
+        for pkg in "$@"; do
+            __info "$pkg"
+            pacman -Qq $pkg &>/dev/null && __warn "$pkg already installed" || sudo pacman -S --noconfirm $pkg
+        done
+    elif command -v apt-get &>/dev/null; then
+        __info "Using apt-get package manager."
+        for pkg in "$@"; do
+            __info "$pkg"
+            dpkg -s $pkg &>/dev/null && __warn "$pkg already installed" || sudo apt-get install -y $pkg
+        done
+    else
+        __warn "Neither pacman nor apt-get found. Cannot install packages."
+    fi
 }
 
 nb-install-all() {
@@ -281,7 +292,7 @@ nb-install-protonvpn() {
     local name="protonvpn"
     __info "$name"
 
-    sudo pacman -S --noconfirm --needed openvpn dialog python-pip python-setuptools protonvpn-cli
+    __pkgs openvpn dialog python-pip python-setuptools protonvpn-cli
     __warn "ProtonVPN username and password required"
     print -z "sudo protonvpn init"
 }
