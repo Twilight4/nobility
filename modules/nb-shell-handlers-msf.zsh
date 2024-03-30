@@ -143,7 +143,7 @@ nb-shell-handlers-msf-payload() {
          *) f_error;;
     esac
     
-    __ask "Choose malicious payload"
+    __ask "Choose malicious payload:"
     echo "1.   android/meterpreter/reverse_tcp         (.apk)"
     echo "2.   cmd/windows/reverse_powershell          (.bat)"
     echo "3.   java/jsp_shell_reverse_tcp (Linux)      (.jsp)"
@@ -160,7 +160,6 @@ nb-shell-handlers-msf-payload() {
     echo "14.  windows/x64/meterpreter_reverse_https   (multi)"
     echo "15.  windows/x64/meterpreter_reverse_tcp     (multi)"
     echo "16.  Previous menu"
-    
     echo
     echo -n "Choice: "
     read choice
@@ -240,36 +239,9 @@ nb-shell-handlers-msf-payload() {
               arch="x64"
               platform="windows"
               f_format;;
-         16) f_main;;
-    
-         *) f_error;;
+         16) exit;;
+        *) echo "Invalid option";;
     esac
-    
-    echo
-    echo -n "LHOST: "
-    read lhost
-    
-    # Check for no answer
-    if [ -z $lhost ]; then
-         lhost=$ip
-         echo "[*] Using $ip"
-         echo
-    fi
-    
-    echo -n "LPORT: "
-    read lport
-    
-    # Check for no answer.
-    if [ -z $lport ]; then
-         lport=443
-         echo "[*] Using 443"
-         echo
-    fi
-    
-    # Check for valid port number.
-    if [[ ${__LPORT} -lt 1 || ${__LPORT} -gt 65535 ]]; then
-         f_error
-    fi
     
     echo -n "Iterations: "
     read iterations
