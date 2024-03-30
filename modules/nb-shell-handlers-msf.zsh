@@ -57,7 +57,6 @@ nb-shell-handlers-msf-listener() {
 
     clear
 
-    #echo "Choose a payload type:"
     __ask "Choose a payload type:"
     echo "1.  android/meterpreter/reverse_tcp"
     echo "2.  cmd/windows/reverse_powershell"
@@ -116,12 +115,8 @@ nb-shell-handlers-msf-payload() {
     nb-vars-set-lport
 
     clear
-    f_banner
     
-    f_format(){
-    echo
-    echo -e "${BLUE}Formats${NC}"
-    echo
+    __ask "Choose a payload format:"
     echo '1. aspx'
     echo '2. c'
     echo '3. csharp'
@@ -147,10 +142,8 @@ nb-shell-handlers-msf-payload() {
               format="raw";;
          *) f_error;;
     esac
-    }
     
-    echo -e "${BLUE}Malicious Payloads${NC}"
-    echo
+    __ask "Choose malicious payload"
     echo "1.   android/meterpreter/reverse_tcp         (.apk)"
     echo "2.   cmd/windows/reverse_powershell          (.bat)"
     echo "3.   java/jsp_shell_reverse_tcp (Linux)      (.jsp)"
