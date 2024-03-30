@@ -56,8 +56,9 @@ nb-shell-handlers-msf-listener() {
     nb-vars-set-lport
 
     clear
-    f_banner
-    
+    #f_banner
+
+    # Bind it to listener variable
     echo -e "${BLUE}Metasploit Listeners${NC}"
     echo
     echo "1.   android/meterpreter/reverse_tcp"
@@ -78,6 +79,7 @@ nb-shell-handlers-msf-listener() {
     echo -n "Choice: "
     read choice
     
+    # Bind it to payload variable
     case $choice in
          1) payload="android/meterpreter/reverse_tcp";;
          2) payload="cmd/windows/reverse_powershell";;
@@ -96,37 +98,36 @@ nb-shell-handlers-msf-listener() {
          *) f_error;;
     esac
     
-    echo
-    echo -n "LHOST: "
-    read lhost
+
+
+    #echo
+    #echo -n "LHOST: "
+    #read lhost
     
     # Check for no answer
-    if [ -z $lhost ]; then
-         lhost=$ip
-         echo "[*] Using $ip"
-         echo
-    fi
+    #if [ -z $lhost ]; then
+    #     lhost=$ip
+    #     echo "[*] Using $ip"
+    #     echo
+    #fi
     
-    echo -n "LPORT: "
-    read lport
+    #echo -n "LPORT: "
+    #read lport
     
     # Check for no answer
-    if [ -z ${__LPORT} ]; then
-         lport=443
-         echo "[*] Using 443"
-    fi
+    #if [ -z ${__LPORT} ]; then
+    #     lport=443
+    #     echo "[*] Using 443"
+    #fi
     
-    # Check for valid port number.
-    if [[ ${__LPORT} -lt 1 || ${__LPORT} -gt 65535 ]]; then
-         f_error
-    fi
-    
+
+
     # Check for root when binding to a low port
-    if [[ ${__LPORT} -lt 1025 && "$(id -u)" != "0" ]]; then
-         echo "You must be root to bind to a port that low."
-         sleep 3
-         f_error
-    fi
+    #if [[ ${__LPORT} -lt 1025 && "$(id -u)" != "0" ]]; then
+    #     echo "You must be root to bind to a port that low."
+    #     sleep 3
+    #     f_error
+    #fi
     
     cp $discover/resource/listener.rc /tmp/
     
