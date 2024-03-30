@@ -29,6 +29,8 @@ nb-install-pentest-tools
 nb-install-protonvpn
 nb-install-nmap-elasticsearch-nse
 nb-install-link-finder
+nb-install-winpeas
+nb-install-linpeas
 
 DOC
 }
@@ -75,9 +77,9 @@ nb-install-all() {
         nb-enum-host-install
         nb-ad-kerb-install
         nb-ad-ldap-install
-		nb-ad-pth-install
-		nb-ad-smb-relay-install
-		nb-ad-asrep-roast-install
+        nb-ad-pth-install
+        nb-ad-smb-relay-install
+        nb-ad-asrep-roast-install
         nb-enum-mssql-install
         nb-enum-mysql-install
         nb-enum-network-install
@@ -348,5 +350,23 @@ nb-install-link-finder() {
         cat requirements.txt
         echo "Install tools listed in requirements using pacman"
         popd
+    fi
+}
+
+nb-install-winpeas {
+    __cyan "This will install WinPEASx64.exe"
+    __ask "CONTINUE?"
+    if __check-proceed
+    then
+        wget https://github.com/carlospolop/PEASS-ng/releases/download/20240324-2c3cd766/linpeas.sh -O ~/desktop/server/winPEASx64.exe
+    fi
+}
+
+nb-install-linpeas {
+    __cyan "This will install LinPEAS.sh"
+    __ask "CONTINUE?"
+    if __check-proceed
+    then
+        wget https://github.com/carlospolop/PEASS-ng/releases/download/20240324-2c3cd766/winPEASx64.exe -O ~/desktop/server/linpeas.sh
     fi
 }
