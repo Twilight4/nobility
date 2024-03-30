@@ -33,17 +33,22 @@ nb-shell-handlers-install() {
 #############################################################
 nb-shell-handlers-nc() {
     nb-vars-set-lport
-    print -z "nc -nlvp ${__LPORT}"
+
+    echo
+    nc -nlvp ${__LPORT}
 }
 
 nb-shell-handlers-ncrl() {
     nb-vars-set-lport
-    print -z "rlwrap nc -nlvp ${__LPORT}"
+    echo
+    rlwrap nc -nlvp ${__LPORT}
 }
 
 nb-shell-handlers-nc-udp() {
     nb-vars-set-lport
-    print -z "nc -nlvu ${__LPORT}"
+
+    echo
+    nc -nlvu ${__LPORT}
 }
 
 
