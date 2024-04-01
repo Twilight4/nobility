@@ -22,6 +22,7 @@ nb-enum-web-snmp                   create host list and scan IP with WORDLIST
 nb-enum-web-vhosts-gobuster        brute force for virtual hosts
 nb-enum-web-eyewitness             scrape screenshots from target URL
 nb-enum-web-wordpress              enumerate Wordpress information
+nb-enum-web-wordpress-bruteforce   bruteforce Wordpress password, knowing the username
 nb-enum-web-headers                grab headers from a target url using curl
 nb-enum-web-mirror                 mirrors the target website locally
 
@@ -105,6 +106,16 @@ nb-enum-web-wordpress() {
     __check-project
     nb-vars-set-url
     print -z "wpscan --ua \"${__UA}\" --url ${__URL} --enumerate tt,vt,u,vp -o $(__urlpath)/wpscan.txt"
+}
+
+nb-enum-web-wordpress-bruteforce() {
+    __check-project
+    nb-vars-set-url
+    nb-vars-set-wordlist
+
+    __ask "Enter a user account"
+	  __check-user
+    print -z "wpscan --ua \"${__UA}\" --url ${__URL} --usernames ${__USER} --passwords ${__WORDLIST} --max-threads 20 -o $(__urlpath)/wpscan.txt"
 }
 
 nb-enum-web-headers() {
