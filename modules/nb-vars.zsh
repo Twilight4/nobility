@@ -319,7 +319,7 @@ __check-org() { __askvar __ORG ORG }
 export __ASN
 __check-asn() { __askvar __ASN ASN }
 
-
+# Output dirs
 __netpath() { 
     __check-project
     local net=$(echo ${__NETWORK} | cut -d'/' -f1)
@@ -349,4 +349,3 @@ __dompath() {
     mkdir -p "${result}"
     echo  "${result}"
 }
-
