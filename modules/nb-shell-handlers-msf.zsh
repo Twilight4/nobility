@@ -104,7 +104,7 @@ nb-shell-handlers-msf-listener() {
     echo "set payload ${__PAYLOAD}" >> "$rc_file"
     echo "set LHOST ${__LHOST}" >> "$rc_file"
     echo "set LPORT ${__LPORT}" >> "$rc_file"
-    echo "exploit -j" >> "$rc_file"
+    echo "exploit" >> "$rc_file"
 
     msfconsole -q -r "$rc_file"
 }
@@ -294,7 +294,7 @@ nb-shell-handlers-msf-upgrade-shell() {
     echo "set LHOST ${__LHOST}" >> "$rc_file"
     echo "set SESSION ${__SESSION}" >> "$rc_file"
     echo "set LPORT ${__LPORT}" >> "$rc_file"
-    echo "exploit -j" >> "$rc_file"
+    echo "exploit" >> "$rc_file"
 
     msfconsole -q -r "$rc_file"
 }
