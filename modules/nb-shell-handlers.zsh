@@ -34,20 +34,20 @@ nb-shell-handlers-nc() {
     nb-vars-set-lport
 
     echo
-    nc -nlvp ${__LPORT}
+    print -z "nc -nlvp ${__LPORT}"
 }
 
 nb-shell-handlers-ncrl() {
     nb-vars-set-lport
     echo
-    rlwrap nc -nlvp ${__LPORT}
+    print -z "rlwrap nc -nlvp ${__LPORT}"
 }
 
 nb-shell-handlers-nc-udp() {
     nb-vars-set-lport
 
     echo
-    nc -nlvu ${__LPORT}
+    print -z "nc -nlvu ${__LPORT}"
 }
 
 
@@ -58,5 +58,5 @@ nb-shell-handlers-socat() {
     nb-vars-set-lport
 
     echo
-    socat file:`tty`,raw,echo=0 tcp-listen:${__LPORT}
+    print -z "socat file:`tty`,raw,echo=0 tcp-listen:${__LPORT}"
 }
