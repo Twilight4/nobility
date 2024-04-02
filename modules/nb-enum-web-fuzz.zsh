@@ -79,7 +79,7 @@ nb-enum-web-brute-hydra-get() {
     __check-user
     __ask "Enter the URI for the get request, ex: /path"
     local uri && __askvar uri URI
-    print -z "hydra -l ${__USER} -P ${__PASSLIST} ${__RHOST} http-get ${uri}"
+    print -z "hydra -l ${__USER} -P ${__PASSLIST} ${__RHOST} http-get ${uri} -V"
 }
 
 nb-enum-web-brute-hydra-form-post() {
@@ -91,5 +91,5 @@ nb-enum-web-brute-hydra-form-post() {
     local pf && __askvar pf PASSWORD_FIELD
     __ask "Enter the response value to check for failure"
     local fm && __askvar fm FAILURE
-    print -z "hydra ${__RHOST} http-form-post \"${uri}:${uf}=^USER^&${pf}=^PASS^:${fm}\" -l ${uv} -P ${__PASSLIST} -t 10 -w 30 "
+    print -z "hydra ${__RHOST} http-form-post \"${uri}:${uf}=^USER^&${pf}=^PASS^:${fm}\" -l ${uv} -P ${__PASSLIST} -t 10 -w 30 -V"
 }
