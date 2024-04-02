@@ -1,40 +1,40 @@
 #!/usr/bin/env zsh
 
 ############################################################# 
-# nb-arch
+# nb-os
 #############################################################
-nb-arch-help() {
+nb-os-help() {
     cat << "DOC" | bat --plain --language=help
 
-nb-arch
+nb-os
 ----------
-The nb-arch namespace provides commands that assist with managing Arch linux.
+The nb-os namespace provides commands that assist with managing your OS.
 
 Commands
 --------
-nb-arch-pkg-query            query if a package is installed or not  
-nb-arch-flush-iptables       flushes ip tables
-nb-arch-get-gateway          get router IP address
-nb-arch-get-hosts            get list of host IP addresses found via nmap
-nb-arch-get-hostnames        get list of host names using nmap and the IP of a known DNS server
-nb-arch-download-html        download IP and print with html2text
-nb-arch-scan-tcp             scan IP with masscan
-nb-arch-scan-udp             scan IP with nmap
-nb-arch-ps-grep              search list of processes
-nb-arch-ps-dtach             run a script in the background
-nb-arch-path-add             add a new path to the PATH environment variable
-nb-arch-file-replace         replace an existing value in a file
-nb-arch-file-dos-to-unix     convert file with dos endings to unix
-nb-arch-file-unix-to-dos     convert file with unix endings to dos
-nb-arch-file-sort-uniq       sort a file uniq in place 
-nb-arch-file-sort-uniq-ip    sort a file of IP addresses uniq in place
-nb-arch-sudoers-easy         removes the requirment for sudo for common commands like nmap
-nb-arch-sudoers-harden       removes sudo exclusions
+nb-os-pkg-query            query if a package is installed or not  
+nb-os-flush-iptables       flushes ip tables
+nb-os-get-gateway          get router IP address
+nb-os-get-hosts            get list of host IP addresses found via nmap
+nb-os-get-hostnames        get list of host names using nmap and the IP of a known DNS server
+nb-os-download-html        download IP and print with html2text
+nb-os-scan-tcp             scan IP with masscan
+nb-os-scan-udp             scan IP with nmap
+nb-os-ps-grep              search list of processes
+nb-os-ps-dtach             run a script in the background
+nb-os-path-add             add a new path to the PATH environment variable
+nb-os-file-replace         replace an existing value in a file
+nb-os-file-dos-to-unix     convert file with dos endings to unix
+nb-os-file-unix-to-dos     convert file with unix endings to dos
+nb-os-file-sort-uniq       sort a file uniq in place 
+nb-os-file-sort-uniq-ip    sort a file of IP addresses uniq in place
+nb-os-sudoers-easy         removes the requirment for sudo for common commands like nmap
+nb-os-sudoers-harden       removes sudo exclusions
 
 DOC
 }
 
-nb-arch-pkg-query() {
+nb-os-pkg-query() {
     local query && __askvar query PACKAGE 
     for pkg in "${query}"
     do
@@ -42,7 +42,7 @@ nb-arch-pkg-query() {
     done 
 }
 
-nb-arch-flush-iptables() {
+nb-os-flush-iptables() {
     echo ""
     echo ">>> Before flush <<<"
     echo "" 
@@ -66,12 +66,12 @@ nb-arch-flush-iptables() {
     echo ""
 }
 
-nb-arch-get-gateway() {
+nb-os-get-gateway() {
    INTERFACE=${1:-tap0}
    ip route | grep via | grep "$INTERFACE" | cut -d" " -f3 
 }
 
-nb-arch-get-hosts() {
+nb-os-get-hosts() {
     PORT=${1:-"none"}
     NETWORK=${2:-"10.11.1.0"}
     PATTERN="Nmap scan report for ${NETWORK:0:-1}"
@@ -87,7 +87,7 @@ nb-arch-get-hosts() {
     fi
 }
 
-nb-arch-get-hostnames() {
+nb-os-get-hostnames() {
     DNS=$1
     NETWORK=${2:-"10.11.1.0"}
     PATTERN="Nmap scan report for "
@@ -103,23 +103,23 @@ nb-arch-get-hostnames() {
     fi
 }
 
-nb-arch-download-html() { 
+nb-os-download-html() { 
 	curl -s "${1:-$RHOST}:${80:-$RPORT}" | html2text -style pretty; 
 }
 
-nb-arch-scan-tcp() {
+nb-os-scan-tcp() {
     IP=${1:-${__RHOST}
     INTERFACE=${2:-"tap0"}
     SAVEPATH=$(create_scan_directory "$IP")
 	
     run() {
-        masscan "$1" -e "$INTERFACE" --router-ip "$(nb-arch-get-gateway "$INTERFACE")" -p 0-65535 --rate 500 -oL "$SAVEPATH"/ports
+        masscan "$1" -e "$INTERFACE" --router-ip "$(nb-os-get-gateway "$INTERFACE")" -p 0-65535 --rate 500 -oL "$SAVEPATH"/ports
     }
 	
     run "$IP"
 }
 
-nb-arch-scan-udp() {
+nb-os-scan-udp() {
     IP=${1:-$RHOST}
     SAVEPATH=$(create_scan_directory "$IP")
 	
@@ -130,60 +130,60 @@ nb-arch-scan-udp() {
     run "$IP"
 }
 
-nb-arch-ps-grep() { 
+nb-os-ps-grep() { 
     local query && __askvar query QUERY 
     print -z "ps aux | grep -v grep | grep -i -e VSZ -e ${query}" 
 }
 
-nb-arch-ps-dtach() { 
+nb-os-ps-dtach() { 
     __ask "Enter full path to script to run dtach'd"
     local p && __askpath p PATH $(pwd)
     dtach -A ${p} /bin/zsh 
 }
 
-nb-arch-path-add() { 
+nb-os-path-add() { 
     __ask "Enter new path to append to current PATH"
     local p && __askpath p PATH /   
     print -z "echo \"export PATH=\$PATH:${p}\" | tee -a $HOME/.zshrc" 
 }
 
-nb-arch-file-replace() {
+nb-os-file-replace() {
     local replace && __askvar replace REPLACE
     local with && __askvar with WITH
     local file && __askpath file FILE $(pwd)
     print -z "sed 's/${replace}/${with}/g' ${file} > ${file}"
 } 
 
-nb-arch-file-dos-to-unix() { 
+nb-os-file-dos-to-unix() { 
     local file=$1 
     [[ -z "${file}" ]] && __askpath file FILE $(pwd)
     print -z "tr -d \"\015\" < ${file} > ${file}.unix"
 }
 
-nb-arch-file-unix-to-dos() {
+nb-os-file-unix-to-dos() {
     local file=$1 
     [[ -z "${file}" ]] && __askpath file FILE $(pwd)
     print -z "sed -e 's/$/\r/' ${file} > ${file}.dos"
 }
 
-nb-arch-file-sort-uniq() {
+nb-os-file-sort-uniq() {
     local file=$1 
     [[ -z "${file}" ]] && __askpath file FILE $(pwd)
     print -z "cat ${file} | sort -u -o ${file}"
 }
 
-nb-arch-file-sort-uniq-ip() { 
+nb-os-file-sort-uniq-ip() { 
     local file=$1 
     [[ -z "${file}" ]] && __askpath file FILE $(pwd)
     print -z "cat ${file} | sort -u | sort -V -o ${file}"
 }
 
-nb-arch-sudoers-easy() {
+nb-os-sudoers-easy() {
     __warn "This is dangerous for OPSEC! Remove when done."
 	
     print -z "echo \"$USER ALL=(ALL:ALL) NOPASSWD: /usr/bin/nmap, /usr/bin/masscan, /usr/sbin/tcpdump\" | sudo tee /etc/sudoers.d/$(whoami)"
 }
 
-nb-arch-sudoers-harden() {
+nb-os-sudoers-harden() {
     print -z "sudo rm /etc/sudoers.d/$(whoami)"
 }
