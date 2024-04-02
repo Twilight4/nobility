@@ -1,8 +1,7 @@
 # Nobility
-
 Nobility is an organized colletion of shell functions designed to streamline your terminal interactions, liberating you from the hassle of juggling notes, endless copying and pasting, and tedious command editing. 
 
-This tool is tailored for Arch-based Linux systems, with a focus on enhancing red-teaming and network-pentesting endeavors. 
+This tool is tailored for security consultants with a focus on enhancing red-teaming and network-pentesting endeavors. 
 Nobility doesn't cover all tools, it's my own curated collection which I am still adding to and updating in order to automate my workflow. 
 I focus on tools I use and that are maintained and current. 
 
@@ -21,15 +20,11 @@ Instead you can use nobility to build a composable, on-the-fly workflow for ever
 * **Reverse Shell Handlers**: Manage reverse shell handlers easily, enhancing network-pentesting capabilities
 * **Content Serving Commands**: Serve content effortlessly, making file sharing and testing straightforward
 * **Built-in Logbook**: Keep on-the-fly notes and save commands with Nobility's built-in logbook feature
-* **Org Mode Rendering**: Render Org mode notes directly to the command line for a streamlined reading experience
-* **Arch Linux System Management**: Optimized for Arch Linux systems, simplifying system management tasks
-* **Update Notifications**: Stay informed with update notifications for the latest features and improvements
+* **Linux System Management**: Optimized for Linux management, simplifying system tasks
 * **Dependency Installers**: Includes installers for dependencies, ensuring a smooth and hassle-free setup process
 
 # Installation
 Nobility requires the following:
-
-* [Arch Linux](https://archlinux.org/)
 * [Zsh](https://github.com/zsh-users/zsh)
 * [Oh-my-zsh](https://ohmyz.sh/) (optional)
 
@@ -131,7 +126,4 @@ nb-enum-web-gospider
 
 # Brute force URIs
 nb-enum-web-dirs-ffuf
-
-# Read your notes
-nb-notes
 ```
