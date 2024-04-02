@@ -19,7 +19,6 @@ __EXT_PHP        a list of file extensions used on PHP webservers
 __EXT_DOCS       a list of common documents file types
 __API_GITHUB     your personal Github API key
 __RESOLVERS      path to public resolvers file 
-__NOTES          path to the directory containing your org-mode notes for nb-notes
 __MNU_UA         path to the file containing user-agent strings
 __MNU_WORDLISTS  path to the file containing a list of favorite wordlists
 __TCP_PORTS      path to the file of favorite TCP ports
@@ -38,7 +37,6 @@ nb-vars-global() {
     echo "$(__cyan EXT_PHP: ) ${__EXT_PHP}"
     echo "$(__cyan EXT_DOCS: ) ${__EXT_DOCS}"
     echo "$(__cyan API_GITHUB: ) ${__API_GITHUB}"
-    echo "$(__cyan NOTES: ) ${__NOTES}"
     echo "$(__cyan RESOLVERS: ) ${__RESOLVERS}"
     echo "$(__cyan MNU_UA: ) ${__MNU_UA}"
     echo "$(__cyan MNU_WORDLISTS: ) ${__MNU_WORDLISTS}"
@@ -118,20 +116,6 @@ nb-vars-global-set-resolvers() {
 }
 
 __check-resolvers() { [[ -z "${__RESOLVERS}" ]] && nb-vars-global-set-resolvers }
-
-
-############################################################# 
-# __NOTES
-#############################################################
-export __NOTES="$(cat ${__GLOBALS}/NOTES 2> /dev/null)"
-
-nb-vars-global-set-notes() {
-    __ask "Set the full path to the directory containing org-mode notes."
-    __askpath __NOTES DIR $HOME
-    echo "${__NOTES}" > ${__GLOBALS}/NOTES
-}
-
-__check-notes() { [[ -z "${__NOTES}" ]] && nb-vars-global-set-notes }
 
 
 ############################################################# 

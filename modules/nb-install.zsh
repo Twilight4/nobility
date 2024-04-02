@@ -98,7 +98,6 @@ nb-install-all() {
         nb-enum-web-ssl-install
         nb-enum-web-install
         nb-exploit-install
-        nb-notes-install
         nb-pivot-install
         nb-project-install
         nb-recon-domains-install
