@@ -22,7 +22,7 @@ Tools
 These installers are for individual tools.
 
 nb-install-wordlist-commonspeak
-nb-install-wordlist-nerdlist
+nb-install-wordlist-seclists
 nb-install-github-search
 nb-install-git-secrets
 nb-install-pentest-tools
@@ -168,27 +168,9 @@ nb-install-node() {
     fi
 }
 
-nb-install-wordlist-commonspeak() {
-    local name="commonspeak2"
-    local url="https://github.com/assetnote/commonspeak2-wordlists.git"
-    local p="$__TOOLS/$name"
-
-    __info "$name"
-
-    if [[ ! -d $p ]]
-    then
-        git clone $url $p
-    else
-        __warn "already installed in $p"
-        pushd $p 
-        git pull
-        popd
-    fi
-}
-
-nb-install-wordlist-nerdlist() {
-    local name="nerdlist"
-    local url="https://github.com/tarahmarie/nerdlist.git"
+nb-install-wordlist-seclists() {
+    local name="seclists"
+    local url="https://github.com/danielmiessler/SecLists"
     local p="$__TOOLS/$name"
 
     __info "$name"
