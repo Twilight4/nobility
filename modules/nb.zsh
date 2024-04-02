@@ -25,13 +25,12 @@ Each namespace has its own install and help commands.
  Install and Configuration
  -------------------------
  nb-install-                    Installers for commonly used applications and global installer for all dependencies
- nb-notes-                      Configure and read your org notes
  nb-vars-global-                Persistent environment variables used in all commands, all sessions
 
  Utility
  ---------
  nb-encoding-                   Used for encoding / decoding data
- nb-arch-                       Variety of commands for managing Arch linux
+ nb-os-                       Variety of commands for managing your OS
 
  Engagement / Project / Bounty
  -----------------------------
