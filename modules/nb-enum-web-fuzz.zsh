@@ -12,14 +12,15 @@ The nb-enum-web-fuzz namespace contains commands for fuzzing inputs of web appli
 
 Commands
 --------
-nb-enum-web-fuzz-install                  installs dependencies
-nb-enum-web-fuzz-auth-basic-payloads      generate base64 encoded credentials
-nb-enum-web-fuzz-auth-basic-ffuf          brute force basic auth
-nb-enum-web-fuzz-auth-json-ffuf           brute force basic auth with json post
-nb-enum-web-fuzz-auth-post-ffuf           brute force auth with post
-nb-enum-web-fuzz-auth-post-wfuzz          brute force auth with post
-nb-enum-web-brute-hydra-get               brute force auth with get
-nb-enum-web-brute-hydra-form-post         brute force auth with post
+nb-enum-web-fuzz-install                      installs dependencies
+nb-enum-web-fuzz-auth-basic-payloads          generate base64 encoded credentials
+nb-enum-web-fuzz-auth-basic-ffuf              brute force basic auth
+nb-enum-web-fuzz-auth-json-ffuf               brute force basic auth with json post
+nb-enum-web-fuzz-auth-post-ffuf               brute force auth with post
+nb-enum-web-fuzz-auth-post-wfuzz              brute force auth with post
+nb-enum-web-brute-hydra-get                   brute force auth with get
+nb-enum-web-brute-password-hydra-form-post    brute force auth password with post request
+nb-enum-web-brute-login-hydra-form-post       brute force auth login with post request
 
 DOC
 }
@@ -82,14 +83,28 @@ nb-enum-web-brute-hydra-get() {
     print -z "hydra -l ${__USER} -P ${__PASSLIST} ${__RHOST} http-get ${uri} -V"
 }
 
-nb-enum-web-brute-hydra-form-post() {
+nb-enum-web-brute-password-hydra-form-post() {
     nb-vars-set-rhost
+    nb-vars-set-passlist
     __ask "Enter the URI for the post request, ex: /path"
     local uri && __askvar uri URI
     local uf && __askvar uf USER_FIELD
-    local uv && __askvar uv USER_VALUE
+    local pf && __askvar pf PASSWORD_FIELD
+    __ask "Enter the username which you wanna bruteforce"
+    local un && __askvar un USER_NAME
+    __ask "Enter the response value to check for failure"
+    local fm && __askvar fm FAILURE
+    print -z "hydra ${__RHOST} http-form-post \"${uri}:${uf}=^USER^&${pf}=^PASS^:${fm}\" -l ${un} -P ${__PASSLIST} -t 10 -w 30 -V"
+}
+
+nb-enum-web-brute-login-hydra-form-post() {
+    nb-vars-set-rhost
+    nb-vars-set-wordlist
+    __ask "Enter the URI for the post request, ex: /path"
+    local uri && __askvar uri URI
+    local uf && __askvar uf USER_FIELD
     local pf && __askvar pf PASSWORD_FIELD
     __ask "Enter the response value to check for failure"
     local fm && __askvar fm FAILURE
-    print -z "hydra ${__RHOST} http-form-post \"${uri}:${uf}=^USER^&${pf}=^PASS^:${fm}\" -l ${uv} -P ${__PASSLIST} -t 10 -w 30 -V"
+    print -z "hydra ${__RHOST} http-form-post \"${uri}:${uf}=^USER^&${pf}=^PASS^:${fm}\" -l ${__WORDLIST} -p test -t 10 -w 30 -V"
 }
