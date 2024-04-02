@@ -12,17 +12,10 @@ The nb namespace is the root of all other namespaces that can be access with tab
 To get started, explore the nb-<namespace>-help commands. Install dependencies per namespace,
 using the nb-<namespace>-install commands or install all dependencies using nb-install-all.
 
-Variables
----------
-__VERSION     Current version of the nobility plugin
-__PLUGIN      Full path to the nobility oh-my-zsh plugin directory
-
 Commands
 --------
 nb-update        git pull the latest (MAIN branch) version of nobility
 nb-status        check the current status of the locally cloned nobility repository
-nb-whatsnew      display the latest release notes
-nb-debug         display the local diagnostic log
 
 Namespaces
 ----------
@@ -98,28 +91,18 @@ DOC
 }
 
 nb-update() {
-	cd $HOME/.config/zsh/plugins/nobility
+	  cd $HOME/.config/zsh/plugins/nobility
     #cd $HOME/.oh-my-zsh/custom/plugins/nobility
     git pull
-    rm $__REMOTE_VER
-    rm $__REMOTE_CHK
     cd - > /dev/null
-    source $HOME/.zshrc
+    source $HOME/.config/zsh/.zshrc
 }
 
 nb-status() {
-	cd $HOME/.config/zsh/plugins/nobility
+	  cd $HOME/.config/zsh/plugins/nobility
     #cd $HOME/.oh-my-zsh/custom/plugins/nobility
-    git status | grep On | cut -d" " -f2,3
+    git status
     cd - > /dev/null
-}
-
-nb-whatsnew() {
-    cat $__PLUGIN/RELEASES.md
-}
-
-nb-debug() {
-    cat ${__LOGFILE}
 }
 
 
