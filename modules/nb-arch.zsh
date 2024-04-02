@@ -13,7 +13,6 @@ The nb-arch namespace provides commands that assist with managing Arch linux.
 Commands
 --------
 nb-arch-pkg-query            query if a package is installed or not  
-nb-arch-new-project          create a new project and go there
 nb-arch-flush-iptables       flushes ip tables
 nb-arch-get-gateway          get router IP address
 nb-arch-get-hosts            get list of host IP addresses found via nmap
@@ -41,49 +40,6 @@ nb-arch-pkg-query() {
     do
     pacman -Q | grep -qw $pkg && __ok "${pkg} is installed" || __warn "${pkg} not installed"
     done 
-}
-
-nb-arch-new-project() {
-    # Check if project name is provided
-    if [ -z "$1" ]; then
-        echo "Usage: nb-arch-new-project company-name"
-        return 1
-    fi
-
-    # Ask for assessment type
-    echo "Assessment types:"
-    echo "1. external-pentest"
-	echo "2. internal-pentest"
-    echo "3. red-team-engagement"
-    echo "4. social-engineering-pentest"
-	echo "5. wireless-pentest"
-
-    # Read assessment choice
-    echo -n "Enter assessment type number: "
-    read assessment_choice
-
-    case $assessment_choice in
-        1) assessment_type="external-pentest";;
-		2) assessment_type="internal-pentest";;
-        3) assessment_type="red-team-engagement";;
-		4) assessment_type="social-engineering-pentest";;
-        5) assessment_type="wireless-pentest";;
-        *) echo -e "\nInvalid choice. Aborting."; return 1;;
-    esac
-
-    # Create a directory for assessment type if it doesn't exist
-    assessment_dir="$HOME/desktop/projects/$assessment_type"
-    mkdir -p "$assessment_dir"
-
-    # Create the project directory
-    proj_name="$1"
-    proj_dir="$assessment_dir/$proj_name"
-    mkdir -p "$proj_dir"
-
-    # Move to the project directory
-    cd "$proj_dir"
-
-    echo "Project '$proj_name' created with assessment type '$assessment_type'."
 }
 
 nb-arch-flush-iptables() {
