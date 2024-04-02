@@ -21,7 +21,6 @@ Tools
 -----
 These installers are for individual tools.
 
-nb-install-wordlist-commonspeak
 nb-install-wordlist-seclists
 nb-install-github-search
 nb-install-git-secrets
@@ -177,7 +176,7 @@ nb-install-wordlist-seclists() {
 
     if [[ ! -d $p ]]
     then
-        git clone $url $p
+        git clone --depth 1 $url $p
     else
         __warn "already installed in $p"
         pushd $p 
