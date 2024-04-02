@@ -18,7 +18,7 @@ __PROJECT_ZD_ROOT           a global variable for the project root folder used i
 
 Commands
 --------
-nb-project-new                         create a new project and cd there
+nb-project-new                          create a new project and cd there
 nb-project-custom-zd-start              scaffolds directory structure and logbook for "zd" projects
 nb-project-custom-zd-end                zips and removes directories and data for "zd" projects
 nb-project-custom-zd-root-set           sets the __PROJECT_ZD_ROOT variable
@@ -98,7 +98,6 @@ nb-project-custom-zd-consultant-set() {
 }
 
 nb-project-custom-zd-start() {
-
     __check-project-zd
 
     local pid && __askvar pid "PROJECT ID"
@@ -129,7 +128,6 @@ nb-project-custom-zd-start() {
 }
 
 nb-project-custom-zd-end() {
-
     __check-project-zd
 
     __ask "Select a project folder: "
