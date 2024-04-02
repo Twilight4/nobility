@@ -11,7 +11,7 @@ Instead you can use nobility to build a composable, on-the-fly workflow for ever
 # Key Features
 * **Prefilled Commands**: Streamlines terminal interactions by automatically prefilling commands
 * **Organized Commands**: Well-organized commands with tab auto-completion
-* **Seamless Integration**: ZSH/Oh-My-ZSH shell plugin ensures easy integration into your environment
+* **Seamless Integration**: Zsh/Oh-My-Zsh shell plugin ensures easy integration into your environment
 * **Customizable Settings**: Tailor Nobility to your preferences with customizable settings and global variables
 * **Recon Phase**: Access OSINT commands for efficient information gathering
 * **Enumeration Phase**: Effortlessly enumerate common services, saving time in penetration testing
