@@ -43,13 +43,13 @@ source ~/.zshrc
 ## Manual installation
 ```bash
 # Clone the repo to your zsh directory
-git clone https://github.com/Twilight4/nobility.git ~/.config/zsh/nobility
+git clone https://github.com/Twilight4/nobility.git ~/.config/nobility
 
 # Source the plugin in `~/.zshrc`
-echo 'source ~/.config/zsh/nobility/nobility.plugin.zsh' >> ~/.config/zsh/.zshrc
+echo 'source ~/.config/nobility/nobility.plugin.zsh' >> ~/.zshrc
 
 # Source `.zshrc` to load the plugin
-source ~/.config/zsh/.zshrc
+source ~/.zshrc
 ```
 
 # Getting Started
