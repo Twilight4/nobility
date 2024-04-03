@@ -106,6 +106,7 @@ iex([System.Text.Encoding]::Unicode.GetString($b))
     __info "Commands to download the \"dropper\" copied to clipboard."
 
     # Run the server
+    echo
     cd "$HOME/desktop/server" ; echo "$(hip) in $PWD" ; sudo python3 -m http.server 8000
 }
 
