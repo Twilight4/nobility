@@ -12,15 +12,15 @@ The nb namespace is the root of all other namespaces that can be access with tab
 To get started, explore the nb-<namespace>-help commands. Install dependencies per namespace,
 using the nb-<namespace>-install commands or install all dependencies using nb-install-all.
 
-Commands
---------
-nb-update        git pull the latest (MAIN branch) version of nobility
-nb-status        check the current status of the locally cloned nobility repository
+ Commands
+ --------
+ nb-update        git pull the latest (MAIN branch) version of nobility
+ nb-status        check the current status of the locally cloned nobility repository
 
-Namespaces
-----------
-nobility is organized in a tree of namespaces that are accessible via "nb-" with tab completion and search.
-Each namespace has its own install and help commands.
+ Namespaces
+ ----------
+ nobility is organized in a tree of namespaces that are accessible via "nb-" with tab completion and search.
+ Each namespace has its own install and help commands.
 
  Install and Configuration
  -------------------------
