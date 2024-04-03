@@ -34,8 +34,6 @@ nb-project-install() {
 }
 
 nb-project-start() {
-    __check-project
-
     local cname && __askvar cname "COMPANY NAME"
     local fullpath=${__PROJECT}/${cname}
 

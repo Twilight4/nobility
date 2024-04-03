@@ -120,12 +120,12 @@ nb-vars-set-project() {
   local pd=$(__menu $(find $__PROJECT -mindepth 1 -maxdepth 1 -type d))
   __ok "Selected: ${pd}"
 
-  __PROJECT=$pd
+  __PROJECT=$pd/tool-output
   mkdir -p ${__PROJECT}
 }
 
 # Check if output dir exists, if not, set it
-__check-project() { [[ -z "${__PROJECT}/$pd" ]] && nb-vars-set-project }
+__check-project() { [[ -z "${__PROJECT}/$pd/tool-output" ]] && nb-vars-set-project }
 
 
 ############################################################# 
