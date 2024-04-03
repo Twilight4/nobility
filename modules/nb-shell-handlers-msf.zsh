@@ -121,8 +121,9 @@ nb-shell-handlers-msf-payload() {
     echo '2. c'
     echo '3. csharp'
     echo '4. exe'
-    echo '5. psh'
-    echo '6. raw'
+    echo '5. exe-service'
+    echo '6. psh'
+    echo '7. raw'
     echo
     echo -n "Choice: "
     read choice2
@@ -136,9 +137,11 @@ nb-shell-handlers-msf-payload() {
               format="csharp";;
          4) extention=".exe"
               format="exe";;
-         5) extention=".ps1"
+         5) extention=".exe"
+              format="exe-service";;
+         6) extention=".ps1"
               format="psh";;
-         6) extention=".bin"
+         7) extention=".bin"
               format="raw";;
         *) echo "Invalid option";;
     esac
