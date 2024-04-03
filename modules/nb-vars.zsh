@@ -134,7 +134,7 @@ __check-project() { [[ -z "${__PROJECT}/$pd" ]] && nb-vars-set-project }
 export __LOGBOOK="$HOME/documents/org/projects/logbook/logbook.org"
 
 nb-vars-set-logbook() {
-  __ask "Set the full path to the logbook file."
+  __ask "Set the full directory path to the 'logbook.org' file (without the filename)."
   
   local d=$(__askpath DIR $HOME)
   [[ "$d" == "~"* ]] && __err "~ not allowed, use the full path" && return
