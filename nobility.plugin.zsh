@@ -33,13 +33,11 @@ export __TOOLS="$HOME/tools"
 #############################################################
 echo "[*] loading... " >> ${__LOGFILE}
 
-#Source all nb scripts
+# Source all nb scripts
 for f in ${0:A:h}/modules/nb* ; do
   echo "[+] sourcing $f ... "  >> ${__LOGFILE}
   source $f >> ${__LOGFILE} 2>&1
 done
-
-source ${__ALIASES}
 
 # Completion enhancement
 # zstyle ':completion:*' matcher-list 'r:|[-]=**'
