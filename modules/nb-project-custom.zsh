@@ -1,115 +1,34 @@
 #!/usr/bin/env zsh
 
 ############################################################# 
-# nb-project-custom
+# nb-project
 #############################################################
-nb-project-custom-help() {
+nb-project-help() {
     cat << "DOC" | bat --plain --language=help
 
-nb-project-custom
+nb-project
 -----------------
-The nb-project-custom namespace provides commands to setup custom project
+The nb-project namespace provides commands to setup project
 directory structures and variables for users that have specific requirements.
-
-Variables
----------
-__PROJECT_ZD_CONSULTANT     a global variable for consultant name used in ZD projects
-__PROJECT_ZD_ROOT           a global variable for the project root folder used in ZD projects
 
 Commands
 --------
-nb-project-new                          create a new project and cd there
-nb-project-custom-zd-start              scaffolds directory structure and logbook for "zd" projects
-nb-project-custom-zd-end                zips and removes directories and data for "zd" projects
-nb-project-custom-zd-root-set           sets the __PROJECT_ZD_ROOT variable
-nb-project-custom-zd-consultant-set     sets the __PROJECT_ZD_CONSULTANT variable
+nb-project-start              create directory structure and logbook for new project
+nb-project-end                zips and removes directories and data for new project
 
 DOC
 }
 
-export __PROJECT_ZD=""
-export __PROJECT_ZD_CONSULTANT="$(cat ${__GLOBALS}/__PROJECT_ZD_CONSULTANT 2> /dev/null)"
-export __PROJECT_ZD_ROOT="$(cat ${__GLOBALS}/__PROJECT_ZD_ROOT 2> /dev/null)"
+nb-project-start() {
+    __check-project
 
-__check-project-zd() {
-    if [[ -z $__PROJECT_ZD_CONSULTANT ]]
-    then
-        nb-project-custom-zd-root-set
-    fi
-    if [[ -z $__PROJECT_ZD_ROOT ]]
-    then
-        nb-project-custom-zd-consultant-set
-    fi
-}
+    local cname && __askvar cname "COMPANY NAME"
+    local fullpath=${__PROJECT}/${cname}
 
-nb-project-new() {
-    # Check if project name is provided
-    if [ -z "$1" ]; then
-        echo "Usage: nb-project-new company-name"
-        return 1
-    fi
-
-    # Ask for assessment type
-    echo "Assessment types:"
-    echo "1. external-pentest"
-    echo "2. internal-pentest"
-    echo "3. red-team-engagement"
-    echo "4. social-engineering-pentest"
-    echo "5. wireless-pentest"
-
-    # Read assessment choice
-    echo -n "Enter assessment type number: "
-    read assessment_choice
-
-    case $assessment_choice in
-        1) assessment_type="external-pentest";;
-		2) assessment_type="internal-pentest";;
-        3) assessment_type="red-team-engagement";;
-		4) assessment_type="social-engineering-pentest";;
-        5) assessment_type="wireless-pentest";;
-        *) echo -e "\nInvalid choice. Aborting."; return 1;;
-    esac
-
-    # Create a directory for assessment type if it doesn't exist
-    assessment_dir="$HOME/desktop/projects/$assessment_type"
-    mkdir -p "$assessment_dir"
-
-    # Create the project directory
-    proj_name="$1"
-    proj_dir="$assessment_dir/$proj_name"
-    mkdir -p "$proj_dir"
-
-    # Move to the project directory
-    cd "$proj_dir"
-
-    echo "Project '$proj_name' created with assessment type '$assessment_type'."
-}
-
-nb-project-custom-zd-root-set() {
-    __warn "Enter the full path to the root folder of your projects."
-    __prefill __PROJECT_ZD_ROOT DIR $HOME
-    echo "${__PROJECT_ZD_ROOT}" > ${__GLOBALS}/PROJECT_ZD_ROOT
-}
-
-nb-project-custom-zd-consultant-set() {
-    __warn "Enter consultant name below."
-    __askvar __PROJECT_ZD_CONSULTANT NAME 
-    echo "${__PROJECT_ZD_CONSULTANT}" > ${__GLOBALS}/PROJECT_ZD_CONSULTANT
-}
-
-nb-project-custom-zd-start() {
-    __check-project-zd
-
-    local pid && __askvar pid "PROJECT ID"
-    local pname && __askvar pname "PROJECT NAME"
-
-    local fname="${pid}-${pname}-${__CONSULTANT_NAME// /}"
-    local fullpath=${__PROJECT_ROOT}/${fname}
-
-    #scaffold
+    # create dir structure
     mkdir -p ${fullpath}/{burp/{log,intruder,http-requests},client-supplied-info/emails,files/{downloads,uploads},notes/screenshots,scans/{raw,pretty},ssl,tool-output}
     
-    #set project to be tool-output
+    # set project to be tool-output
     __PROJECT=${fullpath}/tool-output
 
     # wanted this to be an optional step, sometimes I'll create folders in advance due to calls with clients ahead of the test or prep work
@@ -119,19 +38,23 @@ nb-project-custom-zd-start() {
             nb-log-set
             ;;
         n|N ) 
-            echo "no"
+            echo ""
             ;;
         * ) 
             echo ""
             ;;
     esac   
+# Move to the project directory
+    cd "$fullpath"
+
+    echo "Project '$proj_name' created with assessment type '$assessment_type'."
 }
 
-nb-project-custom-zd-end() {
-    __check-project-zd
+nb-project-end() {
+    __check-project
 
     __ask "Select a project folder: "
-    local pd=$(__menu $(find $__PROJECT_ROOT -mindepth 1 -maxdepth 1 -type d))
+    local pd=$(__menu $(find $__PROJECT -mindepth 1 -maxdepth 1 -type d))
     __ok "Selected: ${pd}"
 
 
@@ -151,8 +74,8 @@ nb-project-custom-zd-end() {
 
     # Task 3: zip up engagement folder
     local zf=$(basename ${pd})
-    7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=1024m -ms=on ${__PROJECT_ROOT}/${zf}.7z ${pd} > /dev/null 2>&1
-    [[ -f ${__PROJECT_ROOT}/${zf}.7z ]] && __ok "Zipped files into ${__PROJECT_ROOT}/${zf}.7z." || __err "Failed to zip ${pd}"
+    7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=1024m -ms=on ${__PROJECT}/${zf}.7z ${pd} > /dev/null 2>&1
+    [[ -f ${__PROJECT}/${zf}.7z ]] && __ok "Zipped files into ${__PROJECT}/${zf}.7z." || __err "Failed to zip ${pd}"
 
     # Task 4: Delete engagement folder
     local rmp && read "rmp?$fg[cyan]Delete project folder? (Y/n)?:$reset_color "
