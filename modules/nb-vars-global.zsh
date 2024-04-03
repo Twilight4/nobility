@@ -43,6 +43,9 @@ nb-vars-global() {
     echo "$(__cyan SHELL_SSL_CERT: ) ${__SHELL_SSL_CERT}"
 }
 
+# Set default __PAYLOADS variable to nobility/payloads dir
+export __PAYLOADS=~/.config/zsh/plugins/nobility/payloads
+
 
 ############################################################# 
 # __EXT_PHP
