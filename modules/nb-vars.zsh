@@ -28,8 +28,8 @@ __LHOST       the accessible local IP address, ex: 10.1.2.3
 __LPORT       the accessible local PORT, ex: 4444
 __URL         a target URL, example: https://target.example.org
 __UA          the user agent to use for commands, ex: googlebot
-__WORDLIST    path to a wordlist file, ex: /usr/share/wordlists/example.txt
-__PASSLIST    path to a wordlist for password brute forcing, ex: /usr/share/wordlists/rockyou.txt
+__WORDLIST    used to select from a list of favorite wordlists (global var) brute forcing
+__PASSLIST    used to select only from passwords wordlists for password brute forcing
 
 Commands
 --------
@@ -269,32 +269,36 @@ nb-vars-set-wordlist() {
   if [[ -z $__WORDLIST ]]
   then
     __ask "Choose a wordlist: "
-    __WORDLIST=$(__menu $(cat  ${__MNU_WORDLISTS}))
+    __WORDLIST=$(__menu $(cat ${__MNU_WORDLISTS}))
   else
-
     __WORDLIST= __prefill __WORDLIST WORDLIST ${__WORDLIST}
   fi
 }
 
+nb-vars-set-wordlist-usernames() {
+  __ask "Choose a wordlist: "
+  __WORDLIST=$(__menu $(find /usr/share/seclists/Usernames | sort))
+}
+
 nb-vars-set-wordlist-web() {
   __ask "Choose a wordlist: "
-  __WORDLIST=$(__menu $(find  /usr/share/seclists/Discovery/Web-Content | sort))
+  __WORDLIST=$(__menu $(find /usr/share/seclists/Discovery/Web-Content | sort))
 }
 
 nb-vars-set-wordlist-dns() {
   __ask "Choose a wordlist: "
-  __WORDLIST=$(__menu $(find  /usr/share/seclists/Discovery/DNS | sort))
+  __WORDLIST=$(__menu $(find /usr/share/seclists/Discovery/DNS | sort))
 }
 
 
 ############################################################# 
 # __PASSLIST
 #############################################################
-export __PASSLIST="/usr/share/wordlists/rockyou.txt"
+export __PASSLIST=""
 
 nb-vars-set-passlist() {
   __ask "Choose a passlist: "
-  __PASSLIST=$(__menu $(find  /usr/share/seclists/Passwords | sort))
+  __PASSLIST=$(__menu $(find /usr/share/seclists/Passwords | sort))
 }
 
 # Helpers
