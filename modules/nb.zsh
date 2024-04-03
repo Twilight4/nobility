@@ -37,7 +37,6 @@ Each namespace has its own install and help commands.
  nb-log-                        Configure and setup a logbook for current engagement
  nb-vars-                       Per-session, per-engagement variables used in all commands
  nb-project-                    Commands to define scope and manage project data
- nb-project-custom-             Commands for custom project directory scaffolding
 
  Recon Phase
  -----------
