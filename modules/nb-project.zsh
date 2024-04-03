@@ -58,10 +58,11 @@ nb-project-start() {
             echo ""
             ;;
     esac   
-# Move to the project directory
+
+    # Move to the project directory
     cd "$fullpath"
 
-    echo "Project '$proj_name' created with assessment type '$assessment_type'."
+    __ok "Project $cname created."
 }
 
 nb-project-end() {
