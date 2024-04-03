@@ -89,18 +89,16 @@ DOC
 }
 
 nb-update() {
-	  cd $HOME/.config/zsh/plugins/nobility
-    #cd $HOME/.oh-my-zsh/custom/plugins/nobility
+	  cd ${__PLUGIN}
     git pull
-    cd - > /dev/null
+    \cd - > /dev/null
     source $HOME/.config/zsh/.zshrc
 }
 
 nb-status() {
-	  cd $HOME/.config/zsh/plugins/nobility
-    #cd $HOME/.oh-my-zsh/custom/plugins/nobility
+	  cd ${__PLUGIN}
     git status
-    cd - > /dev/null
+    \cd - > /dev/null
 }
 
 
