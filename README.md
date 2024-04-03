@@ -73,9 +73,6 @@ This approach enables you to compose your workflow dynamically, adapting to spec
 # Create a project structure
 nb-project-start
 
-# Specify project directory for tools outputs
-nb-vars-set-project 
-
 # Set some session variables for the target 
 nb-vars-set-domain 
 
