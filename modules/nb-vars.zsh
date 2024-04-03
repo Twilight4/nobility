@@ -112,20 +112,20 @@ nb-vars-load() {
 ############################################################# 
 # __PROJECT
 #############################################################
-export __PROJECT="$HOME/desktop/projects/"
+export __PROJECT="$HOME/desktop/projects"
 
 nb-vars-set-project() {
-  __ask "Set the full path to the project root directory where all command output will be directed"
+  __ask "Select the project directory you created with nb-project-start"
   
-  local d && __askpath d "PROJECT DIR" ${__PROJECT}
-  [[ "$d" == "~"* ]] && __err "~ not allowed, use the full path" && return
+  local pd=$(__menu $(find $__PROJECT -mindepth 1 -maxdepth 1 -type d))
+  __ok "Selected: ${pd}"
 
-  __PROJECT=$d
+  __PROJECT=$pd
   mkdir -p ${__PROJECT}
 }
 
 # Check if output dir exists, if not, set it
-__check-project() { [[ -z "${__PROJECT}" ]] && nb-vars-set-project }
+__check-project() { [[ -z "${__PROJECT}/$pd" ]] && nb-vars-set-project }
 
 
 ############################################################# 
@@ -134,7 +134,7 @@ __check-project() { [[ -z "${__PROJECT}" ]] && nb-vars-set-project }
 export __LOGBOOK="$HOME/documents/org/projects/logbook/logbook.org"
 
 nb-vars-set-logbook() {
-  __ask "Set the full path to the directory of the logbook file (filename not included)."
+  __ask "Set the full path to the logbook file."
   
   local d=$(__askpath DIR $HOME)
   [[ "$d" == "~"* ]] && __err "~ not allowed, use the full path" && return
