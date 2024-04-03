@@ -62,7 +62,7 @@ nb-project-start() {
     # Move to the project directory
     cd "$fullpath"
 
-    __ok "Project $cname created."
+    __ok "Project $cname created. Tools output will be created in $fullpath/tool-output."
 }
 
 nb-project-end() {
