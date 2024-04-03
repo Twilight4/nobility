@@ -29,7 +29,8 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
 
  Utility
  ---------
- nb-encoding-                   Used for encoding / decoding data
+ nb-crack-                    Used for crackign password hashes
+ nb-encoding-                 Used for encoding / decoding data
  nb-os-                       Variety of commands for managing your OS
 
  Engagement / Project / Bounty
