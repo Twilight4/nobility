@@ -15,6 +15,7 @@ Commands
 --------
 nb-recon-org-install               installs dependencies
 nb-recon-org-files-metagoofil      uses metagoofil to search and download files for a domain
+nb-recon-org-files-urls            uses gf to search and download files for a domain
 nb-recon-org-wordlist-cewl         uses cewl to create a custom wordlist from a url
 nb-recon-org-theharvester          uses theHarvester to mine data about a target domain
 
