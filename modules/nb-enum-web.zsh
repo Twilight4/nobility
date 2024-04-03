@@ -50,7 +50,7 @@ nb-enum-web-nmap-aggressive() {
 nb-enum-web-rustscan() {
     __check-project
     nb-vars-set-network
-    print -z "rustscan -a ${__NETWORK} -- -sV -sC"
+    print -z "rustscan -a ${__NETWORK} -r 1-65535 -- -sV -sC"
 }
 
 nb-enum-web-tcpdump() {
