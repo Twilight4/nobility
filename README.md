@@ -70,18 +70,23 @@ This approach enables you to compose your workflow dynamically, adapting to spec
 ## Example Workflow
 ### Preparation
 ```bash
-# If you have org-mode notes, configure the path 
-nb-vars-global-set-notes
+# Create a project structure
+nb-project-start
+
+# Specify project directory for tools outputs
+nb-vars-set-project 
 
 # Set some session variables for the target 
-nb-vars-set-project 
 nb-vars-set-domain 
 
 # Generate scope files from the target url
 nb-project-rescope
 
-# Save vars for other terminal sessions, nb-vars-load
+# Save vars for other terminal sessions
 nb-vars-save
+
+# Reload previously saved vars (use in new terminal sessions)
+nb-vars-load
 ```
 
 ### Passive Recon
