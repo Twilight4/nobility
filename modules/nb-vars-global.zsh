@@ -41,7 +41,6 @@ nb-vars-global() {
     echo "$(__cyan MNU_WORDLISTS: ) ${__MNU_WORDLISTS}"
     echo "$(__cyan TCP_PORTS: ) ${__TCP_PORTS}"
     echo "$(__cyan SHELL_SSL_CERT: ) ${__SHELL_SSL_CERT}"
-    echo "$(__cyan ALIASES: ) ${__ALIASES}"
 }
 
 
@@ -82,22 +81,6 @@ nb-vars-global-set-api-github() {
     __ask "Enter your github API key below."
     __askvar __API_GITHUB API_GITHUB
     echo "${__API_GITHUB}" > ${__GLOBALS}/API_GITHUB
-}
-
-__check-api-github()  { [[ -z "${__API_GITHUB}" ]] && nb-vars-global-set-api-github } 
-
-
-############################################################# 
-# __API_GOOGLE_DOMAINS
-#############################################################
-export __API_GOOGLE_DOMAINS="$(cat ${__GLOBALS}/API_GOOGLE_DOMAINS 2> /dev/null)"
-
-nb-vars-global-set-api-google-domains() {
-    __ask "Enter Google domains username and password for a dynamic DNS domain"
-    local u && __askvar u USERNAME 
-    local p && __askvar p PASSWORD
-    local __API_GOOGLE_DOMAINS = $( echo "$u:$p" | base64 )
-    echo "${__API_GOOGLE_DOMAINS}" > ${__GLOBALS}/API_GOOGLE_DOMAINS
 }
 
 __check-api-github()  { [[ -z "${__API_GITHUB}" ]] && nb-vars-global-set-api-github } 
