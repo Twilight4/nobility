@@ -80,7 +80,7 @@ nb-srv-empire-stager() {
 
     # Path to generated Empire stager
     __ask "Set the directory to Empire launcher.bat payload (without the filename)"
-    local d=$(__askpath DIR $HOME)
+    local d=$(__askpath DIR $HOME/downloads)
     [[ "$d" == "~"* ]] && __err "~ not allowed, use the full path" && return
     dp="${d}/launcher.bat"
     
