@@ -12,16 +12,23 @@ The crack namespace provides commands for crackign password hashes.
 
 Commands
 --------
-nb-crack-
-nb-crack-
+nb-crack-hash-classic          Classic hashcat usage to crack a hash
 
 DOC
 }
 
 nb-crack-hash() {
+	__ask "Enter the hash"
+	__check-hash
+	__ask "Enter a password wordlist"
+	nb-vars-set-passlist
 
-  cd downloads
-  echo '${hs}' > hash.txt
-  hashid $hs
-  hashcat -a 0 -m 0 hash.txt /usr/share/wordlists/rockyou.txt
+  # Capture the output of hashid command and extract the third line
+  ht=$(hashid ${__HASH} | awk 'NR==3{print $2}')
+  __info "Hash type: $ht"
+
+  hashcat --help | grep $ht
+
+  echo
+  print -z "hashcat -a 0 -m $md ${__HASH} ${__PASSLIST}"
 }
