@@ -67,6 +67,9 @@ nb-srv-file-download() {
     esac
 
     echo "$__COMMAND" | wl-copy
+
+    __info "Run the shell using command:"
+    __ok "  Start-Process \"shell-name.exe\""
 }
 
 nb-srv-web() {
