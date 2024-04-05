@@ -335,28 +335,49 @@ nb-install-link-finder() {
 }
 
 nb-install-winpeas() {
+    local win="$HOME/desktop/server/winPEASx64.exe"
+
+    # Check if file already exists
+    if [ -f "$win" ]; then
+        echo "WinPEASx64.exe is already installed."
+        return
+    fi
+
     __cyan "This will install WinPEASx64.exe"
     __ask "CONTINUE?"
-    if __check-proceed
-    then
-        wget https://github.com/carlospolop/PEASS-ng/releases/download/20240324-2c3cd766/linpeas.sh -O ~/desktop/server/winPEASx64.exe
+    if __check-proceed; then
+        wget https://github.com/carlospolop/PEASS-ng/releases/download/20240324-2c3cd766/linpeas.sh -O "$win"
     fi
 }
 
 nb-install-linpeas() {
+    local lin="$HOME/desktop/server/linpeas.sh"
+
+    # Check if file already exists
+    if [ -f "$lin" ]; then
+        echo "LinPEAS.sh is already installed."
+        return
+    fi
+
     __cyan "This will install LinPEAS.sh"
     __ask "CONTINUE?"
-    if __check-proceed
-    then
-        wget https://github.com/carlospolop/PEASS-ng/releases/download/20240324-2c3cd766/winPEASx64.exe -O ~/desktop/server/linpeas.sh
+    if __check-proceed; then
+        wget https://github.com/carlospolop/PEASS-ng/releases/download/20240324-2c3cd766/winPEASx64.exe -O "$lin"
     fi
 }
 
 nb-install-amsi-bypass() {
+    local amsi_path="$HOME/desktop/server/amsi.ps1"
+
+    # Check if file already exists
+    if [ -f "$amsi_path" ]; then
+        echo "amsi.ps1 is already installed."
+        return
+    fi
+
     __cyan "This will install amsi.ps1"
     __ask "CONTINUE?"
-    if __check-proceed
-    then
-        wget https://gist.githubusercontent.com/shantanu561993/6483e524dc225a188de04465c8512909/raw/db219421ea911b820e9a484754f03a26fbfb9c27/AMSI_bypass_Reflection.ps1 -O $HOME/desktop/server/amsi.ps1
+    if __check-proceed; then
+        wget https://gist.githubusercontent.com/shantanu561993/6483e524dc225a188de04465c8512909/raw/db219421ea911b820e9a484754f03a26fbfb9c27/AMSI_bypass_Reflection.ps1 -O "$amsi_path"
     fi
 }
