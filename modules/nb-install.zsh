@@ -30,6 +30,7 @@ nb-install-nmap-elasticsearch-nse
 nb-install-link-finder
 nb-install-winpeas
 nb-install-linpeas
+nb-install-amsi-bypass
 
 DOC
 }
@@ -348,5 +349,14 @@ nb-install-linpeas() {
     if __check-proceed
     then
         wget https://github.com/carlospolop/PEASS-ng/releases/download/20240324-2c3cd766/winPEASx64.exe -O ~/desktop/server/linpeas.sh
+    fi
+}
+
+nb-install-amsi-bypass() {
+    __cyan "This will install amsi.ps1"
+    __ask "CONTINUE?"
+    if __check-proceed
+    then
+        wget https://gist.githubusercontent.com/shantanu561993/6483e524dc225a188de04465c8512909/raw/db219421ea911b820e9a484754f03a26fbfb9c27/AMSI_bypass_Reflection.ps1 -O $HOME/desktop/server/amsi.ps1
     fi
 }
