@@ -12,12 +12,13 @@ The crack namespace provides commands for crackign password hashes.
 
 Commands
 --------
-nb-crack-hash-classic          Classic hashcat usage to crack a hash
+nb-crack-hashcat          hashcat usage to crack hash
+nb-crack-john             john usage to crack hash
 
 DOC
 }
 
-nb-crack-hash() {
+nb-crack-hashcat() {
 	__ask "Enter the hash"
 	__check-hash
 	__ask "Enter a password wordlist"
