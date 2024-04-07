@@ -12,8 +12,10 @@ The crack namespace provides commands for crackign password hashes.
 
 Commands
 --------
-nb-crack-hashcat          hashcat usage to crack hash
-nb-crack-john             john usage to crack hash
+nb-crack-hashcat          hashcat usage
+nb-crack-john             john alternative with hash format detection (use this if you don't know the hash format)
+nb-crack-john-passwd      convert linux password files to john-readable format (/etc/passwd and /etc/shadow files)
+nb-crack-john-zip         crack a password protected zip archive
 
 DOC
 }
@@ -65,5 +67,29 @@ nb-crack-john() {
 	__ask "Enter a password wordlist"
 	nb-vars-set-passlist
 
-  print -z "john  ${__HASH} ${__PASSLIST}"
+  print -z "john --wordlist=${__PASSLIST} --stdout ${__HASH}"
 }
+
+nb-crack-john-passwd() {
+  print -z "unshadow <PATH_TO_PASSWD> <PATH_TO_SHADOW> > unshadowed.txt"
+  print -z "john --wordlist=<WORDLIST> --format=<FORMAT_TYPE> unshadowed.txt"
+}
+
+nb-crack-john-zip() {
+  print -z "zip2john <ZIP_FILE> > zip_hash.txt"
+  print -z "john --wordlist=<WORDLIST> zip_hash.txt"
+}
+
+nb-crack-john-rar() {
+Cracking a Password Protected RAR Archive:
+  rar2john <RAR_FILE> > rar_hash.txt
+  john --wordlist=<WORDLIST> rar_hash.txt
+}
+
+nb-crack-john-ssh() {
+  ssh2john <ID_RSA_FILE> > id_rsa_hash.txt
+  john --wordlist=<WORDLIST> id_rsa_hash.txt
+}
+
+Cracking SSH Key Passwords:
+ 
