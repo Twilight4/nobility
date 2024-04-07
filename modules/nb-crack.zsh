@@ -58,3 +58,12 @@ nb-crack-hashcat() {
   echo
   print -z "hashcat -a 0 -m $md ${__HASH} ${__PASSLIST}"
 }
+
+nb-crack-john() {
+	__ask "Enter the hash"
+	__check-hash
+	__ask "Enter a password wordlist"
+	nb-vars-set-passlist
+
+  print -z "john  ${__HASH} ${__PASSLIST}"
+}
