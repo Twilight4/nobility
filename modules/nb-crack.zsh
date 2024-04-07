@@ -73,24 +73,45 @@ nb-crack-john() {
 }
 
 nb-crack-john-passwd() {
+	__ask "Enter a password wordlist"
+	nb-vars-set-passlist
+
   print -z "unshadow <PATH_TO_PASSWD> <PATH_TO_SHADOW> > unshadowed.txt"
-  print -z "john --wordlist=<WORDLIST> --format=<FORMAT_TYPE> unshadowed.txt"
+  print -z "john --wordlist=${__PASSLIST} unshadowed.txt"
 }
 
 nb-crack-john-zip() {
-  print -z "zip2john <ZIP_FILE> > zip_hash.txt"
-  print -z "john --wordlist=<WORDLIST> zip_hash.txt"
+	__ask "Enter a password wordlist"
+	nb-vars-set-passlist
+
+  __ask "Set the full path to the zip file."
+  local d=$(__askpath DIR $HOME/desktop/projects/)
+  [[ "$d" == "~"* ]] && __err "~ not allowed, use the full path" && return
+
+  print -z "zip2john $d > zip_hash.txt"
+  print -z "john --wordlist=${__PASSLIST} zip_hash.txt"
 }
 
 nb-crack-john-rar() {
-  rar2john <RAR_FILE> > rar_hash.txt
-  john --wordlist=<WORDLIST> rar_hash.txt
+	__ask "Enter a password wordlist"
+	nb-vars-set-passlist
+
+  __ask "Set the full path to the rar file."
+  local d=$(__askpath DIR $HOME/desktop/projects/)
+  [[ "$d" == "~"* ]] && __err "~ not allowed, use the full path" && return
+
+  print -z "rar2john $d > rar_hash.txt"
+  print -z "john --wordlist=${__PASSLIST} rar_hash.txt"
 }
 
 nb-crack-john-ssh() {
-  ssh2john <ID_RSA_FILE> > id_rsa_hash.txt
-  john --wordlist=<WORDLIST> id_rsa_hash.txt
+	__ask "Enter a password wordlist"
+	nb-vars-set-passlist
+
+  __ask "Set the full path to the id_rsa file."
+  local d=$(__askpath DIR $HOME/desktop/projects/)
+  [[ "$d" == "~"* ]] && __err "~ not allowed, use the full path" && return
+
+  print -z "ssh2john $d > id_rsa_hash.txt"
+  print -z "john --wordlist=${__PASSLIST} id_rsa_hash.txt"
 }
-
-
- 
