@@ -15,8 +15,6 @@ Commands
 nb-enum-web-install                installs dependencies
 nb-enum-web-tcpdump                capture traffic to and from a host
 nb-enum-web-nmap-sweep             nmap sweep scan to discover web servers on a network
-nb-enum-web-nmap-aggressive        nmap very aggresive and fast scan
-nb-enum-web-rustscan               use better nmap alternative
 nb-enum-web-whatweb                enumerate web server and platform information
 nb-enum-web-waf                    enumerate WAF information
 nb-enum-web-snmp                   create host list and scan IP with WORDLIST
@@ -39,18 +37,6 @@ nb-enum-web-nmap-sweep() {
     __check-project
     nb-vars-set-network
     print -z "sudo nmap -n -Pn -sS -p80,443,8080 ${__NETWORK} -oA $(__netpath)/web-sweep"
-}
-
-nb-enum-web-nmap-aggressive() {
-    __check-project
-    nb-vars-set-network
-    print -z "sudo nmap -A -sV -sC -Pn -T4 -p- -v -n --stats-every=20s --min-parallelism=100 --min-rate=300 -oN $(__netpath)/nmap-aggressive.nmap ${__NETWORK}"
-}
-
-nb-enum-web-rustscan() {
-    __check-project
-    nb-vars-set-network
-    print -z "rustscan -a ${__NETWORK} -r 1-65535 -- -sV -sC"
 }
 
 nb-enum-web-tcpdump() {
