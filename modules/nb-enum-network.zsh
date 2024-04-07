@@ -20,6 +20,7 @@ nb-enum-network-nmap-syn-sweep       sweep a network with TCP syn requests, top 
 nb-enum-network-nmap-udp-sweep       sweep a network with UDP requests, top 100 ports
 nb-enum-network-nmap-all-sweep       sweep a network with TCP syn requests, all ports
 nb-enum-network-nmap-discovery       sweep a network with TCP syn requests and scripts, top 100 ports
+nb-enum-network-nmap-aggressive      sweep a network with TCP syn request very aggresively and fast
 nb-enum-network-masscan-top          sweep a network with TCP requests, uses $__TCP_PORTS global var
 nb-enum-network-masscan-windows      sweep a network for common Windows ports
 nb-enum-network-masscan-linux        sweep a network for common Linux ports
@@ -75,6 +76,12 @@ nb-enum-network-nmap-discovery() {
     __check-project
     nb-vars-set-network
     print -z "nmap -vvv -n -Pn -sV -sC --top-ports 100 ${__NETWORK} -oA $(__netpath)/nmap-discovery"
+}
+
+nb-enum-network-nmap-aggressive() {
+    __check-project
+    nb-vars-set-network
+    print -z "sudo nmap -A -sV -sC -Pn -T4 -p- -v -n --stats-every=20s --min-parallelism=100 --min-rate=300 -oN $(__netpath)/nmap-aggressive.nmap ${__NETWORK}"
 }
 
 nb-enum-network-masscan-top() {
