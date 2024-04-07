@@ -12,10 +12,12 @@ The crack namespace provides commands for crackign password hashes.
 
 Commands
 --------
-nb-crack-hashcat          hashcat usage
-nb-crack-john             john alternative with hash format detection (use this if you don't know the hash format)
+nb-crack-hashcat          crack password hash using hashcat with providing hash format
+nb-crack-john             john alternative with hash format detection (use this if you don't know the hash format format)
 nb-crack-john-passwd      convert linux password files to john-readable format (/etc/passwd and /etc/shadow files)
 nb-crack-john-zip         crack a password protected zip archive
+nb-crack-john-rar         crack a password protected rar archive
+nb-crack-john-ssh         crack ssh key passwords
 
 DOC
 }
@@ -81,7 +83,6 @@ nb-crack-john-zip() {
 }
 
 nb-crack-john-rar() {
-Cracking a Password Protected RAR Archive:
   rar2john <RAR_FILE> > rar_hash.txt
   john --wordlist=<WORDLIST> rar_hash.txt
 }
@@ -91,5 +92,5 @@ nb-crack-john-ssh() {
   john --wordlist=<WORDLIST> id_rsa_hash.txt
 }
 
-Cracking SSH Key Passwords:
+
  
