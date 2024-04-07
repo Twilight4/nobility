@@ -15,7 +15,7 @@ Commands
 nb-enum-web-php-install                 installs dependencies
 nb-enum-web-php-ffuf                    scan for PHP files
 nb-enum-web-php-rfi                     exploit typical RFI params
-nb-enum-web-php-rfi-input               exploit LFI params with input
+nb-enum-web-php-rfi-input               exploit RFI params with input
 nb-enum-web-php-lfi-proc-self-environ   exploit LFI params with self environment
 nb-enum-web-php-lfi-filter-resource     exploit LFI params with filter resource
 nb-enum-web-php-lfi-zip-jpg-shell       exploit LFI params for zip-jpg shell

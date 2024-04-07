@@ -21,6 +21,7 @@ nb-enum-network-nmap-udp-sweep       sweep a network with UDP requests, top 100 
 nb-enum-network-nmap-all-sweep       sweep a network with TCP syn requests, all ports
 nb-enum-network-nmap-discovery       sweep a network with TCP syn requests and scripts, top 100 ports
 nb-enum-network-nmap-aggressive      sweep a network with TCP syn request very aggresively and fast
+nb-enum-network-rustscan             sweep a network with TCP syn using better nmap alternative with classic scan
 nb-enum-network-masscan-top          sweep a network with TCP requests, uses $__TCP_PORTS global var
 nb-enum-network-masscan-windows      sweep a network for common Windows ports
 nb-enum-network-masscan-linux        sweep a network for common Linux ports
@@ -82,6 +83,12 @@ nb-enum-network-nmap-aggressive() {
     __check-project
     nb-vars-set-network
     print -z "sudo nmap -A -sV -sC -Pn -T4 -p- -v -n --stats-every=20s --min-parallelism=100 --min-rate=300 -oN $(__netpath)/nmap-aggressive.nmap ${__NETWORK}"
+}
+
+nb-enum-network-rustscan() {
+    __check-project
+    nb-vars-set-network
+    print -z "rustscan -a ${__NETWORK} -r 1-65535 -- -sV -sC"
 }
 
 nb-enum-network-masscan-top() {
