@@ -16,6 +16,7 @@ Commands
 nb-project-install                        installs dependencies
 nb-project-start                          create directory structure and logbook for new project
 nb-project-end                            zips and removes directories and data for new project
+nb-project-host                           add ip and domain to /etc/hosts
 nb-project-scope                          generate a scope regex by root word (matches all to the left and right)
 nb-project-rescope-txt                    uses rescope to generate scope from a url
 nb-project-rescope-burp                   uses rescope to generate burp scope (JSON) from a url
@@ -94,6 +95,14 @@ nb-project-end() {
     if [[ "${rmp}" =~ ^[Yy]$ ]] && print -z "trash -rf ${pd}"
 
     __ok "Project $pd ended."
+}
+
+nb-project-host() {
+    __check-project
+    nb-vars-set-network
+    nb-vars-set-domain
+
+	print -z "echo '${__NETWORK} ${__DOMAIN}' | sudo tee -a /etc/hosts"
 }
 
 nb-project-scope() {
