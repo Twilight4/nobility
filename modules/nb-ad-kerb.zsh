@@ -42,7 +42,7 @@ nb-ad-kerb-tcpdump() {
 nb-ad-kerb-users() {
     nb-vars-set-rhost
     local realm && __askvar realm REALM
-    print -z "nmap -v -p 88 --script krb5-enum-users --script-args krb5-enum-users.realm=${realm},userdb=/usr/share/seclists/Usernames/Names/names.txt ${__RHOST}"
+    print -z "grc nmap -v -p 88 --script krb5-enum-users --script-args krb5-enum-users.realm=${realm},userdb=/usr/share/seclists/Usernames/Names/names.txt ${__RHOST}"
 }
 
 nb-ad-kerb-kerberoast() {

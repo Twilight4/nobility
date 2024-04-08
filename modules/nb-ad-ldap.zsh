@@ -33,7 +33,7 @@ nb-ad-ldap-install() {
 nb-ad-ldap-nmap-sweep() {
     __check-project
     nb-vars-set-network
-    print -z "sudo nmap -n -Pn -sS -sU -p389,636,3269 ${__NETWORK} -oA $(__netpath)/ldap-sweep"
+    print -z "sudo grc nmap -n -Pn -sS -sU -p389,636,3269 ${__NETWORK} -oA $(__netpath)/ldap-sweep"
 }
 
 nb-ad-ldap-tcpdump() {

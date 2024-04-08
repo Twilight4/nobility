@@ -31,7 +31,7 @@ nb-enum-web-elastic-install() {
 nb-enum-web-elastic-nmap() {
     __check-project
     nb-vars-set-rhost
-    print -z "sudo nmap -n -Pn -p9200 --script=elasticsearch ${__RHOST} -oN $(__hostpath)/nmap-elastic.txt"
+    print -z "sudo grc nmap -n -Pn -p9200 --script=elasticsearch ${__RHOST} -oN $(__hostpath)/nmap-elastic.txt"
 }
 
 nb-enum-web-elastic-health() {

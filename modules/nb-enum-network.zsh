@@ -52,37 +52,37 @@ nb-enum-network-tcpdump-bcasts() {
 nb-enum-network-nmap-ping-sweep() {
     __check-project
     nb-vars-set-network
-    print -z "nmap -vvv -sn --open ${__NETWORK} -oA $(__netpath)/nmap-ping-sweep"
+    print -z "grc nmap -vvv -sn --open ${__NETWORK} -oA $(__netpath)/nmap-ping-sweep"
 }
 
 nb-enum-network-nmap-syn-sweep() {
     __check-project
     nb-vars-set-network
-    print -z "sudo nmap -vvv -n -Pn -sS --open --top-ports 100 ${__NETWORK} -oA $(__netpath)/nmap-syn-sweep"
+    print -z "sudo grc nmap -vvv -n -Pn -sS --open --top-ports 100 ${__NETWORK} -oA $(__netpath)/nmap-syn-sweep"
 }
 
 nb-enum-network-nmap-udp-sweep() {
     __check-project
     nb-vars-set-network
-    print -z "sudo nmap -vvv -n -Pn -sU --open --top-ports 100 ${__NETWORK} -oA $(__netpath)/nmap-udp-sweep"
+    print -z "sudo grc nmap -vvv -n -Pn -sU --open --top-ports 100 ${__NETWORK} -oA $(__netpath)/nmap-udp-sweep"
 }
 
 nb-enum-network-nmap-all-sweep() {
     __check-project
     nb-vars-set-network
-    print -z "sudo nmap -vvv -n -Pn -T4 --open -sS -p- ${__NETWORK} -oA $(__netpath)/nmap-all-sweep"
+    print -z "sudo grc nmap -vvv -n -Pn -T4 --open -sS -p- ${__NETWORK} -oA $(__netpath)/nmap-all-sweep"
 }
 
 nb-enum-network-nmap-discovery() {
     __check-project
     nb-vars-set-network
-    print -z "nmap -vvv -n -Pn -sV -sC --top-ports 100 ${__NETWORK} -oA $(__netpath)/nmap-discovery"
+    print -z "grc nmap -vvv -n -Pn -sV -sC --top-ports 100 ${__NETWORK} -oA $(__netpath)/nmap-discovery"
 }
 
 nb-enum-network-nmap-aggressive() {
     __check-project
     nb-vars-set-network
-    print -z "sudo nmap -A -sV -sC -Pn -T4 -p- -v -n --stats-every=20s --min-parallelism=100 --min-rate=300 -oN $(__netpath)/nmap-aggressive.nmap ${__NETWORK}"
+    print -z "sudo grc nmap -A -sV -sC -Pn -T4 -p- -v -n --stats-every=20s --min-parallelism=100 --min-rate=300 -oN $(__netpath)/nmap-aggressive.nmap ${__NETWORK}"
 }
 
 nb-enum-network-rustscan() {

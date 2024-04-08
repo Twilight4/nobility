@@ -31,7 +31,7 @@ nb-ad-smb-relay-install() {
 nb-ad-smb-relay-enum() {
 	nb-vars-set-network
 
-	print -z "nmap --script=smb2-security-mode -p 445 ${__NETWORK}"
+	print -z "grc nmap --script=smb2-security-mode -p 445 ${__NETWORK}"
 }
 
 nb-ad-smb-relay-responder() {

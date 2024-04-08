@@ -30,7 +30,7 @@ nb-enum-mssql-install() {
 nb-enum-mssql-nmap-sweep() {
     __check-project
     nb-vars-set-network
-    print -z "sudo nmap -n -Pn -sS -sU -p T:1433,U:1434 ${__NETWORK} -oA $(__netpath)/mssql-sweep"
+    print -z "sudo grc nmap -n -Pn -sS -sU -p T:1433,U:1434 ${__NETWORK} -oA $(__netpath)/mssql-sweep"
 }
 
 nb-enum-mssql-tcpdump() {

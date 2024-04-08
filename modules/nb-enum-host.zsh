@@ -41,31 +41,31 @@ nb-enum-host-tcpdump() {
 nb-enum-host-nmap-top(){
     __check-project
     nb-vars-set-rhost
-    print -z "sudo nmap -vvv -Pn -sS --top-ports 1000 --open ${__RHOST} -oA $(__hostpath)/nmap-top"
+    print -z "sudo grc nmap -vvv -Pn -sS --top-ports 1000 --open ${__RHOST} -oA $(__hostpath)/nmap-top"
 }
 
 nb-enum-host-nmap-top-discovery(){
     __check-project
     nb-vars-set-rhost
-    print -z "sudo nmap -vvv -Pn -sS --top-ports 1000 --open -sC -sV ${__RHOST} -oA $(__hostpath)/nmap-top-discovery"
+    print -z "sudo grc nmap -vvv -Pn -sS --top-ports 1000 --open -sC -sV ${__RHOST} -oA $(__hostpath)/nmap-top-discovery"
 }
 
 nb-enum-host-nmap-all() {
     __check-project
     nb-vars-set-rhost
-    print -z "sudo nmap -vvv -Pn -sS -p- -T4 --open ${__RHOST} -oA $(__hostpath)/nmap-all"
+    print -z "sudo grc nmap -vvv -Pn -sS -p- -T4 --open ${__RHOST} -oA $(__hostpath)/nmap-all"
 }
 
 nb-enum-host-nmap-all-discovery() {
     __check-project
     nb-vars-set-rhost
-    print -z "sudo nmap -vvv -Pn -sS -p- -sC -sV --open ${__RHOST} -oA $(__hostpath)/nmap-all-discovery"
+    print -z "sudo grc nmap -vvv -Pn -sS -p- -sC -sV --open ${__RHOST} -oA $(__hostpath)/nmap-all-discovery"
 }
 
 nb-enum-host-nmap-udp() {
     __check-project
     nb-vars-set-rhost
-    print -z "sudo nmap -v -Pn -sU --top-ports 100 -sV -sC --open ${__RHOST} -oA $(__hostpath)/nmap-udp"
+    print -z "sudo grc nmap -v -Pn -sU --top-ports 100 -sV -sC --open ${__RHOST} -oA $(__hostpath)/nmap-udp"
 }
 
 nb-enum-host-masscan-all-tcp() {

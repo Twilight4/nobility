@@ -28,7 +28,7 @@ nb-enum-dhcp-install() {
 nb-enum-dhcp-sweep-nmap() {
     __check-project
     nb-vars-set-network
-    print -z "sudo nmap -n -Pn -sU -p67 ${__NETWORK} -oA $(__netpath)/dhcp-sweep"
+    print -z "sudo grc nmap -n -Pn -sU -p67 ${__NETWORK} -oA $(__netpath)/dhcp-sweep"
 }
 
 nb-enum-dhcp-tcpdump() {
@@ -39,5 +39,5 @@ nb-enum-dhcp-tcpdump() {
 }
 
 nb-enum-dhcp-discover-nmap() {
-    print -z "sudo nmap -v --script broadcast-dhcp-discover"
+    print -z "sudo grc nmap -v --script broadcast-dhcp-discover"
 }

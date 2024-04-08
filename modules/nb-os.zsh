@@ -81,9 +81,9 @@ nb-os-get-hosts() {
     }
 	
     if [[ $PORT == "none" ]]; then
-        nmap "$NETWORK"/24 -sn | grep "$PATTERN" | get_ip
+        print -z 'grc nmap "$NETWORK"/24 -sn | grep "$PATTERN" | get_ip'
     else
-        nmap "$NETWORK"/24 -p "$PORT" --open | grep "$PATTERN" | get_ip
+        print -z 'grc nmap "$NETWORK"/24 -p "$PORT" --open | grep "$PATTERN" | get_ip'
     fi
 }
 
@@ -97,7 +97,7 @@ nb-os-get-hostnames() {
     }
 
     if [[ ${#1} -gt 0 ]]; then
-        nmap "$NETWORK"/24 --dns-server "$DNS" -sn | grep "$PATTERN" | get_ip
+        grc nmap "$NETWORK"/24 --dns-server "$DNS" -sn | grep "$PATTERN" | get_ip
     else
         echo "DNS server address required"
     fi
@@ -124,7 +124,7 @@ nb-os-scan-udp() {
     SAVEPATH=$(create_scan_directory "$IP")
 	
     run() {
-        nmap -sU -T4 --open --max-retries 1 "$1" -oX "$SAVEPATH"/ports-udp.xml
+        grc nmap -sU -T4 --open --max-retries 1 "$1" -oX "$SAVEPATH"/ports-udp.xml
     }
 	
     run "$IP"
