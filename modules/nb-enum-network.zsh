@@ -88,7 +88,7 @@ nb-enum-network-nmap-aggressive() {
 nb-enum-network-rustscan() {
     __check-project
     nb-vars-set-network
-    print -z "rustscan -a ${__NETWORK} -r 1-65535 -- -sV -sC -T4 --min-rate=10000"
+    print -z "rustscan -a ${__NETWORK} -r 1-65535 -- -sV -sC -T4 -Pn --min-rate=10000 -oA $(__netpath)/network-sweep"
 }
 
 nb-enum-network-masscan-top() {
