@@ -1,8 +1,8 @@
 /usr/share/seclists/Discovery/Web-Content/quickhits.txt
 /usr/share/seclists/Discovery/Web-Content/common.txt
-/usr/share/seclists/Discovery/Web-Content/raft-large-words.txt
-/usr/share/seclists/Discovery/Web-Content/raft-large-files.txt
-/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
+/usr/share/seclists/Discovery/Web-Content/directory-list-2.3-small.txt
+/usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt
+/usr/share/seclists/Discovery/Web-Content/directory-list-2.3-big.txt
 /usr/share/seclists/Usernames/Names/names.txt
 /usr/share/seclists/Usernames/top-usernames-shortlist.txt 
 /usr/share/seclists/Usernames/cirt-default-usernames.txt 
