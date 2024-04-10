@@ -25,7 +25,7 @@ export __VARS=$HOME/.nobility/vars
 export __GLOBALS=$HOME/.nobility/globals
 export __PAYLOADS="$__PLUGIN/payloads"
 export __SCRIPTS="$__PLUGIN/scripts"
-export __TOOLS="$HOME/tools"
+export __TOOLS="/opt/tools"
 
 
 ############################################################# 
