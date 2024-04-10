@@ -55,7 +55,8 @@ nb-crack-hashcat() {
       md=2500
   # Add more conditions for other hash types as needed
   else
-      __warn "Hash type not recognized. Enter hashcat mode for the hash type."
+      __warn "Hash type not recognized. Enter hashcat type for the hash mode:"
+	  __ask "  hashcat --help | grep <HASH_TYPE>"
       local md && __askvar md "HASHCAT MODE"
   fi
 
