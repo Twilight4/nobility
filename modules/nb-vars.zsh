@@ -294,7 +294,7 @@ nb-vars-set-wordlist-dns() {
 ############################################################# 
 # __PASSLIST
 #############################################################
-export __PASSLIST=""
+export __PASSLIST="/usr/share/wordlists/seclists/Passwords/Leaked-Databases/rockyou.txt"
 
 nb-vars-set-passlist() {
   __ask "Choose a passlist: "
