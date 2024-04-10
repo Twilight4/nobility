@@ -172,16 +172,16 @@ nb-install-node() {
 nb-install-wordlist-seclists() {
     local name="seclists"
     local url="https://github.com/danielmiessler/SecLists"
-    local p="$__TOOLS/$name"
+    local path="/usr/share/wordlists/$name"
 
     __info "$name"
 
-    if [[ ! -d $p ]]
+    if [[ ! -d $path ]]
     then
-        git clone --depth 1 $url $p
+        git clone --depth 1 $url $path
     else
-        __warn "already installed in $p"
-        pushd $p 
+        __warn "already installed in $path"
+        pushd $path 
         git pull
         popd
     fi
@@ -194,12 +194,12 @@ nb-install-wordlist-payloadallthethings() {
 
     __info "$name"
 
-    if [[ ! -d $p ]]
+    if [[ ! -d $path ]]
     then
         git clone --depth 1 $url $path
     else
         __warn "already installed in $path"
-        pushd $p 
+        pushd $path 
         git pull
         popd
     fi
@@ -354,7 +354,7 @@ nb-install-link-finder() {
 }
 
 nb-install-winpeas() {
-    local win="$HOME/desktop/server/winPEASx64.exe"
+    local win="$SV/winPEASx64.exe"
 
     # Check if file already exists
     if [ -f "$win" ]; then
@@ -370,7 +370,7 @@ nb-install-winpeas() {
 }
 
 nb-install-linpeas() {
-    local lin="$HOME/desktop/server/linpeas.sh"
+    local lin="$SV/linpeas.sh"
 
     # Check if file already exists
     if [ -f "$lin" ]; then
@@ -386,7 +386,7 @@ nb-install-linpeas() {
 }
 
 nb-install-amsi-bypass() {
-    local amsi_path="$HOME/desktop/server/amsi.ps1"
+    local amsi_path="$SV/amsi.ps1"
 
     # Check if file already exists
     if [ -f "$amsi_path" ]; then
