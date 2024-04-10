@@ -22,6 +22,7 @@ Tools
 These installers are for individual tools.
 
 nb-install-wordlist-seclists
+nb-install-wordlist-payloadallthethings
 nb-install-github-search
 nb-install-git-secrets
 nb-install-pentest-tools
@@ -180,6 +181,24 @@ nb-install-wordlist-seclists() {
         git clone --depth 1 $url $p
     else
         __warn "already installed in $p"
+        pushd $p 
+        git pull
+        popd
+    fi
+}
+
+nb-install-wordlist-payloadallthethings() {
+    local name="PayloadsAllTheThings"
+    local url="https://github.com/swisskyrepo/PayloadsAllTheThings"
+    local path="/usr/share/wordlists/$name"
+
+    __info "$name"
+
+    if [[ ! -d $p ]]
+    then
+        git clone --depth 1 $url $path
+    else
+        __warn "already installed in $path"
         pushd $p 
         git pull
         popd
