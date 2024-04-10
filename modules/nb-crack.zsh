@@ -61,7 +61,7 @@ nb-crack-hashcat() {
   fi
 
   echo
-  print -z "hashcat -a 0 -m $md ${__HASH} ${__PASSLIST}"
+  print -z "hashcat -O -a 0 -m $md ${__HASH} ${__PASSLIST}"
 }
 
 nb-crack-john() {
