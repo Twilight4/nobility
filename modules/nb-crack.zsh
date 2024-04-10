@@ -86,7 +86,7 @@ nb-crack-john-zip() {
 	nb-vars-set-passlist
 
   __ask "Set the full path to the zip file."
-  local d=$(__askpath DIR $HOME/desktop/projects/)
+  local d=$(__askpath DIR $PJ/)
   [[ "$d" == "~"* ]] && __err "~ not allowed, use the full path" && return
 
   print -z "zip2john $d > zip_hash.txt"
@@ -98,7 +98,7 @@ nb-crack-john-rar() {
 	nb-vars-set-passlist
 
   __ask "Set the full path to the rar file."
-  local d=$(__askpath DIR $HOME/desktop/projects/)
+  local d=$(__askpath DIR $PJ/)
   [[ "$d" == "~"* ]] && __err "~ not allowed, use the full path" && return
 
   print -z "rar2john $d > rar_hash.txt"
@@ -110,7 +110,7 @@ nb-crack-john-ssh() {
 	nb-vars-set-passlist
 
   __ask "Set the full path to the id_rsa file."
-  local d=$(__askpath DIR $HOME/desktop/projects/)
+  local d=$(__askpath DIR $PJ/)
   [[ "$d" == "~"* ]] && __err "~ not allowed, use the full path" && return
 
   print -z "ssh2john $d > id_rsa_hash.txt"
