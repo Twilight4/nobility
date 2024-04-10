@@ -53,10 +53,12 @@ nb-crack-hashcat() {
       md=2100
   elif [[ $ht == *"WPA"* ]]; then
       md=2500
-  # Add more conditions for other hash types as needed
+  elif [[ $ht == *"Kerberos 5"* ]]; then
+      md=13100
   else
+      # Add more conditions for other hash types as needed
       __warn "Hash type not recognized. Enter hashcat type for the hash mode:"
-	  __ask "  hashcat --help | grep <HASH_TYPE>"
+	    __ask "  hashcat --help | grep <HASH_TYPE>"
       local md && __askvar md "HASHCAT MODE"
   fi
 
