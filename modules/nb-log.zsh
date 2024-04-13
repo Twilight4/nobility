@@ -18,6 +18,7 @@ nb-log-edit       edit the logbook using $EDITOR
 nb-log-clear      deletes the logbook
 nb-log-scan       pastes from clipboard to an entry in the logbook in code format (uses wl-clipboard)
 nb-log-append     append additional information to the last logbook entry using $EDITOR in bullet points
+nb-log-append-sc  append screenshot to the last logbook entry using $EDITOR
 nb-log-full       asks for full detailed logs for an entry
 
 DOC
@@ -116,6 +117,19 @@ nb-log-append() {
     echo " " >> ${__LOGBOOK}
     echo "Additional Information:" >> ${__LOGBOOK}
     echo "  - " >> ${__LOGBOOK}
+    eval $EDITOR ${__LOGBOOK}
+    echo " "
+
+    __info "Input appended to the last log entry in ${__LOGBOOK}"
+}
+
+nb-log-append-sc() {
+    __check-logbook
+
+    # Edit logbook
+    echo " " >> ${__LOGBOOK}
+    echo "Evidence:" >> ${__LOGBOOK}
+    echo " " >> ${__LOGBOOK}
     eval $EDITOR ${__LOGBOOK}
     echo " "
 
