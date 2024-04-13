@@ -142,7 +142,7 @@ nb-vars-set-logbook() {
 
   mkdir -p $d/logbook
 
-  __LOGBOOK="${d}/logbook/logbook.org"
+  export __LOGBOOK="${d}/logbook/logbook.org"
   
   if [[ -f "${__LOGBOOK}" ]]; then
       __warn "${__LOGBOOK} already exists, set as active log"
@@ -169,7 +169,7 @@ nb-vars-set-screenshots() {
   local d=$(__menu $(find $__SCREENSHOTS -mindepth 1 -maxdepth 1 -type d))
   __ok "Selected: ${d}"
 
-  __SCREENSHOTS="${d}/screenshots"
+  export __SCREENSHOTS="${d}/screenshots"
 
   mkdir -p ${__SCREENSHOTS}
 }
