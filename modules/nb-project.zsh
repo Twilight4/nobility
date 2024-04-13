@@ -36,7 +36,7 @@ nb-project-install() {
 
 nb-project-start() {
     local cname && __askvar cname "COMPANY NAME"
-    local fullpath=${__PROJECT}/${cname}
+    local fullpath=$HOME/desktop/projects/${cname}
 
     # create dir structure
     mkdir -p ${fullpath}/{evidence,credentials,data,logs,scope,client-supplied-info/emails,files/{downloads,uploads},scans/{raw,pretty},ssl,tool-output}
@@ -47,6 +47,7 @@ nb-project-start() {
     # set other vars
     nb-vars-set-logbook
     nb-vars-set-screenshots
+    nb-vars-save >/dev/null
 
     # Move to the project directory
     cd "$fullpath"

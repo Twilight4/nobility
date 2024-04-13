@@ -19,6 +19,7 @@ Variables
 ---------
 __PROJECT     the root directory used for all output, ex: /projects/example
 __LOGBOOK     the logbook.org org-mode file used in nb-log commands 
+__SCREENSHOTS the screenshots directory used for saving screenshots in emacs
 __IFACE       the interface to use for commands, ex: eth0
 __DOMAIN      the domain to use for commands, ex: example.org
 __NETWORK     the subnet to use for commands, ex: 10.1.2.0/24
@@ -45,6 +46,7 @@ DOC
 nb-vars() {
   echo "$(__cyan __PROJECT: ) ${__PROJECT}"
   echo "$(__cyan __LOGBOOK: ) ${__LOGBOOK}"
+  echo "$(__cyan __SCREENSHOTS: ) ${__SCREENSHOTS}"
   echo "$(__cyan __IFACE: ) ${__IFACE}"
   echo "$(__cyan __DOMAIN: ) ${__DOMAIN}"
   echo "$(__cyan __NETWORK: ) ${__NETWORK}"
@@ -61,6 +63,7 @@ nb-vars() {
 nb-vars-clear() {
   __PROJECT=""
   __LOGBOOK=""
+  __SCREENSHOTS=""
   __IFACE=""
   __DOMAIN=""
   __NETWORK=""
@@ -72,11 +75,15 @@ nb-vars-clear() {
   __UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
   __WORDLIST=""
   __PASSLIST=""
+
+  # Save the changes
+  nb-vars-save
 }
 
 nb-vars-save() {
   echo "${__PROJECT}" > $__VARS/PROJECT
   echo "${__LOGBOOK}" > $__VARS/LOGBOOK
+  echo "${__SCREENSHOTS}" > $__VARS/SCREENSHOTS
   echo "${__IFACE}" > $__VARS/IFACE
   echo "${__DOMAIN}" > $__VARS/DOMAIN
   echo "${__NETWORK}" > $__VARS/NETWORK
@@ -88,12 +95,15 @@ nb-vars-save() {
   echo "${__UA}" > $__VARS/UA
   echo "${__WORDLIST}" > $__VARS/WORDLIST
   echo "${__PASSLIST}" > $__VARS/PASSLIST
+
+  # Show the changes
   nb-vars
 }
 
 nb-vars-load() {
     __PROJECT=$(cat $__VARS/PROJECT) 
     __LOGBOOK=$(cat $__VARS/LOGBOOK)
+    __SCREENSHOTS=$(cat $__VARS/SCREENSHOTS)
     __IFACE=$(cat $__VARS/IFACE)
     __DOMAIN=$(cat $__VARS/DOMAIN)
     __NETWORK=$(cat $__VARS/NETWORK)
@@ -105,6 +115,8 @@ nb-vars-load() {
     __UA=$(cat $__VARS/UA)
     __WORDLIST=$(cat $__VARS/WORDLIST)
     __PASSLIST=$(cat $__VARS/PASSLIST)
+
+    # Show the changes
     nb-vars
 }
 
@@ -137,12 +149,12 @@ nb-vars-set-logbook() {
   echo
   __ask "Choose the project directory for logbook you created with nb-project-start."
   
-  local d=$(__menu $(find $__LOGBOOK -mindepth 1 -maxdepth 1 -type d))
+  local d=$(__menu $(find $HOME/desktop/projects/ -mindepth 1 -maxdepth 1 -type d))
   __ok "Selected: ${d}"
 
   mkdir -p $d/logbook
 
-  export __LOGBOOK="${d}/logbook/logbook.org"
+  __LOGBOOK="${d}/logbook/logbook.org"
   
   if [[ -f "${__LOGBOOK}" ]]; then
       __warn "${__LOGBOOK} already exists, set as active log"
@@ -166,12 +178,12 @@ nb-vars-set-screenshots() {
   echo
   __ask "Choose the project directory for screenshots you created with nb-project-start."
   
-  local d=$(__menu $(find $__SCREENSHOTS -mindepth 1 -maxdepth 1 -type d))
+  local d=$(__menu $(find $HOME/desktop/projects/ -mindepth 1 -maxdepth 1 -type d))
   __ok "Selected: ${d}"
 
-  export __SCREENSHOTS="${d}/screenshots"
+  mkdir -p ${__SCREENSHOTS}/screenshots
 
-  mkdir -p ${__SCREENSHOTS}
+  __SCREENSHOTS="${d}/screenshots"
 }
 
 __check-screenshots() { [[ -z "${__SCREENSHOTS}" ]] && nb-vars-set-screenshots }
