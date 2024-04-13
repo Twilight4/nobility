@@ -74,7 +74,8 @@ This approach enables you to compose your workflow dynamically, adapting to spec
 nb-project-start
 
 # Set some session variables for the target 
-nb-vars-set-domain 
+nb-vars-set-domain
+nb-vars-set-network
 
 # Generate scope files from the target url
 nb-project-rescope
