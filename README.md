@@ -68,6 +68,19 @@ In contrast to heavily automated scripts or frameworks that execute entire workf
 This approach enables you to compose your workflow dynamically, adapting to specific targets and contextual requirements. This flexibility is achieved without the brittleness and complexity associated with fully automated solutions.
 
 ## Example Workflow
+### Variables
+```bash
+# Each time you use nb-vars-set-* command or within a namespace,
+# to persist the vars in other terminal sessions you need to use command (namespaces should include this by default):
+nb-vars-save
+
+# To load previously saved vars (use in new terminal sessions), use command: (you can set this command in .zshrc file):
+nb-vars-load
+
+# If you made a mistake you can clear the variables
+nb-vars-clear
+```
+
 ### Preparation
 ```bash
 # Create a project structure
@@ -79,12 +92,6 @@ nb-vars-set-network
 
 # Generate scope files from the target url
 nb-project-rescope
-
-# Save vars for other terminal sessions
-nb-vars-save
-
-# Reload previously saved vars (use in new terminal sessions)
-nb-vars-load
 ```
 
 ### Passive Recon
