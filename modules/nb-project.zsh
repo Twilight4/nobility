@@ -59,10 +59,11 @@ nb-project-end() {
     __check-project
 
     __ask "Select a project folder: "
-    local pd=$(__menu $(find $__PROJECT -mindepth 1 -maxdepth 1 -type d))
+    local pd=$(__menu $(find $HOME/desktop/projects/ -mindepth 1 -maxdepth 1 -type d))
     __ok "Selected: ${pd}"
 
     # Task 1: delete all empty folders
+    echo
     local df && read "df?$fg[cyan]Delete empty folders? (Y/n)?:$reset_color "
     if [[ "$df" =~ ^[Yy]$ ]]
     then
@@ -82,6 +83,7 @@ nb-project-end() {
     [[ -f ${__PROJECT}/${zf}.7z ]] && __ok "Zipped files into ${__PROJECT}/${zf}.7z." || __err "Failed to zip ${pd}"
 
     # Task 4: Delete engagement folder
+    echo
     local rmp && read "rmp?$fg[cyan]Delete project folder? (Y/n)?:$reset_color "
     if [[ "${rmp}" =~ ^[Yy]$ ]] && print -z "trash -rf ${pd}"
 
