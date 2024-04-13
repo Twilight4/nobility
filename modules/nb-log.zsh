@@ -13,7 +13,6 @@ The log namespace provides commands that create a logbook in a directory specifi
 Commands
 --------
 nb-log            ask user for an log entry in the logbook
-nb-log-set        creates or uses existing logbook.org in the path specified
 nb-log-cat        cats the logbook
 nb-log-edit       edit the logbook using $EDITOR
 nb-log-clear      deletes the logbook
@@ -22,10 +21,6 @@ nb-log-append     append additional information to the last logbook entry using 
 nb-log-full       asks for full detailed logs for an entry
 
 DOC
-}
-
-nb-log-set() {
-    nb-vars-set-logbook
 }
 
 nb-log-cat() {

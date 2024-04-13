@@ -112,10 +112,10 @@ nb-vars-load() {
 ############################################################# 
 # __PROJECT
 #############################################################
-export __PROJECT="$HOME/desktop/projects"
+export __PROJECT="$HOME/desktop/projects/"
 
 nb-vars-set-project() {
-  __ask "Select the project directory you created with nb-project-start"
+  __ask "Select the project directory you created with nb-project-start."
   
   local pd=$(__menu $(find $__PROJECT -mindepth 1 -maxdepth 1 -type d))
   __ok "Selected: ${pd}"
@@ -125,23 +125,24 @@ nb-vars-set-project() {
 }
 
 # Check if output dir exists, if not, set it
-__check-project() { [[ -z "${__PROJECT}/$pd/tool-output" ]] && nb-vars-set-project }
+__check-project() { [[ -z "${__PROJECT}" ]] && nb-vars-set-project }
 
 
 ############################################################# 
 # __LOGBOOK
 #############################################################
-export __LOGBOOK="$HOME/documents/org/projects/logbook/logbook.org"
+export __LOGBOOK="$HOME/desktop/projects/"
 
 nb-vars-set-logbook() {
-  __ask "Set the full directory path to the 'logbook.org' file (without the filename)."
+  echo
+  __ask "Choose the project directory for logbook you created with nb-project-start."
   
-  local d=$(__askpath DIR $HOME)
-  [[ "$d" == "~"* ]] && __err "~ not allowed, use the full path" && return
+  local d=$(__menu $(find $__LOGBOOK -mindepth 1 -maxdepth 1 -type d))
+  __ok "Selected: ${d}"
 
-  mkdir -p $d
+  mkdir -p $d/logbook
 
-  __LOGBOOK="${d}/logbook.org"
+  __LOGBOOK="${d}/logbook/logbook.org"
   
   if [[ -f "${__LOGBOOK}" ]]; then
       __warn "${__LOGBOOK} already exists, set as active log"
@@ -154,6 +155,26 @@ nb-vars-set-logbook() {
 }
 
 __check-logbook() { [[ -z "${__LOGBOOK}" ]] && nb-vars-set-logbook }
+
+
+############################################################# 
+# __SCREENSHOTS
+#############################################################
+export __SCREENSHOTS="$HOME/desktop/projects/"
+
+nb-vars-set-screenshots() {
+  echo
+  __ask "Choose the project directory for screenshots you created with nb-project-start."
+  
+  local d=$(__menu $(find $__SCREENSHOTS -mindepth 1 -maxdepth 1 -type d))
+  __ok "Selected: ${d}"
+
+  __SCREENSHOTS="${d}/screenshots"
+
+  mkdir -p ${__SCREENSHOTS}
+}
+
+__check-screenshots() { [[ -z "${__SCREENSHOTS}" ]] && nb-vars-set-screenshots }
 
 
 ############################################################# 

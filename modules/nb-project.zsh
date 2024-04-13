@@ -40,23 +40,13 @@ nb-project-start() {
 
     # create dir structure
     mkdir -p ${fullpath}/{evidence,credentials,data,logs,scope,client-supplied-info/emails,files/{downloads,uploads},scans/{raw,pretty},ssl,tool-output}
-    
+
     # set project to be tool-output
     __PROJECT=${fullpath}/tool-output
-
-    # wanted this to be an optional step, sometimes I'll create folders in advance due to calls with clients ahead of the test or prep work
-    local setlog && read "setlog?$fg[cyan]Add a log file for this project (y/n)?:$reset_color "
-    case "$setlog" in 
-        y|Y ) 
-            nb-log-set
-            ;;
-        n|N ) 
-            echo ""
-            ;;
-        * ) 
-            echo ""
-            ;;
-    esac   
+    
+    # set other vars
+    nb-vars-set-logbook
+    nb-vars-set-screenshots
 
     # Move to the project directory
     cd "$fullpath"
