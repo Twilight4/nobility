@@ -62,29 +62,29 @@ nb-project-end() {
     local pd=$(__menu $(find $HOME/desktop/projects/ -mindepth 1 -maxdepth 1 -type d))
     __ok "Selected: ${pd}"
 
-    # Task 1: delete all empty folders
+    # Task 1: delete all empty directories
     echo
-    local df && read "df?$fg[cyan]Delete empty folders? (Y/n)?:$reset_color "
+    local df && read "df?$fg[cyan]Delete empty directories? (Y/n)?:$reset_color "
     if [[ "$df" =~ ^[Yy]$ ]]
     then
         find ${pd} -type d -empty -delete 
-        __ok "Empty folders deleted."
+        __ok "Empty directories deleted."
     fi
 
     # Task 2: create tree
     cd ${pd}
-    tree -C -F -H ./ > ${pd}/tree.html 
+    tree -C -F -H ./ > ../tree.html 
     [[ -f "${pd}/tree.html" ]] && __ok "Created ${pd}/tree.html." || __err "Failed creating ${pd}/tree.html"
     cd - > /dev/null 2>&1
 
     # Task 3: zip up engagement folder
     local zf=$(basename ${pd})
-    7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=1024m -ms=on ${__PROJECT}/${zf}.7z ${pd} > /dev/null 2>&1
+    7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=1024m -ms=on $HOME/desktop/projects/${zf}.7z ${pd} > /dev/null 2>&1
     [[ -f ${__PROJECT}/${zf}.7z ]] && __ok "Zipped files into ${__PROJECT}/${zf}.7z." || __err "Failed to zip ${pd}"
 
     # Task 4: Delete engagement folder
     echo
-    local rmp && read "rmp?$fg[cyan]Delete project folder? (Y/n)?:$reset_color "
+    local rmp && read "rmp?$fg[cyan]Delete project directory? (Y/n)?:$reset_color "
     if [[ "${rmp}" =~ ^[Yy]$ ]] && print -z "trash -rf ${pd}"
 
     __ok "Project $pd ended."
