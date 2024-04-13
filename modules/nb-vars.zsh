@@ -181,9 +181,9 @@ nb-vars-set-screenshots() {
   local d=$(__menu $(find $HOME/desktop/projects/ -mindepth 1 -maxdepth 1 -type d))
   __ok "Selected: ${d}"
 
-  mkdir -p ${__SCREENSHOTS}/screenshots
-
   __SCREENSHOTS="${d}/screenshots"
+
+  mkdir -p ${__SCREENSHOTS}
 }
 
 __check-screenshots() { [[ -z "${__SCREENSHOTS}" ]] && nb-vars-set-screenshots }
