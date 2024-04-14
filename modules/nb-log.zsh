@@ -15,6 +15,7 @@ Commands
 nb-log            ask user for an log entry in the logbook
 nb-log-cat        cats the logbook
 nb-log-edit       edit the logbook using $EDITOR
+nb-log-notes      edit the notes using $EDITOR
 nb-log-clear      deletes the logbook
 nb-log-scan       pastes from clipboard to an entry in the logbook in code format (uses wl-clipboard)
 nb-log-append     append additional information to the last logbook entry using $EDITOR in bullet points
@@ -34,6 +35,11 @@ nb-log-cat() {
 nb-log-edit() {
     __check-logbook
     eval $EDITOR ${__LOGBOOK}
+}
+
+nb-log-notes() {
+    __check-notebook
+    eval $EDITOR ${__NOTEBOOK}
 }
 
 nb-log-clear() {
