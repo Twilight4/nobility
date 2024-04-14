@@ -27,7 +27,7 @@ nb-crack-hashcat() {
 	__ask "Enter the hash"
 	__check-hash
 	#__ask "Enter a password wordlist"
-	#nb-vars-set-passlist
+	#nb-vars-set-passlist             # use the default one that is set in nb-vars.zsh
 
   # Capture the output of hashid command and extract the third line
   ht=$(hashid ${__HASH} | awk 'NR==3{print $2}')
@@ -72,7 +72,7 @@ nb-crack-hashcat-hashlist() {
   local hs && __askvar hs "HASHLIST"
 
 	#__ask "Enter a password wordlist"
-	#nb-vars-set-passlist
+	#nb-vars-set-passlist             # use the default one that is set in nb-vars.zsh
 
   echo
   print -z "hashcat -O -a 0 ${hs} ${__PASSLIST}"
