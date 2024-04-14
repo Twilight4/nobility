@@ -56,6 +56,9 @@ nb-crack-hashcat() {
       md=2500
   elif [[ $ht == *"Kerberos 5"* ]]; then
       md=13100
+  # This one is for hashes from performing asreproasting attack
+  #elif [[ $ht == *"Kerberos 5, etype 23, AS-REP"* ]]; then
+  #    md=18200
   else
       # Add more conditions for other hash types as needed
       __warn "Hash type not recognized. Enter hashcat type for the hash mode:"
