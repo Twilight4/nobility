@@ -77,12 +77,16 @@ nb-project-end() {
     [[ -f "${pd}/tree.html" ]] && __ok "Created ${pd}/tree.html." || __err "Failed creating ${pd}/tree.html"
     cd - > /dev/null 2>&1
 
-    # Task 3: zip up engagement folder
+    # Task 3: Delete logbook (after finishing writing report)
+    trash-empty
+    trash -rf ${pd}/logbook
+
+    # Task 4: zip up engagement folder
     local zf=$(basename ${pd})
     7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=1024m -ms=on $HOME/desktop/projects/${zf}.7z ${pd} > /dev/null 2>&1
     [[ -f ${__PROJECT}/${zf}.7z ]] && __ok "Zipped files into ${__PROJECT}/${zf}.7z." || __err "Failed to zip ${pd}"
 
-    # Task 4: Delete engagement folder
+    # Task 5: Delete engagement folder
     echo
     local rmp && read "rmp?$fg[cyan]Delete project directory? (Y/n)?:$reset_color "
     if [[ "${rmp}" =~ ^[Yy]$ ]] && print -z "trash -rf ${pd}"
