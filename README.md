@@ -86,6 +86,9 @@ nb-vars-clear
 # Create a project structure
 nb-project-start
 
+# Set target IP to /etc/hosts
+nb-project-host
+
 # Set some session variables for the target 
 nb-vars-set-domain
 nb-vars-set-network
