@@ -13,6 +13,7 @@ The crack namespace provides commands for crackign password hashes.
 Commands
 --------
 nb-crack-hashcat          crack password hash using hashcat with providing hash format
+nb-crack-hashcat-hashlist crack password from provided hashlist using hashcat with format auto-detection
 nb-crack-john             john alternative with hash format detection (use this if you don't know the hash format format)
 nb-crack-john-passwd      convert linux password files to john-readable format (/etc/passwd and /etc/shadow files)
 nb-crack-john-zip         crack a password protected zip archive
@@ -25,8 +26,8 @@ DOC
 nb-crack-hashcat() {
 	__ask "Enter the hash"
 	__check-hash
-	__ask "Enter a password wordlist"
-	nb-vars-set-passlist
+	#__ask "Enter a password wordlist"
+	#nb-vars-set-passlist
 
   # Capture the output of hashid command and extract the third line
   ht=$(hashid ${__HASH} | awk 'NR==3{print $2}')
@@ -64,6 +65,17 @@ nb-crack-hashcat() {
 
   echo
   print -z "hashcat -O -a 0 -m $md ${__HASH} ${__PASSLIST}"
+}
+
+nb-crack-hashcat-hashlist() {
+	__ask "Enter the hashlist"
+  local hs && __askvar hs "HASHLIST"
+
+	#__ask "Enter a password wordlist"
+	#nb-vars-set-passlist
+
+  echo
+  print -z "hashcat -O -a 0 ${hs} ${__PASSLIST}"
 }
 
 nb-crack-john() {
