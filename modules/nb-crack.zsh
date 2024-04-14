@@ -67,7 +67,7 @@ nb-crack-hashcat() {
   fi
 
   echo
-  print -z "hashcat -O -a 0 -m $md ${__HASH} ${__PASSLIST}"
+  print -z "hashcat -O -a 0 -m $md ${__HASH} ${__PASSLIST} | tee $(__netpath)/hashcat"
 }
 
 nb-crack-hashcat-hashlist() {
@@ -78,7 +78,7 @@ nb-crack-hashcat-hashlist() {
 	#nb-vars-set-passlist             # use the default one that is set in nb-vars.zsh
 
   echo
-  print -z "hashcat -O -a 0 ${hs} ${__PASSLIST}"
+  print -z "hashcat -O -a 0 ${hs} ${__PASSLIST} | tee $(__netpath)/hashcat"
 }
 
 nb-crack-john() {
@@ -87,7 +87,7 @@ nb-crack-john() {
 	__ask "Enter a password wordlist"
 	nb-vars-set-passlist
 
-  print -z "john --wordlist=${__PASSLIST} --stdout ${__HASH}"
+  print -z "john --wordlist=${__PASSLIST} --stdout ${__HASH} | tee $(__netpath)/john"
 }
 
 nb-crack-john-passwd() {
