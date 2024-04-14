@@ -46,6 +46,7 @@ nb-project-start() {
     
     # set other vars
     nb-vars-set-logbook
+    nb-vars-set-notebook
     nb-vars-set-screenshots
     nb-vars-save >/dev/null
 
