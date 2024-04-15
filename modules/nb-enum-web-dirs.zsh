@@ -28,19 +28,19 @@ nb-enum-web-dirs-install() {
 }
 
 nb-enum-web-dirs-robots() {
-    __check-project
+    __check-project || return
     nb-vars-set-url
     print -z "curl -s -L --user-agent \"${__UA}\" \"${__URL}/robots.txt\" | tee $(__urlpath)/robots.txt"
 }
 
 nb-enum-web-dirs-parsero() {
-    __check-project
+    __check-project || return
     nb-vars-set-url
     print -z "parsero -u \"${__URL}\" -o -sb | tee $(__urlpath)/robots.txt"
 }
 
 nb-enum-web-dirs-wfuzz() {
-    __check-project
+    __check-project || return
     nb-vars-set-url
     nb-vars-set-wordlist
     local d && __askvar d "RECURSION DEPTH"
@@ -48,7 +48,7 @@ nb-enum-web-dirs-wfuzz() {
 }
 
 nb-enum-web-dirs-ffuf() {
-    __check-project
+    __check-project || return
     nb-vars-set-url
     nb-vars-set-wordlist
     __check-threads
@@ -57,7 +57,7 @@ nb-enum-web-dirs-ffuf() {
 }
 
 nb-enum-web-dirs-gobuster() {
-    __check-project
+    __check-project || return
     nb-vars-set-url
     nb-vars-set-wordlist
     __check-threads
