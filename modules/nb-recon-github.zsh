@@ -31,7 +31,7 @@ nb-recon-github-install() {
 }
 
 nb-recon-github-user-repos() {
-    __check-project
+    __check-project || return
     __check-user
     mkdir -p ${__PROJECT}/source
     print -z "curl -s \"https://api.github.com/users/${__USER}/repos?per_page=1000\" | jq '.[].git_url' | tee -a ${__PROJECT}/source/${__USER}.txt "
@@ -39,7 +39,7 @@ nb-recon-github-user-repos() {
 
 nb-recon-github-endpoints() {
     __check-api-github
-    __check-project
+    __check-project || return
     nb-vars-set-domain
     mkdir -p ${__PROJECT}/source
     print -z "github-endpoints.py -t ${__API_GITHUB} -d ${__DOMAIN} | tee -a ${__PROJECT}/source/${__DOMAIN}.endpoints.txt "
