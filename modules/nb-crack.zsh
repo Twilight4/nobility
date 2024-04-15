@@ -26,8 +26,6 @@ DOC
 nb-crack-hashcat() {
 	__ask "Enter the hash"
 	__check-hash
-  # Return if there are projects found
-  __check-project || return
 	#__ask "Enter a password wordlist"
 	#nb-vars-set-passlist             # use the default one that is set in nb-vars.zsh
 
