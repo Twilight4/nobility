@@ -26,12 +26,16 @@ DOC
 nb-crack-hashcat() {
 	__ask "Enter the hash"
 	__check-hash
+  # Return if there are projects found
+  __check-project || return
 	#__ask "Enter a password wordlist"
 	#nb-vars-set-passlist             # use the default one that is set in nb-vars.zsh
 
   # Capture the output of hashid command and extract the third line
   ht=$(hashid ${__HASH} | awk 'NR==3{print $2}')
-  __info "Hash type: $ht"
+  if [ $? -eq 0 ]; then
+    __info "Hash type: $ht"
+  fi
 
   # Determine hash mode based on hash type
   if [[ $ht == *"MD5"* ]]; then
@@ -62,7 +66,8 @@ nb-crack-hashcat() {
   else
       # Add more conditions for other hash types as needed
       __warn "Hash type not recognized. Enter hashcat type for the hash mode:"
-	    __ask "  hashcat --help | grep <HASH_TYPE>"
+      __ask "  hashcat --help | grep <HASH_TYPE>"
+      echo
       local md && __askvar md "HASHCAT MODE"
   fi
 
