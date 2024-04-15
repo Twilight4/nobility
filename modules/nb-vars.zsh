@@ -65,6 +65,7 @@ nb-vars() {
 nb-vars-clear() {
   __PROJECT=""
   __LOGBOOK=""
+  __NOTEBOOK=""
   __SCREENSHOTS=""
   __IFACE=""
   __DOMAIN=""
