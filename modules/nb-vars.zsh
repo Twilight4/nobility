@@ -176,7 +176,7 @@ __check-logbook() { [[ -z "${__LOGBOOK}" ]] && nb-vars-set-logbook }
 ############################################################# 
 # __NOTEBOOK
 #############################################################
-export __NOTEBOOK="$HOME/documents/org/projects/notes/notebook.org"
+export __NOTEBOOK="$HOME/documents/org/projects"
 
 nb-vars-set-notebook() {
   echo
