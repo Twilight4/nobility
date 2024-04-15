@@ -35,14 +35,14 @@ nb-enum-web-js-beautify() {
 }
 
 nb-enum-web-js-link-finder-url() {
-    __check-project
+    __check-project || return
     __ask "Set the URL of a javascript file"
     nb-vars-set-url
     print -z "python linkfinder.py -i ${__URL} -o $(__urlpath)/js-links.html"
 }
 
 nb-enum-web-js-link-finder-domain() {
-    __check-project
+    __check-project || return
     nb-vars-set-url
     print -z "python linkfinder.py -i ${__URL} -d -o $(__urlpath)/js-links-all.html"
 }

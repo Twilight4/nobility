@@ -34,32 +34,32 @@ nb-enum-web-install() {
 }
 
 nb-enum-web-nmap-sweep() {
-    __check-project
+    __check-project || return
     nb-vars-set-network
     print -z "sudo grc nmap -n -Pn -sS -p80,443,8080 ${__NETWORK} -oA $(__netpath)/web-sweep"
 }
 
 nb-enum-web-tcpdump() {
-    __check-project
+    __check-project || return
     nb-vars-set-iface
     nb-vars-set-rhost
     print -z "sudo tcpdump -i ${__IFACE} host ${__RHOST} and tcp port 80 -w $(__hostpath)/web.pcap"
 }
 
 nb-enum-web-whatweb() {
-    __check-project
+    __check-project || return
     nb-vars-set-url
     print -z "whatweb ${__URL} -a 3 | tee $(__urlpath)/whatweb.txt"
 }
 
 nb-enum-web-waf() {
-    __check-project
+    __check-project || return
     nb-vars-set-url
     print -z "wafw00f ${__URL} -o $(__urlpath)/waf.txt"
 }
 
 nb-enum-web-snmp() {
-    __check-project
+    __check-project || return
     STRINGS="/usr/share/seclists/Discovery/SNMP/snmp-onesixtyone.txt"
     WORDLIST=${2:-STRINGS}
     NETWORK=${3:-"10.11.1.0"}
@@ -73,7 +73,7 @@ nb-enum-web-snmp() {
 # vhosts
 #############################################################
 nb-enum-web-vhosts-gobuster() {
-    __check-project
+    __check-project || return
     nb-vars-set-url
     local w && __askpath w FILE /usr/share/seclists/Discovery/DNS/subdomains-top1mil-20000.txt
     __check-threads
@@ -85,7 +85,7 @@ nb-enum-web-vhosts-gobuster() {
 # screenshots
 #############################################################
 nb-enum-web-eyewitness() {
-    __check-project
+    __check-project || return
     nb-vars-set-url
     mkdir -p $(__urlpath)/screens
     print -z "eyewitness --web --no-dns --no-prompt --single ${__URL} -d $(__urlpath)/screens --user-agent \"${__UA}\" "
@@ -96,13 +96,13 @@ nb-enum-web-eyewitness() {
 # apps
 #############################################################
 nb-enum-web-wordpress() {
-    __check-project
+    __check-project || return
     nb-vars-set-url
     print -z "wpscan --ua \"${__UA}\" --url ${__URL} --enumerate tt,vt,u,vp -o $(__urlpath)/wpscan.txt"
 }
 
 nb-enum-web-wordpress-bruteforce() {
-    __check-project
+    __check-project || return
     nb-vars-set-url
     nb-vars-set-wordlist
 
@@ -112,7 +112,7 @@ nb-enum-web-wordpress-bruteforce() {
 }
 
 nb-enum-web-headers() {
-    __check-project
+    __check-project || return
     nb-vars-set-url
     print -z "curl -s -X GET -I -L -A \"${__UA}\" \"${__URL}\" | tee $(__urlpath)/headers.txt"
 }
@@ -124,13 +124,13 @@ nb-enum-web-mirror() {
 }
 
 nb-enum-web-gospider() {
-    __check-project
+    __check-project || return
     nb-vars-set-url
     print -z "gospider -s "${__URL}" -o $(__urlpath)/spider.txt"
 }
 
 nb-enum-web-hakrawler() {
-    __check-project
+    __check-project || return
     nb-vars-set-url
     local d && __askvar d DEPTH
     print -z "hakrawler -url  "${__URL}" -depth ${d} -linkfinder -usewayback | tee $(__urlpath)/hakrawler.txt"

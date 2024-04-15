@@ -28,20 +28,20 @@ nb-enum-mssql-install() {
 }
 
 nb-enum-mssql-nmap-sweep() {
-    __check-project
+    __check-project || return
     nb-vars-set-network
     print -z "sudo grc nmap -n -Pn -sS -sU -p T:1433,U:1434 ${__NETWORK} -oA $(__netpath)/mssql-sweep"
 }
 
 nb-enum-mssql-tcpdump() {
-    __check-project
+    __check-project || return
     nb-vars-set-iface
     nb-vars-set-rhost
     print -z "sudo tcpdump -i ${__IFACE} host ${__RHOST} and tcp port 1433 -w $(__hostpath)/mssql.pcap"
 }
 
 nb-enum-mssql-sqsh() {
-    __check-project
+    __check-project || return
     nb-vars-set-rhost
     __check-user
     print -z "sqsh -S ${__RHOST} -U ${__USER}"
@@ -55,7 +55,7 @@ nb-enum-mssql-impacket-client() {
 }
 
 nb-enum-mssql-hydra() {
-    __check-project
+    __check-project || return
     nb-vars-set-rhost
     __check-user
     print -z "hydra -l ${__USER} -P ${__PASSLIST} -e -o $(__hostpath)/mssql-hydra-brute.txt ${__RHOST} MS-SQL"

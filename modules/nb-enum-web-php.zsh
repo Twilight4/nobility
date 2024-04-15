@@ -32,7 +32,7 @@ nb-enum-web-php-install() {
 }
 
 nb-enum-web-php-ffuf() {
-    __check-project
+    __check-project || return
     nb-vars-set-url
     nb-vars-set-wordlist
     __check-threads

@@ -28,7 +28,7 @@ nb-recon-org-install() {
 }
 
 nb-recon-org-files-metagoofil() {
-    __check-project
+    __check-project || return
     __check-ext-docs
     nb-vars-set-domain
     mkdir -p ${__PROJECT}/recon/files
@@ -36,20 +36,20 @@ nb-recon-org-files-metagoofil() {
 }
 
 nb-recon-org-files-urls() {
-    __check-project
+    __check-project || return
     nb-vars-set-domain
     print -z "strings * | gf urls | grep $__DOMAIN | tee -a ${__PROJECT}/recon/urls.txt"
 }
 
 nb-recon-org-wordlist-by-url-cewl() {
-    __check-project
+    __check-project || return
     nb-vars-set-url
     mkdir -p ${__PROJECT}/recon
     print -z "cewl -a -d 3 -m 5 -u \"${__UA}\" -w ${__PROJECT}/recon/cewl.txt ${__URL}"
 }
 
 nb-recon-org-theharvester() {
-    __check-project
+    __check-project || return
     nb-vars-set-domain
     mkdir -p ${__PROJECT}/recon
     print -z "theHarvester -d ${__DOMAIN} -l 50 -b all -f ${__PROJECT}/recon/harvested.txt"

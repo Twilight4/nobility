@@ -30,7 +30,7 @@ nb-enum-web-vuln-install() {
 }
 
 nb-enum-web-vuln-nikto() {
-    __check-project
+    __check-project || return
     nb-vars-set-url
     print -z "nikto -useragent \"${__UA}\" -h \"${__URL}\" -o $(__urlpath)/nikto.txt"
 }

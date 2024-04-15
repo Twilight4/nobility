@@ -28,13 +28,13 @@ nb-enum-mysql-install() {
 }
 
 nb-enum-mysql-nmap-sweep() {
-    __check-project
+    __check-project || return
     nb-vars-set-network
     print -z "sudo grc nmap -n -Pn -sS -p 3306 ${__NETWORK} -oA $(__netpath)/mysql-sweep"
 }
 
 nb-enum-mysql-tcpdump() {
-    __check-project
+    __check-project || return
     nb-vars-set-iface
     nb-vars-set-rhost
     print -z "sudo tcpdump -i ${__IFACE} host ${__RHOST} and tcp port 3306 -w $(__hostpath)/mysql.pcap"
@@ -53,7 +53,7 @@ nb-enum-mysql-auth-bypass() {
 }
 
 nb-enum-mysql-hydra() {
-    __check-project
+    __check-project || return
     nb-vars-set-rhost
     __check-user
     local db && __prefill db DATABASE mysql

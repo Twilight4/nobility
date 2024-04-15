@@ -30,7 +30,7 @@ nb-enum-web-ssl-install() {
 }
 
 nb-enum-web-ssl-tcpdump() {
-    __check-project
+    __check-project || return
     nb-vars-set-iface
     nb-vars-set-rhost
     print -z "tcpdump -i ${__IFACE} host ${__RHOST} and tcp port 443 -w $(__hostpath)/ssl.pcap"
@@ -54,20 +54,20 @@ nb-enum-web-ssl-certs() {
 }
 
 nb-enum-web-ssl-cert-download() {
-    __check-project
+    __check-project || return
     nb-vars-set-url
 	local d=$(echo "${__URL}" | cut -d/ -f3)
 	print -z "openssl s_client -servername ${d} -connect ${d}:443 </dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-DOC CERTIFICATE-/p' > $(__urlpath)/ssl.certificate.`date +"%Y%m%d-%H%M%S"`.pem"
 }
 
 nb-enum-web-ssl-testssl-full() {
-    __check-project
+    __check-project || return
     nb-vars-set-url
 	print -z "testssl --color=3 -oA $(__urlpath)/testssl.full.`date +"%Y%m%d-%H%M%S"` ${__URL} "
 }
 
 nb-enum-web-ssl-testssl-ciphers() {
-    __check-project
+    __check-project || return
     nb-vars-set-url
 	print -z "testssl -E --color=3 -oA $(__urlpath)/testssl.ciphers.`date +"%Y%m%d-%H%M%S"` ${__URL} "
 }

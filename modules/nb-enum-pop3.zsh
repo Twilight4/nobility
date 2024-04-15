@@ -26,20 +26,20 @@ nb-enum-pop3-install() {
 }
 
 nb-enum-pop3-nmap-sweep() {
-    __check-project
+    __check-project || return
     nb-vars-set-network
     print -z "sudo grc nmap -n -Pn -sS -p 110,995 ${__NETWORK} -oA $(__netpath)/pop3-sweep"
 }
 
 nb-enum-pop3-tcpdump() {
-    __check-project
+    __check-project || return
     nb-vars-set-iface
     nb-vars-set-rhost
     print -z "sudo tcpdump -i ${__IFACE} host ${__RHOST} and tcp port 110 and port 995 -w $(__hostpath)/pop3.pcap"
 }
 
 nb-enum-pop3-hydra() {
-    __check-project
+    __check-project || return
     nb-vars-set-rhost
     __check-user
     print -z "hydra -l ${__USER} -P ${__PASSLIST} -e -o $(__hostpath)/pop3-hydra-brute.txt ${__RHOST} POP3"

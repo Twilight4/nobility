@@ -38,7 +38,7 @@ nb-srv-install() {
 }
 
 nb-srv-file-download() {
-    __check-project
+    __check-project || return
     nb-vars-set-lhost
     nb-vars-set-lport
 
@@ -74,7 +74,7 @@ nb-srv-file-download() {
 }
 
 nb-srv-empire-stager() {
-    __check-project
+    __check-project || return
     nb-vars-set-lhost
     nb-vars-set-lport
 

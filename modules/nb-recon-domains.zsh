@@ -27,7 +27,7 @@ nb-recon-domains-install() {
 }
 
 nb-recon-domains-amass-whois() {
-    __check-project
+    __check-project || return
     nb-vars-set-domain
     mkdir -p ${__PROJECT}/amass
     mkdir -p ${__PROJECT}/domains
@@ -35,7 +35,7 @@ nb-recon-domains-amass-whois() {
 }
 
 nb-recon-domains-amass-asn() {
-    __check-project
+    __check-project || return
     __check-asn
     mkdir -p ${__PROJECT}/amass
     mkdir -p ${__PROJECT}/domains

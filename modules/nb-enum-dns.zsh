@@ -35,13 +35,13 @@ nb-enum-dns-install() {
 }
 
 nb-enum-dns-nmap-sweep() {
-    __check-project
+    __check-project || return
     nb-vars-set-network
     print -z "sudo grc nmap -n -Pn -sS -sU -p53 ${__NETWORK} -oA $(__netpath)/dns-sweep"
 }
 
 nb-enum-dns-tcpdump() {
-    __check-project  
+    __check-project || return
     __check-iface
     nb-vars-set-rhost
     print -z "sudo tcpdump -i ${__IFACE} host ${__RHOST} and tcp port 53 -w $(__hostpath)/dns.pcap"
@@ -84,21 +84,21 @@ nb-enum-dns-host-srv() {
 }
 
 nb-enum-dns-nmap-ad() {
-    __check-project
+    __check-project || return
     nb-vars-set-domain
     nb-vars-set-rhost
     print -z "grc nmap --script dns-srv-enum --script-args dns-srv-enum.domain=${__DOMAIN} ${__RHOST} -o $(__dompath)/nmap-AD.txt"
 }
 
 nb-enum-dns-dnsrecon() {
-    __check-project
+    __check-project || return
     nb-vars-set-domain
     nb-vars-set-rhost
     print -z "dnsrecon -d ${__DOMAIN} -n ${__RHOST} -a -s -w -z --threads 10 -c $(__dompath)/dns.csv"
 }
 
 nb-enum-dns-dnsrecon-reverse() {
-    __check-project
+    __check-project || return
     nb-vars-set-rhost
     mkdir -p ${__PROJECT}/domains
     print -z "dnsrecon -r ${__NETWORK} -n ${__RHOST} -c ${__PROJECT}/domains/revdns.csv"

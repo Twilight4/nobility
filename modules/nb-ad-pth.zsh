@@ -29,7 +29,7 @@ nb-ad-pth-install() {
 }
 
 nb-ad-pth-pass() {
-    __check-project
+    __check-project || return
     __ask "Enter target AD domain (must also be set in your hosts file)"
     nb-vars-set-domain
     __ask "Enter a user account"
@@ -42,7 +42,7 @@ nb-ad-pth-pass() {
 }
 
 nb-ad-pth-exploit() {
-    __check-project
+    __check-project || return
     nb-vars-set-network
     __ask "Enter a user account"
   	__check-user
@@ -53,7 +53,7 @@ nb-ad-pth-exploit() {
 }
 
 nb-ad-pth-sam() {
-    __check-project
+    __check-project || return
     nb-vars-set-network
     __ask "Enter a user account"
 	  __check-user
@@ -64,7 +64,7 @@ nb-ad-pth-sam() {
 }
 
 nb-ad-pth-enum() {
-    __check-project
+    __check-project || return
     nb-vars-set-network
     __ask "Enter a user account"
 	  __check-user
@@ -75,7 +75,7 @@ nb-ad-pth-enum() {
 }
 
 nb-ad-pth-lsa() {
-    __check-project
+    __check-project || return
     nb-vars-set-network
     __ask "Enter a user account"
 	  __check-user
@@ -86,7 +86,7 @@ nb-ad-pth-lsa() {
 }
 
 nb-ad-pth-lsassy() {
-    __check-project
+    __check-project || return
     nb-vars-set-network
     __ask "Enter a user account"
 	  __check-user

@@ -37,13 +37,13 @@ nb-enum-oracle-install() {
 }
 
 nb-enum-oracle-nmap-sweep() {
-    __check-project
+    __check-project || return
     nb-vars-set-network
     print -z "sudo grc nmap -n -Pn -sS -p 1521 ${__NETWORK} -oA $(__netpath)/oracle-sweep"
 }
 
 nb-enum-oracle-tcpdump() {
-    __check-project
+    __check-project || return
     nb-vars-set-iface
     nb-vars-set-rhost
     print -z "sudo tcpdump -i ${__IFACE} host ${__RHOST} and tcp port 1521 -w $(__hostpath)/oracle.pcap"
@@ -98,14 +98,14 @@ nb-enum-oracle-oscanner() {
 }
 
 nb-enum-oracle-hydra-listener() {
-    __check-project
+    __check-project || return
     nb-vars-set-rhost
     __check-user
     print -z "hydra -l ${__USER} -P ${__PASSLIST} -e -o $(__hostpath)/oracle-listener-hydra-brute.txt ${__RHOST} Oracle Listener"
 }
 
 nb-enum-oracle-hydra-sid() {
-    __check-project
+    __check-project || return
     nb-vars-set-rhost
     __check-user
     print -z "hydra -l ${__USER} -P ${__PASSLIST} -e -o $(__hostpath)/oracle-sid-hydra-brute.txt ${__RHOST} Oracle Sid"

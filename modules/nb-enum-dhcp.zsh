@@ -26,13 +26,13 @@ nb-enum-dhcp-install() {
 }
 
 nb-enum-dhcp-sweep-nmap() {
-    __check-project
+    __check-project || return
     nb-vars-set-network
     print -z "sudo grc nmap -n -Pn -sU -p67 ${__NETWORK} -oA $(__netpath)/dhcp-sweep"
 }
 
 nb-enum-dhcp-tcpdump() {
-    __check-project
+    __check-project || return
     nb-vars-set-iface
     nb-vars-set-rhost
     print -z "sudo tcpdump -i ${__IFACE} host ${__RHOST} and udp port 67 and port 68 -w $(__hostpath)/dhcp.pcap"

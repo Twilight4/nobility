@@ -27,13 +27,13 @@ nb-enum-nfs-install() {
 }
 
 nb-enum-nfs-nmap-sweep() {
-    __check-project
+    __check-project || return
     nb-vars-set-network
     print -z "sudo grc nmap -n -Pn -sS -sU -p U:111,T:111,U:2049,T:2049 ${__NETWORK} -oA $(__netpath)/nfs-sweep"
 }
 
 nb-enum-nfs-tcpdump() {
-    __check-project
+    __check-project || return
     nb-vars-set-iface
     nb-vars-set-rhost
     print -z "sudo tcpdump -i ${__IFACE} host ${__RHOST} and tcp port 111 and port 2049 -w $(__hostpath)/nfs.pcap"
