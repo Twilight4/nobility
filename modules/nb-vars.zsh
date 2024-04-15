@@ -147,7 +147,7 @@ __check-project() { [[ -z "${__PROJECT}" ]] && nb-vars-set-project }
 ############################################################# 
 # __LOGBOOK
 #############################################################
-export __LOGBOOK="$HOME/documents/org/projects/logbook/logbook.org"
+export __LOGBOOK="$HOME/desktop/projects"
 
 nb-vars-set-logbook() {
   echo
@@ -176,7 +176,7 @@ __check-logbook() { [[ -z "${__LOGBOOK}" ]] && nb-vars-set-logbook }
 ############################################################# 
 # __NOTEBOOK
 #############################################################
-export __NOTEBOOK="$HOME/documents/org/projects"
+export __NOTEBOOK="$HOME/desktop/projects"
 
 nb-vars-set-notebook() {
   echo
