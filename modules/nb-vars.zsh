@@ -144,7 +144,7 @@ nb-vars-set-project() {
 # Check if output dir exists, if not, set it
 __check-project() {
   if [ -z "$(find "$HOME/desktop/projects/" -mindepth 1 -maxdepth 1 -type d)" ]; then
-    echo "Error: There are no directories in the project path $__PROJECT"
+    __err "There are no directories in the $HOME/desktop/projects/"
     return 1
   fi
 

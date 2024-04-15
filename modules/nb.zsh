@@ -110,7 +110,7 @@ __cyan() echo "$fg[cyan]$@ $reset_color"
 __green() echo "$fg[green]$@ $reset_color"
 __blue() echo "$fg[blue]$@ $reset_color"
 __yellow() echo "$fg[yellow]$@ $reset_color"
-__err() echo "$fg[red]$@ $reset_color"
+__red() echo "$fg[red]$@ $reset_color"
 
 __info() __blue "[*] $@"
 __ok() __green "[+] $@"
