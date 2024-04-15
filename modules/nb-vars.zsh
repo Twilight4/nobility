@@ -399,7 +399,7 @@ __check-asn() { __askvar __ASN ASN }
 
 # Output dirs
 __netpath() { 
-    __check-project
+    __check-project || return
     local net=$(echo ${__NETWORK} | cut -d'/' -f1)
     local result=${__PROJECT}/networks/${net}
     mkdir -p "${result}"
@@ -407,14 +407,14 @@ __netpath() {
 }
 
 __hostpath() { 
-    __check-project
+    __check-project || return
     local result=${__PROJECT}/hosts/${__RHOST}
     mkdir -p "${result}"
     echo "${result}"
 }
 
 __urlpath() { 
-    __check-project
+    __check-project || return
     local host=$(echo ${__URL} | cut -d'/' -f3)
     local result=${__PROJECT}/hosts/${host}
     mkdir -p "${result}"
@@ -422,7 +422,7 @@ __urlpath() {
 }
 
 __dompath() { 
-    __check-project
+    __check-project || return
     local result=${__PROJECT}/domains/${__DOMAIN}
     mkdir -p "${result}"
     echo "${result}"
