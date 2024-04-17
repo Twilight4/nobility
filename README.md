@@ -146,7 +146,7 @@ nb-enum-web-gospider
 ```
 
 ### Organization OSINT
-```
+```bash
 # Search for target files
 nb-recon-org-files
 
