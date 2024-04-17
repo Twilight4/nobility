@@ -163,3 +163,24 @@ nb-enum-dns-dnsrecon
 # Mine data about a target domain
 nb-recon-org-theharvester
 ```
+
+### Active Directory Exploitation
+```bash
+# General AD Recon
+nb-ad-help
+
+# AS-REP Roasting
+nb-ad-asrep-help 
+
+# Kerberoasting
+nb-ad-kerb-help
+
+# Pass-The-Hash
+nb-ad-pth-help
+
+# LDAP Enumeration
+nb-ad-ldap-help
+
+# SMB Relay
+nb-ad-smb-relay-help
+```
