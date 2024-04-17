@@ -13,7 +13,7 @@ The nb-ad-asrep namespace contains commands for as-rep roast attack on Active Di
 Commands
 --------
 nb-ad-asrep-install        installs dependencies
-nb-ad-asrep-enum-users     brute force a password hashes of given users
+nb-ad-asrep-enum-users     utilize kerbrute to enumerate usernames
 nb-ad-asrep-brute          brute force a password hashes of given users
 nb-ad-asrep-crack          crack the password hash
 
@@ -21,12 +21,24 @@ DOC
 }
 
 nb-ad-asrep-install() {
-    __info "Running $0..."
-    __pkgs impacket
+  __info "Running $0..."
+  __pkgs impacket
+  
+  # Install kerbrute binary
+  curl -LO https://github.com/ropnop/kerbrute/releases/download/v1.0.3/kerbrute_linux_amd64
+  chmod +x kerbrute_linux_amd64
 }
 
 nb-ad-asrep-enum-users() {
+  __ask "Enter target AD domain (must also be set in your hosts file)"
+  nb-vars-set-domain
+	__ask "Enter a users wordlist"
+	nb-vars-set-wordlist
+  __ask "Enter location of the Domain Controller (KDC) to target"
+  # e.g. dc.${__DOMAIN}
+  local dc && __askvar dc DOMAIN_CONTROLLER
 
+  print -z "./kerbrute_linux_amd64 userenum --dc $dc -d ${__DOMAIN} ${__WORDLIST}"
 }
 
 nb-ad-asrep-brute() {
