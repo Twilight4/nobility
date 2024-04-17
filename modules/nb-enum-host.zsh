@@ -40,7 +40,7 @@ nb-enum-host-tcpdump() {
     print -z "sudo tcpdump -i ${__IFACE} host ${__RHOST} -w $(__hostpath)/tcpdump.pcap"
 }
 
-nb-enum-host-nmap-aggressive-rustscan() {
+nb-enum-host-nmap-aggressive-all() {
     __check-project 
     nb-vars-set-rhost
     print -z "sudo grc nmap -A -sV -sC -Pn -T4 -p- -v -n --stats-every=20s --min-parallelism=100 --min-rate=300 -oN $(__hostpath)/nmap-aggressive-all.nmap ${__RHOST}"
