@@ -26,6 +26,7 @@ DOC
 }
 
 nb-log-cat() {
+    __check-project
     __check-logbook
     __info "${__LOGBOOK}" 
     echo " " 
@@ -33,21 +34,25 @@ nb-log-cat() {
 }
 
 nb-log-edit() {
+    __check-project
     __check-logbook
     eval $EDITOR ${__LOGBOOK}
 }
 
 nb-log-notes() {
+    __check-project
     __check-notebook
     eval $EDITOR ${__NOTEBOOK}
 }
 
 nb-log-clear() {
+    __check-project
     __check-logbook
     rm -v -i ${__LOGBOOK}
 }
 
 nb-log() {
+    __check-project
     __check-logbook
 
     # Log the timestamp to the logbook.org file
@@ -87,6 +92,7 @@ nb-log() {
 }
 
 nb-log-scan() {
+    __check-project
     __check-logbook
 
     # Log the timestamp to the logbook.org file
@@ -117,6 +123,7 @@ nb-log-scan() {
 }
 
 nb-log-append() {
+    __check-project
     __check-logbook
 
     # Edit logbook
@@ -130,6 +137,7 @@ nb-log-append() {
 }
 
 nb-log-append-sc() {
+    __check-project
     __check-logbook
 
     # Edit logbook
@@ -143,6 +151,7 @@ nb-log-append-sc() {
 }
 
 nb-log-full() {
+    __check-project
     __check-logbook
 
     # Log the timestamp to the logbook.org file
