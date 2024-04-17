@@ -12,6 +12,7 @@ The shell-tty namespace provides commands for fixing interactive command/reverse
 
 Commands
 --------
+nb-shell-tty             reminder of go-to commands
 nb-shell-tty-python2     command to spawn a tty shell
 nb-shell-tty-python3     command to spawn a tty shell     
 nb-shell-tty-perl        command to spawn a tty shell
@@ -19,6 +20,24 @@ nb-shell-tty-ruby        command to spawn a tty shell
 nb-shell-tty-lua         command to spawn a tty shell
 nb-shell-tty-expect      command to spawn a tty shell
 
+DOC
+}
+
+nb-shell-tty() {
+cat << "DOC" 
+# In reverse shell
+$ python -c 'import pty; pty.spawn("/bin/bash")'
+Ctrl-Z
+
+# In Kali
+$ stty raw -echo
+$ fg
+
+# In reverse shell
+$ reset
+$ export SHELL=bash
+$ export TERM=xterm-256color
+$ stty rows <num> columns <cols>
 DOC
 }
 
