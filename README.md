@@ -91,7 +91,10 @@ nb-project-host
 
 # Set some session variables for the target 
 nb-vars-set-domain
-nb-vars-set-network
+nb-vars-set-rhost
+
+# Save variables for other terminal sessions
+nb-vars-save
 
 # Generate scope files from the target url
 nb-project-rescope
