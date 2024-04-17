@@ -145,7 +145,7 @@ nb-vars-set-project() {
 __check-project() {
   if [ -z "$(find "$HOME/desktop/projects/" -mindepth 1 -maxdepth 1 -type d)" ]; then
     __err "There are no directories in the $HOME/desktop/projects/"
-    return 1
+    exit
   fi
 
   [[ -z "${__PROJECT}" ]] && nb-vars-set-project
@@ -399,7 +399,7 @@ __check-asn() { __askvar __ASN ASN }
 
 # Output dirs
 __netpath() { 
-    __check-project || return
+    __check-project
     local net=$(echo ${__NETWORK} | cut -d'/' -f1)
     local result=${__PROJECT}/networks/${net}
     mkdir -p "${result}"
@@ -407,14 +407,14 @@ __netpath() {
 }
 
 __hostpath() { 
-    __check-project || return
+    __check-project
     local result=${__PROJECT}/hosts/${__RHOST}
     mkdir -p "${result}"
     echo "${result}"
 }
 
 __urlpath() { 
-    __check-project || return
+    __check-project
     local host=$(echo ${__URL} | cut -d'/' -f3)
     local result=${__PROJECT}/hosts/${host}
     mkdir -p "${result}"
@@ -422,7 +422,7 @@ __urlpath() {
 }
 
 __dompath() { 
-    __check-project || return
+    __check-project
     local result=${__PROJECT}/domains/${__DOMAIN}
     mkdir -p "${result}"
     echo "${result}"
