@@ -14,8 +14,8 @@ Commands
 --------
 nb-enum-host-install                 installs dependencies
 nb-enum-host-tcpdump                 capture traffic to and from a host
-nb-enum-host-nmap-aggressive-all     TCP syn scan requests very aggresively and fast
-nb-enum-host-rustscan-all            TCP syn scan using better nmap alternative with classic scan
+nb-enum-host-nmap-aggressive-all     TCP syn scan all ports very aggresively and fast
+nb-enum-host-rustscan-all            TCP syn scan all ports using better nmap alternative with classic scan
 nb-enum-host-nmap-top                syn scan of the top 1000 ports
 nb-enum-host-nmap-top-discovery      syn scan of the top 1000 ports with versioning and scripts
 nb-enum-host-nmap-all                syn scan all ports 
