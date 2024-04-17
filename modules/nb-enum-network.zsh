@@ -37,50 +37,50 @@ nb-enum-network-install() {
 
 
 nb-enum-network-tcpdump() {
-    __check-project || return
+    __check-project 
     nb-vars-set-iface
     nb-vars-set-network
     print -z "sudo tcpdump -i ${__IFACE} net ${__NETWORK} -w $(__netpath)/network.pcap"
 }
 
 nb-enum-network-tcpdump-bcasts() {
-    __check-project || return
+    __check-project 
     nb-vars-set-iface
     print -z "sudo tcpdump -i ${__IFACE} ether broadcast and ether multicast -w $__PROJECT/networks/bcasts.pcap"
 }
 
 nb-enum-network-nmap-ping-sweep() {
-    __check-project || return
+    __check-project 
     nb-vars-set-network
     print -z "grc nmap -vvv -sn --open ${__NETWORK} -oA $(__netpath)/nmap-ping-sweep"
 }
 
 nb-enum-network-nmap-syn-sweep() {
-    __check-project || return
+    __check-project 
     nb-vars-set-network
     print -z "sudo grc nmap -vvv -n -Pn -sS --open --top-ports 100 ${__NETWORK} -oA $(__netpath)/nmap-syn-sweep"
 }
 
 nb-enum-network-nmap-udp-sweep() {
-    __check-project || return
+    __check-project 
     nb-vars-set-network
     print -z "sudo grc nmap -vvv -n -Pn -sU --open --top-ports 100 ${__NETWORK} -oA $(__netpath)/nmap-udp-sweep"
 }
 
 nb-enum-network-nmap-all-sweep() {
-    __check-project || return
+    __check-project 
     nb-vars-set-network
     print -z "sudo grc nmap -vvv -n -Pn -T4 --open -sS -p- ${__NETWORK} -oA $(__netpath)/nmap-all-sweep"
 }
 
 nb-enum-network-nmap-discovery() {
-    __check-project || return
+    __check-project 
     nb-vars-set-network
     print -z "grc nmap -vvv -n -Pn -sV -sC --top-ports 100 ${__NETWORK} -oA $(__netpath)/nmap-discovery"
 }
 
 nb-enum-network-nmap-aggressive() {
-    __check-project || return
+    __check-project 
     nb-vars-set-network
     print -z "sudo grc nmap -A -sV -sC -Pn -T4 -p- -v -n --stats-every=20s --min-parallelism=100 --min-rate=300 -oN $(__netpath)/nmap-aggressive.nmap ${__NETWORK}"
 }
@@ -92,25 +92,25 @@ nb-enum-network-rustscan() {
 }
 
 nb-enum-network-masscan-top() {
-    __check-project || return
+    __check-project 
     nb-vars-set-network
     print -z "sudo masscan ${__NETWORK} -p${__TCP_PORTS} -oL $(__netpath)/masscan-top.txt"
 }
 
 nb-enum-network-masscan-windows() {
-    __check-project || return
+    __check-project 
     nb-vars-set-network
     print -z "sudo masscan ${__NETWORK} -p135-139,445,3389,389,636,88 -oL $(__netpath)/masscan-windows.txt"
 }
 
 nb-enum-network-masscan-linux() {
-    __check-project || return
+    __check-project 
     nb-vars-set-network
     print -z "sudo masscan ${__NETWORK} -p22,111,2222 -oL $(__netpath)/masscan-linux.txt"
 }
 
 nb-enum-network-masscan-web() {
-    __check-project || return
+    __check-project 
     nb-vars-set-network
     print -z "sudo masscan ${__NETWORK} -p80,800,8000,8080,8888,443,4433,4443 -oL $(__netpath)/masscan-web.txt"
 }
