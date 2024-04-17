@@ -24,7 +24,7 @@ DOC
 }
 
 nb-crack-hashcat() {
-  __check-project || return
+  __check-project
 	__ask "Enter the hash"
 	__check-hash
 	#__ask "Enter a password wordlist"
@@ -75,7 +75,7 @@ nb-crack-hashcat() {
 }
 
 nb-crack-hashcat-hashlist() {
-  __check-project || return
+  __check-project
 	__ask "Enter the hashlist"
   local hs && __askvar hs "HASHLIST"
 
@@ -87,7 +87,7 @@ nb-crack-hashcat-hashlist() {
 }
 
 nb-crack-john() {
-  __check-project || return
+  __check-project
 	__ask "Enter the hash"
 	__check-hash
 	__ask "Enter a password wordlist"
@@ -97,7 +97,7 @@ nb-crack-john() {
 }
 
 nb-crack-john-passwd() {
-  __check-project || return
+  __check-project
 	__ask "Enter a password wordlist"
 	nb-vars-set-passlist
 
@@ -106,7 +106,7 @@ nb-crack-john-passwd() {
 }
 
 nb-crack-john-zip() {
-  __check-project || return
+  __check-project
 	__ask "Enter a password wordlist"
 	nb-vars-set-passlist
 
@@ -119,7 +119,7 @@ nb-crack-john-zip() {
 }
 
 nb-crack-john-rar() {
-  __check-project || return
+  __check-project
 	__ask "Enter a password wordlist"
 	nb-vars-set-passlist
 
@@ -132,7 +132,7 @@ nb-crack-john-rar() {
 }
 
 nb-crack-john-ssh() {
-  __check-project || return
+  __check-project
 	__ask "Enter a password wordlist"
 	nb-vars-set-passlist
 

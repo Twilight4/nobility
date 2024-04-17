@@ -57,7 +57,7 @@ nb-project-start() {
 }
 
 nb-project-end() {
-    __check-project || return
+    __check-project
 
     __ask "Select a project folder: "
     local pd=$(__menu $(find $HOME/desktop/projects/ -mindepth 1 -maxdepth 1 -type d))
@@ -96,7 +96,7 @@ nb-project-end() {
 }
 
 nb-project-host() {
-    __check-project || return
+    __check-project
     nb-vars-set-rhost
     nb-vars-set-domain
 
@@ -104,13 +104,13 @@ nb-project-host() {
 }
 
 nb-project-scope() {
-    __check-project || return
+    __check-project
     __check-org
     print -z "echo \"^.*?${__ORG}\..*\$ \" >> ${__PROJECT}/scope.txt"
 }
 
 nb-project-rescope-burp() {
-    __check-project || return
+    __check-project
     __ask "Enter the URL to the bug bounty scope description"
     nb-vars-set-url
     mkdir -p ${__PROJECT}/burp

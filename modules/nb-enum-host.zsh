@@ -32,52 +32,52 @@ nb-enum-host-install() {
 }
 
 nb-enum-host-tcpdump() {
-    __check-project || return
+    __check-project
     __check-iface
     nb-vars-set-rhost
     print -z "sudo tcpdump -i ${__IFACE} host ${__RHOST} -w $(__hostpath)/tcpdump.pcap"
 }
 
 nb-enum-host-nmap-top(){
-    __check-project || return
+    __check-project
     nb-vars-set-rhost
     print -z "sudo grc nmap -vvv -Pn -sS --top-ports 1000 --open ${__RHOST} -oA $(__hostpath)/nmap-top"
 }
 
 nb-enum-host-nmap-top-discovery(){
-    __check-project || return
+    __check-project
     nb-vars-set-rhost
     print -z "sudo grc nmap -vvv -Pn -sS --top-ports 1000 --open -sC -sV ${__RHOST} -oA $(__hostpath)/nmap-top-discovery"
 }
 
 nb-enum-host-nmap-all() {
-    __check-project || return
+    __check-project
     nb-vars-set-rhost
     print -z "sudo grc nmap -vvv -Pn -sS -p- -T4 --open ${__RHOST} -oA $(__hostpath)/nmap-all"
 }
 
 nb-enum-host-nmap-all-discovery() {
-    __check-project || return
+    __check-project
     nb-vars-set-rhost
     print -z "sudo grc nmap -vvv -Pn -sS -p- -sC -sV --open ${__RHOST} -oA $(__hostpath)/nmap-all-discovery"
 }
 
 nb-enum-host-nmap-udp() {
-    __check-project || return
+    __check-project
     nb-vars-set-rhost
     print -z "sudo grc nmap -v -Pn -sU --top-ports 100 -sV -sC --open ${__RHOST} -oA $(__hostpath)/nmap-udp"
 }
 
 nb-enum-host-masscan-all-tcp() {
     __check-iface
-    __check-project || return
+    __check-project
     nb-vars-set-rhost
     print -z "masscan -p1-65535 --open-only ${__RHOST} --rate=1000 -e ${__IFACE} -oL $(__hostpath)/masscan-all-tcp.txt"
 }
 
 nb-enum-host-masscan-all-udp() {
     __check-iface
-    __check-project || return
+    __check-project
     nb-vars-set-rhost
     print -z "masscan -pU:1-65535 --open-only ${__RHOST} --rate=1000 -e ${__IFACE} -oL $(__hostpath)/masscan-all-udp.txt"
 }
@@ -88,7 +88,7 @@ nb-enum-host-nmap-lse-grep() {
 }
 
 nb-enum-host-ip() {
-    __check-project || return
+    __check-project
     nb-vars-set-rhost
     print -z "curl -s \"https://iplist.cc/api/${__RHOST}\" | tee $(__hostpath/ip.json) "
 }

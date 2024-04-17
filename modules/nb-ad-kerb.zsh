@@ -27,13 +27,13 @@ nb-ad-kerb-install() {
 }
 
 nb-ad-kerb-nmap-sweep() {
-    __check-project || return
+    __check-project
     nb-vars-set-network
     print -z "sudo nmap -n -Pn -sS -p88 ${__NETWORK} -oA $(__netpath)/kerb-sweep"
 }
 
 nb-ad-kerb-tcpdump() {
-    __check-project || return
+    __check-project
     nb-vars-set-iface
     nb-vars-set-rhost
     print -z "sudo tcpdump -i ${__IFACE} host ${__RHOST} and tcp port 88 -w $(__hostpath)/kerb.pcap"

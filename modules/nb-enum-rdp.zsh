@@ -29,20 +29,20 @@ nb-enum-rdp-install() {
 }
 
 nb-enum-rdp-nmap-sweep() {
-    __check-project || return
+    __check-project
     nb-vars-set-network
     print -z "grc nmap -n -Pn -sS -p3389 ${__NETWORK} -oA $(__netpath)/rdp-sweep"
 }
 
 nb-enum-rdp-tcpdump() {
-    __check-project || return
+    __check-project
     nb-vars-set-iface
     nb-vars-set-rhost
     print -z "tcpdump -i ${__IFACE} host ${__RHOST} and tcp port 3389 -w $(__hostpath)/rdp.pcap"
 }
 
 nb-enum-rdp-ncrack() {
-    __check-project || return
+    __check-project
     nb-vars-set-rhost
     __check-user
     print -z "ncrack -vv --user ${__USER} -P ${__PASSLIST} rdp://${__RHOST} -oN $(__hostpath)/ncrack-rdp.txt "
@@ -54,7 +54,7 @@ nb-enum-rdp-bluekeep() {
 }
 
 nb-enum-rdp-msf-bluekeep-scan() {
-    __check-project || return
+    __check-project
     nb-vars-set-rhost
     local cmd="use auxiliary/scanner/rdp/cve_2019_0708_bluekeep; set RHOSTS ${__RHOST}; run; exit"
     print -z "msfconsole -n -q -x \" ${cmd} \" | tee $(__hostpath/bluekeep-scan.txt)"

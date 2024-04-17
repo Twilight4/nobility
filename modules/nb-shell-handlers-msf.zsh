@@ -52,7 +52,7 @@ VAR
 }
 
 nb-shell-handlers-msf-listener() {
-    __check-project || return
+    __check-project
     nb-vars-set-lhost
     nb-vars-set-lport
 
@@ -110,7 +110,7 @@ nb-shell-handlers-msf-listener() {
 }
 
 nb-shell-handlers-msf-payload() {
-    __check-project || return
+    __check-project
     nb-vars-set-lhost
     nb-vars-set-lport
 
@@ -281,7 +281,7 @@ nb-shell-handlers-msf-payload() {
 }
 
 nb-shell-handlers-msf-upgrade-shell() {
-    __check-project || return
+    __check-project
     nb-vars-set-lhost
     nb-vars-set-lport
 

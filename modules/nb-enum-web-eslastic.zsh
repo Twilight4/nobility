@@ -29,7 +29,7 @@ nb-enum-web-elastic-install() {
 }
 
 nb-enum-web-elastic-nmap() {
-    __check-project || return
+    __check-project
     nb-vars-set-rhost
     print -z "sudo grc nmap -n -Pn -p9200 --script=elasticsearch ${__RHOST} -oN $(__hostpath)/nmap-elastic.txt"
 }
@@ -53,7 +53,7 @@ nb-enum-web-elastic-search() {
 }
 
 nb-enum-web-elastic-all() {
-  __check-project || return
+  __check-project
   nb-vars-set-url
   local i && __askvar i "INDEX"
   print -z "curl -A \"${__UA}\" -XGET \"${__URL}:9200/${i}/_search?size=1000\" | tee $(__urlpath)/elastic-docs.json"

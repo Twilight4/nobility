@@ -32,21 +32,21 @@ nb-recon-networks-bgp() {
 }
 
 nb-recon-networks-amass-asns() {
-    __check-project || return
+    __check-project
     __check-org
     mkdir ${__PROJECT}/networks
     print -z "amass intel -org ${__ORG} | cut -d, -f1 | tee -a ${__PROJECT}/networks/asns.txt "
 }
 
 nb-recon-networks-bgpview-ipv4() {
-    __check-project || return
+    __check-project
     __check-asn
     mkdir ${__PROJECT}/networks
     print -z "curl -s https://api.bgpview.io/asn/${__ASN}/prefixes | jq -r '.data | .ipv4_prefixes | .[].prefix' | tee -a ${__PROJECT}/networks/ipv4.txt"
 }
 
 nb-recon-networks-bgpview-ipv6() {
-    __check-project || return
+    __check-project
     __check-asn
     mkdir ${__PROJECT}/networks
     print -z "curl -s https://api.bgpview.io/asn/${__ASN}/prefixes | jq -r '.data | .ipv6_prefixes | .[].prefix'  | tee -a ${__PROJECT}/networks/ipv6.txt"

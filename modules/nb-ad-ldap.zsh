@@ -31,13 +31,13 @@ nb-ad-ldap-install() {
 }
 
 nb-ad-ldap-nmap-sweep() {
-    __check-project || return
+    __check-project
     nb-vars-set-network
     print -z "sudo grc nmap -n -Pn -sS -sU -p389,636,3269 ${__NETWORK} -oA $(__netpath)/ldap-sweep"
 }
 
 nb-ad-ldap-tcpdump() {
-    __check-project || return
+    __check-project
     nb-vars-set-iface
     nb-vars-set-rhost
     print -z "sudo tcpdump -i ${__IFACE} host ${__RHOST} and tcp port 389 and port 636 and port 3269 -w $(__hostpath)/ldap.pcap"
@@ -74,7 +74,7 @@ nb-ad-ldap-whoami() {
 }
 
 nb-ad-ldap-hydra() {
-    __check-project || return
+    __check-project
     nb-vars-set-rhost
     __check-user
     print -z "hydra -l ${__USER} -P ${__PASSLIST} -e -o $(__hostpath)/ldap-hydra-brute.txt ${__RHOST} LDAP"
