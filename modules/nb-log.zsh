@@ -68,13 +68,13 @@ nb-log() {
       return
     fi
 
-    __ask "Enter description for the log entry (necessary)"
+    __ask "Enter command you ran (necessary)"
     local description && __askvar description DESCRIPTION
 
     if [[ -n "$description" ]]; then
       echo " " >> ${__LOGBOOK}
-      echo "Description:" >> ${__LOGBOOK}
-      echo "  =$description=" >> ${__LOGBOOK}
+      echo "Command:" >> ${__LOGBOOK}
+      echo "  - =$description=" >> ${__LOGBOOK}
       __info "Description logged to ${__LOGBOOK}"
       echo " "
     else
