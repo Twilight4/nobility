@@ -158,4 +158,7 @@ nb-recon-github-gitrob
 
 # Check DNS records
 nb-enum-dns-dnsrecon
+
+# Mine data about a target domain
+nb-recon-org-theharvester
 ```
