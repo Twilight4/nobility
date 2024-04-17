@@ -14,8 +14,9 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
 
  Commands
  --------
- nb-update        git pull the latest (MAIN branch) version of nobility
- nb-status        check the current status of the locally cloned nobility repository
+ nb-update            git pull the latest (MAIN branch) version of nobility
+ nb-status            check the current status of the locally cloned nobility repository
+ nb-message-toggle    toggle the "Nobility loadead" shell startup message
 
  Namespaces
  ----------
@@ -81,6 +82,10 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  nb-shell-tty-                  Commands for upgrading shells to tty
  nb-shell-handlers-             Commands for spawning reverse shell handlers
  nb-shell-handlers-msf-         Commands for spawning reverse shells with Metasploit
+
+ Active-Directory Phase
+ -----------------------
+
   
  Post-Exploitation Phase
  -----------------------
