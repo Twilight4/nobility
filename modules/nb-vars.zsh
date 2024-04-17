@@ -15,6 +15,12 @@ with nb-vars-load. The values are stored as files in .nobility/vars.
 The menu options for some of the variables can be set using nb-vars-global, such
 as the list of favorite user-agents or wordlists (nb-vars-global-help).
 
+Note: 
+If you use in scripts: __check-VAR instead of nb-vars-set-VAR, 
+it will not ask for tha variable nor prefill it, that means:
+use __check-VAR for obvious choices,
+use nb-vars-set-VAR for more verbosity
+
 Variables
 ---------
 __PROJECT     the root directory used for all output, ex: /projects/example
