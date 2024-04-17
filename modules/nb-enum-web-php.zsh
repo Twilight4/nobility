@@ -37,7 +37,7 @@ nb-enum-web-php-ffuf() {
     nb-vars-set-wordlist
     __check-threads
     local d && __askvar d "RECURSION DEPTH"
-    print -z "ffuf -p 0.1 -t ${__THREADS} -recursion -recursion-depth ${d} -H \"User-Agent: Mozilla\" -fc 404 -w ${__WORDLIST} -u ${__URL}/FUZZ -e ${__EXT_PHP} -o $(__urlpath)/ffuf-dirs-php.csv -of csv"
+    print -z "ffuf -c -p 0.1 -t ${__THREADS} -recursion -recursion-depth ${d} -H \"User-Agent: Mozilla\" -fc 404 -w ${__WORDLIST} -u ${__URL}/FUZZ -e ${__EXT_PHP} -o $(__urlpath)/ffuf-dirs-php.csv -of csv"
 }
 
 nb-enum-web-php-rfi() {

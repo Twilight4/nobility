@@ -45,13 +45,13 @@ nb-enum-web-fuzz-auth-basic-ffuf() {
     __ask "Select file containing authorization header payloads"
     local f && __askpath f FILE $(pwd)
     __check-threads
-    print -z "ffuf -t ${__THREADS} -p \"0.1\" -w ${f} -H \"Authorization: Basic FUZZ\" -fc 401 -u ${__URL}  "
+    print -z "ffuf -c -t ${__THREADS} -p \"0.1\" -w ${f} -H \"Authorization: Basic FUZZ\" -fc 401 -u ${__URL}  "
 }
 
 nb-enum-web-fuzz-auth-json-ffuf() {
     nb-vars-set-url
     __check-threads
-    print -z "ffuf -t ${__THREADS} -p \"0.1\" -w /usr/share/seclists/Fuzzing/Databases/NoSQL.txt -u ${__URL} -X POST -H \"Content-Type: application/json\" -d '{\"username\": \"FUZZ\", \"password\": \"FUZZ\"}' -fr \"error\" "
+    print -z "ffuf -c -t ${__THREADS} -p \"0.1\" -w /usr/share/seclists/Fuzzing/Databases/NoSQL.txt -u ${__URL} -X POST -H \"Content-Type: application/json\" -d '{\"username\": \"FUZZ\", \"password\": \"FUZZ\"}' -fr \"error\" "
 }
 
 nb-enum-web-fuzz-auth-post-ffuf() {
@@ -60,7 +60,7 @@ nb-enum-web-fuzz-auth-post-ffuf() {
     local uv && __askvar uv USER_VALUE
     local pf && __askvar pf PASSWORD_FIELD
     __check-threads
-    print -z "ffuf -t ${__THREADS}  -p \"0.1\" -w ${__PASSLIST}  -H \"Content-Type: application/x-www-form-urlencoded\" -X POST -d \"${uf}=${uv}&${pf}=FUZZ\" -u ${__URL} -fs 75 "
+    print -z "ffuf -c -t ${__THREADS}  -p \"0.1\" -w ${__PASSLIST}  -H \"Content-Type: application/x-www-form-urlencoded\" -X POST -d \"${uf}=${uv}&${pf}=FUZZ\" -u ${__URL} -fs 75 "
 }
 
 
