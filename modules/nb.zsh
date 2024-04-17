@@ -30,9 +30,9 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
 
  Utility
  ---------
- nb-crack-                    Used for crackign password hashes
- nb-encoding-                 Used for encoding / decoding data
- nb-os-                       Variety of commands for managing your OS
+ nb-crack-                      Used for crackign password hashes
+ nb-encoding-                   Used for encoding / decoding data
+ nb-os-                         Variety of commands for managing your OS
 
  Engagement / Project / Bounty
  -----------------------------
@@ -85,8 +85,13 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
 
  Active-Directory Phase
  -----------------------
+ nb-ad-                         Commands for general active directory enumeration
+ nb-ad-asrep-roast-             Commands for ASREP-Roast AD attack
+ nb-ad-kerb-                    Commands for Kerberoast AD attack
+ nb-ad-pth-                     Commands for Pass-The-Hash AD attack
+ nb-ad-smb-relay-               Commands for SMB Relay AD attack
+ nb-ad-ldap-                    Commands for LDAP enumeration
 
-  
  Post-Exploitation Phase
  -----------------------
  nb-pivot-                      Commands for pivoting with ssh
