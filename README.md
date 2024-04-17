@@ -112,6 +112,7 @@ nb-enum-web-whatweb
 nb-enum-web-dirs-robots
 
 # Subdomain enumeration
+nb-enum-web-vhosts-gobuster
 nb-recon-subs-ffuf
 nb-recon-subs-subfinder
 
