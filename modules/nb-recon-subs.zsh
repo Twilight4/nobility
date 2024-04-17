@@ -23,6 +23,7 @@ nb-recon-subs-amass-diff       track changes between last 2 enumerations using a
 nb-recon-subs-amass-names      list gathered subs in the amass db
 nb-recon-subs-crt.sh           gather subdomains from crt.sh
 nb-recon-subs-subfinder        gather subdomains from sources (api keys help)
+nb-recon-subs-ffuf             gather subdomains with ffuf
 nb-recon-subs-assetfinder      gather subdomains from sources (api keys help)
 nb-recon-subs-wayback          gather subdomains from Wayback Machine
 
@@ -77,6 +78,15 @@ nb-recon-subs-subfinder() {
     nb-vars-set-domain
     __check-threads
     print -z "subfinder -t ${__THREADS} -d ${__DOMAIN} -nW -silent | tee -a $(__dompath)/subs.txt"
+}
+
+nb-recon-subs-ffuf() {
+    __check-project
+    nb-vars-set-domain
+    nb-vars-set-url
+    nb-vars-set-wordlist
+    __check-threads
+    print -z "ffuf -c -p 0.1 -t ${__THREADS} -H \"Host: FUZZ.${__DOMAIN}\" -fs 5602 -fc 404 -w ${__WORDLIST} -u ${__URL} -o $(__dompath)/ffuf-subs.csv -of csv"
 }
 
 nb-recon-subs-assetfinder() {
