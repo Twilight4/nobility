@@ -19,6 +19,7 @@ nb-enum-smb-null-smbmap              query with smbmap null session
 nb-enum-smb-user-smbmap              query with smbmap authenticated session
 nb-enum-smb-null-enum4               enumerate with enum4linux
 nb-enum-smb-null-smbclient-list      list shares with a null session
+nb-enum-smb-null-smbclient-list-rec  list shares recursively with a null session
 nb-enum-smb-null-smbclient-connect   connect with a null session
 nb-enum-smb-user-smbclient-connect   connect with an authenticated session
 nb-enum-user-smb-mount               mount an SMB share
@@ -69,6 +70,12 @@ nb-enum-smb-null-enum4() {
 nb-enum-smb-null-smbclient-list() {
   nb-vars-set-rhost
   print -r -z "smbclient -L //${__RHOST} -N "
+}
+
+nb-enum-smb-null-smbclient-list-rec() {
+  nb-vars-set-rhost
+  __check-share
+  print -r -z "smbclient //${__RHOST}/${__SHARE} -c 'recurse;ls'"
 }
 
 nb-enum-smb-null-smbclient-connect() {
