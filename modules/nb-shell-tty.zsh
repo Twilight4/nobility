@@ -24,7 +24,8 @@ DOC
 }
 
 nb-shell-tty() {
-cat << "DOC" 
+    __ok "Copy the commands below and use on the remote system"
+    cat << "DOC" 
 # In reverse shell
 $ python -c 'import pty; pty.spawn("/bin/bash")'
 Ctrl-Z
