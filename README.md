@@ -100,8 +100,36 @@ nb-vars-save
 nb-project-rescope
 ```
 
-### Passive Recon
+### Web Recon
 ```bash
+# Scan individual host all ports with TCP syn using rustscan
+nb-enum-host-rustscan-all
+
+# Identifying technologies
+nb-enum-web-whatweb
+
+# Get robots.txt
+nb-enum-web-dirs-robots
+
+# Subdomain enumeration
+nb-recon-subs-ffuf
+
+# Directory brute force
+nb-enum-web-dirs-gobuster 
+
+# Web vuln scanners
+nb-enum-web-vuln-nikto
+
+# Enumerate wordpress website
+nb-enum-web-wordpress
+
+# Brute force web auth password for post request
+nb-enum-web-fuzz-password-hydra-form-post
+
+# Brute force auth login with post request
+nb-enum-web-fuzz-login-hydra-form-post
+
+
 # Search for target files
 nb-recon-org-files
 
