@@ -108,14 +108,20 @@ nb-enum-host-rustscan-all
 # Identifying technologies
 nb-enum-web-whatweb
 
-# Get robots.txt
+# Download out robots.txt
 nb-enum-web-dirs-robots
 
 # Subdomain enumeration
 nb-recon-subs-ffuf
+nb-recon-subs-subfinder
+
+# Resolve and parse subdomains
+nb-recon-subs-resolve-massdns
+nb-recon-subs-resolve-parse
 
 # Directory brute force
 nb-enum-web-dirs-gobuster 
+nb-enum-web-dirs-ffuf
 
 # Web vuln scanners
 nb-enum-web-vuln-nikto
@@ -129,7 +135,18 @@ nb-enum-web-fuzz-password-hydra-form-post
 # Brute force auth login with post request
 nb-enum-web-fuzz-login-hydra-form-post
 
+# ID a WAF if present
+nb-enum-web-waf
 
+# Parse SSL certs
+nb-enum-web-ssl-certs
+
+# Spider the site
+nb-enum-web-gospider
+```
+
+### Organization OSINT
+```
 # Search for target files
 nb-recon-org-files
 
@@ -141,33 +158,4 @@ nb-recon-github-gitrob
 
 # Check DNS records
 nb-enum-dns-dnsrecon
-
-# Look for ASNs and networks
-nb-recon-networks-amass-asns
-nb-recon-networks-bgpview-ipv4
-
-# Get subdomains
-nb-recon-subs-subfinder
-
-# Resolve and parse subdomains
-nb-recon-subs-resolve-massdns
-nb-recon-subs-resolve-parse
-```
-
-### Active Web Enumeration
-```bash
-# Download out robots.txt
-nb-enum-web-dirs-robots
-
-# ID a WAF if present
-nb-enum-web-waf
-
-# Parse SSL certs
-nb-enum-web-ssl-certs
-
-# Spider the site
-nb-enum-web-gospider
-
-# Brute force URIs
-nb-enum-web-dirs-ffuf
 ```
