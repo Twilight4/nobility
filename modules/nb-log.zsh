@@ -13,42 +13,11 @@ The log namespace provides commands that create a logbook in a directory specifi
 Commands
 --------
 nb-log            ask user for an log entry in the logbook
-nb-log-cat        cats the logbook
-nb-log-edit       edit the logbook using $EDITOR
-nb-log-notes      edit the notes using $EDITOR
-nb-log-clear      deletes the logbook
 nb-log-scan       pastes from clipboard to an entry in the logbook in code format (uses wl-clipboard)
-nb-log-append     append additional information to the last logbook entry using $EDITOR in bullet points
-nb-log-append-sc  append screenshot to the last logbook entry using $EDITOR
+nb-log-sc         append screenshot to the last logbook entry using $EDITOR
 nb-log-full       asks for full detailed logs for an entry
 
 DOC
-}
-
-nb-log-cat() {
-    __check-project
-    __check-logbook
-    __info "${__LOGBOOK}" 
-    echo " " 
-    sed -e 's/^\* .*$/\x1b[94m&\x1b[0m/' -e 's/^\*\*.*$/\x1b[96m&\x1b[0m/' -e 's/=\([^=]*\)=/\o033[1;32m\1\o033[0m/g; s/^\( \{0,6\}\)-/•/g' -e '/^\(:PROPERTIES:\|:ID:\|:END:\|#\+date:\)/d' -e '/^\(:PROPERTIES:\|:ID:\|:END:\|#\+date:\)/d' ${__LOGBOOK} | command bat --language=org --style=plain --color=always
-}
-
-nb-log-edit() {
-    __check-project
-    __check-logbook
-    eval $EDITOR ${__LOGBOOK}
-}
-
-nb-log-notes() {
-    __check-project
-    __check-notebook
-    eval $EDITOR ${__NOTEBOOK}
-}
-
-nb-log-clear() {
-    __check-project
-    __check-logbook
-    rm -v -i ${__LOGBOOK}
 }
 
 nb-log() {
@@ -64,7 +33,7 @@ nb-log() {
     if [[ -n "$title" ]]; then
       # Log the information to the logbook.org file
       echo " " >> ${__LOGBOOK}
-      echo "*** $title" >> ${__LOGBOOK}
+      echo "** $title" >> ${__LOGBOOK}
       echo "#+date: ${stamp}" >> ${__LOGBOOK}
       echo " "
     else
@@ -122,21 +91,7 @@ nb-log-scan() {
   __info "Log entry added to ${__LOGBOOK}"
 }
 
-nb-log-append() {
-    __check-project
-    __check-logbook
-
-    # Edit logbook
-    echo " " >> ${__LOGBOOK}
-    echo "Additional Information:" >> ${__LOGBOOK}
-    echo "  - " >> ${__LOGBOOK}
-    eval $EDITOR ${__LOGBOOK}
-    echo " "
-
-    __info "Input appended to the last log entry in ${__LOGBOOK}"
-}
-
-nb-log-append-sc() {
+nb-log-sc() {
     __check-project
     __check-logbook
 
