@@ -24,8 +24,6 @@ use nb-vars-set-VAR for more verbosity
 Variables
 ---------
 __PROJECT     the root directory used for all output, ex: /projects/example
-__LOGBOOK     the logbook.org file used in nb-log commands 
-__NOTEBOOK    the notebook.org file used in nb-log-notes command
 __SCREENSHOTS the screenshots directory used for saving screenshots in emacs
 __IFACE       the interface to use for commands, ex: eth0
 __DOMAIN      the domain to use for commands, ex: example.org
@@ -52,8 +50,6 @@ DOC
 
 nb-vars() {
   echo "$(__cyan __PROJECT: ) ${__PROJECT}"
-  echo "$(__cyan __LOGBOOK: ) ${__LOGBOOK}"
-  echo "$(__cyan __NOTEBOOK: ) ${__NOTEBOOK}"
   echo "$(__cyan __SCREENSHOTS: ) ${__SCREENSHOTS}"
   echo "$(__cyan __IFACE: ) ${__IFACE}"
   echo "$(__cyan __DOMAIN: ) ${__DOMAIN}"
@@ -70,8 +66,6 @@ nb-vars() {
 
 nb-vars-clear() {
   __PROJECT=""
-  __LOGBOOK=""
-  __NOTEBOOK=""
   __SCREENSHOTS=""
   __IFACE=""
   __DOMAIN=""
@@ -91,8 +85,6 @@ nb-vars-clear() {
 
 nb-vars-save() {
   echo "${__PROJECT}" > $__VARS/PROJECT
-  echo "${__LOGBOOK}" > $__VARS/LOGBOOK
-  echo "${__NOTEBOOK}" > $__VARS/NOTEBOOK
   echo "${__SCREENSHOTS}" > $__VARS/SCREENSHOTS
   echo "${__IFACE}" > $__VARS/IFACE
   echo "${__DOMAIN}" > $__VARS/DOMAIN
@@ -112,8 +104,6 @@ nb-vars-save() {
 
 nb-vars-load() {
     __PROJECT=$(cat $__VARS/PROJECT) 
-    __LOGBOOK=$(cat $__VARS/LOGBOOK)
-    __NOTEBOOK=$(cat $__VARS/NOTEBOOK)
     __SCREENSHOTS=$(cat $__VARS/SCREENSHOTS)
     __IFACE=$(cat $__VARS/IFACE)
     __DOMAIN=$(cat $__VARS/DOMAIN)
@@ -156,64 +146,6 @@ __check-project() {
 
   [[ -z "${__PROJECT}" ]] && nb-vars-set-project
 }
-
-
-############################################################# 
-# __LOGBOOK
-#############################################################
-export __LOGBOOK="$HOME/desktop/projects"
-
-nb-vars-set-logbook() {
-  echo
-  __ask "Choose the project directory for logbook you created with nb-project-start."
-  
-  local d=$(__menu $(find $HOME/desktop/projects/ -mindepth 1 -maxdepth 1 -type d))
-  __ok "Selected: ${d}"
-
-  mkdir -p $d/logbook
-
-  __LOGBOOK="${d}/logbook/logbook.org"
-  
-  if [[ -f "${__LOGBOOK}" ]]; then
-      __warn "${__LOGBOOK} already exists, set as active log"
-  else
-      touch ${__LOGBOOK}
-      echo "* Logbook" >> ${__LOGBOOK}
-      echo " " >> ${__LOGBOOK}
-      __ok "${__LOGBOOK} created."
-  fi
-}
-
-__check-logbook() { [[ -z "${__LOGBOOK}" ]] && nb-vars-set-logbook }
-
-
-############################################################# 
-# __NOTEBOOK
-#############################################################
-export __NOTEBOOK="$HOME/desktop/projects"
-
-nb-vars-set-notebook() {
-  echo
-  __ask "Choose the project directory for notebook you created with nb-project-start."
-  
-  local d=$(__menu $(find $HOME/desktop/projects/ -mindepth 1 -maxdepth 1 -type d))
-  __ok "Selected: ${d}"
-
-  mkdir -p $d/notes
-
-  __NOTEBOOK="${d}/notes/notebook.org"
-  
-  if [[ -f "${__NOTEBOOK}" ]]; then
-      __warn "${__NOTEBOOK} already exists, set as active log"
-  else
-      touch ${__NOTEBOOK}
-      echo "* Notebook" >> ${__NOTEBOOK}
-      echo " " >> ${__NOTEBOOK}
-      __ok "${__NOTEBOOK} created."
-  fi
-}
-
-__check-notebook() { [[ -z "${__NOTEBOOK}" ]] && nb-vars-set-notebook }
 
 
 ############################################################# 

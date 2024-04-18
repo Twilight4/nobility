@@ -14,7 +14,7 @@ as well as commands for syncing data and managing a VPS.
 Commands
 --------
 nb-project-install                        installs dependencies
-nb-project-start                          create directory structure and logbook for new project
+nb-project-start                          create directory structure
 nb-project-end                            zips and removes directories and data for new project
 nb-project-host                           add ip and domain to /etc/hosts
 nb-project-scope                          generate a scope regex by root word (matches all to the left and right)
@@ -45,8 +45,6 @@ nb-project-start() {
     __PROJECT=${fullpath}/tool-output
     
     # set other vars
-    nb-vars-set-logbook
-    nb-vars-set-notebook
     nb-vars-set-screenshots
     nb-vars-save >/dev/null
 
@@ -58,7 +56,6 @@ nb-project-start() {
 
 nb-project-end() {
     __check-project
-    __check-logbook
 
     __ask "Select a project folder: "
     local pd=$(__menu $(find $HOME/desktop/projects/ -mindepth 1 -maxdepth 1 -type d))

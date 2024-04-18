@@ -34,9 +34,8 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  nb-encoding-                   Used for encoding / decoding data
  nb-os-                         Variety of commands for managing your OS
 
- Engagement / Project / Bounty
+ Engagement / Project
  -----------------------------
- nb-log-                        Configure and setup a logbook for current engagement
  nb-vars-                       Per-session, per-engagement variables used in all commands
  nb-project-                    Commands to define scope and manage project data
 
