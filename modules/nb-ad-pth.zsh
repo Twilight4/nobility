@@ -30,10 +30,13 @@ nb-ad-pth-install() {
 
 nb-ad-pth-pass() {
     __check-project
+    echo
     __ask "Enter target AD domain (must also be set in your hosts file)"
     nb-vars-set-domain
+    echo
     __ask "Enter a user account"
 	  __check-user
+    echo
 	  __ask "Enter a password for authentication"
 	  __check-pass
     nb-vars-set-network
@@ -44,8 +47,10 @@ nb-ad-pth-pass() {
 nb-ad-pth-exploit() {
     __check-project
     nb-vars-set-network
+    echo
     __ask "Enter a user account"
   	__check-user
+    echo
   	__ask "Enter a NTLM hash"
   	__check-hash
 
@@ -55,8 +60,10 @@ nb-ad-pth-exploit() {
 nb-ad-pth-sam() {
     __check-project
     nb-vars-set-network
+    echo
     __ask "Enter a user account"
 	  __check-user
+    echo
 	  __ask "Enter a NTLM hash"
 	  __check-hash
 
@@ -66,8 +73,10 @@ nb-ad-pth-sam() {
 nb-ad-pth-enum() {
     __check-project
     nb-vars-set-network
-    __ask "Enter a user account"
+    echo
+    __ask "Enter a user account/user list"
 	  __check-user
+    echo
 	  __ask "Enter a NTLM hash"
 	  __check-hash
 
@@ -77,8 +86,10 @@ nb-ad-pth-enum() {
 nb-ad-pth-lsa() {
     __check-project
     nb-vars-set-network
+    echo
     __ask "Enter a user account"
 	  __check-user
+    echo
 	  __ask "Enter a NTLM hash"
 	  __check-hash
 
@@ -88,8 +99,10 @@ nb-ad-pth-lsa() {
 nb-ad-pth-lsassy() {
     __check-project
     nb-vars-set-network
+    echo
     __ask "Enter a user account"
 	  __check-user
+    echo
 	  __ask "Enter a NTLM hash"
 	  __check-hash
 
