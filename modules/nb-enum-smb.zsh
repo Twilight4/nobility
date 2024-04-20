@@ -64,7 +64,7 @@ nb-enum-smb-user-smbmap() {
 
 nb-enum-smb-null-enum4() {
   nb-vars-set-rhost
-  print -z "enum4linux -a ${__RHOST} | tee $(__hostpath)/enum4linux.txt "
+  print -z "enum4linux -a ${__RHOST} | tee $(__hostpath)/enumlinux.txt"
 }
 
 nb-enum-smb-null-smbclient-list() {
