@@ -28,7 +28,7 @@ nb-ad-asrep-install() {
   curl -LO https://github.com/ropnop/kerbrute/releases/download/v1.0.3/kerbrute_linux_amd64 ~/downloads/
   chmod +x ~/downloads/kerbrute_linux_amd64
   sudo mv ~/downloads/kerbrute_linux_amd64 /bin/kerbrute
-  __info "kerbrute_linux_amd64 downloaded as kerbrute in /bin/kerbrute"
+  __info "kerbrute is now available"
 }
 
 nb-ad-asrep-enum-users() {
@@ -40,7 +40,7 @@ nb-ad-asrep-enum-users() {
   # e.g. dc.${__DOMAIN}
   local dc && __askvar dc DOMAIN_CONTROLLER
 
-  print -z "./kerbrute_linux_amd64 userenum --dc $dc -d ${__DOMAIN} ${__WORDLIST}"
+  print -z "kerbrute userenum --dc $dc -d ${__DOMAIN} ${__WORDLIST}"
 }
 
 nb-ad-asrep-brute() {
