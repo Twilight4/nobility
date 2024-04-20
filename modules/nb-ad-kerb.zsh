@@ -36,7 +36,7 @@ nb-ad-kerb-tcpdump() {
     __check-project
     nb-vars-set-iface
     nb-vars-set-rhost
-    print -z "sudo tcpdump -i ${__IFACE} host ${__RHOST} and tcp port 88 -w $(__hostpath)/kerb.pcap"
+    print -z "sudo tcpdump -i ${__IFACE} host ${__RHOST} and tcp port 88 -w $(__adpath)/kerb.pcap"
 }
 
 nb-ad-kerb-users() {

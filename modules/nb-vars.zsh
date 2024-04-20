@@ -344,6 +344,14 @@ __netpath() {
     echo "${result}"
 }
 
+__netadpath() { 
+    __check-project
+    local net=$(echo ${__NETWORK} | cut -d'/' -f1)
+    local result=${__PROJECT}/networks/active-directory/${net}
+    mkdir -p "${result}"
+    echo "${result}"
+}
+
 __hostpath() { 
     __check-project
     local result=${__PROJECT}/hosts/${__RHOST}
@@ -366,7 +374,7 @@ __dompath() {
     echo "${result}"
 }
 
-__adpath() { 
+__domadpath() { 
     __check-project
     local result=${__PROJECT}/domains/active-directory/${__DOMAIN}
     mkdir -p "${result}"
