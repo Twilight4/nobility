@@ -17,6 +17,7 @@ nb-pivot-mount-remote-sshfs           mounts a remote directory to local /mnt pa
 nb-pivot-ssh-dynamic-proxy            uses remote as a dynamic proxy
 nb-pivot-ssh-remote-to-local          forwards remote port to local port
 nb-pivot-ssh-remote-to-local-burp     forwards remote port 8080 to local port 8080
+nb-pivot-chisel                       # TODO use chisel for pivoting
 
 DOC
 }
