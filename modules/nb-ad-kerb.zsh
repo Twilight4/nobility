@@ -29,20 +29,20 @@ nb-ad-kerb-install() {
 nb-ad-kerb-nmap-sweep() {
     __check-project
     nb-vars-set-network
-    print -z "sudo nmap -n -Pn -sS -p88 ${__NETWORK} -oA $(__netpath)/kerb-sweep"
+    print -z "sudo nmap -n -Pn -sS -p88 ${__NETWORK} -oA $(__netadpath)/kerb-sweep"
 }
 
 nb-ad-kerb-tcpdump() {
     __check-project
     nb-vars-set-iface
     nb-vars-set-rhost
-    print -z "sudo tcpdump -i ${__IFACE} host ${__RHOST} and tcp port 88 -w $(__adpath)/kerb.pcap"
+    print -z "sudo tcpdump -i ${__IFACE} host ${__RHOST} and tcp port 88 -w $(__netadpath)/kerb.pcap"
 }
 
 nb-ad-kerb-users() {
     nb-vars-set-rhost
     local realm && __askvar realm REALM
-    print -z "grc nmap -v -p 88 --script krb5-enum-users --script-args krb5-enum-users.realm=${realm},userdb=/usr/share/seclists/Usernames/Names/names.txt ${__RHOST}"
+    print -z "grc nmap -v -p 88 --script krb5-enum-users --script-args krb5-enum-users.realm=${realm},userdb=/usr/share/seclists/Usernames/Names/names.txt ${__NETWORK} -oA $(__netadpath)/nmap-kerb-users"
 }
 
 nb-ad-kerb-kerberoast() {
@@ -52,5 +52,5 @@ nb-ad-kerb-kerberoast() {
     __check-user
     __ask "Enter the IP address of the target domain controller"
     nb-vars-set-rhost
-    print -z "getuserspns.py -request ${__DOMAIN}s/${__USER} -dc-ip ${__RHOST} "
+    print -z "getuserspns.py -request ${__DOMAIN}s/${__USER} -dc-ip ${__RHOST} | tee $(__domadpath)/kerberoast.txt"
 }
