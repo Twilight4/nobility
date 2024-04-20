@@ -365,3 +365,10 @@ __dompath() {
     mkdir -p "${result}"
     echo "${result}"
 }
+
+__adpath() { 
+    __check-project
+    local result=${__PROJECT}/domains/active-directory/${__DOMAIN}
+    mkdir -p "${result}"
+    echo "${result}"
+}
