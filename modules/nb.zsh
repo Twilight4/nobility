@@ -16,7 +16,7 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  --------
  nb-update            git pull the latest (MAIN branch) version of nobility
  nb-status            check the current status of the locally cloned nobility repository
- nb-message-toggle    toggle the "Nobility loadead" shell startup message
+ nb-message-toggle    toggle the "Nobility loaded" shell startup message
 
  Namespaces
  ----------
@@ -109,6 +109,18 @@ nb-status() {
 	  cd ${__PLUGIN}
     git status
     \cd - > /dev/null
+}
+
+nb-message-toggle() {
+    local file="$HOME/.config/zsh/plugins/nobility/nobility.plugin.zsh"
+    local line="__info \"Nobility ZSH plugin loaded\""
+    if grep -qF "#$line" "$file"; then
+        sed -i "s/#$line/$line/" "$file"
+        __info "Nobility startup message suppressed"
+    else
+        sed -i "s/$line/#$line/" "$file"
+        __info "Nobility startup message visible"
+    fi
 }
 
 
