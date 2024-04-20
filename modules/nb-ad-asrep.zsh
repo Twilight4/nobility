@@ -27,7 +27,8 @@ nb-ad-asrep-install() {
   # Download kerbrute binary
   curl -LO https://github.com/ropnop/kerbrute/releases/download/v1.0.3/kerbrute_linux_amd64 ~/downloads/
   chmod +x ~/downloads/kerbrute_linux_amd64
-  __info "kerbrute_linux_amd64 downloaded in ~/downloads/kerbrute_linux_amd64"
+  mv ~/downloads/kerbrute_linux_amd64 /bin/kerbrute
+  __info "kerbrute_linux_amd64 downloaded as kerbrute in /bin/kerbrute"
 }
 
 nb-ad-asrep-enum-users() {
