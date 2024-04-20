@@ -24,9 +24,10 @@ nb-ad-asrep-install() {
   __info "Running $0..."
   __pkgs impacket
   
-  # Install kerbrute binary
-  curl -LO https://github.com/ropnop/kerbrute/releases/download/v1.0.3/kerbrute_linux_amd64
-  chmod +x kerbrute_linux_amd64
+  # Download kerbrute binary
+  curl -LO https://github.com/ropnop/kerbrute/releases/download/v1.0.3/kerbrute_linux_amd64 ~/downloads/
+  chmod +x ~/downloads/kerbrute_linux_amd64
+  __info "kerbrute_linux_amd64 downloaded in ~/downloads/kerbrute_linux_amd64"
 }
 
 nb-ad-asrep-enum-users() {
