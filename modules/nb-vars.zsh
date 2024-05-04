@@ -24,7 +24,6 @@ use nb-vars-set-VAR for more verbosity
 Variables
 ---------
 __PROJECT     the root directory used for all output, ex: /projects/example
-__SCREENSHOTS the screenshots directory used for saving screenshots in emacs
 __IFACE       the interface to use for commands, ex: eth0
 __DOMAIN      the domain to use for commands, ex: example.org
 __NETWORK     the subnet to use for commands, ex: 10.1.2.0/24
@@ -50,7 +49,6 @@ DOC
 
 nb-vars() {
   echo "$(__cyan __PROJECT: ) ${__PROJECT}"
-  echo "$(__cyan __SCREENSHOTS: ) ${__SCREENSHOTS}"
   echo "$(__cyan __IFACE: ) ${__IFACE}"
   echo "$(__cyan __DOMAIN: ) ${__DOMAIN}"
   echo "$(__cyan __NETWORK: ) ${__NETWORK}"
@@ -66,7 +64,6 @@ nb-vars() {
 
 nb-vars-clear() {
   __PROJECT=""
-  __SCREENSHOTS=""
   __IFACE=""
   __DOMAIN=""
   __NETWORK=""
@@ -85,7 +82,6 @@ nb-vars-clear() {
 
 nb-vars-save() {
   echo "${__PROJECT}" > $__VARS/PROJECT
-  echo "${__SCREENSHOTS}" > $__VARS/SCREENSHOTS
   echo "${__IFACE}" > $__VARS/IFACE
   echo "${__DOMAIN}" > $__VARS/DOMAIN
   echo "${__NETWORK}" > $__VARS/NETWORK
@@ -104,7 +100,6 @@ nb-vars-save() {
 
 nb-vars-load() {
     __PROJECT=$(cat $__VARS/PROJECT) 
-    __SCREENSHOTS=$(cat $__VARS/SCREENSHOTS)
     __IFACE=$(cat $__VARS/IFACE)
     __DOMAIN=$(cat $__VARS/DOMAIN)
     __NETWORK=$(cat $__VARS/NETWORK)
@@ -146,26 +141,6 @@ __check-project() {
 
   [[ -z "${__PROJECT}" ]] && nb-vars-set-project
 }
-
-
-############################################################# 
-# __SCREENSHOTS
-#############################################################
-export __SCREENSHOTS="$HOME/desktop/projects/"
-
-nb-vars-set-screenshots() {
-  echo
-  __ask "Choose the project directory for screenshots you created with nb-project-start."
-  
-  local d=$(__menu $(find $HOME/desktop/projects/ -mindepth 1 -maxdepth 1 -type d))
-  __ok "Selected: ${d}"
-
-  __SCREENSHOTS="${d}/screenshots"
-
-  mkdir -p ${__SCREENSHOTS}
-}
-
-__check-screenshots() { [[ -z "${__SCREENSHOTS}" ]] && nb-vars-set-screenshots }
 
 
 ############################################################# 
