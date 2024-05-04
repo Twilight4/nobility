@@ -44,10 +44,6 @@ nb-project-start() {
     # set project to be tool-output
     __PROJECT=${fullpath}/tool-output
     
-    # set other vars
-    nb-vars-set-screenshots
-    nb-vars-save >/dev/null
-
     # Move to the project directory
     cd "$fullpath"
 
