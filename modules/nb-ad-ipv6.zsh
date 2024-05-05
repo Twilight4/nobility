@@ -31,7 +31,7 @@ nb-ad-ipv6-install() {
         sudo ./pipmykali.sh
         popd &> /dev/null
       else
-        #nb-install-pipmykali
+        nb-install-pipmykali
     fi
 }
 

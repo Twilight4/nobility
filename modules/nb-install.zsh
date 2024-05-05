@@ -32,6 +32,7 @@ nb-install-link-finder
 nb-install-winpeas
 nb-install-linpeas
 nb-install-amsi-bypass
+nb-install-pipmykali
 
 DOC
 }
@@ -398,5 +399,23 @@ nb-install-amsi-bypass() {
     __ask "CONTINUE?"
     if __check-proceed; then
         wget https://gist.githubusercontent.com/shantanu561993/6483e524dc225a188de04465c8512909/raw/db219421ea911b820e9a484754f03a26fbfb9c27/AMSI_bypass_Reflection.ps1 -O "$amsi_path"
+    fi
+}
+
+nb-install-pipmykali() {
+    local name="pipmykali"
+    local url="https://github.com/Dewalt-arch/$name"
+    local path="/opt/$name"
+
+    __info "$name"
+
+    if [[ ! -d $path ]]
+    then
+        sudo git clone --depth 1 $url $path
+    else
+        __warn "already installed in $path"
+        pushd $path 
+        git pull
+        popd
     fi
 }
