@@ -35,9 +35,9 @@ nb-ad-enum-ldapdomaindump() {
 	  __ask "Enter the IP address of the target DC server"
 	  nb-vars-set-rhost
     __ask "Enter a user account"
-    __check-user
+    nb-vars-set-user
     __ask "Enter a password for authentication"
-    __check-pass
+    nb-vars-set-pass
 
     print -z "ldapdomaindump ${__RHOST} -u '${__DOMAIN}/${__USER}' -p "${__PASS}" -o $(__domadpath)/ldapdomaindump"}
     __info "Output saved in 'ldapdomaindump' directory"

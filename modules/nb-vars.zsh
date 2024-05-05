@@ -31,6 +31,8 @@ __RHOST       the remote host or target, ex: 10.1.2.3, example: target.example.o
 __RPORT       the remote port; ex: 80
 __LHOST       the accessible local IP address, ex: 10.1.2.3
 __LPORT       the accessible local PORT, ex: 4444
+__USER        the user variable
+__PASS        the pass variable
 __URL         a target URL, example: https://target.example.org
 __UA          the user agent to use for commands, ex: googlebot
 __WORDLIST    used to select from a list of favorite wordlists (global var) brute forcing
@@ -56,6 +58,8 @@ nb-vars() {
   echo "$(__cyan __RPORT: ) ${__RPORT}"
   echo "$(__cyan __LHOST: ) ${__LHOST}"
   echo "$(__cyan __LPORT: ) ${__LPORT}"
+  echo "$(__cyan __USER: ) ${__USER}"
+  echo "$(__cyan __PASS: ) ${__PASS}"
   echo "$(__cyan __URL: ) ${__URL}"
   echo "$(__cyan __UA: ) ${__UA}"
   echo "$(__cyan __WORDLIST: ) ${__WORDLIST}"
@@ -71,6 +75,8 @@ nb-vars-clear() {
   __RPORT=""
   __LHOST=""
   __LPORT=""
+  __USER=""
+  __PASS=""
   __URL=""
   __UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
   __WORDLIST=""
@@ -89,6 +95,8 @@ nb-vars-save() {
   echo "${__RPORT}" > $__VARS/RPORT
   echo "${__LHOST}" > $__VARS/LHOST
   echo "${__LPORT}" > $__VARS/LPORT
+  echo "${__USER}" > $__VARS/USER
+  echo "${__PASS}" > $__VARS/PASS
   echo "${__URL}" > $__VARS/URL
   echo "${__UA}" > $__VARS/UA
   echo "${__WORDLIST}" > $__VARS/WORDLIST
@@ -107,6 +115,8 @@ nb-vars-load() {
     __RPORT=$(cat $__VARS/RPORT)
     __LHOST=$(cat $__VARS/LHOST)
     __LPORT=$(cat $__VARS/LPORT)
+    __USER=$(cat $__VARS/USER)
+    __PASS=$(cat $__VARS/PASS)
     __URL=$(cat $__VARS/URL)
     __UA=$(cat $__VARS/UA)
     __WORDLIST=$(cat $__VARS/WORDLIST)
@@ -231,6 +241,26 @@ nb-vars-set-lport() { __prefill __LPORT LPORT ${__LPORT} && nb-vars-save &>/dev/
 
 
 ############################################################# 
+# __USER
+#############################################################
+export __USER=""
+
+nb-vars-set-user() { __prefill __USER USER ${__USER} && nb-vars-save &>/dev/null }
+
+__check-user() { [[ -z "${__USER}"]] ]] && nb-vars-set-user }
+
+
+############################################################# 
+# __PASS
+#############################################################
+export __PASS=""
+
+nb-vars-set-pass() { __prefill __PASS PASS ${__PASS} && nb-vars-save &>/dev/null }
+
+__check-pass() { [[ -z "${__PASS}" ]] && nb-vars-set-pass }
+
+
+############################################################# 
 # __URL
 #############################################################
 export __URL=""
@@ -311,12 +341,6 @@ nb-vars-set-passlist() {
 # Helpers
 export __THREADS
 __check-threads() { __askvar __THREADS THREADS }
-
-export __USER
-__check-user() { __askvar __USER USER }
-
-export __PASS
-__check-pass() { __askvar __PASS PASS }
 
 export __HASH
 __check-hash() { __askvar __HASH HASH }
