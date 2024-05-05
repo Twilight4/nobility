@@ -165,21 +165,33 @@ nb-recon-org-theharvester
 
 ### Active Directory Exploitation
 ```bash
-# General AD Recon
-nb-ad-help
+# LLMNR Poisoning
+nb-ad-smb-relay-responder
 
 # AS-REP Roasting
-nb-ad-asrep-help 
-
-# Kerberoasting
-nb-ad-kerb-help
-
-# Pass-The-Hash
-nb-ad-pth-help
-
-# LDAP Enumeration
-nb-ad-ldap-help
+nb-ad-asrep-brute
 
 # SMB Relay
-nb-ad-smb-relay-help
+nb-ad-smb-relay-enum
+
+# IPv6 Attack
+nb-ad-ipv6
+
+# Internal Enumeration
+nb-ad-enum-ldapdomaindump
+
+# Kerberoasting
+nb-ad-kerb-kerberoast
+
+# Pass Attack
+nb-ad-pth-pass
+
+# Hash Dump
+nb-ad-dump-hash
+
+# GPP Attack
+nb-ad-gpp
+
+# Dump NTDS
+nb-ad-dump-ntds
 ```
