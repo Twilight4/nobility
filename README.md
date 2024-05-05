@@ -90,7 +90,9 @@ nb-project-host
 
 # Set some session variables for the target 
 nb-vars-set-domain
-nb-vars-set-rhost
+nb-vars-set-network
+nb-vars-set-user
+nb-vars-set-pass
 
 # Save variables for other terminal sessions
 nb-vars-save
