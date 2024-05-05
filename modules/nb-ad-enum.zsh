@@ -25,7 +25,15 @@ nb-ad-enum-install() {
 }
 
 nb-ad-enum-ldapdomaindump() {
+	  __ask "Enter the IP address of the target DC server"
+	  nb-vars-set-rhost
+    __ask "Enter a user account"
+    __check-user
+    __ask "Enter a password for authentication"
+    __check-pass
 
+    print -z "python3 ldapdomaindump.py ${__RHOST} -u '${__DOMAIN}\\${__USER}' -p "${__PASS}" -o lootme"}
+    __info "Output saved in 'lootme' directory"
 }
 
 nb-ad-enum-bloodhound() {
