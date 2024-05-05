@@ -12,9 +12,9 @@ The nb-ad-enum namespace contains commands for enumerating Active Directory DC, 
 
 Commands
 --------
-nb-ad-enum-install              Install dependencies
-nb-ad-enum-ldapdomaindump       Enumerate with LdapDomainDump
-nb-ad-enum-bloodhound           Enumerate with Bloodhound
+nb-ad-enum-install              install dependencies
+nb-ad-enum-ldapdomaindump       enumerate with LdapDomainDump
+nb-ad-enum-bloodhound           enumerate with Bloodhound
 
 DOC
 }
@@ -31,6 +31,7 @@ nb-ad-enum-install() {
 }
 
 nb-ad-enum-ldapdomaindump() {
+    __check-project
 	  __check-domain
 	  __ask "Enter the IP address of the target DC server"
 	  nb-vars-set-rhost
@@ -44,6 +45,7 @@ nb-ad-enum-ldapdomaindump() {
 }
 
 nb-ad-enum-bloodhound() {
+    __check-project
 	  __check-domain
 	  __ask "Enter the IP address of the target DC server"
 	  nb-vars-set-rhost
