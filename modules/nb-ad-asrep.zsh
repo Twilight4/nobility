@@ -40,7 +40,7 @@ nb-ad-asrep-enum-users() {
   # e.g. dc.${__DOMAIN}
   local dc && __askvar dc DOMAIN_CONTROLLER
 
-  print -z "kerbrute userenum --dc $dc -d ${__DOMAIN} ${__WORDLIST} | tee $(__domadpath)/kerbrute.txt"
+  print -z "kerbrute userenum --dc $dc -d ${__DOMAIN} ${__WORDLIST} | tee -a $(__domadpath)/kerbrute.txt"
 }
 
 nb-ad-asrep-brute() {
@@ -51,7 +51,7 @@ nb-ad-asrep-brute() {
 	__ask "Enter a users wordlist"
 	nb-vars-set-wordlist
 
-	print -z "GetNPUsers.py -dc-ip ${__RHOST} ${__DOMAIN}.local/ -no-pass -usersfile ${__WORDLIST} | tee $(__domadpath)/GetNPUsers.txt"
+	print -z "GetNPUsers.py -dc-ip ${__RHOST} ${__DOMAIN}.local/ -no-pass -usersfile ${__WORDLIST} | tee -a $(__domadpath)/GetNPUsers.txt"
 }
 
 nb-ad-asrep-crack() {
