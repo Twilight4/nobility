@@ -38,7 +38,7 @@ nb-ad-smb-relay-enum() {
 nb-ad-smb-relay-responder() {
     nb-vars-set-iface
 
-  print -z "sudo responder -I ${__IFACE} dwPv | tee -a $(domadpath)/responder-smb-relay.txt"
+  print -z "sudo responder -I ${__IFACE} -dwPv | tee -a $(domadpath)/responder-smb-relay.txt"
 }
 
 nb-ad-smb-relay-ntlmrelay() {
