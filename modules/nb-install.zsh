@@ -34,6 +34,7 @@ nb-install-linpeas
 nb-install-amsi-bypass
 nb-install-pipmykali
 nb-install-fluxion
+nb-install-rustscan
 
 DOC
 }
@@ -439,4 +440,25 @@ nb-install-fluxion() {
         git pull
         popd
     fi
+}
+
+nb-install-rustscan() {
+    # Check for the newest version manually
+    local rustscan_version="1.8.0"
+    local deb_file="rustscan_${rustscan_version}_amd64.deb"
+    local download_url="https://github.com/RustScan/RustScan/releases/download/${rustscan_version}/${deb_file}"
+
+    # Download RustScan .deb file
+    __info "Downloading RustScan ${rustscan_version}..."
+    wget "$download_url" -P /tmp || { echo "Failed to download RustScan."; return 1; }
+
+    # Install RustScan
+    __info "Installing RustScan ${rustscan_version}..."
+    sudo dpkg -i "/tmp/${deb_file}" || { echo "Failed to install RustScan."; return 1; }
+
+    # Clean up
+    __info "Cleaning up..."
+    rm "/tmp/${deb_file}" || { echo "Failed to clean up."; return 1; }
+
+    __info "RustScan ${rustscan_version} installed successfully."
 }
