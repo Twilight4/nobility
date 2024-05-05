@@ -140,6 +140,9 @@ __check-project() {
   fi
 
   [[ -z "${__PROJECT}" ]] && nb-vars-set-project
+
+  # Save the changes
+  nb-vars-save &>/dev/null
 }
 
 
@@ -157,6 +160,8 @@ nb-vars-set-iface() {
     __prefill __IFACE IFACE ${__IFACE}
   fi
 
+  # Save the changes
+  nb-vars-save &>/dev/null
 }
 
 __check-iface() { [[ -z "${__IFACE}" ]] && nb-vars-set-iface }
@@ -167,7 +172,7 @@ __check-iface() { [[ -z "${__IFACE}" ]] && nb-vars-set-iface }
 #############################################################
 export __DOMAIN=""
 
-nb-vars-set-domain() { __prefill __DOMAIN DOMAIN ${__DOMAIN} }
+nb-vars-set-domain() { __prefill __DOMAIN DOMAIN ${__DOMAIN} && nb-vars-save &>/dev/null }
 
 __check-domain() { [[ -z "${__DOMAIN}" ]] && nb-vars-set-domain }
 
@@ -177,7 +182,7 @@ __check-domain() { [[ -z "${__DOMAIN}" ]] && nb-vars-set-domain }
 #############################################################
 export __NETWORK=""
 
-nb-vars-set-network() { __prefill __NETWORK NETWORK ${__NETWORK} }
+nb-vars-set-network() { __prefill __NETWORK NETWORK ${__NETWORK} && nb-vars-save &>/dev/null }
 
 __check-network() { [[ -z "${__NETWORK}" ]] && nb-vars-set-network }
 
@@ -187,7 +192,7 @@ __check-network() { [[ -z "${__NETWORK}" ]] && nb-vars-set-network }
 #############################################################
 export __RHOST=""
 
-nb-vars-set-rhost() { __prefill __RHOST RHOST ${__RHOST} }
+nb-vars-set-rhost() { __prefill __RHOST RHOST ${__RHOST} && nb-vars-save &>/dev/null }
 
 
 ############################################################# 
@@ -195,7 +200,7 @@ nb-vars-set-rhost() { __prefill __RHOST RHOST ${__RHOST} }
 #############################################################
 export __RPORT=""
 
-nb-vars-set-rport() { __prefill __RPORT RPORT ${__RPORT} }
+nb-vars-set-rport() { __prefill __RPORT RPORT ${__RPORT} && nb-vars-save &>/dev/null }
 
 
 ############################################################# 
@@ -211,6 +216,9 @@ nb-vars-set-lhost() {
   else
     __prefill __LHOST LHOST ${__LHOST}
   fi
+
+  # Save the changes
+  nb-vars-save &>/dev/null
 }
 
 
@@ -219,7 +227,7 @@ nb-vars-set-lhost() {
 #############################################################
 export __LPORT=""
 
-nb-vars-set-lport() { __prefill __LPORT LPORT ${__LPORT} }
+nb-vars-set-lport() { __prefill __LPORT LPORT ${__LPORT} && nb-vars-save &>/dev/null }
 
 
 ############################################################# 
@@ -230,6 +238,9 @@ export __URL=""
 nb-vars-set-url() { 
   local u && __prefill u URL ${__URL}
   __URL=$(echo ${u} | sed 's/\/$//')
+
+  # Save the changes
+  nb-vars-save &>/dev/null
 }
 
 
@@ -242,6 +253,9 @@ nb-vars-set-ua() {
   IFS=$'\n'
   __ask "Choose a user agent: " 
   __UA=$(__menu $(cat  ${__MNU_UA}))
+
+  # Save the changes
+  nb-vars-save &>/dev/null
 }
 
 __check-ua() { [[ -z "${__UA}" ]] && nb-vars-set-ua }
@@ -260,6 +274,9 @@ nb-vars-set-wordlist() {
   else
     __WORDLIST= __prefill __WORDLIST WORDLIST ${__WORDLIST}
   fi
+
+  # Save the changes
+  nb-vars-save &>/dev/null
 }
 
 nb-vars-set-wordlist-usernames() {
@@ -286,6 +303,9 @@ export __PASSLIST="/usr/share/wordlists/seclists/Passwords/Leaked-Databases/rock
 nb-vars-set-passlist() {
   __ask "Choose a passlist: "
   __PASSLIST=$(__menu $(find /usr/share/seclists/Passwords | sort))
+
+  # Save the changes
+  nb-vars-save &>/dev/null
 }
 
 # Helpers

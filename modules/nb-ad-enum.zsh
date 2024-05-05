@@ -23,6 +23,7 @@ nb-ad-enum-install() {
     __info "Running $0..."
     __pkgs bloodhound neo4j
 
+    # Install ldapdomaindump from source
     sudo apt remove python3-ldapdomaindump
     sudo git clone https://github.com/dirkjanm/ldapdomaindump.git /opt/ldapdomaindump
     sudo chmod +x /opt/ldapdomaindump/bin/*
@@ -30,6 +31,7 @@ nb-ad-enum-install() {
 }
 
 nb-ad-enum-ldapdomaindump() {
+	  __check-domain
 	  __ask "Enter the IP address of the target DC server"
 	  nb-vars-set-rhost
     __ask "Enter a user account"
@@ -37,8 +39,8 @@ nb-ad-enum-ldapdomaindump() {
     __ask "Enter a password for authentication"
     __check-pass
 
-    print -z "python3 ldapdomaindump.py ${__RHOST} -u '${__DOMAIN}\\${__USER}' -p "${__PASS}" -o lootme"}
-    __info "Output saved in 'lootme' directory"
+    print -z "ldapdomaindump ${__RHOST} -u '${__DOMAIN}/${__USER}' -p "${__PASS}" -o $(__domadpath)/ldapdomaindump"}
+    __info "Output saved in 'ldapdomaindump' directory"
 }
 
 nb-ad-enum-bloodhound() {
