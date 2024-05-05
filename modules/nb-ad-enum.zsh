@@ -54,6 +54,8 @@ nb-ad-enum-bloodhound() {
     __ask "Enter a password for authentication"
     nb-vars-set-pass
 
+    pushd $(__domadpath) &> /dev/null
     print -z "sudo bloodhound-python -d ${__DOMAIN} -u ${__USER} -p ${__PASS} -ns ${__RHOST} -c all"
     __info "Output saved in 'bloodhound' directory"
+    popd &> /dev/null
 }
