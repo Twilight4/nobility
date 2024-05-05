@@ -21,7 +21,12 @@ DOC
 
 nb-ad-enum-install() {
     __info "Running $0..."
-    __pkgs python3-ldapdomaindump bloodhound neo4j
+    __pkgs bloodhound neo4j
+
+    sudo apt remove python3-ldapdomaindump
+    sudo git clone https://github.com/dirkjanm/ldapdomaindump.git /opt/ldapdomaindump
+    sudo chmod +x /opt/ldapdomaindump/bin/*
+    sudo ln -sf /opt/ldapdomaindump/bin/* /bin/
 }
 
 nb-ad-enum-ldapdomaindump() {
