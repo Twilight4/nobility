@@ -14,8 +14,8 @@ Commands
 --------
 nb-ad-gpp-install         installs dependencies
 nb-ad-gpp-msf             use metasploit module to look for the cPassword
-nb-ad-gpp-cme-password
-nb-ad-gpp-cme-autologin
+nb-ad-gpp-cme-password    retrieves the plaintext password and other information for accounts pushed through Group Policy Preferences
+nb-ad-gpp-cme-autologin   searches the domain controller for registry.xml to find autologon information and returns the username and password
 
 DOC
 }
