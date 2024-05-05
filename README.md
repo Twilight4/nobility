@@ -19,7 +19,6 @@ Instead you can use nobility to build a composable, on-the-fly workflow for ever
 * **AD Phase**: Assistance in **Active Directory** types of attack
 * **Reverse Shell Handlers**: Manage reverse shell handlers easily, enhancing network-pentesting capabilities
 * **Content Serving Commands**: Serve content effortlessly, making file sharing and testing straightforward
-* **Built-in Logbook**: Keep on-the-fly notes and save commands with Nobility's built-in logbook feature
 * **Linux System Management**: Optimized for Linux management, simplifying system tasks
 * **Dependency Installers**: Includes installers for dependencies, ensuring a smooth and hassle-free setup process
 
