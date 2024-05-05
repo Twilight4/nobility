@@ -33,6 +33,7 @@ nb-install-winpeas
 nb-install-linpeas
 nb-install-amsi-bypass
 nb-install-pipmykali
+nb-install-fluxion
 
 DOC
 }
@@ -412,6 +413,26 @@ nb-install-pipmykali() {
     if [[ ! -d $path ]]
     then
         sudo git clone --depth 1 $url $path
+    else
+        __warn "already installed in $path"
+        pushd $path 
+        git pull
+        popd
+    fi
+}
+
+nb-install-fluxion() {
+    local name="fluxion"
+    local url="https://github.com/FluxionNetwork/$name"
+    local path="/opt/$name"
+
+    __info "$name"
+
+    if [[ ! -d $path ]]
+    then
+        sudo git clone --depth 1 $url $path
+        sudo ln -sf /opt/fluxion/fluxion.sh /bin/fluxion
+        __info "'which fluxion' should be: aliased to 'xhost +SI:localuser:root && sudo fluxion'"
     else
         __warn "already installed in $path"
         pushd $path 
