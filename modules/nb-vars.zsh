@@ -247,7 +247,7 @@ export __USER=""
 
 nb-vars-set-user() { __prefill __USER USER ${__USER} && nb-vars-save &>/dev/null }
 
-__check-user() { [[ -z "${__USER}"]] ]] && nb-vars-set-user }
+__check-user() { [[ -z "${__USER}" ]] && nb-vars-set-user }
 
 
 ############################################################# 

