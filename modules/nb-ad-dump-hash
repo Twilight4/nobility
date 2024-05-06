@@ -1,0 +1,30 @@
+#!/usr/bin/env zsh
+
+############################################################# 
+# nb-ad-pth
+#############################################################
+nb-ad-pth-help() {
+    cat << "DOC" | bat --plain --language=help
+
+nb-ad-pth
+------------
+The nb-ad-pth namespace contains commands for pass-the-hash attack on Active Directory DC server.
+
+Commands
+--------
+nb-ad-pth-install         installs dependencies
+nb-ad-pth-pass            pass the password/hash
+nb-ad-pth-enum            enumerate shares
+nb-ad-pth-sam             dump SAM hashes
+nb-ad-pth-lsa             dump LSA hashes
+nb-ad-pth-lsassy          dump LSASSY hashes
+
+DOC
+}
+
+nb-ad-pth-install() {
+    __info "Running $0..."
+    __pkgs crackmapexec
+}
+
+
