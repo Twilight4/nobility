@@ -13,6 +13,7 @@ The nb-ad-dump-hash namespace contains commands for pass-the-hash attack on Acti
 Commands
 --------
 nb-ad-dump-hash-install         installs dependencies
+nb-ad-dump-hash-secrets         dump secrets from the remote machine
 
 DOC
 }
@@ -22,7 +23,7 @@ nb-ad-dump-hash-install() {
     __pkgs impacket
 }
 
-nb-ad-dump-hash() {
+nb-ad-dump-hash-secrets() {
     __check-project
     __check-network
     __check-domain
