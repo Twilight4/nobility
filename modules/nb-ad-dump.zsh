@@ -1,30 +1,30 @@
 #!/usr/bin/env zsh
 
 ############################################################# 
-# nb-ad-dump-hash
+# nb-ad-dump
 #############################################################
-nb-ad-dump-hash-help() {
+nb-ad-dump-help() {
     cat << "DOC" | bat --plain --language=help
 
-nb-ad-dump-hash
+nb-ad-dump
 ------------
-The nb-ad-dump-hash namespace contains commands for pass-the-hash attack on Active Directory DC server.
+The nb-ad-dump namespace contains commands for hash dumping in Active Directory environment.
 
 Commands
 --------
-nb-ad-dump-hash-install         installs dependencies
-nb-ad-dump-hash-secrets         dump secrets from the remote machine
-nb-ad-dump-hash-ntds            extract only NTDS.DIT data (NTLM hashes only)
+nb-ad-dump-install         installs dependencies
+nb-ad-dump-secrets         dump secrets from the remote machine
+nb-ad-dump-ntds            extract only NTDS.DIT data (NTLM hashes only)
 
 DOC
 }
 
-nb-ad-dump-hash-install() {
+nb-ad-dump-install() {
     __info "Running $0..."
     __pkgs impacket
 }
 
-nb-ad-dump-hash-secrets() {
+nb-ad-dump-secrets() {
     __check-project
     __check-domain
     __check-user
@@ -52,7 +52,7 @@ nb-ad-dump-hash-secrets() {
     fi
 }
 
-nb-ad-dump-hash-ntds() {
+nb-ad-dump-ntds() {
     __check-project
     __check-domain
 
