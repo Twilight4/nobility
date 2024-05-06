@@ -84,12 +84,15 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
 
  Active-Directory Phase
  -----------------------
- nb-ad-                         Commands for general active directory enumeration
  nb-ad-asrep-                   Commands for ASREP-Roast AD attack
- nb-ad-kerb-                    Commands for Kerberoast AD attack
+ nb-ad-kerb-                    Commands for attacking kerberos
  nb-ad-pth-                     Commands for Pass-The-Hash AD attack
  nb-ad-smb-relay-               Commands for SMB Relay AD attack
  nb-ad-ldap-                    Commands for LDAP enumeration
+ nb-ad-dump-                    Commands for Dumping Hashes in AD
+ nb-ad-gpp-                     Commands for GPP AD attack
+ nb-ad-ipv6-                    Commands for IPv6 AD attack
+ nb-ad-enum-                    Commands for AD enumeration
 
  Post-Exploitation Phase
  -----------------------

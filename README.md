@@ -189,7 +189,7 @@ nb-ad-kerb-kerberoast
 nb-ad-pth-pass
 
 # Hash Dump
-nb-ad-dump-hash
+nb-ad-dump-secrets
 
 # GPP Attack
 nb-ad-gpp
