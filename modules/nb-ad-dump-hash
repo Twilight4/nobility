@@ -1,30 +1,24 @@
 #!/usr/bin/env zsh
 
 ############################################################# 
-# nb-ad-pth
+# nb-ad-dump-hash
 #############################################################
-nb-ad-pth-help() {
+nb-ad-dump-hash-help() {
     cat << "DOC" | bat --plain --language=help
 
-nb-ad-pth
+nb-ad-dump-hash
 ------------
-The nb-ad-pth namespace contains commands for pass-the-hash attack on Active Directory DC server.
+The nb-ad-dump-hash namespace contains commands for pass-the-hash attack on Active Directory DC server.
 
 Commands
 --------
-nb-ad-pth-install         installs dependencies
-nb-ad-pth-pass            pass the password/hash
-nb-ad-pth-enum            enumerate shares
-nb-ad-pth-sam             dump SAM hashes
-nb-ad-pth-lsa             dump LSA hashes
-nb-ad-pth-lsassy          dump LSASSY hashes
+nb-ad-dump-hash-install         installs dependencies
 
 DOC
 }
 
-nb-ad-pth-install() {
+nb-ad-dump-hash-install() {
     __info "Running $0..."
     __pkgs crackmapexec
 }
-
 
