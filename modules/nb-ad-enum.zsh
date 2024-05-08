@@ -13,8 +13,8 @@ The nb-ad-enum namespace contains commands for enumerating Active Directory DC, 
 Commands
 --------
 nb-ad-enum-install              install dependencies
-nb-ad-enum-ldapdomaindump       enumerate with LdapDomainDump
-nb-ad-enum-bloodhound           enumerate with Bloodhound
+nb-ad-enum-ldapdomaindump       enumerate with ldapdomaindump
+nb-ad-enum-bloodhound           enumerate with bloodhound
 
 DOC
 }
