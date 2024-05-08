@@ -14,7 +14,6 @@ Commands
 --------
 nb-ad-ipv6-install         installs dependencies
 nb-ad-ipv6-ntlmrelayx      set up ntlm relay
-nb-ad-ipv6-ntlmrelayx      set up ntlm relay
 nb-ad-ipv6-mitm6           set up man in the middle for ipv6
 
 DOC
