@@ -30,18 +30,21 @@ nb-ad-smb-relay-install() {
 }
 
 nb-ad-smb-relay-enum() {
+    __check-project
   	nb-vars-set-network
 
     print -z "grc nmap --script=smb2-security-mode -p 445 ${__NETWORK} -oA $(netadpath)/nmap-smb-security"
 }
 
 nb-ad-smb-relay-responder() {
+    __check-project
     nb-vars-set-iface
 
     print -z "sudo responder -I ${__IFACE} -dwPv | tee -a $(domadpath)/responder-smb-relay.txt"
 }
 
 nb-ad-smb-relay-ntlmrelay() {
+    __check-project
 	  __ask "Enter a targets list file"
 	  local targets && __askvar targets TARGETS
 
@@ -49,6 +52,7 @@ nb-ad-smb-relay-ntlmrelay() {
 }
 
 nb-ad-smb-relay-ntlmrelay-shell() {
+    __check-project
 	  __ask "Enter a targets list file"
 	  local targets && __askvar targets TARGETS
 
@@ -56,6 +60,7 @@ nb-ad-smb-relay-ntlmrelay-shell() {
 }
 
 nb-ad-smb-relay-ntlmrelay-whoami() {
+    __check-project
 	  __ask "Enter a targets list file"
 	  local targets && __askvar targets TARGETS
 
@@ -63,6 +68,7 @@ nb-ad-smb-relay-ntlmrelay-whoami() {
 }
 
 nb-ad-smb-relay-multirelay-command() {
+    __check-project
 	  __ask "Enter the IP address of the target DC server"
 	  nb-vars-set-rhost
 	  __ask "Enter a shell command to execute"
