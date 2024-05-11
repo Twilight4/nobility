@@ -83,7 +83,7 @@ nb-enum-web-vhosts-gobuster() {
 
 nb-enum-web-vhosts-ffuf() {
     __check-project
-    __check-domain
+    nb-vars-set-domain
     nb-vars-set-url
     local w && __askpath w WORDLIST /usr/share/seclists/Discovery/DNS/subdomains-top1million-20000.txt
     __check-threads
