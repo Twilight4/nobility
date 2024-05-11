@@ -18,6 +18,7 @@ nb-enum-web-nmap-sweep             nmap sweep scan to discover web servers on a 
 nb-enum-web-whatweb                enumerate web server and platform information
 nb-enum-web-waf                    enumerate WAF information
 nb-enum-web-snmp                   create host list and scan IP with WORDLIST
+nb-enum-web-ffuf-crawl             crawl/spider a website for hidden folders and files
 nb-enum-web-vhosts-gobuster        brute force for virtual hosts with gobuster
 nb-enum-web-vhosts-ffuf            brute force for virtual hosts with ffuf
 nb-enum-web-eyewitness             scrape screenshots from target URL
@@ -69,6 +70,16 @@ nb-enum-web-snmp() {
     onesixtyone -i "$HOSTS" -c "$STRINGS"
 }
 
+nb-enum-web-crawl() {
+    __check-project
+    nb-vars-set-url
+    nb-vars-set-wordlist
+    local w && __askpath w WORDLIST /usr/share/seclists/Discovery/Web-Content/raft-small-directories-lowercase.txt
+    __check-threads
+    local d && __askvar d "RECURSION DEPTH"
+    print -z "ffuf -c -p 0.1 -t ${__THREADS} -recursion -recursion-depth ${d} -H \"User-Agent: Mozilla\" -fc 404 -w ${w} -u ${__URL}/FUZZ -o $(__urlpath)/ffuf-crawl.csv -of csv"
+}
+
 
 ############################################################# 
 # vhosts
@@ -87,7 +98,7 @@ nb-enum-web-vhosts-ffuf() {
     nb-vars-set-url
     local w && __askpath w WORDLIST /usr/share/seclists/Discovery/DNS/subdomains-top1million-20000.txt
     __check-threads
-    print -z "ffuf -c -p 0.1 -fc 404 -fs 612 -u http://${__URL} -w ${w} -t ${__THREADS} -H \"HOST: FUZZ.${__DOMAIN}\" -o $(__urlpath)/vhosts.txt -of csv"
+    print -z "ffuf -c -p 0.1 -fc 404 -fs 612 -u http://${__URL} -w ${w} -t ${__THREADS} -H \"HOST: FUZZ.${__DOMAIN}\" -o $(__urlpath)/vhosts.csv -of csv"
 }
 
 
