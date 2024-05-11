@@ -76,7 +76,7 @@ nb-enum-web-snmp() {
 nb-enum-web-vhosts-gobuster() {
     __check-project
     nb-vars-set-url
-    local w && __askpath w FILE /usr/share/seclists/Discovery/DNS/subdomains-top1mil-20000.txt
+    local w && __askpath w WORDLIST /usr/share/seclists/Discovery/DNS/subdomains-top1mil-20000.txt
     __check-threads
     print -z "gobuster vhost -u ${__URL} -w ${w} -a \"${__UA}\" -t ${__THREADS} -o $(__urlpath)/vhosts.txt"
 }
@@ -84,9 +84,9 @@ nb-enum-web-vhosts-gobuster() {
 nb-enum-web-vhosts-ffuf() {
     __check-project
     nb-vars-set-url
-    local w && __askpath w FILE /usr/share/seclists/Discovery/DNS/subdomains-top1mil-20000.txt
+    local w && __askpath w WORDLIST /usr/share/seclists/Discovery/DNS/subdomains-top1mil-20000.txt
     __check-threads
-    print -z "ffuf -c -p 0.1 -fs 612 -w ./vhost -u ${__URL} -w ${w} -a \"${__UA}\" -t ${__THREADS} -H 'HOST: FUZZ.${__URL}' -o $(__urlpath)/vhosts.txt -of csv"
+    print -z "ffuf -c -p 0.1 -fs 612 -u ${__URL} -w ${w} -a \"${__UA}\" -t ${__THREADS} -H 'HOST: FUZZ.${__URL}' -o $(__urlpath)/vhosts.txt -of csv"
 }
 
 
