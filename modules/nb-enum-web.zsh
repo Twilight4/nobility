@@ -18,7 +18,8 @@ nb-enum-web-nmap-sweep             nmap sweep scan to discover web servers on a 
 nb-enum-web-whatweb                enumerate web server and platform information
 nb-enum-web-waf                    enumerate WAF information
 nb-enum-web-snmp                   create host list and scan IP with WORDLIST
-nb-enum-web-vhosts-gobuster        brute force for virtual hosts
+nb-enum-web-vhosts-gobuster        brute force for virtual hosts with gobuster
+nb-enum-web-vhosts-ffuf            brute force for virtual hosts with ffuf
 nb-enum-web-eyewitness             scrape screenshots from target URL
 nb-enum-web-wordpress              enumerate Wordpress information
 nb-enum-web-wordpress-bruteforce   bruteforce Wordpress password, knowing the username
