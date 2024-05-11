@@ -85,6 +85,9 @@ nb-project-end() {
     local rmp && read "rmp?$fg[cyan]Delete project directory? (Y/n)?:$reset_color "
     if [[ "${rmp}" =~ ^[Yy]$ ]] && print -z "trash -rf ${pd}"
 
+    # Clear vars
+    nb-vars-clear &>/dev/null
+
     __ok "Project $pd ended."
 }
 
