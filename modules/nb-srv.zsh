@@ -42,18 +42,28 @@ nb-srv-install() {
     __pkgs netcat atftpd 
     __pkgs php python python-pip python-smb python-pyftpdlib impacket python-updog
 
-    # Check if pyftpdlib is installed
     if ! command -v pyftpdlib &> /dev/null
     then
         __info "pyftpdlib is not installed. Installing..."
         sudo pip3 install pyftpdlib
     fi
 
-    # Check if uploadserver is installed
     if ! command -v uploadserver &> /dev/null
     then
         __info "uploadserver is not installed. Installing..."
         sudo pip3 install uploadserver
+    fi
+
+    if ! command -v wsgidav &> /dev/null
+    then
+        __info "wsgidav is not installed. Installing..."
+        sudo pip3 install wsgidav 
+    fi
+
+    if ! command -v cheroot &> /dev/null
+    then
+        __info "cheroot is not installed. Installing..."
+        sudo pip3 install cheroot
     fi
 }
 
