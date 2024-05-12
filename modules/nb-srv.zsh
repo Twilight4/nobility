@@ -68,7 +68,6 @@ nb-srv-install() {
 }
 
 nb-srv-file-download() {
-    __check-project
     nb-vars-set-lhost
     nb-vars-set-lport
     local filename && __askvar filename "FILENAME"
@@ -99,7 +98,6 @@ nb-srv-file-download() {
 }
 
 nb-srv-empire-stager() {
-    __check-project
     nb-vars-set-lhost
     nb-vars-set-lport
 
@@ -137,7 +135,6 @@ nb-srv-uploadserver() {
 }
 
 nb-srv-uploadserver-upload() {
-  __check-project
   nb-vars-set-lhost
   nb-vars-set-lport
   local path && __askvar path "FULL_PATH_TO_FILE"
@@ -156,7 +153,6 @@ nb-srv-ftp() {
 }
 
 nb-srv-ftp-down() {
-  __check-project
   nb-vars-set-lhost
   local filename && __askvar filename "FILENAME"
 
@@ -172,7 +168,6 @@ nb-srv-smb() {
 }
 
 nb-srv-smb-down() {
-  __check-project
   nb-vars-set-lhost
   local filename && __askvar filename "FILENAME"
 
@@ -183,13 +178,17 @@ nb-srv-smb-down() {
   __info "Command to use on a target system copied to clipboard"
 }
 
+nb-srv-smb-http() {
+  nb-vars-set-lhost
+   print -z "sudo wsgidav --host=0.0.0.0 --port=80 --root=/tmp --auth=anonymous"
+}
+
 # New versions of Windows block unauthenticated guest access, to bypass set username and pass
 nb-srv-smb-auth() {
 	print -z "sudo impacket-smbserver share -smb2support /tmp/smbshare -user test -password test"
 }
 
 nb-srv-smb-auth-down() {
-  __check-project
   nb-vars-set-lhost
   local filename && __askvar filename "FILENAME"
 
