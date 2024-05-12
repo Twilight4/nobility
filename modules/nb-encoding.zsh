@@ -24,30 +24,61 @@ DOC
 }
 
 nb-encoding-encrypt-rsa() {
-  # Generate key pair
-  print -z "openssl genrsa -out pub_priv_pair.key 4096"
+  local filename && __askvar filename "FILENAME"
 
-  # Extract public key
-  print -z "openssl rsa -in pub_priv_pair.key -pubout -out public_key.key"
+  # Prompt user for input
+  echo "Do you want to generate a key pair? (Y/n)?"
+  read choice
+  
+  # Convert input to lowercase for case-insensitivity
+  choice=$(echo "$choice" | tr '[:upper:]' '[:lower:]')
+  
+  # Check user input
+  if [[ $choice == "y" || $choice == "yes" ]]; then
+      echo
+      __info "Generating key pair..."
+      openssl genrsa -out pub_priv_pair.key 4096
+      openssl rsa -in pub_priv_pair.key -pubout -out public_key.key
+      __ok "Key pair generated successfully."
+  elif [[ $choice == "n" || $choice == "no" ]]; then
+      __info "No key pair generated."
+  else
+      __err "Invalid choice. No key pair generated."
+  fi
 
+  # Encrypt it with their public key
+  echo
+  __info "Encrypting the file with public RSA key..."
+  __ok "Encrypted file saved as $filename.bin."
+  openssl rsautl -encrypt -pubin -inkey public_key.key -in $filename -out $filename.bin -oaep
 
+  # Encode it with base64
+  echo
+  __info "Encoding the file..."
+  __ok "Encoded file saved as $filename-b64.txt"
+  openssl base64 -in $filename.bin -out $filename-b64.txt
 
-  # Encrypt it 
-  print -z "openssl rsautl -encrypt -pubin -inkey public_key.key -in $filename -out $filename.bin -oaep"
-
-  # Encode it with base64 - you can send the base64 plain text to someone
-  print -z "openssl base64 -in $filename.bin -out $filename-b64.txt"
-
-
-
+  echo
+  __ok "The contents of base64 file copied to clipboard."
+  __info "You can send the base64 plain text to someone:"
+  cat $filename-b64.txt | wl-copy
+  cat $filename-b64.txt
 }
 
 nb-encoding-decrypt-rsa() {
+  local filename && __askvar filename "FILENAME"
+
   # Decode it
-  print -z "openssl base64 -d -in $filename-b64.txt -out $filename.bin"
+  echo
+  __info "Decoding the file..."
+  __ok "Decoded file saved as $filename.bin"
+  openssl base64 -d -in $filename -out $filename.bin
 
   # Decrypt it
-  print -z "openssl rsautl -decrypt -inkey pub_priv_pair.key -in $filename.bin -out $filename -oaep"
+  echo
+  __info "Decrypting the file with public RSA key..."
+  __ok "Decrypted file saved as $filename-decrypted."
+  openssl rsautl -decrypt -inkey pub_priv_pair.key -in $filename.bin -out $filename-decrypted -oaep
 }
 
 nb-encoding-encrypt-aes256() {
