@@ -13,8 +13,8 @@ The srv namespace provides commands for hosting local services such as web, ftp,
 Commands
 --------
 nb-srv-install          install dependencies
-nb-srv-file-download    copy command to download a payload into a target machine
-nb-srv-empire-stager    use commands to stealthy download and execute empire stager in a target machine
+nb-srv-file-download    select command to download a payload into a target machine
+nb-srv-empire-stager    command to download and execute empire stager in a target machine
 nb-srv-web              hosts a python web server in current dir
 nb-srv-uploadserver     hosts a python 'uploadserver' in current dir
 nb-srv-uploadserver-upload   commands to upload a file to 'uploadserver' using powershell
@@ -28,7 +28,7 @@ nb-srv-updog            hosts an updog web server in current dir
 nb-srv-nc-tar           hosts a netcat server > tar file in current dir
 nb-srv-nc-file          hosts a netcat server > file in current dir
 nb-srv-nc-b64           hosts a netcat server > decode b64 file in current dir
-nb-srv-nc-b64-web
+nb-srv-nc-b64-web       hosts a netcat server > decode b64 file in current dir
 nb-srv-web-hosted       hosts a python web server in /srv, port as $1
 nb-srv-php-hosted       hosts a php web server in /srv, port as $1
 nb-srv-ftp-hosted       hosts a python ftp server in /srv
