@@ -35,6 +35,7 @@ nb-install-amsi-bypass
 nb-install-pipmykali
 nb-install-fluxion
 nb-install-rustscan
+nb-install-nessus
 
 DOC
 }
@@ -461,4 +462,11 @@ nb-install-rustscan() {
     rm "/tmp/${deb_file}" || { echo "Failed to clean up."; return 1; }
 
     __info "RustScan ${rustscan_version} installed successfully."
+}
+
+nb-install-nessus() {
+    # Download the binary
+    curl --request GET \
+      --url 'https://www.tenable.com/downloads/api/v2/pages/nessus/files/Nessus-10.7.2-debian10_amd64.deb' \
+      --output 'Nessus-10.7.2-debian10_amd64.deb'
 }
