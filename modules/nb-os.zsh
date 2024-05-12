@@ -40,7 +40,7 @@ nb-os-rdp() {
   nb-vars-set-user
   nb-vars-set-pass
 
-  print -z "wlfreerdp /v:${__RHOST} /u:${__USER} /p:'${__PASS}'"
+  print -z "wlfreerdp /v:${__RHOST} /u:'${__USER}' /p:'${__PASS}'"
 }
 
 nb-os-pkg-query() {

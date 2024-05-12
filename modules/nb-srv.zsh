@@ -24,7 +24,7 @@ nb-srv-smb              hosts an impacket smb server in current dir
 nb-srv-smb-auth         hosts an impacket smb server with authentication in current dir
 nb-srv-ftp-down         hosts a python ftp server in current dir
 
-Commands to upload a file to a server/listener
+Commands to upload a file to a server
 ----------------------------------------------
 nb-srv-ftp-up           hosts a python ftp server in current dir
 nb-srv-uploadserver     hosts a python 'uploadserver' in current dir
@@ -37,7 +37,7 @@ nb-srv-file-download    select one of general commands to download a payload int
 nb-srv-empire-stager    command to download and execute empire stager in a target machine
 nb-srv-install          install dependencies
 
-Commands to upload a file to a server/listener on LINUX
+Commands to upload a file to a server on LINUX
 -------------------------------------------------------
 nb-srv-nc-tar           hosts a netcat server > tar file in current dir
 nb-srv-nc-file          hosts a netcat server > file in current dir
@@ -49,7 +49,7 @@ DOC
 nb-srv-install() {
     __info "Running $0..."
     __pkgs netcat atftpd 
-    __pkgs php python python-pip python-smb python-pyftpdlib impacket python-updog
+    __pkgs php python python-pip python-smb impacket python-updog
 
     if ! command -v pyftpdlib &> /dev/null
     then
@@ -166,10 +166,9 @@ nb-srv-ftp-down() {
   echo "$__COMMAND" | wl-copy
   __info "Command to use on a target system copied to clipboard"
 
-  echo
   pushd "$HOME/desktop/server" &> /dev/null
   __info "Serving content at $(hip) in $PWD"
-	sudo python -m pyftpdlib --port 21
+	sudo python3 -m pyftpdlib --port 21
   popd &> /dev/null
 }
 
@@ -186,7 +185,7 @@ nb-srv-ftp-up() {
   echo
   pushd "$HOME/desktop/server" &> /dev/null
   __info "Serving content at $(hip) in $PWD"
-  sudo python -m pyftpdlib --port 21 --write
+  sudo python3 -m pyftpdlib --port 21 --write
   popd &> /dev/null
 }
 
@@ -269,7 +268,7 @@ nb-srv-tftp() {
 nb-srv-smtp() {
   pushd "$HOME/desktop/server" &> /dev/null
   __info "Serving content at $(hip) in $PWD"
-	sudo python -m smtpd -c DebuggingServer -n 0.0.0.0:25
+	sudo python3 -m smtpd -c DebuggingServer -n 0.0.0.0:25
   popd &> /dev/null
 }
 
