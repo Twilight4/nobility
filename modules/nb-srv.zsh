@@ -17,7 +17,9 @@ nb-srv-file-download    copy command to download a payload into a target machine
 nb-srv-empire-stager    use commands to stealthy download and execute empire stager in a target machine
 nb-srv-web              hosts a python web server in current dir
 nb-srv-ftp              hosts a python ftp server in current dir
+nb-srv-ftp-down         copy command to download the file from ftp server
 nb-srv-smb              hosts an impacket smb server in current dir
+nb-srv-smb-down         copy command to download the file from smb server
 nb-srv-tftp             starts the atftpd service in /srv/tftp
 nb-srv-smtp             hosts a python smtp server in current dir
 nb-srv-updog            hosts an updog web server in current dir
