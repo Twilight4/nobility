@@ -12,6 +12,7 @@ The nb-os namespace provides commands that assist with managing your OS.
 
 Commands
 --------
+nb-os-rdp                  connect via rdp to a target host
 nb-os-pkg-query            query if a package is installed or not  
 nb-os-flush-iptables       flushes ip tables
 nb-os-get-gateway          get router IP address
@@ -32,6 +33,14 @@ nb-os-sudoers-easy         removes the requirment for sudo for common commands l
 nb-os-sudoers-harden       removes sudo exclusions
 
 DOC
+}
+
+nb-os-rdp() {
+  nb-vars-set-rhost
+  nb-vars-set-user
+  nb-vars-set-pass
+
+  print -z "wlfreerdp /v:${__RHOST} /u:${__USER} /p:'${__PASS}'"
 }
 
 nb-os-pkg-query() {
