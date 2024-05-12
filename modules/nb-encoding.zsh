@@ -31,10 +31,6 @@ nb-encoding-to-b64-powershell() {
   __info "Command copied to clipboard"
 }
 
-
-
-
-
 nb-encoding-file-to-b64() {
     if [ "$#" -eq  "1" ]
     then

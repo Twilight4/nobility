@@ -137,7 +137,7 @@ nb-srv-smb-down() {
   local filename && __askvar filename "FILENAME"
 
   echo
-  __COMMAND="copy \\${__LHOST}\share\\$filename";;
+  __COMMAND="copy \\${__LHOST}\share\\$filename"
   echo "$__COMMAND" | wl-copy
 
   __info "Command copied to clipboard"
