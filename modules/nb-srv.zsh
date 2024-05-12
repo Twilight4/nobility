@@ -23,6 +23,7 @@ Commands to download a file from server
 nb-srv-smb              hosts an impacket smb server in current dir
 nb-srv-smb-auth         hosts an impacket smb server with authentication in current dir
 nb-srv-ftp-down         hosts a python ftp server in current dir
+nb-srv-scp-down         download a file using SCP
 
 Commands to upload a file to a server
 ----------------------------------------------
@@ -30,6 +31,7 @@ nb-srv-ftp-up           hosts a python ftp server in current dir
 nb-srv-uploadserver     hosts a python 'uploadserver' in current dir
 nb-srv-smb-http         hosts an SMB over HTTP server with WebDav in current dir
 nb-srv-nc-b64-web       hosts a netcat server > decode b64 file in current dir
+nb-srv-scp-up           upload a file using SCP
 
 General Commands
 -------------------------------------
@@ -170,6 +172,24 @@ nb-srv-ftp-down() {
   __info "Serving content at $(hip) in $PWD"
 	sudo python3 -m pyftpdlib --port 21
   popd &> /dev/null
+}
+
+nb-srv-scp-down() {
+  nb-vars-set-user
+  nb-vars-set-rhost
+  local filename && __askvar filename "FILENAME"
+  local path && __askvar path "FULL_PATH_INCLUDING_FILENAME"
+
+  scp ${__USER}@${__RHOST}:$path $filename
+}
+
+nb-srv-scp-up() {
+  nb-vars-set-user
+  nb-vars-set-rhost
+  local filename && __askvar filename "FILENAME"
+  local path && __askvar path "FULL_PATH_INCLUDING_FILENAME"
+
+  scp $filename ${__USER}@${__RHOST}:$path
 }
 
 nb-srv-ftp-up() {
