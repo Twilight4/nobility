@@ -37,6 +37,20 @@ nb-srv-install() {
     __info "Running $0..."
     __pkgs netcat atftpd 
     __pkgs php python python-pip python-smb python-pyftpdlib impacket python-updog
+
+    # Check if pyftpdlib is installed
+    if ! command -v pyftpdlib &> /dev/null
+    then
+        __info "pyftpdlib is not installed. Installing..."
+        sudo pip3 install pyftpdlib
+    fi
+
+    # Check if uploadserver is installed
+    if ! command -v uploadserver &> /dev/null
+    then
+        __info "uploadserver is not installed. Installing..."
+        sudo pip3 install uploadserver
+    fi
 }
 
 nb-srv-file-download() {
@@ -104,14 +118,11 @@ nb-srv-web() {
 	print -z "sudo python -m http.server 80"
 }
 
-nb-srv-ftp() {
-  # Check if pyftpdlib is installed
-  if ! command -v pyftpdlib &> /dev/null
-  then
-      __info "pyftpdlib is not installed. Installing..."
-      sudo pip3 install pyftpdlib
-  fi
+nb-srv-upload-server() {
+	print -z "python3 -m uploadserver"
+}
 
+nb-srv-ftp() {
 	print -z "sudo python -m pyftpdlib -p 21 -w"
 }
 
