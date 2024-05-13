@@ -111,14 +111,7 @@ nb-shell-tty-find-exec() {
 
 nb-shell-tty-expect() {
     __ok "Command to use on a target system copied to clipboard"
-    __COMMAND="python3 -c 'import pty;pty.spawn(\"/bin/bash\")'"
+    __COMMAND="/usr/bin/expect sh"
     echo "$__COMMAND" | wl-copy
-    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-python3"
-
-    __ok "Copy the commands below and use on the remote system"
-    cat << "DOC" 
-
-/usr/bin/expect sh
-
-DOC
+    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-expect"
 }
