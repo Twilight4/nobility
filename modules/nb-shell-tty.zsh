@@ -14,10 +14,14 @@ Commands
 --------
 nb-shell-tty             reminder of go-to commands
 nb-shell-tty-python2     command to spawn a tty shell
-nb-shell-tty-python3     command to spawn a tty shell     
+nb-shell-tty-python3     command to spawn a tty shell
+nb-shell-tty-sh          command to spawn a tty shell
 nb-shell-tty-perl        command to spawn a tty shell
 nb-shell-tty-ruby        command to spawn a tty shell
 nb-shell-tty-lua         command to spawn a tty shell
+nb-shell-tty-awk         command to spawn a tty shell
+nb-shell-tty-find        command to spawn a tty shell
+nb-shell-tty-find-exec   command to spawn a tty shell
 nb-shell-tty-expect      command to spawn a tty shell
 
 DOC
@@ -60,6 +64,15 @@ python3 -c 'import pty;pty.spawn("/bin/bash")'
 DOC
 }
 
+nb-shell-tty-sh() {
+    __ok "Copy the commands below and use on the remote system"
+    cat << "DOC" 
+
+/bin/sh -i
+
+DOC
+}
+
 nb-shell-tty-perl() {
     __ok "Copy the commands below and use on the remote system"
     cat << "DOC" 
@@ -85,6 +98,33 @@ nb-shell-tty-lua() {
 lua: os.execute('/bin/sh')
 
 DOC
+}
+
+nb-shell-tty-awk() {
+    __ok "copy the commands below and use on the remote system"
+    cat << "doc" 
+
+awk 'begin {system("/bin/sh")}'
+
+doc
+}
+
+nb-shell-tty-find() {
+    __ok "copy the commands below and use on the remote system"
+    cat << "doc" 
+
+find / -name nameoffile -exec /bin/awk 'BEGIN {system("/bin/sh")}' \;
+
+doc
+}
+
+nb-shell-tty-find-exec() {
+    __ok "copy the commands below and use on the remote system"
+    cat << "doc" 
+
+find . -exec /bin/sh \; -quit
+
+doc
 }
 
 nb-shell-tty-expect() {
