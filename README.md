@@ -1,5 +1,5 @@
 # Nobility
-Nobility is an organized colletion of shell modules designed to streamline your terminal workflow by leveraging Zsh integrations such as autocompletion and prefilling, optimizing the productivity of your work and liberatating you from the hassle of juggling notes, endless copying and pasting, and tedious command editing. 
+Nobility is an organized colletion of shell modules designed to streamline your pentesting workflow by leveraging shell integrations such as autocompletion and prefilling, optimizing the productivity of your work and liberatating you from the hassle of juggling notes, endless copying and pasting, and tedious command editing. 
 
 This tool is tailored for security consultants. Unlike other pentesting frameworks like Metasploit, which primarily focuses on **post-exploitation**, Nobility provides a customizable arsenal of modules fully written in Zsh for comprehensive **workflow automation** which you can directly call from the shell prompt, allowing for seamless adaptation to your specific needs and enhancing red-teaming and network-pentesting endeavors.
 
