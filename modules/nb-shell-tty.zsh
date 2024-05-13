@@ -47,21 +47,17 @@ DOC
 }
 
 nb-shell-tty-python2() {
-    __ok "Copy the commands below and use on the remote system"
-    cat << "DOC" 
-
-python -c 'import pty;pty.spawn("/bin/bash")' 
-
-DOC
+    __ok "Command to use on a target system copied to clipboard"
+    __COMMAND="python -c 'import pty;pty.spawn(\"/bin/bash\")'"
+    echo "$__COMMAND" | wl-copy
+    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-python2"
 }
 
 nb-shell-tty-python3() {
-    __ok "Copy the commands below and use on the remote system"
-    cat << "DOC" 
-
-python3 -c 'import pty;pty.spawn("/bin/bash")'
-
-DOC
+    __ok "Command to use on a target system copied to clipboard"
+    __COMMAND="python3 -c 'import pty;pty.spawn(\"/bin/bash\")'"
+    echo "$__COMMAND" | wl-copy
+    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-python3"
 }
 
 nb-shell-tty-sh() {
