@@ -59,7 +59,7 @@ To set up the necessary dependencies for each namespace, execute the `nb-namespa
 # Workflow
 Nobility is designed to offer a sophisticated and flexible workflow. It eliminates the conventional, tedious process of manually navigating through notes, searching for commands, copying, pasting, and adjusting values before execution. 
 
-In contrast to heavily automated scripts or frameworks that execute entire workflows, often obfuscating the underlying tools and techniques whcih are cumbersome to modify, nobility strikes a balance. Embracing the principles of the KISS principle (Keep It Simple, Stupid), each module within nobility is deliberately small and distinct, minimizing unnecessary complications. This design allows you to quickly execute individual commands, providing well-organized output. 
+In contrast to heavily automated scripts or frameworks that execute entire workflows, often obfuscating the underlying tools and techniques whcih are cumbersome to modify, Nobility strikes a balance. Embracing the principles of the KISS principle (Keep It Simple, Stupid), each module within Nobility is deliberately small and distinct, minimizing unnecessary complications. This design allows you to quickly execute individual commands, providing well-organized output. 
 
 This approach enables you to compose your workflow dynamically, adapting to specific targets and contextual requirements. This flexibility is achieved without the brittleness and complexity associated with fully automated solutions.
 
