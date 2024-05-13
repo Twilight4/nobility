@@ -61,24 +61,25 @@ nb-shell-tty-python3() {
 }
 
 nb-shell-tty-sh() {
-    __ok "Copy the commands below and use on the remote system"
-    cat << "DOC" 
-
-/bin/sh -i
-
-DOC
+    __ok "Command to use on a target system copied to clipboard"
+    __COMMAND="/bin/sh -i"
+    echo "$__COMMAND" | wl-copy
+    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-sh"
 }
 
 nb-shell-tty-perl() {
-    __ok "Copy the commands below and use on the remote system"
-    cat << "DOC" 
-
-perl -e 'exec "/bin/sh";'
-
-DOC
+    __ok "Command to use on a target system copied to clipboard"
+    __COMMAND="perl -e 'exec \"/bin/sh\";'"
+    echo "$__COMMAND" | wl-copy
+    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-perl"
 }
 
 nb-shell-tty-ruby() {
+    __ok "Command to use on a target system copied to clipboard"
+    __COMMAND="python3 -c 'import pty;pty.spawn(\"/bin/bash\")'"
+    echo "$__COMMAND" | wl-copy
+    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-python3"
+
     __ok "Copy the commands below and use on the remote system"
     cat << "DOC" 
 
@@ -88,6 +89,11 @@ DOC
 }
 
 nb-shell-tty-lua() {
+    __ok "Command to use on a target system copied to clipboard"
+    __COMMAND="python3 -c 'import pty;pty.spawn(\"/bin/bash\")'"
+    echo "$__COMMAND" | wl-copy
+    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-python3"
+
     __ok "Copy the commands below and use on the remote system"
     cat << "DOC" 
 
@@ -97,6 +103,11 @@ DOC
 }
 
 nb-shell-tty-awk() {
+    __ok "Command to use on a target system copied to clipboard"
+    __COMMAND="python3 -c 'import pty;pty.spawn(\"/bin/bash\")'"
+    echo "$__COMMAND" | wl-copy
+    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-python3"
+
     __ok "copy the commands below and use on the remote system"
     cat << "doc" 
 
@@ -106,6 +117,11 @@ doc
 }
 
 nb-shell-tty-find() {
+    __ok "Command to use on a target system copied to clipboard"
+    __COMMAND="python3 -c 'import pty;pty.spawn(\"/bin/bash\")'"
+    echo "$__COMMAND" | wl-copy
+    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-python3"
+
     __ok "copy the commands below and use on the remote system"
     cat << "doc" 
 
@@ -115,6 +131,11 @@ doc
 }
 
 nb-shell-tty-find-exec() {
+    __ok "Command to use on a target system copied to clipboard"
+    __COMMAND="python3 -c 'import pty;pty.spawn(\"/bin/bash\")'"
+    echo "$__COMMAND" | wl-copy
+    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-python3"
+
     __ok "copy the commands below and use on the remote system"
     cat << "doc" 
 
@@ -124,6 +145,11 @@ doc
 }
 
 nb-shell-tty-expect() {
+    __ok "Command to use on a target system copied to clipboard"
+    __COMMAND="python3 -c 'import pty;pty.spawn(\"/bin/bash\")'"
+    echo "$__COMMAND" | wl-copy
+    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-python3"
+
     __ok "Copy the commands below and use on the remote system"
     cat << "DOC" 
 
