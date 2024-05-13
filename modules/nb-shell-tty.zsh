@@ -8,11 +8,11 @@ nb-shell-tty-help() {
 
 nb-shell-tty
 ------------
-The shell-tty namespace provides commands for fixing interactive command/reverse shells.
+The shell-tty namespace provides commands for spawning interactive shells.
 
 Commands
 --------
-nb-shell-tty             reminder of go-to commands
+nb-shell-tty-full        commands to spawn a fully interactive tty shell with python
 nb-shell-tty-python2     command to spawn a tty shell
 nb-shell-tty-python3     command to spawn a tty shell
 nb-shell-tty-sh          command to spawn a tty shell
@@ -27,7 +27,7 @@ nb-shell-tty-expect      command to spawn a tty shell
 DOC
 }
 
-nb-shell-tty() {
+nb-shell-tty-full() {
     __ok "Copy the commands below and use on the remote system"
     cat << "DOC" 
 # In reverse shell
