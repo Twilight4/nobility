@@ -23,7 +23,6 @@ nb-shell-tty-expect      command to spawn a tty shell
 DOC
 }
 
-# Check out ncat-lin cheat note
 nb-shell-tty() {
     __ok "Copy the commands below and use on the remote system"
     cat << "DOC" 
