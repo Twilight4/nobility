@@ -91,7 +91,6 @@ nb-ad-dump-cme-ntds() {
 
     __ask "Provide domain admin username"
     nb-vars-set-user
-    echo
 
     __ask "Do you want to log in using a password or a hash? (p/h)"
     local login && __askvar login "LOGIN_OPTION"
