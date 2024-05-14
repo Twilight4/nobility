@@ -18,7 +18,6 @@ nb-ad-pth-enum            enumerate shares
 nb-ad-pth-sam             dump SAM hashes
 nb-ad-pth-lsa             dump LSA hashes
 nb-ad-pth-lsassy          dump LSASSY hashes
-
 DOC
 }
 
@@ -29,8 +28,8 @@ nb-ad-pth-install() {
 
 nb-ad-pth-pass() {
     __check-project
-    __check-network
-    __check-user
+    nb-vars-set-network
+    nb-vars-set-user
 
     __ask "Do you want to log in using a password or a hash? (p/h)"
     local login && __askvar login "LOGIN_OPTION"
@@ -61,8 +60,8 @@ nb-ad-pth-pass() {
 
 nb-ad-pth-enum() {
     __check-project
-    __check-network
-	  __check-user
+    nb-vars-set-network
+    nb-vars-set-user
 
     __ask "Do you want to log in using a password or a hash? (p/h)"
     local login && __askvar login "LOGIN_OPTION"
@@ -93,8 +92,8 @@ nb-ad-pth-enum() {
 
 nb-ad-pth-sam() {
     __check-project
-    __check-network
-	  __check-user
+    nb-vars-set-network
+    nb-vars-set-user
 
     __ask "Do you want to log in using a password or a hash? (p/h)"
     local login && __askvar login "LOGIN_OPTION"
@@ -125,8 +124,8 @@ nb-ad-pth-sam() {
 
 nb-ad-pth-lsa() {
     __check-project
-    __check-network
-	  __check-user
+    nb-vars-set-network
+    nb-vars-set-user
 
     __ask "Do you want to log in using a password or a hash? (p/h)"
     local login && __askvar login "LOGIN_OPTION"
@@ -157,8 +156,8 @@ nb-ad-pth-lsa() {
 
 nb-ad-pth-lsassy() {
     __check-project
-    __check-network
-	  __check-user
+    nb-vars-set-network
+    nb-vars-set-user
 
     __ask "Do you want to log in using a password or a hash? (p/h)"
     local login && __askvar login "LOGIN_OPTION"
