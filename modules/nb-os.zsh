@@ -13,6 +13,7 @@ The nb-os namespace provides commands that assist with managing your OS.
 Commands
 --------
 nb-os-rdp                  connect via rdp to a target host
+nb-os-evil-winrm           connect via winrm to a target host
 nb-os-pkg-query            query if a package is installed or not  
 nb-os-flush-iptables       flushes ip tables
 nb-os-get-gateway          get router IP address
@@ -41,6 +42,30 @@ nb-os-rdp() {
   nb-vars-set-pass
 
   print -z "wlfreerdp /v:${__RHOST} /u:'${__USER}' /p:'${__PASS}'"
+}
+
+nb-os-evil-winrm() {
+  nb-vars-set-rhost
+  nb-vars-set-user
+
+  echo
+  __ask "Do you want to log in using a password or a hash? (p/h)"
+  local login && __askvar login "LOGIN_OPTION"
+
+  if [[ $login == "p" ]]; then
+      echo
+      __ask "Enter a password for authentication"
+      __check-pass
+      print -z "evil-winrm -i ${__RHOST} -u '${__USER}' -p '${__PASS}'"
+  elif [[ $login == "h" ]]; then
+      echo
+      __ask "Enter the NTLM hash for authentication"
+      __check-hash
+      print -z "evil-winrm -i ${__RHOST} -u '${__USER}' -H '${__HASH}'"
+  else
+      echo
+      __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+  fi
 }
 
 nb-os-pkg-query() {
