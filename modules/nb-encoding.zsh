@@ -46,39 +46,50 @@ nb-encoding-encrypt-rsa() {
       __err "Invalid choice. No key pair generated."
   fi
 
-  # Encrypt it with their public key
-  echo
-  __info "Encrypting the file with public RSA key..."
-  __ok "Encrypted file saved as $filename.bin."
-  openssl rsautl -encrypt -pubin -inkey public_key.key -in $filename -out $filename.bin -oaep
+  if [[ -f "$filename" ]]; then
+    # Encrypt it with their public key
+    echo
+    __info "Encrypting the file with public RSA key..."
+    openssl rsautl -encrypt -pubin -inkey public_key.key -in $filename -out $filename.bin -oaep
+    __ok "Encrypted file saved as $filename.bin."
 
-  # Encode it with base64
-  echo
-  __info "Encoding the file..."
-  __ok "Encoded file saved as $filename-b64.txt"
-  openssl base64 -in $filename.bin -out $filename-b64.txt
+    # Encode it with base64
+    echo
+    __info "Encoding the file..."
+    openssl base64 -in $filename.bin -out $filename-b64.txt
+    __ok "Encoded file saved as $filename-b64.txt"
 
-  echo
-  __ok "The contents of base64 file copied to clipboard."
-  __info "You can send the base64 plain text to someone:"
-  cat $filename-b64.txt | wl-copy
-  cat $filename-b64.txt
+    # Final message
+    echo
+    __ok "The contents of base64 file copied to clipboard."
+    __info "You can send the base64 plain text to someone:"
+    cat $filename-b64.txt | wl-copy
+    cat $filename-b64.txt
+  else
+    __err "File $filename does not exist. Exiting."
+    exit 1
+  fi
 }
 
 nb-encoding-decrypt-rsa() {
   local filename && __askvar filename "FILENAME"
 
-  # Decode it
-  echo
-  __info "Decoding the file..."
-  __ok "Decoded file saved as $filename.bin"
-  openssl base64 -d -in $filename -out $filename.bin
+  if [[ -f "$filename" ]]; then
+    # Decode it
+    echo
+    __info "Decoding the file..."
+    __ok "Decoded file saved as $filename.bin"
+    openssl base64 -d -in $filename -out $filename.bin
 
-  # Decrypt it
-  echo
-  __info "Decrypting the file with public RSA key..."
-  __ok "Decrypted file saved as $filename-decrypted."
-  openssl rsautl -decrypt -inkey pub_priv_pair.key -in $filename.bin -out $filename-decrypted -oaep
+    # Decrypt it
+    echo
+    __info "Decrypting the file with public RSA key..."
+    __ok "Decrypted file saved as $filename-decrypted."
+    openssl rsautl -decrypt -inkey pub_priv_pair.key -in $filename.bin -out $filename-decrypted -oaep
+  else
+    __err "File $filename does not exist. Exiting."
+    exit 1
+  fi
 }
 
 nb-encoding-encrypt-aes256() {
