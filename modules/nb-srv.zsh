@@ -68,7 +68,7 @@ nb-srv-install() {
     if ! command -v wsgidav &> /dev/null
     then
         __info "wsgidav is not installed. Installing..."
-        sudo pip3 install wsgidav 
+        sudo apt install python3-wsgidav
     fi
 
     if ! command -v cheroot &> /dev/null
@@ -194,7 +194,7 @@ nb-srv-scp-up() {
 
 nb-srv-ftp-up() {
   nb-vars-set-lhost
-  local filename && __askvar filename "FILENAME"
+  local filename && __askvar filename "SAVE_AS_FILENAME"
   local path && __askvar path "FULL_PATH_TO_FILE"
 
   echo
