@@ -45,6 +45,8 @@ nb-ad-pth-pass() {
             nb-vars-set-pass
             print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' | tee -a $(__netadpath)/cme-sweep.txt"
         else
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
             print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' | tee -a $(__netadpath)/cme-sweep.txt"
         fi
     elif [[ $login == "h" ]]; then
@@ -77,6 +79,8 @@ nb-ad-pth-enum() {
             nb-vars-set-pass
             print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --shares | tee -a $(__netadpath)/cme-SHARES-sweep.txt"
         else
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
             print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' --shares | tee -a $(__netadpath)/cme-SHARES-sweep.txt"
         fi
     elif [[ $login == "h" ]]; then
@@ -109,6 +113,8 @@ nb-ad-pth-sam() {
             nb-vars-set-pass
             print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --sam | tee -a $(__netadpath)/cme-SAM-sweep.txt"
         else
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
             print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' --sam | tee -a $(__netadpath)/cme-SAM-sweep.txt"
         fi
     elif [[ $login == "h" ]]; then
@@ -141,6 +147,8 @@ nb-ad-pth-lsa() {
             nb-vars-set-pass
             print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --lsa | tee -a $(__netadpath)/cme-LSA-sweep.txt"
         else
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
             print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' --lsa | tee -a $(__netadpath)/cme-LSA-sweep.txt"
         fi
     elif [[ $login == "h" ]]; then
@@ -173,6 +181,8 @@ nb-ad-pth-lsassy() {
             nb-vars-set-pass
             print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' -M lsassy | tee -a $(__netadpath)/cme-LSASSY-sweep.txt"
         else
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
             print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' -M lsassy | tee -a $(__netadpath)/cme-LSASSY-sweep.txt"
         fi
     elif [[ $login == "h" ]]; then
