@@ -31,7 +31,7 @@ nb-crack-hashcat() {
 	#nb-vars-set-passlist             # use the default one that is set in nb-vars.zsh
 
   # Capture the output of hashid command and extract the third line
-  ht=$(hashid ${__HASH} | awk 'NR==3{print $2}')
+  ht=$(hashid ${__HASH} | awk 'NR==15{print $2}')
   if [ $? -eq 0 ]; then
     __info "Hash type: $ht"
   fi

