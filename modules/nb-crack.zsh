@@ -192,7 +192,7 @@ nb-crack-john-ssh() {
 
   # Check if the rar file exists
   if [[ -f "$d" ]]; then
-    __info "Generating the has of the zip file using ss2john..."
+    __info "Generating the hash of the zip file using ss2john..."
     ssh2john $d > id_rsa_hash.txt
     __ok "Generated the hash of the zip file as id_rsa_hash.txt"
 
