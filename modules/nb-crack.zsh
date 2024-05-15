@@ -95,11 +95,11 @@ nb-crack-john-passwd() {
 
   # Prompt the user for the full path to the zip file
   __ask "Set the full path to the passwd file."
-  local d=$(__askpath DIR $PJ/)
+  local d && __askpath d "PATH_TO_FILE" $PJ/
 
   # Prompt the user for the full path to the zip file
   __ask "Set the full path to the shadow file."
-  local p=$(__askpath DIR $PJ/)
+  local d && __askpath d "PATH_TO_FILE" $PJ/
 
   # Check if the path contains the tilde character
   if [[ "$d" == "~"* ]]; then
@@ -127,7 +127,7 @@ nb-crack-john-zip() {
 
   # Prompt the user for the full path to the zip file
   __ask "Set the full path to the zip file."
-  local d=$(__askpath DIR $PJ/)
+  local d && __askpath d "PATH_TO_FILE" $PJ/
 
   # Check if the path contains the tilde character
   if [[ "$d" == "~"* ]]; then
@@ -155,7 +155,7 @@ nb-crack-john-rar() {
 
   # Prompt the user for the full path to the zip file
   __ask "Set the full path to the rar file."
-  local d=$(__askpath DIR $PJ/)
+  local d && __askpath d "PATH_TO_FILE" $PJ/
 
   # Check if the path contains the tilde character
   if [[ "$d" == "~"* ]]; then
@@ -182,7 +182,7 @@ nb-crack-john-ssh() {
   __check-project
 
   __ask "Set the full path to the id_rsa file."
-  local d=$(__askpath DIR $PJ/)
+  local d && __askpath d "PATH_TO_FILE" $PJ/
 
   # Check if the path contains the tilde character
   if [[ "$d" == "~"* ]]; then
