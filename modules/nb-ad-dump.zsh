@@ -44,7 +44,7 @@ nb-ad-dump-secrets() {
         print -z secretsdump.py ${__DOMAIN}/${__USER}:"${__PASS}"@${__RHOST} | tee -a ${__domainadpath}/${__USER}-hashdump.txt
     elif [[ $login == "h" ]]; then
         echo
-        __ask "Enter the NTLM hash for authentication"
+        __ask "Enter THE WHOLE NT:LM hash for authentication"
         __check-hash
         print -z secretsdump.py ${__USER}@${__RHOST} -hashes ${__HASH} | tee -a ${__domainadpath}/${__USER}-hashdump.txt
     else
