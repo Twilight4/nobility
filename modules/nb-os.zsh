@@ -39,9 +39,23 @@ DOC
 nb-os-rdp() {
   nb-vars-set-rhost
   nb-vars-set-user
-  nb-vars-set-pass
 
-  print -z "wlfreerdp /v:${__RHOST} /u:'${__USER}' /p:'${__PASS}'"
+    __ask "Do you want to log in using a password or a hash? (p/h)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    if [[ $login == "p" ]]; then
+        __ask "Enter a password for authentication"
+        nb-vars-set-pass
+        print -z "wlfreerdp /v:${__RHOST} /u:'${__USER}' /p:'${__PASS}'"
+    elif [[ $login == "h" ]]; then
+        echo
+        __ask "Enter the NTLM hash for authentication"
+        __check-hash
+        print -z "wlfreerdp /v:${__RHOST} /u:'${__USER}' /pth:'${__HASH}'"
+    else
+        echo
+        __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+    fi
 }
 
 nb-os-evil-winrm() {
