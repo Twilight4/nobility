@@ -93,11 +93,11 @@ nb-crack-john() {
 nb-crack-john-passwd() {
   __check-project
 
-  # Prompt the user for the full path to the zip file
+  # Prompt the user for the full path to the file
   __ask "Set the full path to the passwd file."
   local d && __askpath d "PATH_TO_FILE" $PJ/
 
-  # Prompt the user for the full path to the zip file
+  # Prompt the user for the full path to the file
   __ask "Set the full path to the shadow file."
   local d && __askpath d "PATH_TO_FILE" $PJ/
 
@@ -153,7 +153,7 @@ nb-crack-john-zip() {
 nb-crack-john-rar() {
   __check-project
 
-  # Prompt the user for the full path to the zip file
+  # Prompt the user for the full path to the file
   __ask "Set the full path to the rar file."
   local d && __askpath d "PATH_TO_FILE" $PJ/
 
@@ -165,9 +165,9 @@ nb-crack-john-rar() {
 
   # Check if the rar file exists
   if [[ -f "$d" ]]; then
-    __info "Generating the has of the zip file using rar2john..."
+    __info "Generating the has of the file using rar2john..."
     rar2john $d > rar_hash.txt
-    __ok "Generated the hash of the zip file as rar_hash.txt"
+    __ok "Generated the hash of the file as rar_hash.txt"
 
     # Run John the Ripper with the provided wordlist on the generated hash
     echo
@@ -192,9 +192,9 @@ nb-crack-john-ssh() {
 
   # Check if the rar file exists
   if [[ -f "$d" ]]; then
-    __info "Generating the hash of the zip file using ss2john..."
+    __info "Generating the hash of the rsa file using ss2john..."
     ssh2john $d > id_rsa_hash.txt
-    __ok "Generated the hash of the zip file as id_rsa_hash.txt"
+    __ok "Generated the hash of the rsa file as id_rsa_hash.txt"
 
     # Run John the Ripper with the provided wordlist on the generated hash
     echo
