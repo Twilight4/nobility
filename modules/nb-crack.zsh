@@ -99,10 +99,16 @@ nb-crack-john-passwd() {
 
   # Prompt the user for the full path to the file
   __ask "Set the full path to the shadow file."
-  local d && __askpath d "PATH_TO_FILE" $PJ/
+  local p && __askpath p "PATH_TO_FILE" $PJ/
 
   # Check if the path contains the tilde character
   if [[ "$d" == "~"* ]]; then
+    __err "~ not allowed, use the full path"
+    return
+  fi
+
+  # Check if the path contains the tilde character
+  if [[ "$p" == "~"* ]]; then
     __err "~ not allowed, use the full path"
     return
   fi
@@ -117,7 +123,7 @@ nb-crack-john-passwd() {
     echo
     print -z "john --wordlist=${__PASSLIST} unshadowed.txt"
   else
-    __err "File does not exist: $d. Exiting."
+    __err "File does not exist: $d and $p. Exiting."
     return
   fi
 }
