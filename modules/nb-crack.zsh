@@ -71,7 +71,7 @@ nb-crack-hashcat() {
   fi
 
   echo
-  print -z "hashcat -O -a 0 -m $md ${__HASH} ${__PASSLIST} | tee $(__netpath)/hashcat"
+  print -z "hashcat -O -a 0 -m $md ${__HASH} ${__PASSLIST} -o $(__netpath)/hashcat"
 }
 
 nb-crack-hashcat-hashlist() {
@@ -79,7 +79,7 @@ nb-crack-hashcat-hashlist() {
 	__ask "Enter the hashlist"
   local hs && __askvar hs "HASHLIST"
   echo
-  print -z "hashcat -O -a 0 ${hs} ${__PASSLIST} | tee $(__netpath)/hashcat"
+  print -z "hashcat -O -a 0 ${hs} ${__PASSLIST} -o $(__netpath)/hashcat"
 }
 
 nb-crack-john() {
@@ -87,7 +87,7 @@ nb-crack-john() {
 	__ask "Enter the hash"
 	__check-hash
 
-  print -z "john --wordlist=${__PASSLIST} --stdout ${__HASH} | tee $(__netpath)/john"
+  print -z "john --wordlist=${__PASSLIST} --stdout ${__HASH} -o $(__netpath)/john"
 }
 
 nb-crack-john-passwd() {
@@ -121,7 +121,7 @@ nb-crack-john-passwd() {
 
     # Run John the Ripper with the provided wordlist on the generated hash
     echo
-    print -z "john --wordlist=${__PASSLIST} unshadowed.txt"
+    print -z "hashcat -O -m 1800 -a 0 unshadowed.txt ${__PASSLIST} -o unshadowed.cracked"
   else
     __err "File does not exist: $d and $p. Exiting."
     return
