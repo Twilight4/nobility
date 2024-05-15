@@ -180,7 +180,7 @@ nb-srv-scp-down() {
   local filename && __askvar filename "FILENAME"
   local path && __askvar path "FULL_PATH_INCLUDING_FILENAME"
 
-  scp ${__USER}@${__RHOST}:$path $filename
+  print -z "scp ${__USER}@${__RHOST}:$path $filename"
 }
 
 nb-srv-scp-up() {
@@ -189,7 +189,7 @@ nb-srv-scp-up() {
   local filename && __askvar filename "FILENAME"
   local path && __askvar path "FULL_PATH_INCLUDING_FILENAME"
 
-  scp $filename ${__USER}@${__RHOST}:$path
+  print -z "scp $filename ${__USER}@${__RHOST}:$path"
 }
 
 nb-srv-ftp-up() {
