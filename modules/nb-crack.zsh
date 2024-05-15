@@ -90,16 +90,12 @@ nb-crack-john() {
   __check-project
 	__ask "Enter the hash"
 	__check-hash
-	__ask "Enter a password wordlist"
-	nb-vars-set-passlist
 
   print -z "john --wordlist=${__PASSLIST} --stdout ${__HASH} | tee $(__netpath)/john"
 }
 
 nb-crack-john-passwd() {
   __check-project
-	__ask "Enter a password wordlist"
-	nb-vars-set-passlist
 
   print -z "unshadow <PATH_TO_PASSWD> <PATH_TO_SHADOW> > unshadowed.txt"
   print -z "john --wordlist=${__PASSLIST} unshadowed.txt"
@@ -107,21 +103,32 @@ nb-crack-john-passwd() {
 
 nb-crack-john-zip() {
   __check-project
-	__ask "Enter a password wordlist"
-	nb-vars-set-passlist
 
+  # Prompt the user for the full path to the zip file
   __ask "Set the full path to the zip file."
   local d=$(__askpath DIR $PJ/)
-  [[ "$d" == "~"* ]] && __err "~ not allowed, use the full path" && return
 
-  print -z "zip2john $d > zip_hash.txt"
-  print -z "john --wordlist=${__PASSLIST} zip_hash.txt"
+  # Check if the path contains the tilde character
+  if [[ "$d" == "~"* ]]; then
+    __err "~ not allowed, use the full path"
+    return
+  fi
+
+  # Check if the zip file exists
+  if [[ -f "$d" ]]; then
+    # Generate the hash of the zip file using zip2john
+    zip2john $d > zip_hash.txt
+
+    # Run John the Ripper with the provided wordlist on the generated hash
+    print -z "john --wordlist=${__PASSLIST} zip_hash.txt"
+  else
+    __err "File does not exist: $d"
+    return
+  fi
 }
 
 nb-crack-john-rar() {
   __check-project
-	__ask "Enter a password wordlist"
-	nb-vars-set-passlist
 
   __ask "Set the full path to the rar file."
   local d=$(__askpath DIR $PJ/)
@@ -133,8 +140,6 @@ nb-crack-john-rar() {
 
 nb-crack-john-ssh() {
   __check-project
-	__ask "Enter a password wordlist"
-	nb-vars-set-passlist
 
   __ask "Set the full path to the id_rsa file."
   local d=$(__askpath DIR $PJ/)
