@@ -43,7 +43,7 @@ nb-enum-ftp-tcpdump() {
 nb-enum-ftp-hydra() {
     __check-project
     nb-vars-set-rhost
-    __check-user
+    nb-vars-set-user
     print -z "hydra -l ${__USER} -P ${__PASSLIST} -e -o $(__hostpath)/ftp-hydra-brute.txt ${__RHOST} FTP"
 }
 
