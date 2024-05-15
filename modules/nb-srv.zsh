@@ -187,7 +187,7 @@ nb-srv-scp-up() {
   nb-vars-set-user
   nb-vars-set-rhost
   local filename && __askvar filename "FILENAME"
-  local path && __askvar path "FULL_PATH_INCLUDING_FILENAME"
+  local path && __askvar path "DESTINATION_OF_UPLOADED_FILE"
 
   print -z "scp $filename ${__USER}@${__RHOST}:$path"
 }
