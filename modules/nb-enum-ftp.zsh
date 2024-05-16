@@ -15,7 +15,7 @@ Commands
 nb-enum-ftp-install           installs dependencies
 nb-enum-ftp-nmap-sweep        scan a network for services
 nb-enum-ftp-tcpdump           capture traffic to and from a host
-nb-enum-ftp-hydra             brute force passwords for a user account
+nb-enum-ftp-hydra             brute force passwords/login for a user account
 nb-enum-ftp-lftp-grep         search (grep) the target system
 nb-enum-ftp-wget-mirror       mirror the FTP server locally
 
@@ -43,8 +43,21 @@ nb-enum-ftp-tcpdump() {
 nb-enum-ftp-hydra() {
     __check-project
     nb-vars-set-rhost
-    nb-vars-set-user
-    print -z "hydra -l ${__USER} -P ${__PASSLIST} -e -o $(__hostpath)/ftp-hydra-brute.txt ${__RHOST} FTP"
+
+    __ask "You wanna brute force login or password? (l/p)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    if [[ $login == "p" ]]; then
+      nb-vars-set-user
+      print -z "hydra -l ${__USER} -P ${__PASSLIST} -e -o $(__hostpath)/ftp-hydra-brute.txt ${__RHOST} FTP"
+    elif [[ $login == "l" ]]; then
+      nb-vars-set-wordlist
+      nb-vars-set-pass
+      print -z "hydra -L ${__WORDLIST} -p ${__PASS} -e -o $(__hostpath)/ftp-hydra-brute.txt ${__RHOST} FTP"
+    else
+      echo
+      __err "Invalid option. Please choose 'p' for password or 'l' for login."
+    fi
 }
 
 nb-enum-ftp-lftp-grep() {
