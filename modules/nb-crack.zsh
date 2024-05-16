@@ -204,6 +204,7 @@ nb-crack-john-ssh() {
 
     # Run John the Ripper with the provided wordlist on the generated hash
     echo
+    __info "To show the cracked hash use: john id_rsa_hash.txt --show"
     print -z "john --wordlist=${__PASSLIST} id_rsa_hash.txt"
   else
     __err "File does not exist: $d. Exiting."
