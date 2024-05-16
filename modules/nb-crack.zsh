@@ -187,7 +187,7 @@ nb-crack-john-rar() {
 nb-crack-john-ssh() {
   __check-project
 
-  __ask "Set the full path to the id_rsa file."
+  __ask "Set the full path to the PRIVATE id_rsa file."
   local d && __askpath d "PATH_TO_FILE" $PJ/
 
   # Check if the path contains the tilde character
