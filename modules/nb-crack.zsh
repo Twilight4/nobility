@@ -148,6 +148,7 @@ nb-crack-john-zip() {
     __ok "Generated the hash of the zip file as zip_hash.txt"
 
     # Run John the Ripper with the provided wordlist on the generated hash
+    __info "To show the cracked hash use: john zip_hash.txt --show"
     print -z "john --wordlist=${__PASSLIST} zip_hash.txt"
   else
     __err "File does not exist: $d. Exiting."
@@ -175,7 +176,7 @@ nb-crack-john-rar() {
     __ok "Generated the hash of the file as rar_hash.txt"
 
     # Run John the Ripper with the provided wordlist on the generated hash
-    echo
+    __info "To show the cracked hash use: john rar_hash.txt --show"
     print -z "john --wordlist=${__PASSLIST} rar_hash.txt"
   else
     __err "File does not exist: $d. Exiting."
