@@ -135,7 +135,7 @@ export __PROJECT="$HOME/desktop/projects/"
 nb-vars-set-project() {
   __ask "Select the project directory you created with nb-project-start."
   
-  local pd=$(__menu $(find $__PROJECT -mindepth 1 -maxdepth 1 -type d))
+  local pd=$(__menu $(find "$HOME/desktop/projects/" -mindepth 1 -maxdepth 1 -type d))
   __ok "Selected: ${pd}"
 
   __PROJECT=$pd/tool-output
