@@ -80,7 +80,7 @@ nb-enum-web-fuzz-hydra-get() {
     __check-user
     __ask "Enter the URI for the get request, ex: /path"
     local uri && __askvar uri URI
-    print -z "hydra -l ${__USER} -P ${__PASSLIST} ${__RHOST} http-get ${uri} -V"
+    print -z "hydra -l ${__USER} -P ${__PASSLIST} ${__RHOST} http-get ${uri} -F"
 }
 
 nb-enum-web-fuzz-password-hydra-form-post() {
@@ -94,7 +94,7 @@ nb-enum-web-fuzz-password-hydra-form-post() {
     local un && __askvar un USER_NAME
     __ask "Enter the response value to check for failure"
     local fm && __askvar fm FAILURE
-    print -z "hydra ${__RHOST} http-form-post \"${uri}:${uf}=^USER^&${pf}=^PASS^:${fm}\" -l ${un} -P ${__PASSLIST} -t 10 -w 30 -V"
+    print -z "hydra ${__RHOST} http-form-post \"${uri}:${uf}=^USER^&${pf}=^PASS^:${fm}\" -l ${un} -P ${__PASSLIST} -t 10 -w 30 -F"
 }
 
 nb-enum-web-fuzz-login-hydra-form-post() {
@@ -106,5 +106,5 @@ nb-enum-web-fuzz-login-hydra-form-post() {
     local pf && __askvar pf PASSWORD_FIELD
     __ask "Enter the response value to check for failure"
     local fm && __askvar fm FAILURE
-    print -z "hydra ${__RHOST} http-form-post \"${uri}:${uf}=^USER^&${pf}=^PASS^:${fm}\" -l ${__WORDLIST} -p test -t 10 -w 30 -V"
+    print -z "hydra ${__RHOST} http-form-post \"${uri}:${uf}=^USER^&${pf}=^PASS^:${fm}\" -l ${__WORDLIST} -p test -t 10 -w 30 -F"
 }

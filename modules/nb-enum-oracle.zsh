@@ -101,12 +101,12 @@ nb-enum-oracle-hydra-listener() {
     __check-project
     nb-vars-set-rhost
     __check-user
-    print -z "hydra -l ${__USER} -P ${__PASSLIST} -e -o $(__hostpath)/oracle-listener-hydra-brute.txt ${__RHOST} Oracle Listener"
+    print -z "hydra -l ${__USER} -P ${__PASSLIST} -e -o $(__hostpath)/oracle-listener-hydra-brute.txt ${__RHOST} Oracle Listener -F"
 }
 
 nb-enum-oracle-hydra-sid() {
     __check-project
     nb-vars-set-rhost
     __check-user
-    print -z "hydra -l ${__USER} -P ${__PASSLIST} -e -o $(__hostpath)/oracle-sid-hydra-brute.txt ${__RHOST} Oracle Sid"
+    print -z "hydra -l ${__USER} -P ${__PASSLIST} -e -o $(__hostpath)/oracle-sid-hydra-brute.txt ${__RHOST} Oracle Sid -F"
 }

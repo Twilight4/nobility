@@ -49,11 +49,11 @@ nb-enum-ftp-hydra() {
 
     if [[ $login == "p" ]]; then
       nb-vars-set-user
-      print -z "hydra -l ${__USER} -P ${__PASSLIST} -e -o $(__hostpath)/ftp-hydra-brute.txt ${__RHOST} FTP"
+      print -z "hydra -l ${__USER} -P ${__PASSLIST} -e -o $(__hostpath)/ftp-hydra-brute.txt ${__RHOST} FTP -t 64 -F"
     elif [[ $login == "l" ]]; then
       nb-vars-set-wordlist
       nb-vars-set-pass
-      print -z "hydra -L ${__WORDLIST} -p ${__PASS} -e -o $(__hostpath)/ftp-hydra-brute.txt ${__RHOST} FTP"
+      print -z "hydra -L ${__WORDLIST} -p ${__PASS} -e -o $(__hostpath)/ftp-hydra-brute.txt ${__RHOST} FTP -t 64 -F"
     else
       echo
       __err "Invalid option. Please choose 'p' for password or 'l' for login."

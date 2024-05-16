@@ -77,5 +77,5 @@ nb-ad-ldap-hydra() {
     __check-project
     nb-vars-set-rhost
     __check-user
-    print -z "hydra -l ${__USER} -P ${__PASSLIST} -e -o $(__hostpath)/ldap-hydra-brute.txt ${__RHOST} LDAP"
+    print -z "hydra -l ${__USER} -P ${__PASSLIST} -e -o $(__hostpath)/ldap-hydra-brute.txt ${__RHOST} LDAP -F"
 }

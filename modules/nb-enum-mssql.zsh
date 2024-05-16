@@ -58,5 +58,5 @@ nb-enum-mssql-hydra() {
     __check-project
     nb-vars-set-rhost
     __check-user
-    print -z "hydra -l ${__USER} -P ${__PASSLIST} -e -o $(__hostpath)/mssql-hydra-brute.txt ${__RHOST} MS-SQL"
+    print -z "hydra -l ${__USER} -P ${__PASSLIST} -e -o $(__hostpath)/mssql-hydra-brute.txt ${__RHOST} MS-SQL -F"
 }
