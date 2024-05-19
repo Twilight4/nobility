@@ -15,6 +15,7 @@ Commands
 nb-enum-ftp-install           installs dependencies
 nb-enum-ftp-nmap-sweep        scan a network for services
 nb-enum-ftp-hydra             brute force passwords/login for a user account
+nb-enum-ftp-bounce            perform FTP bounce attack
 nb-enum-ftp-tcpdump           capture traffic to and from a host
 nb-enum-ftp-lftp-grep         search (grep) the target system
 nb-enum-ftp-wget-mirror       mirror the FTP server locally
@@ -51,6 +52,18 @@ nb-enum-ftp-hydra() {
       echo
       __err "Invalid option. Please choose 'p' for password or 'l' for login."
     fi
+}
+
+nb-enum-ftp-bounce() {
+    __check-project
+    nb-vars-set-rhost
+    nb-vars-set-user
+    nb-vars-set-pass
+
+    # Ask for the IP to be scanned
+    __ask "Enter internal target ip to scan with nmap"
+    local t && __askvar t TARGET_IP
+    print -z "grc nmap -Pn -v -n -p80 -b ${__USER}:${__PASS}@${__RHOST} $t"
 }
 
 nb-enum-ftp-tcpdump() {
