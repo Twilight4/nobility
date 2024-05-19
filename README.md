@@ -165,7 +165,7 @@ nb-recon-org-theharvester
 ### Active Directory Exploitation
 ```bash
 # LLMNR Poisoning
-nb-ad-smb-relay-responder
+nb-enum-smb-responder
 
 # AS-REP Roasting
 nb-ad-asrep-brute
