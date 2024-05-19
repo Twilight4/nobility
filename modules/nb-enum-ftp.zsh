@@ -14,8 +14,8 @@ Commands
 --------
 nb-enum-ftp-install           installs dependencies
 nb-enum-ftp-nmap-sweep        scan a network for services
-nb-enum-ftp-tcpdump           capture traffic to and from a host
 nb-enum-ftp-hydra             brute force passwords/login for a user account
+nb-enum-ftp-tcpdump           capture traffic to and from a host
 nb-enum-ftp-lftp-grep         search (grep) the target system
 nb-enum-ftp-wget-mirror       mirror the FTP server locally
 
@@ -27,17 +27,10 @@ nb-enum-ftp-install() {
     __pkgs tcpdump nmap hydra ftp lftp wget 
 }
 
-nb-enum-ftp-sweep-nmap() {
+nb-enum-ftp-nmap-sweep() {
     __check-project
     nb-vars-set-network
-    print -z "sudo grc nmap -n -Pn -sS -p21 ${__NETWORK} -oA $(__netpath)/ftp-sweep"
-}
-
-nb-enum-ftp-tcpdump() {
-    __check-project
-    nb-vars-set-iface
-    nb-vars-set-rhost
-    print -z "sudo tcpdump -i ${__IFACE} host ${__RHOST} and tcp port 21 -w $(__hostpath)/ftp.pcap"
+    print -z "sudo grc nmap -n -Pn -sS -sV -sC -p 21 ${__NETWORK} -oA $(__netpath)/ftp-sweep"
 }
 
 nb-enum-ftp-hydra() {
@@ -58,6 +51,13 @@ nb-enum-ftp-hydra() {
       echo
       __err "Invalid option. Please choose 'p' for password or 'l' for login."
     fi
+}
+
+nb-enum-ftp-tcpdump() {
+    __check-project
+    nb-vars-set-iface
+    nb-vars-set-rhost
+    print -z "sudo tcpdump -i ${__IFACE} host ${__RHOST} and tcp port 21 -w $(__hostpath)/ftp.pcap"
 }
 
 nb-enum-ftp-lftp-grep() {
