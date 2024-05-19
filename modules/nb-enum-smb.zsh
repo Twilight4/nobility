@@ -89,16 +89,18 @@ nb-enum-smb-null-smbmap-list-rec() {
 
 nb-enum-smb-null-smbmap-download() {
   nb-vars-set-rhost
-  __ask "File to download"
+  __check-share
+  __ask "Enter file to download"
   local file && __askvar file FILE
-  print -z "smbmap -H ${__RHOST} --download \"${__SHARE\\$file\"}"
+  print -z "smbmap -H ${__RHOST} --download \"${__SHARE}\\\\$file\""
 }
 
 nb-enum-smb-null-smbmap-upload() {
   nb-vars-set-rhost
+  __check-share
   __ask "File to download"
   local file && __askvar file FILE
-  print -z "smbmap -H ${__RHOST} --upload $file \"${__SHARE\\$file\"}"
+  print -z "smbmap -H ${__RHOST} --upload $file \"${__SHARE}\\\\$file\""
 }
 
 nb-enum-smb-null-smbget-download-rec() {
