@@ -10,11 +10,16 @@ nb-enum-smb
 ------------
 The nb-enum-smb namespace contains commands for scanning and enumerating smb services.
 
+Protocol Attacks
+----------------
+nb-enum-smb-hydra                    brute force password/login for a user account
+
 Automated Enumeration tools
 -------------------------------------
 nb-enum-smb-nmap-sweep               scan a network for services
 nb-enum-smb-null-enum4               enumerate with enum4linux
-nb-enum-smb-null-enum4-aggresssive   aggressively enumerate with enum4linux
+nb-enum-smb-null-enum4-aggressive    aggressively enumerate with enum4linux
+nb-enum-smb-null-rpcclient           use rcpclient for queries
 
 Shares Enumeration
 -------------------------------------
@@ -36,14 +41,12 @@ Connecting to Service
 -------------------------------------
 nb-enum-smb-null-smbclient-connect   connect with a null session
 nb-enum-smb-user-smbclient-connect   connect with an authenticated session
-nb-enum-smb-null-rpcclient           use rcpclient for queries
 
 Other Commands
 -------------------------------------
 nb-enum-smb-null-smbmap-download     download a file from a share
 nb-enum-smb-null-smbget-download-rec recursively download the SMB share
 nb-enum-smb-null-smbmap-upload       upload a file to a share
-nb-enum-smb-hydra                    brute force password/login for a user account
 nb-enum-smb-install                  installs dependencies
 nb-enum-smb-tcpdump                  capture traffic to and from a host
 nb-enum-user-smb-mount               mount an SMB share
