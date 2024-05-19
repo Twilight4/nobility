@@ -21,6 +21,7 @@ Interacting/Connecting Commands
 -------------------------------
 nb-enum-smb-null-smbmap              query with smbmap null session
 nb-enum-smb-null-smbmap-list-rec     list shares recursively with a null session
+nb-enum-smb-null-smbmap-download     download a file from a share
 nb-enum-smb-user-smbmap              query with smbmap authenticated session
 nb-enum-smb-null-smbclient-list      list shares with a null session
 nb-enum-smb-null-smbclient-list-rec  list shares recursively with a null session
@@ -63,6 +64,13 @@ nb-enum-smb-null-smbmap-list-rec() {
   nb-vars-set-rhost
   __check-share
   print -z "smbmap -H ${__RHOST} -r ${__SHARE}"
+}
+
+nb-enum-smb-null-smbmap-download() {
+  nb-vars-set-rhost
+  __ask "File to download"
+  local file && __askvar file FILE
+  print -z "smbmap -H ${__RHOST} --download \"${__SHARE\\$file\"}"
 }
 
 nb-enum-smb-user-smbmap() {
