@@ -42,6 +42,7 @@ Other Commands
 -------------------------------------
 nb-enum-smb-null-smbmap-download     download a file from a share
 nb-enum-smb-null-smbget-download-rec recursively download the SMB share
+nb-enum-smb-null-smbmap-upload       upload a file to a share
 nb-enum-smb-hydra                    brute force password/login for a user account
 nb-enum-smb-install                  installs dependencies
 nb-enum-smb-tcpdump                  capture traffic to and from a host
@@ -87,6 +88,13 @@ nb-enum-smb-null-smbmap-download() {
   __ask "File to download"
   local file && __askvar file FILE
   print -z "smbmap -H ${__RHOST} --download \"${__SHARE\\$file\"}"
+}
+
+nb-enum-smb-null-smbmap-upload() {
+  nb-vars-set-rhost
+  __ask "File to download"
+  local file && __askvar file FILE
+  print -z "smbmap -H ${__RHOST} --upload $file \"${__SHARE\\$file\"}"
 }
 
 nb-enum-smb-null-smbget-download-rec() {
