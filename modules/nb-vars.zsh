@@ -304,9 +304,6 @@ nb-vars-set-wordlist() {
   else
     __WORDLIST= __prefill __WORDLIST WORDLIST ${__WORDLIST}
   fi
-
-  # Save the changes
-  nb-vars-save &>/dev/null
 }
 
 nb-vars-set-wordlist-usernames() {
@@ -333,9 +330,6 @@ export __PASSLIST="/usr/share/wordlists/seclists/Passwords/Leaked-Databases/rock
 nb-vars-set-passlist() {
   __ask "Choose a passlist: "
   __PASSLIST=$(__menu $(find /usr/share/seclists/Passwords | sort))
-
-  # Save the changes
-  nb-vars-save &>/dev/null
 }
 
 # Helpers

@@ -13,6 +13,7 @@ The nb-enum-smb namespace contains commands for scanning and enumerating smb ser
 Protocol Attacks
 ----------------
 nb-enum-smb-hydra                    brute force password/login for a user account
+nb-enum-smb-cme-spray                password spraying with cme
 
 Automated Enumeration tools
 -------------------------------------
@@ -167,6 +168,13 @@ nb-enum-smb-hydra() {
     fi
 }
 
+nb-enum-smb-cme-spray() {
+  nb-vars-set-rhost
+  nb-vars-set-wordlist
+  nb-vars-set-pass
+  print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASS}' --local-auth"
+}
+
 nb-enum-smb-user-smbmap() {
   nb-vars-set-rhost
   __check-user
@@ -175,11 +183,13 @@ nb-enum-smb-user-smbmap() {
 }
 
 nb-enum-smb-null-enum4() {
+  __check-project
   nb-vars-set-rhost
   print -z "enum4linux -a ${__RHOST} | tee $(__hostpath)/enumlinux.txt"
 }
 
 nb-enum-smb-null-enum4-aggresssive() {
+  __check-project
   nb-vars-set-rhost
   print -z "enum4linux -A ${__RHOST} | tee $(__hostpath)/enumlinux.txt"
 }
