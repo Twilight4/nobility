@@ -16,9 +16,9 @@ nb-enum-ftp-install           installs dependencies
 nb-enum-ftp-nmap-sweep        scan a network for services
 nb-enum-ftp-hydra             brute force passwords/login for a user account
 nb-enum-ftp-bounce            perform FTP bounce attack
+nb-enum-ftp-wget-mirror       mirror/download all available files on the FTP server
 nb-enum-ftp-tcpdump           capture traffic to and from a host
 nb-enum-ftp-lftp-grep         search (grep) the target system
-nb-enum-ftp-wget-mirror       mirror the FTP server locally
 
 DOC
 }
@@ -66,6 +66,14 @@ nb-enum-ftp-bounce() {
     print -z "grc nmap -Pn -v -n -p80 -b ${__USER}:${__PASS}@${__RHOST} $t"
 }
 
+nb-enum-ftp-wget-mirror() {
+    __warn "The destination site will be mirrored in the current directory"
+    nb-vars-set-rhost
+    local u && __prefill u USER "anonymous"
+    local p && __prefill p PASSWORD "anonymous@example.com"
+    print -z "wget --mirror ftp://${u}:${p}@${__RHOST}"
+}
+
 nb-enum-ftp-tcpdump() {
     __check-project
     nb-vars-set-iface
@@ -79,10 +87,3 @@ nb-enum-ftp-lftp-grep() {
     print -z "lftp ${__RHOST}:/ > find | grep -i \"${QUERY}\" "
 }
 
-nb-enum-ftp-wget-mirror() {
-    __warn "The destination site will be mirrored in the current directory"
-    nb-vars-set-rhost
-    local u && __prefill u USER "anonymous"
-    local p && __prefill p PASSWORD "anonymous@example.com"
-    print -z "wget --mirror ftp://${u}:${p}@${__RHOST}"
-}
