@@ -172,6 +172,8 @@ nb-ad-asrep-brute
 
 # SMB Relay
 nb-ad-smb-relay-enum
+nb-enum-smb-responder
+nb-ad-smb-relay-ntlmrelay
 
 # IPv6 Attack
 nb-ad-ipv6
