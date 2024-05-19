@@ -16,7 +16,8 @@ nb-enum-mssql-install             installs dependencies
 nb-enum-mssql-nmap-sweep          scan a network for services
 nb-enum-mssql-tcpdump             capture traffic to and from a host
 nb-enum-mssql-sqsh                make an interactive database connection
-nb-enum-mssql-impacket-client     connect using impacket as a sql client
+nb-enum-mssql-mssqlclient         connect using impacket as a sql client
+nb-enum-mssql-mssqlclient         if we are targetting a local account
 nb-enum-mssql-hydra               brute force passwords for a user account
 
 DOC
@@ -30,7 +31,7 @@ nb-enum-mssql-install() {
 nb-enum-mssql-nmap-sweep() {
     __check-project
     nb-vars-set-network
-    print -z "sudo grc nmap -n -Pn -sS -sU -p T:1433,U:1434 ${__NETWORK} -oA $(__netpath)/mssql-sweep"
+    print -z "sudo grc nmap -n -Pn -sS -sC -sV -sU -p T:1433,U:1434 ${__NETWORK} -oA $(__netpath)/mssql-sweep"
 }
 
 nb-enum-mssql-tcpdump() {
@@ -43,15 +44,24 @@ nb-enum-mssql-tcpdump() {
 nb-enum-mssql-sqsh() {
     __check-project
     nb-vars-set-rhost
-    __check-user
-    print -z "sqsh -S ${__RHOST} -U ${__USER}"
+    nb-vars-set-user
+    nb-vars-set-pass
+    print -z "sqsh -S ${__RHOST} -U ${__USER} -P ${__PASS} -h"
 }
 
-nb-enum-mssql-impacket-client() {
+nb-enum-mssql-mssqlclient() {
     nb-vars-set-rhost
     __check-user
     local db && __askvar db DATABASE
-    print -z "mssqlclient.py ${__USER}@${__RHOST} -db ${db} -windows-auth "
+    #print -z "mssqlclient.py ${__USER}@${__RHOST} -db ${db} -windows-auth "
+    print -z "mssqlclient.py -p 1433 ${__USER}@${__RHOST}"
+}
+
+nb-enum-mssql-mssqlclient-local() {
+    nb-vars-set-rhost
+    __check-user
+    local db && __askvar db DATABASE
+    print -z "sqsh -S ${__RHOST} -U .\\\\${__USER} -P '${__PASS}' -h"
 }
 
 nb-enum-mssql-hydra() {
