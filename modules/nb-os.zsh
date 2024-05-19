@@ -264,7 +264,7 @@ nb-os-ps-dtach() {
 nb-os-path-add() { 
     __ask "Enter new path to append to current PATH"
     local p && __askpath p PATH /   
-    print -z "echo \"export PATH=\$PATH:${p}\" | tee -a $HOME/.zshrc" 
+    print -z "echo \"export PATH=\$PATH:${p}\" | tee -a $HOME/.config/zsh/.zshrc"
 }
 
 nb-os-file-replace() {

