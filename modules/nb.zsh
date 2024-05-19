@@ -89,6 +89,7 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  nb-ad-pth-                     Commands for Pass-The-Hash AD attack
  nb-ad-smb-relay-               Commands for SMB Relay AD attack
  nb-ad-ldap-                    Commands for LDAP enumeration
+ nb-ad-rce-                     Commands for RCE on target system
  nb-ad-dump-                    Commands for Dumping Hashes in AD
  nb-ad-gpp-                     Commands for GPP AD attack
  nb-ad-ipv6-                    Commands for IPv6 AD attack
