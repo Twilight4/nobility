@@ -174,26 +174,60 @@ nb-enum-smb-brute-cme() {
     __ask "You wanna brute force login/password/both? (l/p/b)"
     local login && __askvar login "LOGIN_OPTION"
 
+    __ask "Do you want to add a domain? (y/n)"
+    local add_domain && __askvar add_domain "ADD_DOMAIN_OPTION"
+
     if [[ $login == "p" ]]; then
       nb-vars-set-user
-      print -z "crackmapexec smb ${__RHOST} -u '${__USER}' -p '${__PASSLIST}' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute.txt"
+
+      if [[ $add_domain == "y" ]]; then
+        nb-vars-set-domain
+        print -z "crackmapexec smb ${__RHOST} -u '${__USER}' -p '${__PASSLIST}' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/smb-cme-brute.txt"
+      else
+        print -z "crackmapexec smb ${__RHOST} -u '${__USER}' -p '${__PASSLIST}' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute.txt"
+      fi
     elif [[ $login == "l" ]]; then
       nb-vars-set-wordlist
       nb-vars-set-pass
-      print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASS}' --local-auth --continue-on-success"
+      __ask "Do you want to add a domain? (y/n)"
+      local add_domain && __askvar add_domain "ADD_DOMAIN_OPTION"
+      nb-vars-set-user
+
+      if [[ $add_domain == "y" ]]; then
+        nb-vars-set-domain
+        print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASS}' -d ${__DOMAIN} --continue-on-success"
+      else
+        print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASS}' --local-auth --continue-on-success"
+      fi
     elif [[ $login == "b" ]]; then
+      __ask "Do you want to add a domain? (y/n)"
+      local add_domain && __askvar add_domain "ADD_DOMAIN_OPTION"
+      nb-vars-set-user
+
       __ask "Do you wanna manually specify wordlists? (y/n)"
       local sw && __askvar sw "SPECIFY_WORDLIST"
+
       if [[ $sw == "y" ]]; then
         __ask "Select a user list"
         __askpath ul FILE $HOME/desktop/projects/
         __ask "Select a password list"
         __askpath pl FILE $HOME/desktop/projects/
-        print -z "crackmapexec smb ${__RHOST} -u '$ul' -p '$pl' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute.txt"
+
+        if [[ $add_domain == "y" ]]; then
+          nb-vars-set-domain
+          print -z "crackmapexec smb ${__RHOST} -u '$ul' -p '$pl' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/smb-cme-brute.txt"
+        else
+          print -z "crackmapexec smb ${__RHOST} -u '$ul' -p '$pl' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute.txt"
+        fi
       else
         nb-vars-set-wordlist
-        print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASSLIST}' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute.txt"
-      fi
+
+        if [[ $add_domain == "y" ]]; then
+          nb-vars-set-domain
+          print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASSLIST}' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/smb-cme-brute.txt"
+        else
+          print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASSLIST}' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute.txt"
+        fi
     else
       echo
       __err "Invalid option. Please choose 'p' for password or 'l' for login or 'b' for both."
@@ -209,7 +243,7 @@ nb-enum-smb-cme-spray() {
 
 nb-enum-smb-user-smbmap() {
   nb-vars-set-rhost
-  __check-user
+  nb-vars-set-user
   __info "Usage with creds: -u <user> -p <pass> -d <domain>"
   print -z "smbmap -u ${__USER} -H ${__RHOST}"
 }
@@ -257,14 +291,14 @@ nb-enum-smb-null-smbclient-connect() {
 
 nb-enum-smb-user-smbclient-connect() {
   nb-vars-set-rhost
-  __check-user
+  nb-vars-set-user
   __check-share
   print -r -z "smbclient //${__RHOST}/${__SHARE} -U ${__USER} "
 }
 
 nb-enum-user-smb-mount() {
   nb-vars-set-rhost
-  __check-user
+  nb-vars-set-user
   local p && __askvar p PASSWORD
   __check-share
   print -z "mount //${__RHOST}/${__SHARE} /mnt/${__SHARE} -o username=${__USER},password=${p}"
@@ -277,7 +311,7 @@ nb-enum-smb-null-samrdump() {
 
 nb-enum-smb-responder() {
   nb-vars-set-iface
-  print -z "responder -I ${__IFACE} -dwPv | tee $(domadpath)/smb-responder.txt"
+  print -z "responder -I ${__IFACE} -dwPv | tee $(__domadpath)/smb-responder.txt"
 }
 
 nb-enum-smb-net-use-null() {
@@ -292,5 +326,5 @@ nb-enum-smb-nbtscan() {
 
 nb-enum-smb-null-rpcclient() {
   nb-vars-set-rhost
-  print -z "rpcclient -U \" \" ${__RHOST}"
+  print -z "rpcclient -U \"\" ${__RHOST}"
 }

