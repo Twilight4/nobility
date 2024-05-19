@@ -10,25 +10,40 @@ nb-enum-smb
 ------------
 The nb-enum-smb namespace contains commands for scanning and enumerating smb services.
 
-Enumeration Commands
---------------------
+Automated Enumeration tools
+-------------------------------------
 nb-enum-smb-install                  installs dependencies
 nb-enum-smb-nmap-sweep               scan a network for services
 nb-enum-smb-tcpdump                  capture traffic to and from a host
 nb-enum-smb-null-enum4               enumerate with enum4linux
+nb-enum-smb-null-enum4-aggresssive   aggressively enumerate with enum4linux
 
-Interacting/Connecting Commands
--------------------------------
-nb-enum-smb-null-smbmap              query with smbmap null session
-nb-enum-smb-null-smbmap-list-rec     list shares recursively with a null session
-nb-enum-smb-null-smbmap-download     download a file from a share
-nb-enum-smb-user-smbmap              query with smbmap authenticated session
+Shares Enumeration
+-------------------------------------
+NULL Session
+------------
+nb-enum-smb-null-cme-list            list shares with cme null session
+nb-enum-smb-samrdump                 dump info using impacket
+nb-enum-smb-null-smbmap-list         query with smbmap
+nb-enum-smb-null-smbmap-list-rec     list shares recursively
 nb-enum-smb-null-smbclient-list      list shares with a null session
 nb-enum-smb-null-smbclient-list-rec  list shares recursively with a null session
+
+AUTH Session
+------------
+nb-enum-smb-user-smbmap              query with smbmap authenticated session
+nb-enum-smb-user-cme-list            list shares with cme authenticated session
+
+Connecting to service
+-------------------------------------
 nb-enum-smb-null-smbclient-connect   connect with a null session
 nb-enum-smb-user-smbclient-connect   connect with an authenticated session
+
+Other Commands
+-------------------------------------
+nb-enum-smb-null-smbmap-download     download a file from a share
+
 nb-enum-user-smb-mount               mount an SMB share
-nb-enum-smb-samrdump                 dump info using impacket
 nb-enum-smb-responder                spoof and get responses using responder
 nb-enum-smb-net-use-null             print a net use statement for windows
 nb-enum-smb-nbtscan                  scan a local network 
@@ -55,7 +70,7 @@ nb-enum-smb-tcpdump() {
   print -z "tcpdump -i ${__IFACE} host ${__RHOST} and tcp port 445 -w $(__hostpath)/smb.pcap"
 }
 
-nb-enum-smb-null-smbmap() {
+nb-enum-smb-null-smbmap-list() {
   nb-vars-set-rhost
   print -z "smbmap -H ${__RHOST}"
 }
@@ -83,6 +98,18 @@ nb-enum-smb-user-smbmap() {
 nb-enum-smb-null-enum4() {
   nb-vars-set-rhost
   print -z "enum4linux -a ${__RHOST} | tee $(__hostpath)/enumlinux.txt"
+}
+
+nb-enum-smb-null-cme-list() {
+  nb-vars-set-rhost
+  print -z "crackmapexec smb ${__RHOST} --shares -u '' -p ''"
+}
+
+nb-enum-smb-user-cme-list() {
+  nb-vars-set-rhost
+  nb-vars-set-user
+  nb-vars-set-pass
+  print -z "crackmapexec smb ${__RHOST} --shares -u '${__USER}' -p '${__PASS}'"
 }
 
 nb-enum-smb-null-smbclient-list() {
