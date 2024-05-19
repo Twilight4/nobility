@@ -20,35 +20,35 @@ Shares Enumeration
 -------------------------------------
 NULL Session
 ------------
-nb-enum-smb-null-cme-list            list shares with cme null session
-nb-enum-smb-samrdump                 dump info using impacket
+nb-enum-smb-null-cme-list            list shares with cme
+nb-enum-smb-null-samrdump            info using impacket
 nb-enum-smb-null-smbmap-list         query with smbmap
 nb-enum-smb-null-smbmap-list-rec     list shares recursively
-nb-enum-smb-null-smbclient-list      list shares with a null session
-nb-enum-smb-null-smbclient-list-rec  list shares recursively with a null session
+nb-enum-smb-null-smbclient-list      list shares
+nb-enum-smb-null-smbclient-list-rec  list shares recursively
 
 AUTH Session
 ------------
 nb-enum-smb-user-smbmap              query with smbmap authenticated session
 nb-enum-smb-user-cme-list            list shares with cme authenticated session
 
-Connecting to service
+Connecting to Service
 -------------------------------------
 nb-enum-smb-null-smbclient-connect   connect with a null session
 nb-enum-smb-user-smbclient-connect   connect with an authenticated session
+nb-enum-smb-null-rpcclient           use rcpclient for queries
 
 Other Commands
 -------------------------------------
 nb-enum-smb-null-smbmap-download     download a file from a share
+nb-enum-smb-null-smbget-download-rec recursively download the SMB share
 nb-enum-smb-hydra                    brute force password/login for a user account
-
 nb-enum-smb-install                  installs dependencies
 nb-enum-smb-tcpdump                  capture traffic to and from a host
 nb-enum-user-smb-mount               mount an SMB share
 nb-enum-smb-responder                spoof and get responses using responder
 nb-enum-smb-net-use-null             print a net use statement for windows
 nb-enum-smb-nbtscan                  scan a local network 
-nb-enum-smb-rpcclient                use rcpclient for queries
 
 DOC
 }
@@ -87,6 +87,12 @@ nb-enum-smb-null-smbmap-download() {
   __ask "File to download"
   local file && __askvar file FILE
   print -z "smbmap -H ${__RHOST} --download \"${__SHARE\\$file\"}"
+}
+
+nb-enum-smb-null-smbget-download-rec() {
+  nb-vars-set-rhost
+  __check-share
+  print -z "smbget -R smb://${__RHOST}/${__SHARE}"
 }
 
 nb-enum-smb-hydra() {
@@ -211,7 +217,7 @@ nb-enum-user-smb-mount() {
   print -z "mount //${__RHOST}/${__SHARE} /mnt/${__SHARE} -o username=${__USER},password=${p}"
 }
 
-nb-enum-smb-samrdump() {
+nb-enum-smb-null-samrdump() {
   nb-vars-set-rhost
   print -z "samrdump.py ${__RHOST}"
 }
@@ -231,7 +237,7 @@ nb-enum-smb-nbtscan() {
   print -z "nbtscan ${__NETWORK}"
 }
 
-nb-enum-smb-rpcclient() {
+nb-enum-smb-null-rpcclient() {
   nb-vars-set-rhost
   print -z "rpcclient -U \" \" ${__RHOST}"
 }
