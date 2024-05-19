@@ -242,7 +242,7 @@ nb-enum-smb-null-samrdump() {
 
 nb-enum-smb-responder() {
   nb-vars-set-iface
-  print -z "responder -I ${__IFACE} -A"
+  print -z "responder -I ${__IFACE} -dwPv | tee $(domadpath)/smb-responder.txt"
 }
 
 nb-enum-smb-net-use-null() {

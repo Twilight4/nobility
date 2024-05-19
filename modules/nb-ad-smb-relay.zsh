@@ -15,7 +15,6 @@ Commands
 --------
 nb-ad-smb-relay-install              installs dependencies
 nb-ad-smb-relay-enum                 identify hosts without smb signing
-nb-ad-smb-relay-responder            capture the SMB requests
 nb-ad-smb-relay-ntlmrelay            replay the SMB requests
 nb-ad-smb-relay-ntlmrelay-shell      get interactive shell
 nb-ad-smb-relay-ntlmrelay-whoami     execute a whoami shell command on a target host using ntlmrelayx.py
@@ -34,13 +33,6 @@ nb-ad-smb-relay-enum() {
   	nb-vars-set-network
 
     print -z "grc nmap --script=smb2-security-mode -p 445 ${__NETWORK} -oA $(netadpath)/nmap-smb-security"
-}
-
-nb-ad-smb-relay-responder() {
-    __check-project
-    nb-vars-set-iface
-
-    print -z "sudo responder -I ${__IFACE} -dwPv | tee $(domadpath)/responder-smb-relay.txt"
 }
 
 nb-ad-smb-relay-ntlmrelay() {
