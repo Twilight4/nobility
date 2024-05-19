@@ -15,7 +15,7 @@ Commands
 nb-enum-mysql-install             installs dependencies
 nb-enum-mysql-nmap-sweep          scan a network for services
 nb-enum-mysql-tcpdump             capture traffic to and from a host
-nb-enum-mysql-client              connect using the mysql client
+nb-enum-mysql-connect             connect using the mysql client
 nb-enum-mysql-auth-bypass         attempt auth bypass
 nb-enum-mysql-hydra               brute force passwords for a user account
 
@@ -30,7 +30,7 @@ nb-enum-mysql-install() {
 nb-enum-mysql-nmap-sweep() {
     __check-project
     nb-vars-set-network
-    print -z "sudo grc nmap -n -Pn -sS -p 3306 ${__NETWORK} -oA $(__netpath)/mysql-sweep"
+    print -z "sudo grc nmap -n -Pn -sS -sV -sC --script mysql-enum -p 3306 ${__NETWORK} -oA $(__netpath)/mysql-sweep"
 }
 
 nb-enum-mysql-tcpdump() {
@@ -40,10 +40,11 @@ nb-enum-mysql-tcpdump() {
     print -z "sudo tcpdump -i ${__IFACE} host ${__RHOST} and tcp port 3306 -w $(__hostpath)/mysql.pcap"
 }
 
-nb-enum-mysql-client(){
+nb-enum-mysql-connect(){
     nb-vars-set-rhost
-    __check-user
-    print -z "mysql -u ${__USER} -p -h ${__RHOST}"
+    nb-vars-set-user
+    nb-vars-set-pass
+    print -z "mysql -u ${__USER} -p ${__PASS} -h ${__RHOST}"
 }
 
 nb-enum-mysql-auth-bypass() {
