@@ -56,7 +56,7 @@ nb-enum-mysql-auth-bypass() {
 nb-enum-mysql-hydra() {
     __check-project
     nb-vars-set-rhost
-    __check-user
+    nb-vars-set-user
     local db && __prefill db DATABASE mysql
-    print -z "hydra -l ${__USER} -P ${__PASSLIST} -e -o $(__hostpath)/mysql-hydra-brute.txt ${__RHOST} MYSQL ${db}"
+    print -z "hydra -l ${__USER} -P ${__PASSLIST} -o $(__hostpath)/mysql-hydra-brute.txt ${__RHOST} mysql ${db} -t 64"
 }

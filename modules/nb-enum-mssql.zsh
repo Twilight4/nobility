@@ -31,7 +31,7 @@ nb-enum-mssql-install() {
 nb-enum-mssql-nmap-sweep() {
     __check-project
     nb-vars-set-network
-    print -z "sudo grc nmap -n -Pn -sS -sC -sV -sU -p T:1433,U:1434 ${__NETWORK} -oA $(__netpath)/mssql-sweep"
+    print -z "sudo grc nmap -n -Pn -sS -sC -sV -p 1433,1434 ${__NETWORK} -oA $(__netpath)/mssql-sweep"
 }
 
 nb-enum-mssql-tcpdump() {
@@ -51,14 +51,14 @@ nb-enum-mssql-sqsh() {
 
 nb-enum-mssql-sqsh-local() {
     nb-vars-set-rhost
-    __check-user
+    nb-vars-set-user
     local db && __askvar db DATABASE
     print -z "sqsh -S ${__RHOST} -U .\\\\${__USER} -P '${__PASS}' -h"
 }
 
 nb-enum-mssql-mssqlclient() {
     nb-vars-set-rhost
-    __check-user
+    nb-vars-set-user
     local db && __askvar db DATABASE
     #print -z "mssqlclient.py ${__USER}@${__RHOST} -db ${db} -windows-auth "
     print -z "mssqlclient.py -p 1433 ${__USER}@${__RHOST}"
@@ -67,6 +67,6 @@ nb-enum-mssql-mssqlclient() {
 nb-enum-mssql-hydra() {
     __check-project
     nb-vars-set-rhost
-    __check-user
-    print -z "hydra -l ${__USER} -P ${__PASSLIST} -e -o $(__hostpath)/mssql-hydra-brute.txt ${__RHOST} MS-SQL -F"
+    nb-vars-set-user
+    print -z "hydra -l ${__USER} -P ${__PASSLIST} -o $(__hostpath)/mssql-hydra-brute-pass.txt ${__RHOST} mssql -F -t 64"
 }
