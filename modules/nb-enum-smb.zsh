@@ -120,9 +120,6 @@ nb-enum-smb-hydra() {
     if [[ $df == "n" ]]; then
       __ask "Enter port number"
       local pn && __askvar pn "PORT_NUMBER"
-    else
-      __err "SOMETHING WENT WRONG. Aborting"
-      exit 1
     fi
 
     if [[ $login == "p" ]]; then
@@ -172,7 +169,7 @@ nb-enum-smb-cme-spray() {
   nb-vars-set-rhost
   nb-vars-set-wordlist
   nb-vars-set-pass
-  print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASS}' --local-auth"
+  print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASS}' --local-auth --continue-on-success"
 }
 
 nb-enum-smb-user-smbmap() {

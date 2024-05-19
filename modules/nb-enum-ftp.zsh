@@ -47,9 +47,6 @@ nb-enum-ftp-hydra() {
     if [[ $df == "n" ]]; then
       __ask "Enter port number"
       local pn && __askvar pn "PORT_NUMBER"
-    else
-      __err "SOMETHING WENT WRONG. Aborting"
-      exit 1
     fi
 
     if [[ $login == "p" ]]; then
