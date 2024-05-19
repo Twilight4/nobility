@@ -40,7 +40,7 @@ nb-enum-smb-install() {
 nb-enum-smb-nmap-sweep() {
   __check-project
   nb-vars-set-network
-  print -z "grc nmap -n -Pn -sS -sU -p445,137-139 ${__NETWORK} -oA $(__netpath)/smb-sweep"
+  print -z "sudo grc nmap -sV -sC --script=smb-enum-shares.nse,smb-enum-users.nse -n -Pn -sS -p445,137-139 ${__NETWORK} -oA $(__netpath)/smb-sweep"
 }
 
 nb-enum-smb-tcpdump() {
