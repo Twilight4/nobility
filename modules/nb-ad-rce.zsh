@@ -3,23 +3,23 @@
 ############################################################# 
 # nb-ad-rce
 #############################################################
-nb-rce-help() {
+nb-ad-rce-help() {
     cat << "DOC" | bat --plain --language=help
 
-nb-rce
+nb-ad-rce
 ----------
-The nb-rce namespace provides commands for getting shells/remote code execution on a target system.
+The nb-ad-rce namespace provides commands for getting shells/remote code execution on a target system.
 
 Commands
 --------
-nb-rce-rdp                  connect via rdp to a target host
-nb-rce-evil-winrm           connect via winrm to a target host
-nb-rce-psexec               connect via psexec to a target host
-nb-rce-psexec-msf           connect via metasploit's psexec to a target host
+nb-ad-rce-rdp                  connect via rdp to a target host
+nb-ad-rce-evil-winrm           connect via winrm to a target host
+nb-ad-rce-psexec               connect via psexec to a target host
+nb-ad-rce-psexec-msf           connect via metasploit's psexec to a target host
 DOC
 }
 
-nb-rdp-psexec() {
+nb-ad-rce-psexec() {
   nb-vars-set-rhost
   nb-vars-set-user
   echo
@@ -53,7 +53,7 @@ nb-rdp-psexec() {
   fi
 }
 
-nb-rdp-psexec-msf() {
+nb-ad-rce-psexec-msf() {
   nb-vars-set-rhost
   nb-vars-set-user
   echo
@@ -87,7 +87,7 @@ nb-rdp-psexec-msf() {
   fi
 }
 
-nb-rdp-rdp() {
+nb-ad-rce-rdp() {
   nb-vars-set-rhost
   nb-vars-set-user
   echo
@@ -110,7 +110,7 @@ nb-rdp-rdp() {
     fi
 }
 
-nb-rdp-evil-winrm() {
+nb-ad-rce-evil-winrm() {
   nb-vars-set-rhost
   nb-vars-set-user
 
@@ -133,4 +133,3 @@ nb-rdp-evil-winrm() {
       __err "Invalid option. Please choose 'p' for password or 'h' for hash."
   fi
 }
-
