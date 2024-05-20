@@ -88,7 +88,7 @@ nb-enum-ftp-hydra() {
       fi
     else
       echo
-      __err "Invalid option. Please choose 'p' for password or 'l' for login."
+      __err "Invalid option. Please choose 'p' for password or 'l' for login or 'b' for both."
     fi
 }
 

