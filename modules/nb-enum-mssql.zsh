@@ -10,15 +10,18 @@ nb-enum-mssql
 -------------
 The nb-enum-mssql namespace contains commands for scanning and enumerating MS SQL Server services and databases.
 
-Commands
---------
+Connecting to Service
+---------------------
+nb-enum-mssql-connect             make an interactive database connection
+nb-enum-mssql-connect-local       if we are targetting a local windows account
+nb-enum-mssql-mssqlclient         use an impacket to connect
+nb-enum-mssql-mssqlclient-local   use an impacket to connect to a local windows account
+
+Other Commands
+--------------
 nb-enum-mssql-install             installs dependencies
 nb-enum-mssql-nmap-sweep          scan a network for services
 nb-enum-mssql-tcpdump             capture traffic to and from a host
-nb-enum-mssql-connect             make an interactive database connection
-nb-enum-mssql-connect-local       if we are targetting a local account
-nb-enum-mssql-mssqlclient         use an alternative to sqsh, use impacket to connect
-nb-enum-mssql-mssqlclient-local   use an alternative to sqsh, use impacket to connect
 nb-enum-mssql-hydra               brute force passwords for a user account
 nb-enum-mssql-responder           capture mssql service hash
 
