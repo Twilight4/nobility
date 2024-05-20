@@ -37,7 +37,7 @@ nb-enum-dns-install() {
 nb-enum-dns-nmap-sweep() {
     __check-project
     nb-vars-set-network
-    print -z "sudo grc nmap -n -Pn -sS -sU -p53 ${__NETWORK} -oA $(__netpath)/dns-sweep"
+    print -z "sudo grc nmap -n -Pn -sS -sV -sC -p53 ${__NETWORK} -oA $(__netpath)/dns-sweep"
 }
 
 nb-enum-dns-tcpdump() {
