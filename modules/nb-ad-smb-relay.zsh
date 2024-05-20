@@ -15,7 +15,7 @@ Commands
 --------
 nb-ad-smb-relay-install              installs dependencies
 nb-ad-smb-relay-enum                 identify hosts without smb signing
-nb-ad-smb-relay-ntlmrelay            relay the captured SMB requests (from nb-smb-enum-responder)
+nb-ad-smb-relay-ntlmrelay            relay the captured SMB requests by responder
 nb-ad-smb-relay-ntlmrelay-shell      get interactive shell
 nb-ad-smb-relay-ntlmrelay-command    execute a shell command on a target host using ntlmrelayx.py
 nb-ad-smb-relay-multirelay-command   responder's alternative to ntlmrelayx.py - execute a shell command on a target host
@@ -37,6 +37,24 @@ nb-ad-smb-relay-enum() {
 
 nb-ad-smb-relay-ntlmrelay() {
     __check-project
+
+    __ask "Did you disable SMB in /etc/responder/Responder.conf? (y/n)"
+	  local sm && __askvar sm SMB_OPTION
+    if [[ $sm == "n" ]]; then
+      __err "First disable SMB in /etc/responder/Responder.conf."
+      __info "sudo nvim /etc/responder/Responder.conf"
+      exit 1
+    fi
+
+    __ask "Did you first run responder? (y/n)"
+	  local rp && __askvar rp RESPONDER
+
+    if [[ $rp == "n" ]]; then
+      __err "Run first responder to relay the smb request"
+      __info "nb-enum-smb-responder"
+      exit 1
+    fi
+
 	  __ask "Enter a targets list file"
 	  local targets && __askvar targets TARGETS
 
