@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 ############################################################# 
-# nb-enum-mmysql
+# nb-enum-mysql
 #############################################################
 nb-enum-mysql-help() {
     cat << "DOC" | bat --plain --language=help
@@ -44,7 +44,7 @@ nb-enum-mysql-connect(){
     nb-vars-set-rhost
     nb-vars-set-user
     nb-vars-set-pass
-    print -z "mysql -u ${__USER} -p ${__PASS} -h ${__RHOST}"
+    print -z "mysql -u ${__USER} -p${__PASS} -h ${__RHOST}"
 }
 
 nb-enum-mysql-auth-bypass() {
