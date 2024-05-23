@@ -42,5 +42,5 @@ nb-enum-pop3-hydra() {
     __check-project
     nb-vars-set-rhost
     __check-user
-    print -z "hydra -l ${__USER} -P ${__PASSLIST} -e -o $(__hostpath)/pop3-hydra-brute.txt ${__RHOST} POP3"
+    print -z "hydra -l ${__USER} -P ${__PASSLIST} -o $(__hostpath)/pop3-hydra-brute.txt ${__RHOST} pop3"
 }
