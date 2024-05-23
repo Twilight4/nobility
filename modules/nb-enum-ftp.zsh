@@ -76,14 +76,14 @@ nb-enum-ftp-hydra() {
         if [[ $df == "n" ]]; then
           print -z "hydra -L $ul -P $pl -s $pn -o $(__hostpath)/ftp-hydra-brute.txt ${__RHOST} ftp -t 64 -F"
         else
-          print -z "hydra -L ${__WORDLIST} -P ${__PASSLIST} -o $(__hostpath)/ftp-hydra-brute.txt ${__RHOST} ftp -t 64 -F"
+          print -z "hydra -L $ul -P $pl -o $(__hostpath)/ftp-hydra-brute.txt ${__RHOST} ftp -t 64 -F"
         fi
       else
         nb-vars-set-wordlist
         if [[ $df == "n" ]]; then
-          print -z "hydra -L ${__WORDLIST} -P ${__PASSLIST} -s $pn -o $(__hostpath)/ftp-hydra-brute.txt ${__RHOST} ftp -t 64 -F"
+          print -z "hydra -L $ul -P $pl -s $pn -o $(__hostpath)/ftp-hydra-brute.txt ${__RHOST} ftp -t 64 -F"
         else
-          print -z "hydra -L ${__WORDLIST} -P ${__PASSLIST} -o $(__hostpath)/ftp-hydra-brute.txt ${__RHOST} ftp -t 64 -F"
+          print -z "hydra -L $ul -P $pl -o $(__hostpath)/ftp-hydra-brute.txt ${__RHOST} ftp -t 64 -F"
         fi
       fi
     else
