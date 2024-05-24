@@ -39,6 +39,7 @@ nb-install-rustscan
 nb-install-nessus
 nb-install-dnscat2
 nb-install-dnscat2-powershell
+nb-install-chsel
 
 DOC
 }
@@ -539,5 +540,25 @@ nb-install-dnscat2-powershell() {
     __ask "CONTINUE?"
     if __check-proceed; then
         curl -L https://raw.githubusercontent.com/lukebaggett/dnscat2-powershell/master/dnscat2.ps1 -O "$cat"
+    fi
+}
+
+nb-install-chisel() {
+    local name="chisel"
+    local url="https://github.com/jpillora/$name"
+    local path="/opt/$name"
+
+    __info "$name"
+
+    if [[ ! -d $path ]]
+    then
+        sudo git clone --depth 1 $url $path
+        cd $path
+        go build
+    else
+        __warn "already installed in $path"
+        pushd $path 
+        git pull
+        popd
     fi
 }

