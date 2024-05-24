@@ -191,16 +191,14 @@ nb-pivot-chisel-server() {
     __ok "./chisel server -v -p ${__LPORT} --socks5"
 }
 
-
 nb-pivot-chisel-client() {
     nb-vars-set-rhost
     __ask "Use the same port you used with chisel server"
     nb-vars-set-lport
 
-    __info "On attack host connect to the chisel server:"
-    print -z "chisel client -v ${__RHOST}:${__LPORT} socks"
-    echo
     __info "Add the proxy on port 1080 to proxychains4.conf using command:"
     __ok "echo 'socks5 	127.0.0.1 1080' | sudo tee -a /etc/proxychains4.conf"
     __info "You can now use proxychains with e.g. nmap"
+
+    print -z "chisel client -v ${__RHOST}:${__LPORT} socks"
 }
