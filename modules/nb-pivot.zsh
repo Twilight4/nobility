@@ -11,14 +11,15 @@ nb-pivot
 The pivot namespace provides commands for using ssh to proxy and pivot.
 
 Using Metasploit
------------------
+----------------
 nb-pivot-msf-local-proxy              forwards local port to remote port using msf's local socks4 proxy
 nb-pivot-msf-remote-proxy             forwards local port to remote port
 nb-pivot-msf-reverse-proxy            forwards remote port to local port
 
-Using Chisel
+Using Automated Tools
 ------------
 nb-pivot-chisel                       # TODO use chisel for pivoting
+nb-pivot-sshuttle                     SSH pivoting with sshuttle (without the need of proxychains)
 
 Using SSH
 ---------
@@ -35,11 +36,11 @@ DOC
 
 nb-pivot-install() {
     __info "Running $0..."
-    __pkgs sshfs rsync
+    __pkgs sshfs rsync proxychains sshuttle
 }
 
 nb-pivot-mount-remote-sshfs() { 
-    __check-user
+    nb-vars-set-user
     local lm && __askpath lm LMOUNT /mnt
     local rm && __askvar rm RMOUNT /
     nb-vars-set-rhost
@@ -48,7 +49,7 @@ nb-pivot-mount-remote-sshfs() {
 }
 
 nb-pivot-ssh-dynamic-proxy() {
-    __check-user
+    nb-vars-set-user
     nb-vars-set-rhost
     nb-vars-set-lport
     __info "Add the proxy to proxychains4.conf using command:"
@@ -58,7 +59,7 @@ nb-pivot-ssh-dynamic-proxy() {
 }
 
 nb-pivot-ssh-reverse-proxy() {
-    __check-user
+    nb-vars-set-user
     nb-vars-set-rhost
     nb-vars-set-rport
     nb-vars-set-lport
@@ -98,4 +99,12 @@ nb-pivot-msf-reverse-proxy() {
 
     __info "Use this command in meterpreter shell:"
     __ok "portfwd add -R -l ${__LPORT} -p ${__RPORT} -L ${__RHOST}"
+}
+
+nb-pivot-sshuttle() {
+    nb-vars-set-user
+    nb-vars-set-rhost
+    local sb && __askvar sb NETWORK_SUBNET
+
+    print -z "sudo sshuttle -r ${__USER}@${__RHOST} $sb -v"
 }
