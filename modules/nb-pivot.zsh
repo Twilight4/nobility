@@ -18,12 +18,9 @@ nb-pivot-msf-reverse-proxy            forwards remote port to local port
 
 Using Automated Tools
 ------------
-nb-pivot-chisel                       # TODO
 nb-pivot-sshuttle                     ssh pivoting with sshuttle (without the need of proxychains)
 nb-pivot-rpivot-server                web server pivoting with rpivot server.py
 nb-pivot-rpivot-client                web server pivoting with rpivot client.py
-nb-pivot-dnsca2-server                start the dnscat2 server
-nb-pivot-dnsca2-client                command to establish a tunnel with the server running on our attack host
 
 Using SSH
 ---------
@@ -33,7 +30,7 @@ nb-pivot-ssh-reverse-proxy            forwards remote port to local port
 Branching Out Tunnels
 ---------------------
 nb-pivot-dnscat2-server               create a encrypted channel session over dns protocol in txt records
-nb-pivot-dnscat2-client               command to establish a tunnel with to the running server
+nb-pivot-dnscat2-client               command to establish a tunnel with to the running server on the attack host
 nb-pivot-chisel-server
 nb-pivot-chisel-client
 nb-pivot-icmp-server
