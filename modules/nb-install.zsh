@@ -34,8 +34,10 @@ nb-install-linpeas
 nb-install-amsi-bypass
 nb-install-pipmykali
 nb-install-fluxion
+nb-install-rpivot
 nb-install-rustscan
 nb-install-nessus
+nb-install-dnscat2
 
 DOC
 }
@@ -433,7 +435,7 @@ nb-install-fluxion() {
     if [[ ! -d $path ]]
     then
         sudo git clone --depth 1 $url $path
-        sudo ln -sf /opt/fluxion/fluxion.sh /bin/fluxion
+        sudo ln -sf /opt/$name/fluxion.sh ~/.config/.local/bin/$name
         __info "'which fluxion' should be: aliased to 'xhost +SI:localuser:root && sudo fluxion'"
     else
         __warn "already installed in $path"
@@ -499,4 +501,23 @@ nb-install-nessus() {
 
     __info 'Then go to https://kali:8834/ - select Nessus Essentials for the free version, and then enter the activation code'
     __info 'If you get Nessus Invalid Field: Bad Format - check if theres no leading space in the activation code form'
+}
+
+nb-install-dnscat2() {
+    local name="dnscat2"
+    local url="https://github.com/klsecservices/$name"
+    local path="/opt/$name"
+
+    __info "$name"
+
+    if [[ ! -d $path ]]
+    then
+        sudo git clone --depth 1 $url $path
+        sudo ln -sf /opt/$name/server/dnscat2.rb ~/.config/.local/bin/dnscat2
+    else
+        __warn "already installed in $path"
+        pushd $path 
+        git pull
+        popd
+    fi
 }
