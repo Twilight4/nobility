@@ -14,7 +14,7 @@ Commands
 --------
 nb-pivot-install                      installs dependencies
 nb-pivot-mount-remote-sshfs           mounts a remote directory to local /mnt path using sshfs
-nb-pivot-ssh-dynamic-proxy            uses remote as a dynamic proxy
+nb-pivot-ssh-dynamic-proxy            enable dynamic port forwarding with ssh
 nb-pivot-ssh-remote-to-local          forwards remote port to local port
 nb-pivot-ssh-remote-to-local-burp     forwards remote port 8080 to local port 8080
 nb-pivot-chisel                       # TODO use chisel for pivoting
@@ -41,6 +41,9 @@ nb-pivot-ssh-dynamic-proxy() {
     nb-vars-set-rhost
     nb-vars-set-lport
     print -z "ssh -D ${__LPORT} -CqN ${__USER}@${__RHOST}" 
+
+    __info "Add the proxy to proxychains4.conf using command:"
+    __ok "echo 'socks4 	127.0.0.1 ${__LPORT}' | sudo tee -a /etc/proxychains4.conf"
 }
 
 nb-pivot-ssh-remote-to-local() {
