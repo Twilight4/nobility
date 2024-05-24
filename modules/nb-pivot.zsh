@@ -32,8 +32,12 @@ nb-pivot-ssh-reverse-proxy            forwards remote port to local port
 
 Branching Out Tunnels
 ---------------------
-nb-pivot-dnsca2-server
-nb-pivot-dnsca2-client
+nb-pivot-dnscat2-server               create a encrypted channel session over dns protocol in txt records
+nb-pivot-dnscat2-client               command to establish a tunnel with to the running server
+nb-pivot-chisel-server
+nb-pivot-chisel-client
+nb-pivot-icmp-server
+nb-pivot-icmp-client
 
 Commands
 --------
