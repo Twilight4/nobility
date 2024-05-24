@@ -8,7 +8,7 @@ nb-pivot-help() {
 
 nb-pivot
 ------------
-The pivot namespace provides commands for using ssh to proxy and pivot.
+The pivot namespace provides commands for using proxies for pivoting.
 
 Using Metasploit
 ----------------
@@ -18,8 +18,9 @@ nb-pivot-msf-reverse-proxy            forwards remote port to local port
 
 Using Automated Tools
 ------------
-nb-pivot-chisel                       # TODO use chisel for pivoting
-nb-pivot-sshuttle                     SSH pivoting with sshuttle (without the need of proxychains)
+nb-pivot-chisel                       # TODO
+nb-pivot-sshuttle                     ssh pivoting with sshuttle (without the need of proxychains)
+nb-pivot-rpivot-server                web server pivoting with rpivot
 
 Using SSH
 ---------
@@ -36,7 +37,7 @@ DOC
 
 nb-pivot-install() {
     __info "Running $0..."
-    __pkgs sshfs rsync proxychains sshuttle
+    __pkgs sshfs rsync proxychains sshuttle python2.7
 }
 
 nb-pivot-mount-remote-sshfs() { 
@@ -107,4 +108,21 @@ nb-pivot-sshuttle() {
     local sb && __askvar sb NETWORK_SUBNET
 
     print -z "sudo sshuttle -r ${__USER}@${__RHOST} $sb -v"
+}
+
+nb-pivot-rpivot-server() {
+    nb-vars-set-lport
+    print -z "python2.7 server.py --proxy-port ${__LPORT} --server-port 9999 --server-ip 0.0.0.0"
+}
+
+nb-pivot-rpivot-client() {
+    __ask "Did you transfer the 'rpivot' to the target? (y/n)"
+    local rp && __askvar rp "ANSWER"
+
+    if [[ $sh == "n" ]]; then
+      __err "Transfer 'rpivot' to target before proceeding."
+      __info "Use nb-srv-scp-up"
+      exit 1
+    fi
+
 }
