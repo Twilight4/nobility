@@ -95,13 +95,13 @@ nb-ad-rce-freerdp() {
     __ask "Do you want to log in using a password or a hash? (p/h)"
     local login && __askvar login "LOGIN_OPTION"
 
-    __ask "Do you wanna share a directory via RDP?"
-    local dir && __askvar dir "SHARE_DIRECTORY"
-
     if [[ $login == "p" ]]; then
-        echo
         __ask "Enter a password for authentication"
         nb-vars-set-pass
+
+        __ask "Do you wanna share a directory via RDP?"
+        local dir && __askvar dir "SHARE_DIRECTORY"
+
         if [[ $dir == "y" ]]; then
             local d && __askpath d DIRECTORY $HOME
             print -z "wlfreerdp /v:${__RHOST} /u:'${__USER}' /p:'${__PASS}' /cert:ignore +drive:smbfolder,$d"
@@ -109,9 +109,12 @@ nb-ad-rce-freerdp() {
             print -z "wlfreerdp /v:${__RHOST} /u:'${__USER}' /p:'${__PASS}'"
         fi
     elif [[ $login == "h" ]]; then
-        echo
         __ask "Enter the NTLM hash for authentication"
         __check-hash
+
+        __ask "Do you wanna share a directory via RDP?"
+        local dir && __askvar dir "SHARE_DIRECTORY"
+
         if [[ $dir == "y" ]]; then
             local d && __askpath d DIRECTORY $HOME
             print -z "wlfreerdp /v:${__RHOST} /u:'${__USER}' /pth:'${__HASH}' /cert:ignore +drive:smbfolder,$d"
