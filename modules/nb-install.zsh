@@ -38,6 +38,7 @@ nb-install-rpivot
 nb-install-rustscan
 nb-install-nessus
 nb-install-dnscat2
+nb-install-dnscat2-powershell
 
 DOC
 }
@@ -519,5 +520,21 @@ nb-install-dnscat2() {
         pushd $path 
         git pull
         popd
+    fi
+}
+
+nb-install-dnscat2-powershell() {
+    local cat="$SV/dnscat2.ps1"
+
+    # Check if file already exists
+    if [ -f "$cat" ]; then
+        echo "dnscat2.ps1 is already installed."
+        return
+    fi
+
+    __cyan "This will install dnscat2.ps1"
+    __ask "CONTINUE?"
+    if __check-proceed; then
+        curl -L https://raw.githubusercontent.com/lukebaggett/dnscat2-powershell/master/dnscat2.ps1 -O "$cat"
     fi
 }
