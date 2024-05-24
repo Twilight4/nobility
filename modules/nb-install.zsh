@@ -443,6 +443,24 @@ nb-install-fluxion() {
     fi
 }
 
+nb-install-rpivot() {
+    local name="rpivot"
+    local url="https://github.com/klsecservices/$name"
+    local path="/opt/$name"
+
+    __info "$name"
+
+    if [[ ! -d $path ]]
+    then
+        sudo git clone --depth 1 $url $path
+    else
+        __warn "already installed in $path"
+        pushd $path 
+        git pull
+        popd
+    fi
+}
+
 nb-install-rustscan() {
     # Check for the newest version manually
     local rustscan_version="1.8.0"

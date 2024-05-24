@@ -121,7 +121,7 @@ nb-pivot-rpivot-client() {
 
     if [[ $sh == "n" ]]; then
       __err "Transfer 'rpivot' to target before proceeding."
-      __info "Use nb-srv-scp-up"
+      __info "Use nb-srv-scp-up (scp -r)"
       exit 1
     fi
 
