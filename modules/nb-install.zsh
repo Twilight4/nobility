@@ -513,7 +513,7 @@ nb-install-dnscat2() {
     if [[ ! -d $path ]]
     then
         sudo git clone --depth 1 $url $path
-        sudo ln -sf /opt/$name/server/dnscat2.rb ~/.config/.local/bin/dnscat2
+        sudo ln -sf /opt/$name/server/dnscat2.rb /bin/dnscat2
     else
         __warn "already installed in $path"
         pushd $path 
