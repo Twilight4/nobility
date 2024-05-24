@@ -121,12 +121,12 @@ nb-ad-rce-evil-winrm() {
   if [[ $login == "p" ]]; then
       echo
       __ask "Enter a password for authentication"
-      __check-pass
+      nb-vars-set-pass
       print -z "evil-winrm -i ${__RHOST} -u '${__USER}' -p '${__PASS}'"
   elif [[ $login == "h" ]]; then
       echo
       __ask "Enter the NTLM hash for authentication"
-      __check-hash
+      nb-vars-set-pass
       print -z "evil-winrm -i ${__RHOST} -u '${__USER}' -H '${__HASH}'"
   else
       echo
