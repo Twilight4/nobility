@@ -33,6 +33,9 @@ nb-pivot-ssh-reverse-proxy            forwards remote port to local port
 
 Commands
 --------
+nb-pivot-ping-sweep-linux             command to run ping sweep on a network subnet on linux
+nb-pivot-ping-sweep-windows-cmd       command to run ping sweep on a network subnet on windows
+nb-pivot-ping-sweep-windows-pwsh      command to run ping sweep on a network subnet on windows powershell
 nb-pivot-mount-remote-sshfs           mounts a remote directory to local /mnt path using sshfs
 nb-pivot-install                      installs dependencies
 
@@ -196,4 +199,25 @@ nb-pivot-chisel-client() {
     __info "You can now use proxychains with e.g. nmap"
 
     print -z "chisel client -v ${__RHOST}:${__LPORT} socks"
+}
+
+nb-pivot-ping-sweep-linux() {
+    local sb && __askvar sb NETWORK_SUBNET
+
+    __info "Use the following command in linux:"
+    __ok "for i in {1..254} ;do (ping -c 1 $sb\$.i | grep \"bytes from\" &) ;done"
+}
+
+nb-pivot-ping-sweep-windows-cmd() {
+    local sb && __askvar sb NETWORK_SUBNET
+
+    __info "Use the following command in windows cmd:"
+    __ok "for /L %i in (1 1 254) do ping $sb.%i -n 1 -w 100"
+}
+
+nb-pivot-ping-sweep-windows-pwsh() {
+    local sb && __askvar sb NETWORK_SUBNET
+
+    __info "Use the following command in windows powershell:"
+    __ok "1..254 | % {\"172.16.5.\$(\$_): \$(Test-Connection -count 1 -comp \"$sb\".\$(\$_) -quiet)\"}"
 }
