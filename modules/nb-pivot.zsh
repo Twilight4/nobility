@@ -12,7 +12,9 @@ The pivot namespace provides commands for using ssh to proxy and pivot.
 
 Using Metasploit
 -----------------
-nb-pivot-ssh-socks-proxy-msf          configure msf's local proxy
+nb-pivot-msf-local-proxy              forwards local port to remote port using msf's local socks4 proxy
+nb-pivot-msf-remote-proxy             forwards local port to remote port
+nb-pivot-msf-reverse-proxy            forwards remote port to local port
 
 Using Chisel
 ------------
@@ -20,12 +22,12 @@ nb-pivot-chisel                       # TODO use chisel for pivoting
 
 Using SSH
 ---------
-nb-pivot-mount-remote-sshfs           mounts a remote directory to local /mnt path using sshfs
-nb-pivot-ssh-dynamic-proxy            enable dynamic port forwarding with ssh
-nb-pivot-ssh-remote-to-local          forwards remote port to local port
+nb-pivot-ssh-dynamic-proxy            forwards local port to remote port using ssh's dynamic socks4 proxy
+nb-pivot-ssh-reverse-proxy            forwards remote port to local port
 
 Commands
 --------
+nb-pivot-mount-remote-sshfs           mounts a remote directory to local /mnt path using sshfs
 nb-pivot-install                      installs dependencies
 
 DOC
@@ -55,7 +57,15 @@ nb-pivot-ssh-dynamic-proxy() {
     print -z "ssh -D ${__LPORT} -CqN ${__USER}@${__RHOST}" 
 }
 
-nb-pivot-ssh-socks-proxy-msf() {
+nb-pivot-ssh-reverse-proxy() {
+    __check-user
+    nb-vars-set-rhost
+    nb-vars-set-rport
+    nb-vars-set-lport
+    print -z "ssh -R ${__LPORT}:127.0.0.1:${__RPORT} ${__USER}@${__RHOST}" 
+}
+
+nb-pivot-msf-local-proxy() {
     nb-vars-set-lport
     local sb && __askvar sb SUBNET
     __info "Add the proxy to proxychains4.conf using command:"
@@ -70,10 +80,20 @@ nb-pivot-ssh-socks-proxy-msf() {
     __info "You can now use proxychains with e.g. nmap"
 }
 
-nb-pivot-ssh-remote-to-local() {
-    __check-user
+nb-pivot-msf-remote-proxy() {
     nb-vars-set-rhost
     nb-vars-set-rport
     nb-vars-set-lport
-    print -z "ssh -R ${__LPORT}:127.0.0.1:${__RPORT} ${__USER}@${__RHOST}" 
+
+    __info "Use this command in meterpreter shell:"
+    __ok "portfwd add -l ${__LPORT} -p ${__RPORT} -r ${__RHOST}"
+}
+
+nb-pivot-msf-reverse-proxy() {
+    nb-vars-set-rhost
+    nb-vars-set-rport
+    nb-vars-set-lport
+
+    __info "Use this command in meterpreter shell:"
+    __ok "portfwd add -R -l ${__LPORT} -p ${__RPORT} -L ${__RHOST}"
 }
