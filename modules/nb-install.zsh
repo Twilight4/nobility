@@ -515,6 +515,9 @@ nb-install-dnscat2() {
     then
         sudo git clone --depth 1 $url $path
         sudo ln -sf /opt/$name/server/dnscat2.rb /bin/dnscat2
+        __warn "If you get the error 'cannot load such file --ecdsa (loaderror)', run commands:"
+        __ok "sudo gem install bundler"
+        __ok "sudo bundle install"
     else
         __warn "already installed in $path"
         pushd $path 
