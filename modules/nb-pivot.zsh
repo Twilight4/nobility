@@ -10,14 +10,23 @@ nb-pivot
 ------------
 The pivot namespace provides commands for using ssh to proxy and pivot.
 
+Using Metasploit
+-----------------
+nb-pivot-ssh-socks-proxy-msf          configure msf's local proxy
+
+Using Chisel
+------------
+nb-pivot-chisel                       # TODO use chisel for pivoting
+
+Using SSH
+---------
+nb-pivot-mount-remote-sshfs           mounts a remote directory to local /mnt path using sshfs
+nb-pivot-ssh-dynamic-proxy            enable dynamic port forwarding with ssh
+nb-pivot-ssh-remote-to-local          forwards remote port to local port
+
 Commands
 --------
 nb-pivot-install                      installs dependencies
-nb-pivot-mount-remote-sshfs           mounts a remote directory to local /mnt path using sshfs
-nb-pivot-ssh-dynamic-proxy            enable dynamic port forwarding with ssh
-nb-pivot-ssh-socks-proxy-msf          configure msf's local proxy
-nb-pivot-ssh-remote-to-local          forwards remote port to local port
-nb-pivot-chisel                       # TODO use chisel for pivoting
 
 DOC
 }
