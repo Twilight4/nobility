@@ -10,6 +10,13 @@ nb-pivot
 ------------
 The pivot namespace provides commands for using proxies for pivoting.
 
+Branching Out Tunnels
+---------------------
+nb-pivot-dnscat2-server               create a encrypted channel session over dns protocol in txt records
+nb-pivot-dnscat2-client               command to establish a tunnel with to the running server on the attack host
+nb-pivot-chisel-server                socks5 tcp/udp tunneling via http protocol using ssh with chisel server
+nb-pivot-chisel-client                socks5 tcp/udp tunneling via http protocol using ssh with chisel client
+
 Using Metasploit
 ----------------
 nb-pivot-msf-local-proxy              forwards local port to remote port using msf's local socks4 proxy
@@ -26,15 +33,6 @@ Using SSH
 ---------
 nb-pivot-ssh-dynamic-proxy            forwards local port to remote port using ssh's dynamic socks4 proxy
 nb-pivot-ssh-reverse-proxy            forwards remote port to local port
-
-Branching Out Tunnels
----------------------
-nb-pivot-dnscat2-server               create a encrypted channel session over dns protocol in txt records
-nb-pivot-dnscat2-client               command to establish a tunnel with to the running server on the attack host
-nb-pivot-chisel-server                socks5 tcp/udp tunneling via http protocol using ssh with chisel server
-nb-pivot-chisel-client                socks5 tcp/udp tunneling via http protocol using ssh with chisel client
-nb-pivot-icmp-server
-nb-pivot-icmp-client
 
 Commands
 --------
