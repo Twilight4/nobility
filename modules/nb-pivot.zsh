@@ -8,7 +8,7 @@ nb-pivot-help() {
 
 nb-pivot
 ------------
-The pivot namespace provides commands for using proxies for pivoting.
+The pivot namespace provides commands for pivoting, tunneling, port forwarding TTPs.
 
 Using Automated Tools
 ---------------------
