@@ -15,6 +15,7 @@ Commands
 nb-ad-enum-responder            starts responder with passive analysis mode enabled (passively listen to the network and not send any poisoned packets)
 nb-ad-enum-fping                fping active checks to validates which hosts are active on a network subnet
 nb-ad-enum-nmap                 scan the list of active hosts within the network
+nb-ad-enum-kerbrute-userenum    use kerbrute to brute force valid usernames
 nb-ad-enum-install              install dependencies
 nb-ad-enum-ldapdomaindump       enumerate with ldapdomaindump
 nb-ad-enum-bloodhound           enumerate with bloodhound
@@ -22,11 +23,29 @@ nb-ad-enum-bloodhound           enumerate with bloodhound
 DOC
 }
 
+nb-ad-enum-kerbrute-userenum() {
+    __check-project
+    nb-vars-set-domain
+    local dc && __askvar dc DC_IP
+
+    __ask "Do you wanna manually specify wordlists? (y/n)"
+    local sw && __askvar sw "SPECIFY_WORDLIST"
+
+    if [[ $sw == "y" ]]; then
+      __ask "Select a user list"
+      __askpath ul FILE $HOME/desktop/projects/
+
+      print -z "kerbrute userenum -d ${__DOMAIN} --dc $dc $ul -o $(__hostadpath)/valid_ad_users.txt"
+    else
+      print -z "kerbrute userenum -d ${__DOMAIN} --dc $dc ${__WORDLIST} -o $(__hostadpath)/valid_ad_users.txt"
+    fi
+}
+
 nb-ad-enum-nmap() {
     __check-project
     __ask "Specify the file with the list of active hosts"
     local f && __askpath f FILE $HOME/desktop/projects/
-    print -z "sudo nmap -v -A -iL hosts.txt -oA $(__netadpath)/hosts-enum"
+    print -z "sudo grc nmap -v -A -iL $f -oA $(__netadpath)/hosts-enum"
 }
 
 nb-ad-enum-fping() {

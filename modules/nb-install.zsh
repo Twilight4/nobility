@@ -40,6 +40,7 @@ nb-install-nessus
 nb-install-dnscat2
 nb-install-dnscat2-powershell
 nb-install-chsel
+nb-install-kerbrute
 
 DOC
 }
@@ -437,7 +438,7 @@ nb-install-fluxion() {
     if [[ ! -d $path ]]
     then
         sudo git clone --depth 1 $url $path
-        sudo ln -sf /opt/$name/fluxion.sh ~/.config/.local/bin/$name
+        sudo ln -sf /opt/$name/fluxion.sh /bin/$name
         __info "'which fluxion' should be: aliased to 'xhost +SI:localuser:root && sudo fluxion'"
     else
         __warn "already installed in $path"
@@ -483,7 +484,7 @@ nb-install-rustscan() {
     __info "Cleaning up..."
     rm "/tmp/${deb_file}" || { echo "Failed to clean up."; return 1; }
 
-    __info "RustScan ${rustscan_version} installed successfully."
+    __ok "RustScan ${rustscan_version} installed successfully."
 }
 
 nb-install-nessus() {
@@ -561,4 +562,20 @@ nb-install-chisel() {
         git pull
         popd
     fi
+}
+
+nb-install-kerbrute() {
+    # Check for the newest version manually
+    local ver="1.0.3"
+    local file="kerbrute_linux_amd64"
+    local download_url="https://github.com/ropnop/kerbrute/releases/download/v$ver/$file"
+
+    # Download precompiled kerbrute binary
+    __info "Downloading kerbrute ${ver}..."
+    wget "$download_url" -O /tmp/kerbrute || { echo "Failed to download kerbrute."; return 1; }
+
+    # Move kerbrute to path
+    __info "Installing kerbrute ${ver}..."
+    sudo mv "/tmp/kerbrute" /bin/kerbrute || { echo "Failed to install kerbrute."; return 1; }
+    __ok "kerbrute ${ver} installed successfully."
 }
