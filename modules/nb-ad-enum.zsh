@@ -27,7 +27,8 @@ nb-ad-enum-ldap-anon-users      use ldap anonymous search to enumerate valid use
 Enumeration - With Authentication
 -------------------------------
 nb-ad-enum-cme-users-auth       use crackmapexec with authentication to enumerate valid usernames
-
+nb-ad-enum-cme-groups-auth      use crackmapexec with authentication to enumerate domain groups
+nb-ad-enum-cme-loggedon-auth    use crackmapexec with authentication to enumerate logged on users
 
 Domain Enumeration - With Authentication
 --------------------------------------
@@ -85,6 +86,76 @@ nb-ad-enum-cme-users-auth() {
         __ask "Enter the NTLM hash for authentication"
         __check-hash
         print -z "crackmapexec smb $dc -u ${__USER} -H ${__HASH} --local-auth --users"
+    else
+        echo
+        __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+    fi
+}
+
+nb-ad-enum-cme-groups-auth() {
+    __check-project
+    nb-vars-set-user
+	  __ask "Enter the IP address of the target DC server"
+    local dc && __askvar dc DC_IP
+
+    __ask "Do you want to log in using a password or a hash? (p/h)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    if [[ $login == "p" ]]; then
+        __ask "Do you want to add a domain? (y/n)"
+        local add_domain && __askvar add_domain "ADD_DOMAIN_OPTION"
+
+        if [[ $add_domain == "y" ]]; then
+            __ask "Enter the domain"
+            nb-vars-set-domain
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb $dc -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --groups"
+        else
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb $dc -u ${__USER} -p '${__PASS}' --groups"
+        fi
+    elif [[ $login == "h" ]]; then
+        echo
+        __ask "Enter the NTLM hash for authentication"
+        __check-hash
+        print -z "crackmapexec smb $dc -u ${__USER} -H ${__HASH} --local-auth --groups"
+    else
+        echo
+        __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+    fi
+}
+
+nb-ad-enum-cme-loggedon-auth() {
+    __check-project
+    nb-vars-set-user
+	  __ask "Enter the IP address of the target DC server"
+    local dc && __askvar dc DC_IP
+
+    __ask "Do you want to log in using a password or a hash? (p/h)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    if [[ $login == "p" ]]; then
+        __ask "Do you want to add a domain? (y/n)"
+        local add_domain && __askvar add_domain "ADD_DOMAIN_OPTION"
+
+        if [[ $add_domain == "y" ]]; then
+            __ask "Enter the domain"
+            nb-vars-set-domain
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb $dc -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --loggedon-users"
+        else
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb $dc -u ${__USER} -p '${__PASS}' --loggedon-users"
+        fi
+    elif [[ $login == "h" ]]; then
+        echo
+        __ask "Enter the NTLM hash for authentication"
+        __check-hash
+        print -z "crackmapexec smb $dc -u ${__USER} -H ${__HASH} --local-auth --loggedon-users"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
