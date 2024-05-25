@@ -15,26 +15,9 @@ Commands
 nb-ad-kerb-install        installs dependencies
 nb-ad-kerb-nmap-sweep     scan a network for services
 nb-ad-kerb-tcpdump        capture traffic to and from a host
-nb-ad-kerb-pass-spray     perform password spraying
 nb-ad-kerb-kerberoast     get SPN for a service account
 
 DOC
-}
-
-nb-ad-kerb-pass-spray() {
-    __check-project
-    nb-vars-set-domain
-
-	  __ask "Enter the IP address of the target DC server"
-    local dc && __askvar dc DC_IP
-
-    __ask "Select a user list"
-    __askpath ul FILE $HOME/desktop/projects/
-
-	  __ask "Enter the password for spraying"
-    local pw && __askvar pw PASSWORD
-
-    print -z "kerbrute passwordspray -d ${__DOMAIN} --dc $dc $ul $pw -o $(__netadpath)/kerbrute-password-spray.txt"
 }
 
 nb-ad-kerb-install() {
