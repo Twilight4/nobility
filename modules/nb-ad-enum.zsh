@@ -21,6 +21,7 @@ Making a Target User List (without domain account)
 --------------------------------------------------
 nb-ad-enum-kerbrute-users       use kerbrute to enumerate valid usernames 
 nb-ad-enum-cme-users            use crackmapexec to enumerate valid usernames
+nb-ad-enum-cme-users-auth       use crackmapexec with authentication to enumerate valid usernames
 nb-ad-enum-enum4-users          use enum4linux to enumerate valid usernames
 nb-ad-enum-ldap-anon-users      use ldap anonymous search to enumerate valid usernames
 
@@ -49,6 +50,41 @@ nb-ad-enum-cme-users() {
     local dc && __askvar dc DC_IP
 
     print -z "crackmapexec smb $dc --users"
+}
+
+nb-ad-enum-cme-users-auth() {
+    __check-project
+    nb-vars-set-user
+	  __ask "Enter the IP address of the target DC server"
+    local dc && __askvar dc DC_IP
+
+    __ask "Do you want to log in using a password or a hash? (p/h)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    if [[ $login == "p" ]]; then
+        __ask "Do you want to add a domain? (y/n)"
+        local add_domain && __askvar add_domain "ADD_DOMAIN_OPTION"
+
+        if [[ $add_domain == "y" ]]; then
+            __ask "Enter the domain"
+            nb-vars-set-domain
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb $dc -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --users"
+        else
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb $dc -u ${__USER} -p '${__PASS}' --users"
+        fi
+    elif [[ $login == "h" ]]; then
+        echo
+        __ask "Enter the NTLM hash for authentication"
+        __check-hash
+        print -z "crackmapexec smb $dc -u ${__USER} -H ${__HASH} --local-auth --users"
+    else
+        echo
+        __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+    fi
 }
 
 nb-ad-enum-ldapsearch-pass-pol() {
