@@ -12,11 +12,27 @@ The nb-ad-enum namespace contains commands for enumerating Active Directory DC, 
 
 Commands
 --------
+nb-ad-enum-fping                fping active checks to validates which hosts are active on a network subnet
+nb-ad-enum-responder            starts responder with passive analysis mode enabled (passively listen to the network and not send any poisoned packets)
 nb-ad-enum-install              install dependencies
 nb-ad-enum-ldapdomaindump       enumerate with ldapdomaindump
 nb-ad-enum-bloodhound           enumerate with bloodhound
 
 DOC
+}
+
+nb-ad-enum-fping() {
+    __check-project
+    __ask "Specify also a CIDR subnet mask e.g. /23"
+    nb-vars-set-rhost
+    print -z "fping -asgq ${__RHOST}"
+}
+
+nb-ad-enum-responder() {
+    __check-project
+    nb-vars-set-iface
+
+    print -z "sudo responder -I ${__IFACE} -A"
 }
 
 nb-ad-enum-install() {
