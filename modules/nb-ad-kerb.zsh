@@ -34,7 +34,7 @@ nb-ad-kerb-pass-spray() {
 	  __ask "Enter the password for spraying"
     local pw && __askvar pw PASSWORD
 
-    print -z "kerbrute passwordspray -d ${__DOMAIN} --dc $dc $ul $pw"
+    print -z "kerbrute passwordspray -d ${__DOMAIN} --dc $dc $ul $pw -o $(__netadpath)/kerbrute-password-spray.txt"
 }
 
 nb-ad-kerb-install() {

@@ -14,6 +14,7 @@ Protocol Attacks
 ----------------
 nb-enum-smb-brute-hydra              brute force password/login for a user account with hydra
 nb-enum-smb-brute-cme                brute force password/login for a user account with cme
+nb-enum-smb-pass-spray               perform password spraying
 
 Automated Enumeration tools
 -------------------------------------
@@ -165,6 +166,22 @@ nb-enum-smb-brute-hydra() {
       echo
       __err "Invalid option. Please choose 'p' for password or 'l' for login or 'b' for both."
     fi
+}
+
+nb-enum-smb-pass-spray() {
+    __check-project
+    nb-vars-set-domain
+
+	  __ask "Enter the IP address of the target DC server"
+    local dc && __askvar dc DC_IP
+
+    __ask "Select a user list"
+    __askpath ul FILE $HOME/desktop/projects/
+
+	  __ask "Enter the password for spraying"
+    local pw && __askvar pw PASSWORD
+
+    print -z "kerbrute passwordspray -d ${__DOMAIN} --dc $dc $ul $pw -o $(__netadpath)/kerbrute-password-spray.txt"
 }
 
 nb-enum-smb-brute-cme() {
