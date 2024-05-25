@@ -37,6 +37,7 @@ nb-ad-enum-users() {
 
       print -z "kerbrute userenum -d ${__DOMAIN} --dc $dc $ul -o $(__hostadpath)/valid_ad_users.txt"
     else
+      nb-vars-set-wordlist
       print -z "kerbrute userenum -d ${__DOMAIN} --dc $dc ${__WORDLIST} -o $(__hostadpath)/valid_ad_users.txt"
     fi
 }
