@@ -86,7 +86,6 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  -----------------------
  nb-ad-asrep-                   Commands for ASREP-Roast AD attack
  nb-ad-kerb-                    Commands for attacking kerberos
- nb-ad-pth-                     Commands for Pass-The-Hash AD attack
  nb-ad-smb-relay-               Commands for SMB Relay AD attack
  nb-ad-ldap-                    Commands for LDAP enumeration
  nb-ad-rce-                     Commands for RCE on target system
