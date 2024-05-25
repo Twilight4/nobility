@@ -134,7 +134,7 @@ nb-ad-rce-freerdp() {
         __ask "Enter a password for authentication"
         nb-vars-set-pass
 
-        __ask "Do you wanna share a directory via RDP?"
+        __ask "Do you wanna share a directory via RDP? (y/n)"
         local dir && __askvar dir "SHARE_DIRECTORY"
 
         if [[ $dir == "y" ]]; then
@@ -147,7 +147,7 @@ nb-ad-rce-freerdp() {
         __ask "Enter the NTLM hash for authentication"
         __check-hash
 
-        __ask "Do you wanna share a directory via RDP?"
+        __ask "Do you wanna share a directory via RDP? (y/n)"
         local dir && __askvar dir "SHARE_DIRECTORY"
 
         if [[ $dir == "y" ]]; then
