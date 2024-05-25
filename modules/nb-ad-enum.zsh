@@ -294,13 +294,13 @@ nb-ad-enum-ldapdomaindump() {
     __check-project
 	  __check-domain
 	  __ask "Enter the IP address of the target DC server"
-	  nb-vars-set-rhost
+    local dc && __askvar dc DC_IP
     __ask "Enter a user account"
     nb-vars-set-user
     __ask "Enter a password for authentication"
     nb-vars-set-pass
 
-    print -z "ldapdomaindump ${__RHOST} -u "${__DOMAIN}\\${__USER}" -p "${__PASS}" -o $(__domadpath)/ldapdomaindump"}
+    print -z "ldapdomaindump $dc -u "${__DOMAIN}\\${__USER}" -p "${__PASS}" -o $(__domadpath)/ldapdomaindump"}
     __info "Output saved in 'ldapdomaindump' directory"
 }
 
@@ -308,15 +308,17 @@ nb-ad-enum-bloodhound() {
     __check-project
 	  __check-domain
 	  __ask "Enter the IP address of the target DC server"
-	  nb-vars-set-rhost
+    local dc && __askvar dc DC_IP
     __ask "Enter a user account"
     nb-vars-set-user
     __ask "Enter a password for authentication"
     nb-vars-set-pass
 
     pushd $(__domadpath) &> /dev/null
-    print -z "sudo bloodhound-python -d ${__DOMAIN} -u ${__USER} -p ${__PASS} -ns ${__RHOST} -c all"
+    print -z "sudo bloodhound-python -d ${__DOMAIN} -u ${__USER} -p '${__PASS}' -ns $dc -c all"
     __info "Output saved in 'bloodhound' directory"
+    __info "You can zip the .json files together to upload to bloodhound GUI using command:"
+    __ok "zip -r bloodhound-data.zip *.json"
     popd &> /dev/null
 }
 
