@@ -30,6 +30,8 @@ nb-ad-enum-cme-users-auth       use crackmapexec with authentication to enumerat
 nb-ad-enum-cme-groups-auth      use crackmapexec with authentication to enumerate domain groups
 nb-ad-enum-cme-loggedon-auth    use crackmapexec with authentication to enumerate logged-on users
 nb-ad-enum-cme-pass-pol-auth    use crackmapexec to retrieve password policy
+nb-ad-enum-wsearch-domain-admins-auth     use windapsearch.py to enumerate domain admin users
+nb-ad-enum-wsearch-privileged-users-auth  use windapsearch.py to enumerate privileged users
 
 Other Commands - With Authentication
 ------------------------------------
@@ -39,6 +41,30 @@ nb-ad-enum-cme-pass-auth        pass the password/hash
 nb-ad-enum-cme-command-auth     the password/hash and execute command
 
 DOC
+}
+
+nb-ad-enum-wsearch-domain-admins-auth() {
+    __check-project
+    nb-vars-set-user
+    nb-vars-set-pass
+    nb-vars-set-domain
+
+	  __ask "Enter the IP address of the target DC server"
+    local dc && __askvar dc DC_IP
+
+    print -z "python3 windapsearch.py --dc-ip $dc -u ${__USER}@${__DOMAIN} -p ${__PASS} --da"
+}
+
+nb-ad-enum-wsearch-privileged-users-auth() {
+    __check-project
+    nb-vars-set-user
+    nb-vars-set-pass
+    nb-vars-set-domain
+
+	  __ask "Enter the IP address of the target DC server"
+    local dc && __askvar dc DC_IP
+
+    print -z "python3 windapsearch.py --dc-ip $dc -u ${__USER}@${__DOMAIN} -p ${__PASS} -PU"
 }
 
 nb-ad-enum-ldap-anon-users() {
