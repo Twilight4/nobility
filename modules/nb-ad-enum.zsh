@@ -16,9 +16,13 @@ nb-ad-enum-responder            starts responder with passive analysis mode enab
 nb-ad-enum-fping                fping active checks to validates which hosts are active on a network subnet
 nb-ad-enum-nmap                 scan the list of active hosts within the network
 nb-ad-enum-ldapsearch-pass-pol  retrieve password policy using ldapsearch
+
+Making a Target User List (without domain account)
+--------------------------------------------------
+nb-ad-enum-kerbrute-users       use kerbrute to enumerate valid usernames 
 nb-ad-enum-cme-users            use crackmapexec to enumerate valid usernames
-nb-ad-enum-kerbrute-users       use kerbrute to brute force valid usernames
 nb-ad-enum-enum4-users          use enum4linux to enumerate valid usernames
+nb-ad-enum-ldap-anon-users      use ldap anonymous search to enumerate valid usernames
 
 Domain Enumeration
 ------------------
@@ -30,9 +34,17 @@ nb-ad-enum-bloodhound           enumerate with bloodhound
 DOC
 }
 
-nb-ad-enum-cme-users() {
+nb-ad-enum-ldap-anon-users() {
     __check-project
     nb-vars-set-domain
+	  __ask "Enter the IP address of the target DC server"
+    local dc && __askvar dc DC_IP
+    
+    print -z "ldapsearch -h $dc -x -b \"DC=${__DOMAIN},DC=LOCAL\" -s sub \"(&(objectclass=user))\"  | grep sAMAccountName: | cut -f2 -d\" \""
+}
+
+nb-ad-enum-cme-users() {
+    __check-project
 	  __ask "Enter the IP address of the target DC server"
     local dc && __askvar dc DC_IP
 
