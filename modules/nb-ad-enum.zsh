@@ -10,23 +10,27 @@ nb-ad-enum
 ------------
 The nb-ad-enum namespace contains commands for enumerating Active Directory DC, GC and LDAP servers.
 
-Initial Enumeration (without domain account)
+Initial Enumeration - Without Authentication
 --------------------------------------------
 nb-ad-enum-responder            starts responder with passive analysis mode enabled (passively listen to the network and not send any poisoned packets)
 nb-ad-enum-fping                fping active checks to validates which hosts are active on a network subnet
 nb-ad-enum-nmap                 scan the list of active hosts within the network
 nb-ad-enum-ldapsearch-pass-pol  retrieve password policy using ldapsearch
 
-Making a Target User List (without domain account)
+Enumerating Users - Without Authentication
 --------------------------------------------------
 nb-ad-enum-kerbrute-users       use kerbrute to enumerate valid usernames 
 nb-ad-enum-cme-users            use crackmapexec to enumerate valid usernames
-nb-ad-enum-cme-users-auth       use crackmapexec with authentication to enumerate valid usernames
 nb-ad-enum-enum4-users          use enum4linux to enumerate valid usernames
 nb-ad-enum-ldap-anon-users      use ldap anonymous search to enumerate valid usernames
 
-Domain Enumeration
-------------------
+Enumeration - With Authentication
+-------------------------------
+nb-ad-enum-cme-users-auth       use crackmapexec with authentication to enumerate valid usernames
+
+
+Domain Enumeration - With Authentication
+--------------------------------------
 nb-ad-enum-cme-pass-pol         use crackmapexec to retrieve password policy
 nb-ad-enum-install              install dependencies
 nb-ad-enum-ldapdomaindump       enumerate with ldapdomaindump
