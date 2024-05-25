@@ -18,18 +18,19 @@ nb-ad-enum-nmap                 scan the list of active hosts within the network
 nb-ad-enum-ldapsearch-pass-pol  retrieve password policy using ldapsearch
 
 Enumerating Users - Without Authentication
---------------------------------------------------
+------------------------------------------
 nb-ad-enum-kerbrute-users       use kerbrute to enumerate valid usernames 
 nb-ad-enum-cme-users            use crackmapexec to enumerate valid usernames
 nb-ad-enum-enum4-users          use enum4linux to enumerate valid usernames
 nb-ad-enum-ldap-anon-users      use ldap anonymous search to enumerate valid usernames
 
 Domain Enumeration - With Authentication
--------------------------------
+----------------------------------------
 nb-ad-enum-cme-users-auth       use crackmapexec with authentication to enumerate valid usernames
 nb-ad-enum-cme-groups-auth      use crackmapexec with authentication to enumerate domain groups
 nb-ad-enum-cme-loggedon-auth    use crackmapexec with authentication to enumerate logged-on users
 nb-ad-enum-cme-shares-auth      use crackmapexec with authentication to enumerate available shares on the remote host or subnet
+nb-ad-enum-cme-shares-spider-auth  use crackmapexec with authentication to spider available shares on the remote host or subnet
 nb-ad-enum-cme-pass-pol-auth    use crackmapexec to retrieve password policy
 
 Other Commands - With Authentication
@@ -40,6 +41,43 @@ nb-ad-enum-cme-pass-auth        pass the password/hash
 nb-ad-enum-cme-command-auth     the password/hash and execute command
 
 DOC
+}
+
+nb-ad-enum-cme-shares-spider-auth() {
+    __check-project
+    nb-vars-set-network
+    nb-vars-set-user
+
+    __ask "Do you want to log in using a password or a hash? (p/h)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    __ask "Enter name of the share to spider"
+    local sn && __askvar sn "SHARE_NAME"
+
+    if [[ $login == "p" ]]; then
+        __ask "Do you want to add a domain? (y/n)"
+        local add_domain && __askvar add_domain "ADD_DOMAIN_OPTION"
+
+        if [[ $add_domain == "y" ]]; then
+            __ask "Enter the domain"
+            nb-vars-set-domain
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' -M spider_plus --share '$sn' | tee $(__netadpath)/cme-shares-spider-sweep.txt"
+        else
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' -M spider_plus --share '$sn' | tee $(__netadpath)/cme-shares-spider-sweep.txt"
+        fi
+    elif [[ $login == "h" ]]; then
+        echo
+        __ask "Enter the NTLM hash for authentication"
+        __check-hash
+  	    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -M spider_plus --share '$sn' | tee $(__netadpath)/cme-shares-spider-sweep.txt"
+    else
+        echo
+        __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+    fi
 }
 
 nb-ad-enum-cme-shares-auth() {
