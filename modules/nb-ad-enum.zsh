@@ -29,11 +29,46 @@ Domain Enumeration - With Authentication
 nb-ad-enum-cme-users-auth       use crackmapexec with authentication to enumerate valid usernames
 nb-ad-enum-cme-groups-auth      use crackmapexec with authentication to enumerate domain groups
 nb-ad-enum-cme-loggedon-auth    use crackmapexec with authentication to enumerate logged on users
-nb-ad-enum-cme-pass-pol         use crackmapexec to retrieve password policy
+nb-ad-enum-cme-shares-auth      use crackmapexec with authentication to enumerate available shares on the remote host or subnet
+nb-ad-enum-cme-pass-pol-auth    use crackmapexec to retrieve password policy
 nb-ad-enum-ldapdomaindump       enumerate with ldapdomaindump
 nb-ad-enum-bloodhound           enumerate with bloodhound
 
 DOC
+}
+
+nb-ad-enum-cme-shares-auth() {
+    __check-project
+    nb-vars-set-network
+    nb-vars-set-user
+
+    __ask "Do you want to log in using a password or a hash? (p/h)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    if [[ $login == "p" ]]; then
+        __ask "Do you want to add a domain? (y/n)"
+        local add_domain && __askvar add_domain "ADD_DOMAIN_OPTION"
+
+        if [[ $add_domain == "y" ]]; then
+            __ask "Enter the domain"
+            nb-vars-set-domain
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --shares | tee $(__netadpath)/cme-shares-enum-sweep.txt"
+        else
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' --shares | tee $(__netadpath)/cme-shares-enum-sweep.txt"
+        fi
+    elif [[ $login == "h" ]]; then
+        echo
+        __ask "Enter the NTLM hash for authentication"
+        __check-hash
+  	    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --shares | tee $(__netadpath)/cme-shares-enum-sweep.txt"
+    else
+        echo
+        __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+    fi
 }
 
 nb-ad-enum-ldap-anon-users() {
@@ -166,7 +201,7 @@ nb-ad-enum-ldapsearch-pass-pol() {
     print -z "ldapsearch -h ${__RHOST} -x -b \"DC=${__DOMAIN},DC=LOCAL\" -s sub "*" | grep -m 1 -B 10 pwdHistoryLength | tee $(__netadpath)/ldapsearch-pass-pol.txt"
 }
 
-nb-ad-enum-cme-pass-pol() {
+nb-ad-enum-cme-pass-pol-auth() {
     __check-project
     nb-vars-set-network
     nb-vars-set-user
