@@ -135,7 +135,7 @@ nb-ad-enum4-users() {
 	  __ask "Enter the IP address of the target DC server"
     local dc && __askvar dc DC_IP
 
-    print -z "enum4linux -U 172.16.5.5  | grep \"user:\" | cut -f2 -d\"[\" | cut -f1 -d\"] | tee $(__hostadpath)/enum4linux-user-enum.txt"
+    print -z "enum4linux -U 172.16.5.5  | grep \"user:\" | cut -f2 -d\"[\" | cut -f1 -d\"] | tee $(__netadpath)/enum4linux-user-enum.txt"
 }
 
 nb-ad-enum-kerbrute-users() {
@@ -151,10 +151,10 @@ nb-ad-enum-kerbrute-users() {
       __ask "Select a user list"
       __askpath ul FILE $HOME/desktop/projects/
 
-      print -z "kerbrute userenum -d ${__DOMAIN} --dc $dc $ul -o $(__hostadpath)/kerbrute-user-enum.txt"
+      print -z "kerbrute userenum -d ${__DOMAIN} --dc $dc $ul -o $(__netadpath)/kerbrute-user-enum.txt"
     else
       nb-vars-set-wordlist
-      print -z "kerbrute userenum -d ${__DOMAIN} --dc $dc ${__WORDLIST} -o $(__hostadpath)/kerbrute-user-enum.txt"
+      print -z "kerbrute userenum -d ${__DOMAIN} --dc $dc ${__WORDLIST} -o $(__netadpath)/kerbrute-user-enum.txt"
     fi
 }
 
