@@ -12,8 +12,8 @@ The crack namespace provides commands for crackign password hashes.
 
 Commands
 --------
-nb-crack-hashcat          crack password hash using hashcat with providing hash format
-nb-crack-hashcat-hashlist crack password from provided hashlist using hashcat with format auto-detection
+nb-crack-hashcat          crack password hash using hashcat with provided hash format
+nb-crack-hashcat-list     crack password from provided hashlist
 nb-crack-john             john alternative with hash format detection (use this if you don't know the hash format format)
 nb-crack-john-passwd      convert linux password files to john-readable format (/etc/passwd and /etc/shadow files)
 nb-crack-john-zip         crack a password protected zip archive
@@ -71,15 +71,18 @@ nb-crack-hashcat() {
   fi
 
   echo
-  print -z "hashcat -O -a 0 -m $md ${__HASH} ${__PASSLIST} -o $(__netpath)/hashcat"
+  print -z "hashcat -O -a 0 -m $md ${__HASH} ${__PASSLIST} -o $(__netpath)/hashcat-cracked.txt"
 }
 
-nb-crack-hashcat-hashlist() {
+nb-crack-hashcat-list() {
   __check-project
 	__ask "Enter the hashlist"
-  local hs && __askvar hs "HASHLIST"
-  echo
-  print -z "hashcat -O -a 0 ${hs} ${__PASSLIST} -o $(__netpath)/hashcat"
+  local hs && __askpath hs "HASHLIST" $HOME/desktop/projects/
+
+  __ask "Enter hashcat type for the hash mode:"
+  local md && __askvar md "HASHCAT MODE"
+
+  print -z "hashcat -O -a 0 -m $md ${hs} ${__PASSLIST} -o $(__netpath)/hashcat-cracked.txt"
 }
 
 nb-crack-john() {
@@ -87,7 +90,7 @@ nb-crack-john() {
 	__ask "Enter the hash"
 	__check-hash
 
-  print -z "john --wordlist=${__PASSLIST} --stdout ${__HASH} -o $(__netpath)/john"
+  print -z "john --wordlist=${__PASSLIST} --stdout ${__HASH} -o $(__netpath)/john-cracked.txt"
 }
 
 nb-crack-john-passwd() {

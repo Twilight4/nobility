@@ -300,7 +300,7 @@ nb-enum-smb-null-samrdump() {
 
 nb-enum-smb-responder() {
   nb-vars-set-iface
-  print -z "sudo responder -I ${__IFACE} -dwPv | tee $(__domadpath)/smb-responder.txt"
+  print -z "sudo responder -I ${__IFACE} -dwP | tee $(__domadpath)/smb-responder.txt"
 }
 
 nb-enum-smb-net-use-null() {

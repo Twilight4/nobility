@@ -10,17 +10,64 @@ nb-ad-enum
 ------------
 The nb-ad-enum namespace contains commands for enumerating Active Directory DC, GC and LDAP servers.
 
-Commands
---------
+Initial Enumeration (without domain account)
+--------------------------------------------
 nb-ad-enum-responder            starts responder with passive analysis mode enabled (passively listen to the network and not send any poisoned packets)
 nb-ad-enum-fping                fping active checks to validates which hosts are active on a network subnet
 nb-ad-enum-nmap                 scan the list of active hosts within the network
 nb-ad-enum-users                use kerbrute to brute force valid usernames
+nb-ad-enum-ldap-pass-pol        retrieve password policy using ldapsearch
+
+Domain Enumeration
+------------------
+nb-ad-enum-pass-pol             retrieve password policy with cme
 nb-ad-enum-install              install dependencies
 nb-ad-enum-ldapdomaindump       enumerate with ldapdomaindump
 nb-ad-enum-bloodhound           enumerate with bloodhound
 
 DOC
+}
+
+nb-ad-ldap-search-pass-pol() {
+    __check-project
+    nb-vars-set-domain
+    nb-vars-set-rhost
+
+    print -z "ldapsearch -h ${__RHOST} -x -b \"DC=${__DOMAIN},DC=LOCAL\" -s sub "*" | grep -m 1 -B 10 pwdHistoryLength"
+}
+
+nb-ad-enum-pass-pol() {
+    __check-project
+    nb-vars-set-network
+    nb-vars-set-user
+
+    __ask "Do you want to log in using a password or a hash? (p/h)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    if [[ $login == "p" ]]; then
+        __ask "Do you want to add a domain? (y/n)"
+        local add_domain && __askvar add_domain "ADD_DOMAIN_OPTION"
+
+        if [[ $add_domain == "y" ]]; then
+            __ask "Enter the domain"
+            nb-vars-set-domain
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --pass-pol | tee $(__netadpath)/cme-pass-pol.txt"
+        else
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' --pass-pol | tee $(__netadpath)/cme-pass-pol.txt"
+        fi
+    elif [[ $login == "h" ]]; then
+        echo
+        __ask "Enter the NTLM hash for authentication"
+        __check-hash
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --pass-pol | tee $(__netadpath)/cme-pass-pol.txt"
+    else
+        echo
+        __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+    fi
 }
 
 nb-ad-enum-users() {
