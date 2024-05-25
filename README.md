@@ -184,9 +184,6 @@ nb-ad-enum-ldapdomaindump
 # Kerberoasting
 nb-ad-kerb-kerberoast
 
-# Pass Attack
-nb-ad-pth-pass
-
 # Hash Dump
 nb-ad-dump-secrets
 
