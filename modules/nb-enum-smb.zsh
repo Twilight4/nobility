@@ -37,7 +37,9 @@ nb-enum-smb-null-smbclient-list-rec  list shares recursively
 AUTH Session
 ------------
 nb-enum-smb-user-smbmap              query with smbmap authenticated session
+nb-enum-smb-user-smbmap-list-rec     list shares recursively with authentication
 nb-enum-smb-user-cme-list            list shares with cme authenticated session
+nb-enum-smb-user-cme-spider          spider available shares on the remote host or subnet
 
 Connecting to Service
 -------------------------------------
@@ -78,17 +80,21 @@ nb-enum-smb-tcpdump() {
 }
 
 nb-enum-smb-null-smbmap-list() {
+  __check-project
   nb-vars-set-rhost
   print -z "smbmap -H ${__RHOST}"
 }
 
 nb-enum-smb-null-smbmap-list-rec() {
+  __check-project
   nb-vars-set-rhost
   __check-share
+  __info "You can add --dir-only flag"
   print -z "smbmap -H ${__RHOST} -r ${__SHARE}"
 }
 
 nb-enum-smb-null-smbmap-download() {
+  __check-project
   nb-vars-set-rhost
   __check-share
   __ask "Enter file to download"
@@ -97,6 +103,7 @@ nb-enum-smb-null-smbmap-download() {
 }
 
 nb-enum-smb-null-smbmap-upload() {
+  __check-project
   nb-vars-set-rhost
   __check-share
   __ask "File to download"
@@ -105,6 +112,7 @@ nb-enum-smb-null-smbmap-upload() {
 }
 
 nb-enum-smb-null-smbget-download-rec() {
+  __check-project
   nb-vars-set-rhost
   __check-share
   print -z "smbget -R smb://${__RHOST}/${__SHARE}"
@@ -241,6 +249,7 @@ nb-enum-smb-brute-cme() {
 }
 
 nb-enum-smb-cme-spray() {
+  __check-project
   nb-vars-set-rhost
   nb-vars-set-wordlist
   nb-vars-set-pass
@@ -248,10 +257,23 @@ nb-enum-smb-cme-spray() {
 }
 
 nb-enum-smb-user-smbmap() {
+  __check-project
   nb-vars-set-rhost
   nb-vars-set-user
-  __info "Usage with creds: -u <user> -p <pass> -d <domain>"
-  print -z "smbmap -u ${__USER} -H ${__RHOST}"
+  nb-vars-set-pass
+  nb-vars-set-domain
+  print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST}"
+}
+
+nb-enum-smb-user-smbmap-list-rec() {
+  __check-project
+  nb-vars-set-rhost
+  nb-vars-set-user
+  nb-vars-set-pass
+  nb-vars-set-domain
+  __check-share
+  __info "You can add --dir-only flag"
+  print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST} -R '${__SHARE}'"
 }
 
 nb-enum-smb-null-enum4() {
@@ -267,35 +289,104 @@ nb-enum-smb-null-enum4-aggresssive() {
 }
 
 nb-enum-smb-null-cme-list() {
+  __check-project
   nb-vars-set-rhost
   print -z "crackmapexec smb ${__RHOST} --shares -u '' -p ''"
 }
 
+nb-enum-smb-user-cme-spider() {
+    __check-project
+    nb-vars-set-network
+    nb-vars-set-user
+    __ask "Enter name of the share to spider"
+    __check-share
+
+    __ask "Do you want to log in using a password or a hash? (p/h)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    if [[ $login == "p" ]]; then
+        __ask "Do you want to add a domain? (y/n)"
+        local add_domain && __askvar add_domain "ADD_DOMAIN_OPTION"
+
+        if [[ $add_domain == "y" ]]; then
+            __ask "Enter the domain"
+            nb-vars-set-domain
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' -M spider_plus --share '${__SHARE}' | tee $(__netadpath)/cme-shares-spider-sweep.txt"
+        else
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' -M spider_plus --share '${__SHARE}' | tee $(__netadpath)/cme-shares-spider-sweep.txt"
+        fi
+    elif [[ $login == "h" ]]; then
+        echo
+        __ask "Enter the NTLM hash for authentication"
+        __check-hash
+  	    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -M spider_plus --share '${__SHARE}' | tee $(__netadpath)/cme-shares-spider-sweep.txt"
+    else
+        echo
+        __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+    fi
+    __ok "Results have been written to /tmp/cme_spider_plus/${__NETWORK}.json"
+}
+
 nb-enum-smb-user-cme-list() {
-  nb-vars-set-rhost
-  nb-vars-set-user
-  nb-vars-set-pass
-  print -z "crackmapexec smb ${__RHOST} --shares -u '${__USER}' -p '${__PASS}'"
+    __check-project
+    nb-vars-set-network
+    nb-vars-set-user
+
+    __ask "Do you want to log in using a password or a hash? (p/h)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    if [[ $login == "p" ]]; then
+        __ask "Do you want to add a domain? (y/n)"
+        local add_domain && __askvar add_domain "ADD_DOMAIN_OPTION"
+
+        if [[ $add_domain == "y" ]]; then
+            __ask "Enter the domain"
+            nb-vars-set-domain
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --shares | tee $(__netadpath)/cme-shares-enum-sweep.txt"
+        else
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' --shares | tee $(__netadpath)/cme-shares-enum-sweep.txt"
+        fi
+    elif [[ $login == "h" ]]; then
+        echo
+        __ask "Enter the NTLM hash for authentication"
+        __check-hash
+  	    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --shares | tee $(__netadpath)/cme-shares-enum-sweep.txt"
+    else
+        echo
+        __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+    fi
 }
 
 nb-enum-smb-null-smbclient-list() {
+  __check-project
   nb-vars-set-rhost
   print -r -z "smbclient -L //${__RHOST} -N "
 }
 
 nb-enum-smb-null-smbclient-list-rec() {
+  __check-project
   nb-vars-set-rhost
   __check-share
   print -r -z "smbclient //${__RHOST}/${__SHARE} -c 'recurse;ls'"
 }
 
 nb-enum-smb-null-smbclient-connect() {
+  __check-project
   nb-vars-set-rhost
   __check-share
   print -r -z "smbclient //${__RHOST}/${__SHARE} -N "
 }
 
 nb-enum-smb-user-smbclient-connect() {
+  __check-project
   nb-vars-set-rhost
   nb-vars-set-user
   __check-share
@@ -303,6 +394,7 @@ nb-enum-smb-user-smbclient-connect() {
 }
 
 nb-enum-user-smb-mount() {
+  __check-project
   nb-vars-set-rhost
   nb-vars-set-user
   local p && __askvar p PASSWORD
@@ -311,26 +403,31 @@ nb-enum-user-smb-mount() {
 }
 
 nb-enum-smb-null-samrdump() {
+  __check-project
   nb-vars-set-rhost
   print -z "samrdump.py ${__RHOST}"
 }
 
 nb-enum-smb-responder() {
+  __check-project
   nb-vars-set-iface
   print -z "sudo responder -I ${__IFACE} -dwP | tee $(__domadpath)/smb-responder.txt"
 }
 
 nb-enum-smb-net-use-null() {
-    nb-vars-set-rhost
+  __check-project
+  nb-vars-set-rhost
   __info "net use //${__RHOST}/IPC$ \"\" /u:\"\" "
 }
 
 nb-enum-smb-nbtscan() {
+  __check-project
   nb-vars-set-network
   print -z "nbtscan ${__NETWORK}"
 }
 
 nb-enum-smb-null-rpcclient() {
+  __check-project
   nb-vars-set-rhost
   print -z "rpcclient -U \"\" ${__RHOST}"
 }
