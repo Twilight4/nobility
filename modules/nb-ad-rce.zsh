@@ -15,8 +15,43 @@ Commands
 nb-ad-rce-freerdp              connect via freerdp to a target host
 nb-ad-rce-evil-winrm           connect via winrm to a target host
 nb-ad-rce-psexec               connect via psexec to a target host
+nb-ad-rce-wmiexec              connect via wmiexec to a target host
 nb-ad-rce-psexec-msf           connect via metasploit's psexec to a target host
 DOC
+}
+
+nb-ad-rce-wmiexec() {
+  nb-vars-set-rhost
+  nb-vars-set-user
+  echo
+
+  __ask "Do you want to log in using a password or a hash? (p/h)"
+  local login && __askvar login "LOGIN_OPTION"
+
+  if [[ $login == "p" ]]; then
+      __ask "Do you want to add a domain? (y/n)"
+      local add_domain && __askvar add_domain "ADD_DOMAIN_OPTION"
+
+      if [[ $add_domain == "y" ]]; then
+          __ask "Enter the domain"
+          nb-vars-set-domain
+          __ask "Enter a password for authentication"
+          nb-vars-set-pass
+          print -z "wmiexec.py ${__DOMAIN}/${__USER}:'${__PASS}'@${__RHOST}"
+      else
+          __ask "Enter a password for authentication"
+          nb-vars-set-pass
+          print -z "wmiexec.py ${__USER}:'${__PASS}'@${__RHOST}"
+      fi
+  elif [[ $login == "h" ]]; then
+      echo
+      __ask "Enter the NTLM hash for authentication"
+      __check-hash
+      print -z "wmiexec.py ${__USER}@${__RHOST} -hashes :${__HASH}"
+  else
+      echo
+      __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+  fi
 }
 
 nb-ad-rce-psexec() {

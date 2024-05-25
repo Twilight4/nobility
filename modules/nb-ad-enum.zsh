@@ -29,7 +29,6 @@ Domain Enumeration - With Authentication
 nb-ad-enum-cme-users-auth       use crackmapexec with authentication to enumerate valid usernames
 nb-ad-enum-cme-groups-auth      use crackmapexec with authentication to enumerate domain groups
 nb-ad-enum-cme-loggedon-auth    use crackmapexec with authentication to enumerate logged-on users
-nb-ad-enum-cme-shares-spider-auth  use crackmapexec with authentication to spider available shares on the remote host or subnet
 nb-ad-enum-cme-pass-pol-auth    use crackmapexec to retrieve password policy
 
 Other Commands - With Authentication
