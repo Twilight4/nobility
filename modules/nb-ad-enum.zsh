@@ -33,9 +33,10 @@ DOC
 nb-ad-enum-cme-users() {
     __check-project
     nb-vars-set-domain
+	  __ask "Enter the IP address of the target DC server"
     local dc && __askvar dc DC_IP
 
-    print -z "crackmapexec smb 172.16.5.5 --users
+    print -z "crackmapexec smb $dc --users"
 }
 
 nb-ad-enum-ldapsearch-pass-pol() {
@@ -83,6 +84,7 @@ nb-ad-enum-pass-pol() {
 nb-ad-enum4-users() {
     __check-project
     nb-vars-set-domain
+	  __ask "Enter the IP address of the target DC server"
     local dc && __askvar dc DC_IP
 
     print -z "enum4linux -U 172.16.5.5  | grep \"user:\" | cut -f2 -d\"[\" | cut -f1 -d\"] | tee $(__hostadpath)/enum4linux-user-enum.txt"
@@ -91,6 +93,7 @@ nb-ad-enum4-users() {
 nb-ad-enum-kerbrute-users() {
     __check-project
     nb-vars-set-domain
+	  __ask "Enter the IP address of the target DC server"
     local dc && __askvar dc DC_IP
 
     __ask "Do you wanna manually specify wordlists? (y/n)"
