@@ -15,13 +15,14 @@ Initial Enumeration (without domain account)
 nb-ad-enum-responder            starts responder with passive analysis mode enabled (passively listen to the network and not send any poisoned packets)
 nb-ad-enum-fping                fping active checks to validates which hosts are active on a network subnet
 nb-ad-enum-nmap                 scan the list of active hosts within the network
+nb-ad-enum-ldapsearch-pass-pol  retrieve password policy using ldapsearch
+nb-ad-enum-cme-users            use crackmapexec to enumerate valid usernames
 nb-ad-enum-kerbrute-users       use kerbrute to brute force valid usernames
 nb-ad-enum-enum4-users          use enum4linux to enumerate valid usernames
-nb-ad-enum-ldap-pass-pol        retrieve password policy using ldapsearch
 
 Domain Enumeration
 ------------------
-nb-ad-enum-pass-pol             retrieve password policy with cme
+nb-ad-enum-cme-pass-pol         use crackmapexec to retrieve password policy
 nb-ad-enum-install              install dependencies
 nb-ad-enum-ldapdomaindump       enumerate with ldapdomaindump
 nb-ad-enum-bloodhound           enumerate with bloodhound
@@ -29,7 +30,15 @@ nb-ad-enum-bloodhound           enumerate with bloodhound
 DOC
 }
 
-nb-ad-ldap-search-pass-pol() {
+nb-ad-enum-cme-users() {
+    __check-project
+    nb-vars-set-domain
+    local dc && __askvar dc DC_IP
+
+    print -z "crackmapexec smb 172.16.5.5 --users
+}
+
+nb-ad-enum-ldapsearch-pass-pol() {
     __check-project
     nb-vars-set-domain
     nb-vars-set-rhost
