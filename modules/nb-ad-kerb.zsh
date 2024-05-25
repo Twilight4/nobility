@@ -15,10 +15,26 @@ Commands
 nb-ad-kerb-install        installs dependencies
 nb-ad-kerb-nmap-sweep     scan a network for services
 nb-ad-kerb-tcpdump        capture traffic to and from a host
-nb-ad-kerb-users          enumerate domain users
+nb-ad-kerb-pass-spray     perform password spraying
 nb-ad-kerb-kerberoast     get SPN for a service account
 
 DOC
+}
+
+nb-ad-kerb-pass-spray() {
+    __check-project
+    nb-vars-set-domain
+
+	  __ask "Enter the IP address of the target DC server"
+    local dc && __askvar dc DC_IP
+
+    __ask "Select a user list"
+    __askpath ul FILE $HOME/desktop/projects/
+
+	  __ask "Enter the password for spraying"
+    local pw && __askvar pw PASSWORD
+
+    print -z "kerbrute passwordspray -d ${__DOMAIN} --dc $dc $ul $pw"
 }
 
 nb-ad-kerb-install() {
@@ -37,12 +53,6 @@ nb-ad-kerb-tcpdump() {
     nb-vars-set-iface
     nb-vars-set-rhost
     print -z "sudo tcpdump -i ${__IFACE} host ${__RHOST} and tcp port 88 -w $(__netadpath)/kerb.pcap"
-}
-
-nb-ad-kerb-users() {
-    nb-vars-set-rhost
-    local realm && __askvar realm REALM
-    print -z "grc nmap -v -p 88 --script krb5-enum-users --script-args krb5-enum-users.realm=${realm},userdb=/usr/share/seclists/Usernames/Names/names.txt ${__NETWORK} -oA $(__netadpath)/nmap-kerb-users"
 }
 
 nb-ad-kerb-kerberoast() {
