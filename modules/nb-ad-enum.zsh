@@ -15,7 +15,7 @@ Commands
 nb-ad-enum-responder            starts responder with passive analysis mode enabled (passively listen to the network and not send any poisoned packets)
 nb-ad-enum-fping                fping active checks to validates which hosts are active on a network subnet
 nb-ad-enum-nmap                 scan the list of active hosts within the network
-nb-ad-enum-kerbrute-userenum    use kerbrute to brute force valid usernames
+nb-ad-enum-users                use kerbrute to brute force valid usernames
 nb-ad-enum-install              install dependencies
 nb-ad-enum-ldapdomaindump       enumerate with ldapdomaindump
 nb-ad-enum-bloodhound           enumerate with bloodhound
@@ -23,7 +23,7 @@ nb-ad-enum-bloodhound           enumerate with bloodhound
 DOC
 }
 
-nb-ad-enum-kerbrute-userenum() {
+nb-ad-enum-users() {
     __check-project
     nb-vars-set-domain
     local dc && __askvar dc DC_IP
