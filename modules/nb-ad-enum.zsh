@@ -15,7 +15,8 @@ Initial Enumeration (without domain account)
 nb-ad-enum-responder            starts responder with passive analysis mode enabled (passively listen to the network and not send any poisoned packets)
 nb-ad-enum-fping                fping active checks to validates which hosts are active on a network subnet
 nb-ad-enum-nmap                 scan the list of active hosts within the network
-nb-ad-enum-users                use kerbrute to brute force valid usernames
+nb-ad-enum-kerbrute-users       use kerbrute to brute force valid usernames
+nb-ad-enum-enum4-users          use enum4linux to enumerate valid usernames
 nb-ad-enum-ldap-pass-pol        retrieve password policy using ldapsearch
 
 Domain Enumeration
@@ -70,7 +71,15 @@ nb-ad-enum-pass-pol() {
     fi
 }
 
-nb-ad-enum-users() {
+nb-ad-enum4-users() {
+    __check-project
+    nb-vars-set-domain
+    local dc && __askvar dc DC_IP
+
+    print -z "enum4linux -U 172.16.5.5  | grep \"user:\" | cut -f2 -d\"[\" | cut -f1 -d\"] | tee $(__hostadpath)/enum4linux-user-enum.txt"
+}
+
+nb-ad-enum-kerbrute-users() {
     __check-project
     nb-vars-set-domain
     local dc && __askvar dc DC_IP
@@ -82,10 +91,10 @@ nb-ad-enum-users() {
       __ask "Select a user list"
       __askpath ul FILE $HOME/desktop/projects/
 
-      print -z "kerbrute userenum -d ${__DOMAIN} --dc $dc $ul -o $(__hostadpath)/valid_ad_users.txt"
+      print -z "kerbrute userenum -d ${__DOMAIN} --dc $dc $ul -o $(__hostadpath)/kerbrute-user-enum.txt"
     else
       nb-vars-set-wordlist
-      print -z "kerbrute userenum -d ${__DOMAIN} --dc $dc ${__WORDLIST} -o $(__hostadpath)/valid_ad_users.txt"
+      print -z "kerbrute userenum -d ${__DOMAIN} --dc $dc ${__WORDLIST} -o $(__hostadpath)/kerbrute-user-enum.txt"
     fi
 }
 
