@@ -40,6 +40,7 @@ nb-install-dnscat2
 nb-install-dnscat2-powershell
 nb-install-chsel
 nb-install-kerbrute
+nb-install-protonvpn
 nb-install-impacket
 
 DOC
@@ -571,6 +572,52 @@ nb-install-kerbrute() {
     __ok "kerbrute ${ver} installed successfully."
 }
 
-nb-install-impacket() {
+nb-install-protonvpn() {
 
+# Install pvpn beta linux app - https://protonvpn.com/support/official-linux-vpn-debian/
+# can't log in issue - https://www.reddit.com/r/ProtonVPN/comments/wogofb/cant_log_into_proton_vpn_linux_app_any_more/
+# first try just rebooting, if doens't help - uninstall strongswan and related packages and reboot
+wget https://repo.protonvpn.com/debian/dists/unstable/main/binary-all/protonvpn-beta-release_1.0.3-3_all.deb
+sudo dpkg -i ./protonvpn-beta-release_1.0.3-3_all.deb && sudo apt update
+sudo apt install proton-vpn-gnome-desktop
+
+    # Check for the newest version manually
+    local rustscan_version="1.8.0"
+    local deb_file="rustscan_${rustscan_version}_amd64.deb"
+    local download_url="https://github.com/RustScan/RustScan/releases/download/${rustscan_version}/${deb_file}"
+
+    # Download RustScan .deb file
+    __info "Downloading RustScan ${rustscan_version}..."
+    wget "$download_url" -P /tmp || { echo "Failed to download RustScan."; return 1; }
+
+    # Install RustScan
+    __info "Installing RustScan ${rustscan_version}..."
+    sudo dpkg -i "/tmp/${deb_file}" || { echo "Failed to install RustScan."; return 1; }
+
+    # Clean up
+    __info "Cleaning up..."
+    rm "/tmp/${deb_file}" || { echo "Failed to clean up."; return 1; }
+
+    __ok "RustScan ${rustscan_version} installed successfully."
+}
+
+nb-install-impacket() {
+    local name="impacket"
+    local url="https://github.com/fortra/$name"
+    local path="/opt/$name"
+
+    __info "$name"
+
+    if [[ ! -d $path ]]
+    then
+        sudo git clone --depth 1 $url $path
+        pushd $path 
+        sudo python3 -m pip install .
+        popd
+    else
+        __warn "already installed in $path"
+        pushd $path 
+        git pull
+        popd
+    fi
 }
