@@ -26,7 +26,6 @@ nb-install-wordlist-payloadallthethings
 nb-install-github-search
 nb-install-git-secrets
 nb-install-pentest-tools
-nb-install-protonvpn
 nb-install-nmap-elasticsearch-nse
 nb-install-link-finder
 nb-install-winpeas
@@ -41,6 +40,7 @@ nb-install-dnscat2
 nb-install-dnscat2-powershell
 nb-install-chsel
 nb-install-kerbrute
+nb-install-impacket
 
 DOC
 }
@@ -297,15 +297,6 @@ nb-install-pentest-tools() {
         git pull
         popd
     fi
-}
-
-nb-install-protonvpn() {
-    local name="protonvpn"
-    __info "$name"
-
-    __pkgs openvpn dialog python-pip python-setuptools protonvpn-cli
-    __warn "ProtonVPN username and password required"
-    print -z "sudo protonvpn init"
 }
 
 nb-install-nmap-elasticsearch-nse() {
@@ -578,4 +569,8 @@ nb-install-kerbrute() {
     __info "Installing kerbrute ${ver}..."
     sudo mv "/tmp/kerbrute" /bin/kerbrute || { echo "Failed to install kerbrute."; return 1; }
     __ok "kerbrute ${ver} installed successfully."
+}
+
+nb-install-impacket() {
+
 }
