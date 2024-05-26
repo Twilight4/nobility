@@ -49,7 +49,7 @@ nb-ad-enum-wsearch-domain-admins-auth() {
     nb-vars-set-pass
     nb-vars-set-domain
 
-	  __ask "Enter the IP address of the target DC server"
+	  __ask "Enter the IP address of the target DC controller"
     local dc && __askvar dc DC_IP
 
     print -z "python3 windapsearch.py --dc-ip $dc -u ${__USER}@${__DOMAIN} -p ${__PASS} --da"

