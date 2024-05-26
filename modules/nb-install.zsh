@@ -573,32 +573,30 @@ nb-install-kerbrute() {
 }
 
 nb-install-protonvpn() {
-
-# Install pvpn beta linux app - https://protonvpn.com/support/official-linux-vpn-debian/
 # can't log in issue - https://www.reddit.com/r/ProtonVPN/comments/wogofb/cant_log_into_proton_vpn_linux_app_any_more/
 # first try just rebooting, if doens't help - uninstall strongswan and related packages and reboot
 wget https://repo.protonvpn.com/debian/dists/unstable/main/binary-all/protonvpn-beta-release_1.0.3-3_all.deb
 sudo dpkg -i ./protonvpn-beta-release_1.0.3-3_all.deb && sudo apt update
-sudo apt install proton-vpn-gnome-desktop
 
-    # Check for the newest version manually
-    local rustscan_version="1.8.0"
-    local deb_file="rustscan_${rustscan_version}_amd64.deb"
-    local download_url="https://github.com/RustScan/RustScan/releases/download/${rustscan_version}/${deb_file}"
+    # Check for the newest version manually (beta app) - https://protonvpn.com/support/official-linux-vpn-debian/ 
+    local version="1.0.3-3"
+    local file="protonvpn-beta-release_${version}_all.deb"
+    local download_url="https://repo.protonvpn.com/debian/dists/unstable/main/binary-all/${file}"
 
     # Download RustScan .deb file
-    __info "Downloading RustScan ${rustscan_version}..."
-    wget "$download_url" -P /tmp || { echo "Failed to download RustScan."; return 1; }
+    __info "Downloading ProtonVPN deb package ${version}..."
+    wget "$download_url" -P /tmp || { echo "Failed to download ProtonVPN."; return 1; }
 
-    # Install RustScan
-    __info "Installing RustScan ${rustscan_version}..."
-    sudo dpkg -i "/tmp/${deb_file}" || { echo "Failed to install RustScan."; return 1; }
+    # Install ProtonVPN
+    __info "Installing ProtonVPN ${version}..."
+    sudo dpkg -i "/tmp/${file}" && sudo apt update || { echo "Failed to install ProtonVPN."; return 1; }
+    sudo apt install proton-vpn-gnome-desktop
 
     # Clean up
     __info "Cleaning up..."
-    rm "/tmp/${deb_file}" || { echo "Failed to clean up."; return 1; }
+    rm "/tmp/${file}" || { echo "Failed to clean up."; return 1; }
 
-    __ok "RustScan ${rustscan_version} installed successfully."
+    __ok "ProtonVPN ${version} installed successfully."
 }
 
 nb-install-impacket() {
