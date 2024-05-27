@@ -42,6 +42,7 @@ nb-install-chsel
 nb-install-kerbrute
 nb-install-protonvpn
 nb-install-impacket
+nb-install-ldapdomaindump
 
 DOC
 }
@@ -612,6 +613,27 @@ nb-install-impacket() {
         pushd $path 
         sudo python3 -m pip install .
         popd
+    else
+        __warn "already installed in $path"
+        pushd $path 
+        git pull
+        popd
+    fi
+}
+
+nb-install-ldapdomaindump() {
+    local name="ldapdomaindump"
+    local url="https://github.com/dirkjanm/$name"
+    local path="/opt/$name"
+
+    __info "$name"
+
+    if [[ ! -d $path ]]
+    then
+        sudo apt remove python3-ldapdomaindump
+        sudo git clone --depth 1 $url $path
+        sudo chmod +x /opt/ldapdomaindump/bin/*
+        sudo ln -sf /opt/ldapdomaindump/bin/* /bin/
     else
         __warn "already installed in $path"
         pushd $path 
