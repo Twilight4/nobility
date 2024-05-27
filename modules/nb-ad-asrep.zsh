@@ -13,7 +13,7 @@ The nb-ad-asrep namespace contains commands for as-rep roast attack on Active Di
 Commands
 --------
 nb-ad-asrep-install        installs dependencies
-nb-ad-asrep-brute          brute force a password hashes of given users
+nb-ad-asrep-brute          hunt for users with kerberoast pre-auth nOT required
 nb-ad-asrep-crack          crack the password hash
 
 DOC
@@ -30,7 +30,7 @@ nb-ad-asrep-brute() {
 
   if [[ $sh == "n" ]]; then
     __err "You need a valid userlist file to perform asrep roasting."
-    __info "Use nb-ad-enum-users."
+    __info "Use nb-ad-enum-kerbrute-users."
     exit 1
   fi
 
