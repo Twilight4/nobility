@@ -18,8 +18,7 @@ as the list of favorite user-agents or wordlists (nb-vars-global-help).
 Note: 
 If you use in scripts: __check-VAR instead of nb-vars-set-VAR, 
 it will not ask for tha variable nor prefill it, that means:
-use __check-VAR for obvious choices,
-use nb-vars-set-VAR for more verbosity
+use __check-VAR for obvious choices, use nb-vars-set-VAR for more verbosity
 
 Variables
 ---------
