@@ -282,12 +282,6 @@ nb-ad-enum-responder() {
 nb-ad-enum-install() {
     __info "Running $0..."
     __pkgs bloodhound neo4j bloodhound.py
-
-    # Install ldapdomaindump from source
-    sudo apt remove python3-ldapdomaindump
-    sudo git clone https://github.com/dirkjanm/ldapdomaindump.git /opt/ldapdomaindump
-    sudo chmod +x /opt/ldapdomaindump/bin/*
-    sudo ln -sf /opt/ldapdomaindump/bin/* /bin/
 }
 
 nb-ad-enum-ldapdomaindump() {

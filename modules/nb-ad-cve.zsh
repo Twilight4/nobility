@@ -21,8 +21,27 @@ DOC
 nb-ad-cve-printnightmare() {
     __check-project
 
-	  __ask "This will clone the cube0x0 CVE github repo to downloads"
-    local cb && __askvar cb CLONE_REPO
+    __ask "This will clone the cube0x0 CVE github repo to downloads, continue? (y/n)"
+    local cb && __askvar cb ANSWER
 
-    git clone https://github.com/cube0x0/CVE-2021-1675.git ~/downloads/CVE-2021-1675
+    if [[ $db == "y" ]]; then
+      git clone https://github.com/cube0x0/CVE-2021-1675.git ~/downloads/CVE-2021-1675
+    else
+      __err "Operation cancelled by user"
+      exit 1
+    fi
+
+    __ask "This will uninstall current version of impacket and installcube0x0's version of Impacket, continue? (y/n)"
+    local im && __askvar im ANSWER
+
+    if [[ $im == "y" ]]; then
+      pip3 uninstall impacket
+      git clone https://github.com/cube0x0/impacket ~/downloads/impacket
+      cd ~/downloads/impacket
+      python3 ./setup.py install
+      cd ~/downloads/
+    else
+      __err "Operation cancelled by user"
+      exit 1
+    fi
 }

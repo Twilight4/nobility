@@ -26,13 +26,13 @@ __PROJECT     the root directory used for all output, ex: /projects/example
 __IFACE       the interface to use for commands, ex: eth0
 __DOMAIN      the domain to use for commands, ex: example.org
 __NETWORK     the subnet to use for commands, ex: 10.1.2.0/24
-__RHOST       the remote host or target, ex: 10.1.2.3, example: target.example.org
+__RHOST       the remote host or target, ex: 10.1.2.3, ex: target.example.org
 __RPORT       the remote port; ex: 80
 __LHOST       the accessible local IP address, ex: 10.1.2.3
 __LPORT       the accessible local PORT, ex: 4444
-__USER        the user variable
-__PASS        the pass variable
-__URL         a target URL, example: https://target.example.org
+__USER        the user variable, ex: username
+__PASS        the pass variable, ex: password
+__URL         a target URL, ex: https://target.example.org
 __UA          the user agent to use for commands, ex: googlebot
 __WORDLIST    used to select from a list of favorite wordlists (global var) brute forcing
 __PASSLIST    used to select only from passwords wordlists for password brute forcing
