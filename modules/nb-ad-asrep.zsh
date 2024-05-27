@@ -41,13 +41,6 @@ nb-ad-asrep-brute() {
   __askpath ul FILE $HOME/desktop/projects/
 
 	print -z "GetNPUsers.py -dc-ip ${__RHOST} ${__DOMAIN}.local/ -no-pass -usersfile $ul | tee $(__domadpath)/GetNPUsers.txt"
-}
 
-nb-ad-asrep-crack() {
-	__ask "Enter the hash"
-	__check-hash
-	__ask "Enter a password wordlist"
-	nb-vars-set-passlist
-
-  print -z "hashcat -m 18200 -a 0 ${__HASH} ${__PASSLIST} -o $(__domadpath)/hashcat.txt"
+  __info "You can then crack this hash with mode '18200' using 'nb-crack-list'"
 }
