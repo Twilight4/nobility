@@ -76,17 +76,17 @@ nb-pivot-ssh-reverse-proxy() {
 
 nb-pivot-msf-local-proxy() {
     nb-vars-set-lport
+    __ask "Enter network subnet for proxy (without /24)"
     local sb && __askvar sb NETWORK_SUBNET
     __info "Add the proxy to proxychains.conf using command:"
     __ok "echo 'socks4 	127.0.0.1 ${__LPORT}' | sudo tee -a /etc/proxychains.conf"
 
-    print -z "msfconsole -q -n -x 'use auxiliary/server/socks_proxy; set SRVPORT ${__LPORT}; set SRVHOST 0.0.0.0; set version 4a; run'"
+    print -z "msfconsole -q -n -x 'use auxiliary/server/socks_proxy; set SRVPORT ${__LPORT}; set SRVHOST 0.0.0.0; set SRVPORT 9050; set version 4a; run'"
 
     echo
     __info "Then use post/multi/manage/autoroute to tell our socks_proxy module to route all the traffic via the meterpreter session"
     __ok "use post/multi/manage/autoroute; set SESSION 1; set SUBNET $sb; run"
     echo
-    __info "You can also add routes with autoroute in metepreter session: 'run autoroute -s $sb'"
     __info "Use 'run autoroute -p' to list the active routes"
     __info "You can now use proxychains with e.g. nmap"
 }
