@@ -159,7 +159,7 @@ nb-pivot-dnscat2-client() {
 
     if [[ $dn == "n" ]]; then
       __err "Transfer 'dnscat2.ps1' to target before proceeding."
-      __info 'nb-srv-scp-up'
+      __info 'nb-srv-web'
       exit 1
     fi
 
@@ -181,12 +181,12 @@ nb-pivot-chisel-server() {
 
     if [[ $tr == "n" ]]; then
       __err "Transfer 'chisel' to target before proceeding."
-      __info 'nb-srv-scp-up'
+      __info 'nb-srv-web'
       exit 1
     fi
 
-    __info "Run the following commands on the target  to spawn a server:"
-    __ok "./chisel server -v -p ${__LPORT} --socks5"
+    __info "Run the following commands on the target to spawn a server:"
+    __ok ".\\chisel server -v -p ${__LPORT} --socks5"
 }
 
 nb-pivot-chisel-client() {
