@@ -80,7 +80,7 @@ nb-pivot-msf-local-proxy() {
     __info "Add the proxy to proxychains4.conf using command:"
     __ok "echo 'socks4 	127.0.0.1 ${__LPORT}' | sudo tee -a /etc/proxychains4.conf"
 
-    print -z "msfconsole -q -n -x 'use auxiliary/server/socket_proxy; set SRVPORT ${__LPORT}; set SRVHOST 0.0.0.0; set version 4a; run'"
+    print -z "msfconsole -q -n -x 'use auxiliary/server/socks_proxy; set SRVPORT ${__LPORT}; set SRVHOST 0.0.0.0; set version 4a; run'"
 
     echo
     __info "Then use post/multi/manage/autoroute to tell our socks_proxy module to route all the traffic via the meterpreter session"
