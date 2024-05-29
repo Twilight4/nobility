@@ -60,8 +60,8 @@ nb-pivot-ssh-dynamic-proxy() {
     nb-vars-set-user
     nb-vars-set-rhost
     nb-vars-set-lport
-    __info "Add the proxy to proxychains4.conf using command:"
-    __ok "echo 'socks4 	127.0.0.1 ${__LPORT}' | sudo tee -a /etc/proxychains4.conf"
+    __info "Add the proxy to proxychains.conf using command:"
+    __ok "echo 'socks4 	127.0.0.1 ${__LPORT}' | sudo tee -a /etc/proxychains.conf"
 
     print -z "ssh -D ${__LPORT} -CqN ${__USER}@${__RHOST}" 
 }
@@ -77,8 +77,8 @@ nb-pivot-ssh-reverse-proxy() {
 nb-pivot-msf-local-proxy() {
     nb-vars-set-lport
     local sb && __askvar sb NETWORK_SUBNET
-    __info "Add the proxy to proxychains4.conf using command:"
-    __ok "echo 'socks4 	127.0.0.1 ${__LPORT}' | sudo tee -a /etc/proxychains4.conf"
+    __info "Add the proxy to proxychains.conf using command:"
+    __ok "echo 'socks4 	127.0.0.1 ${__LPORT}' | sudo tee -a /etc/proxychains.conf"
 
     print -z "msfconsole -q -n -x 'use auxiliary/server/socks_proxy; set SRVPORT ${__LPORT}; set SRVHOST 0.0.0.0; set version 4a; run'"
 
@@ -138,8 +138,8 @@ nb-pivot-rpivot-client() {
     __ok "cd rpivot"
     __ok "python2.7 client.py --server-ip ${__LHOST} --server-port 9999"
     echo
-    __info "Add the proxy to proxychains4.conf using command:"
-    __ok "echo 'socks4 	127.0.0.1 ${__LPORT}' | sudo tee -a /etc/proxychains4.conf"
+    __info "Add the proxy to proxychains.conf using command:"
+    __ok "echo 'socks4 	127.0.0.1 ${__LPORT}' | sudo tee -a /etc/proxychains.conf"
     echo
     __info "Use proxychains to access teh web server: 'proxychains firefox <target_ip>:80'"
 }
@@ -194,8 +194,8 @@ nb-pivot-chisel-client() {
     __ask "Use the same port you used with chisel server"
     nb-vars-set-lport
 
-    __info "Add the proxy on port 1080 to proxychains4.conf using command:"
-    __ok "echo 'socks5 	127.0.0.1 1080' | sudo tee -a /etc/proxychains4.conf"
+    __info "Add the proxy on port 1080 to proxychains.conf using command:"
+    __ok "echo 'socks5 	127.0.0.1 1080' | sudo tee -a /etc/proxychains.conf"
     __info "You can now use proxychains with e.g. nmap"
 
     print -z "chisel client -v ${__RHOST}:${__LPORT} socks"
