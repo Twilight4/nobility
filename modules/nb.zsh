@@ -39,9 +39,10 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  nb-vars-                       Per-session, per-engagement variables used in all commands
  nb-project-                    Commands to define scope and manage project data
 
- Recon Phase
- -----------
+ Reconneissance Phase
+ --------------------
  nb-recon-org-                  Recon commands for organization files and data
+ nb-recon-user-                 Recon commands for searching person's data
  nb-recon-github-               Recon commands for searching github repositories
  nb-recon-networks-             Recon commands for identiying an organization's networks
  nb-recon-domains-              Recon commands for horizontal domain enumeration
@@ -62,37 +63,31 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  nb-enum-oracle-                Enumerate Oracle database services
  nb-enum-pop3-                  Enumerate POP3 services
  nb-enum-rdp-                   Enumerate RDP services
- nb-enum-smb-                   Enumerate SMB services
  nb-enum-web-                   Enumerate web servers and services
  nb-enum-web-aws-               Enumerate AWS hosted services
  nb-enum-web-dirs-              Enumerate directories and files
- nb-enum-web-elastic-           Enumerate elastic search services
- nb-enum-web-fuzz-              Fuzz inputs such as forms, cookies and headers
- nb-enum-web-js-                Mine javascript files for secrets
  nb-enum-web-php-               Enumerate php web servers
  nb-enum-web-ssl-               Enumerate SSL certs and services
  nb-enum-web-vuln-              Check for common web vulnerabilities
- nb-enum-web-xss-               XSS helpers
 
  Exploitation Phase
  ------------------
  nb-srv-                        Commands for spawning file hosting services
  nb-exploit-                    Commands for compiling exploits
- nb-shell-tty-                  Commands for upgrading shells to tty
+ nb-shell-tty-                  Commands for upgrading tty shells
  nb-shell-handlers-             Commands for spawning reverse shell handlers
  nb-shell-handlers-msf-         Commands for spawning reverse shells with Metasploit
 
  Active-Directory Phase
  -----------------------
- nb-ad-asrep-                   Commands for ASREP-Roast AD attack
  nb-ad-kerb-                    Commands for attacking kerberos
- nb-ad-smb-relay-               Commands for SMB Relay AD attack
  nb-ad-ldap-                    Commands for LDAP enumeration
+ nb-ad-smb-                     Commands for SMB services enumeration
  nb-ad-rce-                     Commands for RCE on target system
  nb-ad-dump-                    Commands for Dumping Hashes in AD
  nb-ad-gpp-                     Commands for GPP AD attack
  nb-ad-ipv6-                    Commands for IPv6 AD attack
- nb-ad-enum-                    Commands for AD enumeration
+ nb-ad-enum-                    Commands for AD internal enumeration
 
  Post-Exploitation Phase
  -----------------------
