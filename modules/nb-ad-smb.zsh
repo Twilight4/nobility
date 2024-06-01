@@ -1,62 +1,62 @@
 #!/usr/bin/env zsh
 
 ############################################################# 
-# nb-enum-smb
+# nb-ad-smb
 #############################################################
-nb-enum-smb-help() {
+nb-ad-smb-help() {
     cat << "DOC" | bat --plain --language=help
 
-nb-enum-smb
+nb-ad-smb
 ------------
-The nb-enum-smb namespace contains commands for scanning and enumerating smb services.
+The nb-ad-smb namespace contains commands for scanning and enumerating smb services.
 
 Protocol Attacks
 ----------------
-nb-enum-smb-brute-hydra              brute force password/login for a user account with hydra
-nb-enum-smb-brute-cme                brute force password/login for a user account with cme
-nb-enum-smb-pass-spray               perform password spraying
+nb-ad-smb-brute-hydra              brute force password/login for a user account with hydra
+nb-ad-smb-brute-cme                brute force password/login for a user account with cme
+nb-ad-smb-pass-spray               perform password spraying
 
 Automated Enumeration tools
 -------------------------------------
-nb-enum-smb-nmap-sweep               scan a network for services
-nb-enum-smb-null-enum4               enumerate with enum4linux
-nb-enum-smb-null-enum4-aggressive    aggressively enumerate with enum4linux
-nb-enum-smb-null-rpcclient           use rcpclient for queries
+nb-ad-smb-nmap-sweep               scan a network for services
+nb-ad-smb-null-enum4               enumerate with enum4linux
+nb-ad-smb-null-enum4-aggressive    aggressively enumerate with enum4linux
+nb-ad-smb-null-rpcclient           use rcpclient for queries
 
 Shares Enumeration
 -------------------------------------
 NULL Session
 ------------
-nb-enum-smb-null-cme-list            list shares with cme
-nb-enum-smb-null-samrdump            info using impacket
-nb-enum-smb-null-smbmap-list         query with smbmap
-nb-enum-smb-null-smbmap-list-rec     list shares recursively
-nb-enum-smb-null-smbclient-list      list shares
-nb-enum-smb-null-smbclient-list-rec  list shares recursively
+nb-ad-smb-null-cme-list            list shares with cme
+nb-ad-smb-null-samrdump            info using impacket
+nb-ad-smb-null-smbmap-list         query with smbmap
+nb-ad-smb-null-smbmap-list-rec     list shares recursively
+nb-ad-smb-null-smbclient-list      list shares
+nb-ad-smb-null-smbclient-list-rec  list shares recursively
 
 AUTH Session
 ------------
-nb-enum-smb-user-smbmap              query with smbmap authenticated session
-nb-enum-smb-user-smbmap-list-rec     list shares recursively with authentication
-nb-enum-smb-user-cme-list            list shares with cme authenticated session
-nb-enum-smb-user-cme-spider          spider available shares on the remote host or subnet
+nb-ad-smb-user-smbmap              query with smbmap authenticated session
+nb-ad-smb-user-smbmap-list-rec     list shares recursively with authentication
+nb-ad-smb-user-cme-list            list shares with cme authenticated session
+nb-ad-smb-user-cme-spider          spider available shares on the remote host or subnet
 
 Connecting to Service
 -------------------------------------
-nb-enum-smb-null-smbclient-connect   connect with a null session
-nb-enum-smb-user-smbclient-connect   connect with an authenticated session
+nb-ad-smb-null-smbclient-connect   connect with a null session
+nb-ad-smb-user-smbclient-connect   connect with an authenticated session
 
 Other Commands
 -------------------------------------
-nb-enum-smb-null-smbmap-download     download a file from a share
-nb-enum-smb-null-smbget-download-rec recursively download the SMB share
-nb-enum-smb-null-smbmap-upload       upload a file to a share
-nb-enum-smb-install                  installs dependencies
-nb-enum-smb-tcpdump                  capture traffic to and from a host
+nb-ad-smb-null-smbmap-download     download a file from a share
+nb-ad-smb-null-smbget-download-rec recursively download the SMB share
+nb-ad-smb-null-smbmap-upload       upload a file to a share
+nb-ad-smb-install                  installs dependencies
+nb-ad-smb-tcpdump                  capture traffic to and from a host
 nb-enum-user-smb-mount               mount an SMB share
-nb-enum-smb-responder                spoof and get responses using responder
-nb-enum-smb-net-use-null             print a net use statement for windows
-nb-enum-smb-nbtscan                  scan a local network 
+nb-ad-smb-responder                spoof and get responses using responder
+nb-ad-smb-net-use-null             print a net use statement for windows
+nb-ad-smb-nbtscan                  scan a local network 
 
 SMB Relay
 ---------
@@ -70,31 +70,31 @@ nb-ad-smb-relay-multirelay-command   responder's alternative to ntlmrelayx.py - 
 DOC
 }
 
-nb-enum-smb-install() {
+nb-ad-smb-install() {
   __info "Running $0..."
   __pkgs nmap tcpdump smbmap enum4linux smbclient impacket responder nbtscan rpcclient
 }
 
-nb-enum-smb-nmap-sweep() {
+nb-ad-smb-nmap-sweep() {
   __check-project
   nb-vars-set-network
   print -z "sudo grc nmap -sV -sC --script=smb-enum-shares.nse,smb-enum-users.nse -n -Pn -sS -p445,137-139 ${__NETWORK} -oA $(__netpath)/smb-sweep"
 }
 
-nb-enum-smb-tcpdump() {
+nb-ad-smb-tcpdump() {
   __check-project
   nb-vars-set-iface
   nb-vars-set-rhost
   print -z "tcpdump -i ${__IFACE} host ${__RHOST} and tcp port 445 -w $(__hostpath)/smb.pcap"
 }
 
-nb-enum-smb-null-smbmap-list() {
+nb-ad-smb-null-smbmap-list() {
   __check-project
   nb-vars-set-rhost
   print -z "smbmap -H ${__RHOST}"
 }
 
-nb-enum-smb-null-smbmap-list-rec() {
+nb-ad-smb-null-smbmap-list-rec() {
   __check-project
   nb-vars-set-rhost
   __check-share
@@ -102,7 +102,7 @@ nb-enum-smb-null-smbmap-list-rec() {
   print -z "smbmap -H ${__RHOST} -r ${__SHARE}"
 }
 
-nb-enum-smb-null-smbmap-download() {
+nb-ad-smb-null-smbmap-download() {
   __check-project
   nb-vars-set-rhost
   __check-share
@@ -111,7 +111,7 @@ nb-enum-smb-null-smbmap-download() {
   print -z "smbmap -H ${__RHOST} --download \"${__SHARE}\\\\$file\""
 }
 
-nb-enum-smb-null-smbmap-upload() {
+nb-ad-smb-null-smbmap-upload() {
   __check-project
   nb-vars-set-rhost
   __check-share
@@ -120,14 +120,14 @@ nb-enum-smb-null-smbmap-upload() {
   print -z "smbmap -H ${__RHOST} --upload $file \"${__SHARE}\\\\$file\""
 }
 
-nb-enum-smb-null-smbget-download-rec() {
+nb-ad-smb-null-smbget-download-rec() {
   __check-project
   nb-vars-set-rhost
   __check-share
   print -z "smbget -R smb://${__RHOST}/${__SHARE}"
 }
 
-nb-enum-smb-brute-hydra() {
+nb-ad-smb-brute-hydra() {
     __check-project
     nb-vars-set-rhost
 
@@ -185,7 +185,7 @@ nb-enum-smb-brute-hydra() {
     fi
 }
 
-nb-enum-smb-pass-spray() {
+nb-ad-smb-pass-spray() {
     __check-project
     nb-vars-set-domain
 
@@ -201,7 +201,7 @@ nb-enum-smb-pass-spray() {
     print -z "kerbrute passwordspray -d ${__DOMAIN} --dc $dc $ul $pw -o $(__netadpath)/kerbrute-password-spray.txt"
 }
 
-nb-enum-smb-brute-cme() {
+nb-ad-smb-brute-cme() {
     __check-project
     nb-vars-set-rhost
 
@@ -257,7 +257,7 @@ nb-enum-smb-brute-cme() {
     fi
 }
 
-nb-enum-smb-cme-spray() {
+nb-ad-smb-cme-spray() {
   __check-project
   nb-vars-set-rhost
   nb-vars-set-wordlist
@@ -265,7 +265,7 @@ nb-enum-smb-cme-spray() {
   print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASS}' --local-auth --continue-on-success"
 }
 
-nb-enum-smb-user-smbmap() {
+nb-ad-smb-user-smbmap() {
   __check-project
   nb-vars-set-rhost
   nb-vars-set-user
@@ -274,7 +274,7 @@ nb-enum-smb-user-smbmap() {
   print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST}"
 }
 
-nb-enum-smb-user-smbmap-list-rec() {
+nb-ad-smb-user-smbmap-list-rec() {
   __check-project
   nb-vars-set-rhost
   nb-vars-set-user
@@ -285,25 +285,25 @@ nb-enum-smb-user-smbmap-list-rec() {
   print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST} -R '${__SHARE}'"
 }
 
-nb-enum-smb-null-enum4() {
+nb-ad-smb-null-enum4() {
   __check-project
   nb-vars-set-rhost
   print -z "enum4linux -a ${__RHOST} | tee $(__hostpath)/enumlinux.txt"
 }
 
-nb-enum-smb-null-enum4-aggresssive() {
+nb-ad-smb-null-enum4-aggresssive() {
   __check-project
   nb-vars-set-rhost
   print -z "enum4linux -A ${__RHOST} | tee $(__hostpath)/enumlinux.txt"
 }
 
-nb-enum-smb-null-cme-list() {
+nb-ad-smb-null-cme-list() {
   __check-project
   nb-vars-set-rhost
   print -z "crackmapexec smb ${__RHOST} --shares -u '' -p ''"
 }
 
-nb-enum-smb-user-cme-spider() {
+nb-ad-smb-user-cme-spider() {
     __check-project
     nb-vars-set-network
     nb-vars-set-user
@@ -340,7 +340,7 @@ nb-enum-smb-user-cme-spider() {
     __ok "Results have been written to /tmp/cme_spider_plus/${__NETWORK}.json"
 }
 
-nb-enum-smb-user-cme-list() {
+nb-ad-smb-user-cme-list() {
     __check-project
     nb-vars-set-network
     nb-vars-set-user
@@ -374,27 +374,27 @@ nb-enum-smb-user-cme-list() {
     fi
 }
 
-nb-enum-smb-null-smbclient-list() {
+nb-ad-smb-null-smbclient-list() {
   __check-project
   nb-vars-set-rhost
   print -r -z "smbclient -L //${__RHOST} -N "
 }
 
-nb-enum-smb-null-smbclient-list-rec() {
+nb-ad-smb-null-smbclient-list-rec() {
   __check-project
   nb-vars-set-rhost
   __check-share
   print -r -z "smbclient //${__RHOST}/${__SHARE} -c 'recurse;ls'"
 }
 
-nb-enum-smb-null-smbclient-connect() {
+nb-ad-smb-null-smbclient-connect() {
   __check-project
   nb-vars-set-rhost
   __check-share
   print -r -z "smbclient //${__RHOST}/${__SHARE} -N "
 }
 
-nb-enum-smb-user-smbclient-connect() {
+nb-ad-smb-user-smbclient-connect() {
   __check-project
   nb-vars-set-rhost
   nb-vars-set-user
@@ -411,31 +411,31 @@ nb-enum-user-smb-mount() {
   print -z "mount //${__RHOST}/${__SHARE} /mnt/${__SHARE} -o username=${__USER},password=${p}"
 }
 
-nb-enum-smb-null-samrdump() {
+nb-ad-smb-null-samrdump() {
   __check-project
   nb-vars-set-rhost
   print -z "samrdump.py ${__RHOST}"
 }
 
-nb-enum-smb-responder() {
+nb-ad-smb-responder() {
   __check-project
   nb-vars-set-iface
   print -z "sudo responder -I ${__IFACE} -dwP | tee $(__domadpath)/smb-responder.txt"
 }
 
-nb-enum-smb-net-use-null() {
+nb-ad-smb-net-use-null() {
   __check-project
   nb-vars-set-rhost
   __info "net use //${__RHOST}/IPC$ \"\" /u:\"\" "
 }
 
-nb-enum-smb-nbtscan() {
+nb-ad-smb-nbtscan() {
   __check-project
   nb-vars-set-network
   print -z "nbtscan ${__NETWORK}"
 }
 
-nb-enum-smb-null-rpcclient() {
+nb-ad-smb-null-rpcclient() {
   __check-project
   nb-vars-set-rhost
   print -z "rpcclient -U \"\" ${__RHOST}"
@@ -464,7 +464,7 @@ nb-ad-smb-relay-ntlmrelay() {
 
     if [[ $rp == "n" ]]; then
       __err "Run first responder to relay the smb request"
-      __info "nb-enum-smb-responder"
+      __info "nb-ad-smb-responder"
       exit 1
     fi
 
