@@ -164,15 +164,9 @@ nb-recon-org-theharvester
 
 ### Active Directory Exploitation
 ```bash
-# LLMNR Poisoning
-nb-enum-smb-responder
-
-# AS-REP Roasting
-nb-ad-asrep-brute
-
 # SMB Relay
 nb-ad-smb-relay-enum
-nb-enum-smb-responder
+nb-ad-smb-responder
 nb-ad-smb-relay-ntlmrelay
 
 # IPv6 Attack
