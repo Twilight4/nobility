@@ -8,7 +8,7 @@ nb-shell-tty-help() {
 
 nb-shell-tty
 ------------
-The shell-tty namespace provides commands for spawning interactive shells.
+The nb-shell-tty namespace provides commands for spawning interactive shells.
 
 Commands
 --------

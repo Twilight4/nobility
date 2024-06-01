@@ -1,40 +1,40 @@
 #!/usr/bin/env zsh
 
 ############################################################# 
-# nb-os
+# nb-lin
 #############################################################
-nb-os-help() {
+nb-lin-help() {
     cat << "DOC" | bat --plain --language=help
 
-nb-os
+nb-lin
 ----------
-The nb-os namespace provides commands that assist with managing your OS.
+The nb-lin namespace provides commands for managing your OS.
 
 Commands
 --------
-nb-os-pkg-query            query if a package is installed or not  
-nb-os-flush-iptables       flushes ip tables
-nb-os-get-gateway          get router IP address
-nb-os-get-hosts            get list of host IP addresses found via nmap
-nb-os-get-hostnames        get list of host names using nmap and the IP of a known DNS server
-nb-os-download-html        download IP and print with html2text
-nb-os-scan-tcp             scan IP with masscan
-nb-os-scan-udp             scan IP with nmap
-nb-os-ps-grep              search list of processes
-nb-os-ps-dtach             run a script in the background
-nb-os-path-add             add a new path to the PATH environment variable
-nb-os-file-replace         replace an existing value in a file
-nb-os-file-dos-to-unix     convert file with dos endings to unix
-nb-os-file-unix-to-dos     convert file with unix endings to dos
-nb-os-file-sort-uniq       sort a file uniq in place 
-nb-os-file-sort-uniq-ip    sort a file of IP addresses uniq in place
-nb-os-sudoers-easy         removes the requirment for sudo for common commands like nmap
-nb-os-sudoers-harden       removes sudo exclusions
+nb-lin-pkg-query            query if a package is installed or not  
+nb-lin-flush-iptables       flushes ip tables
+nb-lin-get-gateway          get router IP address
+nb-lin-get-hosts            get list of host IP addresses found via nmap
+nb-lin-get-hostnames        get list of host names using nmap and the IP of a known DNS server
+nb-lin-download-html        download IP and print with html2text
+nb-lin-scan-tcp             scan IP with masscan
+nb-lin-scan-udp             scan IP with nmap
+nb-lin-ps-grep              search list of processes
+nb-lin-ps-dtach             run a script in the background
+nb-lin-path-add             add a new path to the PATH environment variable
+nb-lin-file-replace         replace an existing value in a file
+nb-lin-file-dos-to-unix     convert file with dos endings to unix
+nb-lin-file-unix-to-dos     convert file with unix endings to dos
+nb-lin-file-sort-uniq       sort a file uniq in place 
+nb-lin-file-sort-uniq-ip    sort a file of IP addresses uniq in place
+nb-lin-sudoers-easy         removes the requirment for sudo for common commands like nmap
+nb-lin-sudoers-harden       removes sudo exclusions
 
 DOC
 }
 
-nb-os-pkg-query() {
+nb-lin-pkg-query() {
     local query && __askvar query PACKAGE 
     for pkg in "${query}"
     do
@@ -42,7 +42,7 @@ nb-os-pkg-query() {
     done 
 }
 
-nb-os-flush-iptables() {
+nb-lin-flush-iptables() {
     echo ""
     echo ">>> Before flush <<<"
     echo "" 
@@ -66,12 +66,12 @@ nb-os-flush-iptables() {
     echo ""
 }
 
-nb-os-get-gateway() {
+nb-lin-get-gateway() {
    INTERFACE=${1:-tap0}
    ip route | grep via | grep "$INTERFACE" | cut -d" " -f3 
 }
 
-nb-os-get-hosts() {
+nb-lin-get-hosts() {
     PORT=${1:-"none"}
     NETWORK=${2:-"10.11.1.0"}
     PATTERN="Nmap scan report for ${NETWORK:0:-1}"
@@ -87,7 +87,7 @@ nb-os-get-hosts() {
     fi
 }
 
-nb-os-get-hostnames() {
+nb-lin-get-hostnames() {
     DNS=$1
     NETWORK=${2:-"10.11.1.0"}
     PATTERN="Nmap scan report for "
@@ -103,23 +103,23 @@ nb-os-get-hostnames() {
     fi
 }
 
-nb-os-download-html() { 
+nb-lin-download-html() { 
 	curl -s "${1:-$RHOST}:${80:-$RPORT}" | html2text -style pretty; 
 }
 
-nb-os-scan-tcp() {
+nb-lin-scan-tcp() {
     IP=${1:-${__RHOST}
     INTERFACE=${2:-"tap0"}
     SAVEPATH=$(create_scan_directory "$IP")
 	
     run() {
-        masscan "$1" -e "$INTERFACE" --router-ip "$(nb-os-get-gateway "$INTERFACE")" -p 0-65535 --rate 500 -oL "$SAVEPATH"/ports
+        masscan "$1" -e "$INTERFACE" --router-ip "$(nb-lin-get-gateway "$INTERFACE")" -p 0-65535 --rate 500 -oL "$SAVEPATH"/ports
     }
 	
     run "$IP"
 }
 
-nb-os-scan-udp() {
+nb-lin-scan-udp() {
     IP=${1:-$RHOST}
     SAVEPATH=$(create_scan_directory "$IP")
 	
@@ -130,60 +130,60 @@ nb-os-scan-udp() {
     run "$IP"
 }
 
-nb-os-ps-grep() { 
+nb-lin-ps-grep() { 
     local query && __askvar query QUERY 
     print -z "ps aux | grep -v grep | grep -i -e VSZ -e ${query}" 
 }
 
-nb-os-ps-dtach() { 
+nb-lin-ps-dtach() { 
     __ask "Enter full path to script to run dtach'd"
     local p && __askpath p PATH $(pwd)
     dtach -A ${p} /bin/zsh 
 }
 
-nb-os-path-add() { 
+nb-lin-path-add() { 
     __ask "Enter new path to append to current PATH"
     local p && __askpath p PATH /   
     print -z "echo \"export PATH=\$PATH:${p}\" | tee -a $HOME/.config/zsh/.zshrc"
 }
 
-nb-os-file-replace() {
+nb-lin-file-replace() {
     local replace && __askvar replace REPLACE
     local with && __askvar with WITH
     local file && __askpath file FILE $(pwd)
     print -z "sed 's/${replace}/${with}/g' ${file} > ${file}"
 } 
 
-nb-os-file-dos-to-unix() { 
+nb-lin-file-dos-to-unix() { 
     local file=$1 
     [[ -z "${file}" ]] && __askpath file FILE $(pwd)
     print -z "tr -d \"\015\" < ${file} > ${file}.unix"
 }
 
-nb-os-file-unix-to-dos() {
+nb-lin-file-unix-to-dos() {
     local file=$1 
     [[ -z "${file}" ]] && __askpath file FILE $(pwd)
     print -z "sed -e 's/$/\r/' ${file} > ${file}.dos"
 }
 
-nb-os-file-sort-uniq() {
+nb-lin-file-sort-uniq() {
     local file=$1 
     [[ -z "${file}" ]] && __askpath file FILE $(pwd)
     print -z "cat ${file} | sort -u -o ${file}"
 }
 
-nb-os-file-sort-uniq-ip() { 
+nb-lin-file-sort-uniq-ip() { 
     local file=$1 
     [[ -z "${file}" ]] && __askpath file FILE $(pwd)
     print -z "cat ${file} | sort -u | sort -V -o ${file}"
 }
 
-nb-os-sudoers-easy() {
+nb-lin-sudoers-easy() {
     __warn "This is dangerous for OPSEC! Remove when done."
 	
     print -z "echo \"$USER ALL=(ALL:ALL) NOPASSWD: /usr/bin/nmap, /usr/bin/masscan, /usr/sbin/tcpdump\" | sudo tee /etc/sudoers.d/$(whoami)"
 }
 
-nb-os-sudoers-harden() {
+nb-lin-sudoers-harden() {
     print -z "sudo rm /etc/sudoers.d/$(whoami)"
 }
