@@ -53,7 +53,7 @@ nb-ad-smb-null-smbget-download-rec recursively download the SMB share
 nb-ad-smb-null-smbmap-upload       upload a file to a share
 nb-ad-smb-install                  installs dependencies
 nb-ad-smb-tcpdump                  capture traffic to and from a host
-nb-enum-user-smb-mount               mount an SMB share
+nb-enum-user-smb-mount             mount an SMB share
 nb-ad-smb-responder                spoof and get responses using responder
 nb-ad-smb-net-use-null             print a net use statement for windows
 nb-ad-smb-nbtscan                  scan a local network 

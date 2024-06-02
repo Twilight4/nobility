@@ -27,8 +27,6 @@ nb-crack-hashcat() {
   __check-project
 	__ask "Enter the hash"
 	__check-hash
-	#__ask "Enter a password wordlist"
-	#nb-vars-set-passlist             # use the default one that is set in nb-vars.zsh
 
   # Capture the output of hashid command and extract the third line
   ht=$(hashid ${__HASH} | awk 'NR==15{print $2}')
