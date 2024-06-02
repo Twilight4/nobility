@@ -20,16 +20,18 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
 
  Namespaces
  ----------
- nobility is organized in a tree of namespaces that are accessible via "nb-" with tab completion and search.
+ Nobility is organized in a tree of namespaces that are accessible via "nb-" with tab completion and search.
  Each namespace has its own install and help commands.
 
- Install and Configuration
- -------------------------
+ Install and Engagement Preparation
+ ----------------------------------
  nb-install-                    Installers for commonly used applications and global installer for all dependencies
+ nb-project-                    Commands to define scope and manage project data
  nb-vars-global-                Persistent environment variables used in all commands, all sessions
+ nb-vars-                       Per-session, per-engagement variables used in all commands
 
  Utility
- ---------
+ -------
  nb-crack-                      Used for crackign password hashes
  nb-encoding-                   Used for encoding / decoding data
  nb-os-                         Variety of commands for managing your OS
@@ -39,11 +41,6 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  nb-shell-handlers-             Commands for spawning reverse shell handlers
  nb-shell-handlers-msf-         Commands for spawning reverse shells with Metasploit
  nb-pivot-                      Commands for pivoting with ssh
-
- Engagement / Project
- -----------------------------
- nb-vars-                       Per-session, per-engagement variables used in all commands
- nb-project-                    Commands to define scope and manage project data
 
  Reconneissance Phase
  --------------------
@@ -77,7 +74,7 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  nb-enum-web-vuln-              Check for common web vulnerabilities
 
  Active-Directory Exploitation Phase
- -----------------------
+ -----------------------------------
  nb-ad-kerb-                    Commands for attacking kerberos
  nb-ad-ldap-                    Commands for LDAP enumeration
  nb-ad-smb-                     Commands for SMB services enumeration
