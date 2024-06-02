@@ -32,9 +32,9 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
 
  Utility
  -------
- nb-crack-                      Used for crackign password hashes
- nb-encoding-                   Used for encoding / decoding data
- nb-os-                         Variety of commands for managing your OS
+ nb-crack-                      Commands for cracking password hashes
+ nb-encoding-                   Commands for encoding / encrypting data
+ nb-os-                         Commands for managing your OS
  nb-srv-                        Commands for spawning file hosting services
  nb-compile-                    Commands for compiling exploits
  nb-shell-tty-                  Commands for upgrading tty shells
@@ -44,12 +44,12 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
 
  Reconneissance Phase
  --------------------
- nb-recon-org-                  Recon commands for organization files and data
- nb-recon-user-                 Recon commands for searching person's data
- nb-recon-github-               Recon commands for searching github repositories
- nb-recon-networks-             Recon commands for identiying an organization's networks
- nb-recon-domains-              Recon commands for horizontal domain enumeration
- nb-recon-subs-                 Recon commands for vertical sub-domain enumeration 
+ nb-recon-org-                  Commands for organization files and data
+ nb-recon-user-                 Commands for searching person's data
+ nb-recon-github-               Commands for searching github repositories
+ nb-recon-networks-             Commands for identiying an organization's networks
+ nb-recon-domains-              Commands for horizontal domain enumeration
+ nb-recon-subs-                 Commands for vertical sub-domain enumeration 
 
  Active Enumeration Phase
  ------------------------
@@ -71,7 +71,7 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  nb-enum-web-dirs-              Enumerate directories and files
  nb-enum-web-php-               Enumerate php web servers
  nb-enum-web-ssl-               Enumerate SSL certs and services
- nb-enum-web-vuln-              Check for common web vulnerabilities
+ nb-enum-web-vuln-              Enumerate common web vulnerabilities
 
  Active-Directory Exploitation Phase
  -----------------------------------
@@ -80,7 +80,7 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  nb-ad-smb-                     Commands for SMB services enumeration
  nb-ad-rce-                     Commands for RCE on target system
  nb-ad-cve                      Commands for exploiting systems vulnerable to modern CVEs
- nb-ad-dump-                    Commands for Dumping Hashes in AD
+ nb-ad-dump-                    Commands for dumping hashes
  nb-ad-gpp-                     Commands for GPP AD attack
  nb-ad-ipv6-                    Commands for IPv6 AD attack
  nb-ad-enum-                    Commands for AD internal enumeration
