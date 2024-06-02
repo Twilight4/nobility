@@ -38,6 +38,7 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  nb-shell-tty-                  Commands for upgrading tty shells
  nb-shell-handlers-             Commands for spawning reverse shell handlers
  nb-shell-handlers-msf-         Commands for spawning reverse shells with Metasploit
+ nb-pivot-                      Commands for pivoting with ssh
 
  Engagement / Project
  -----------------------------
@@ -75,20 +76,17 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  nb-enum-web-ssl-               Enumerate SSL certs and services
  nb-enum-web-vuln-              Check for common web vulnerabilities
 
- Active-Directory Phase
+ Active-Directory Exploitation Phase
  -----------------------
  nb-ad-kerb-                    Commands for attacking kerberos
  nb-ad-ldap-                    Commands for LDAP enumeration
  nb-ad-smb-                     Commands for SMB services enumeration
  nb-ad-rce-                     Commands for RCE on target system
+ nb-ad-cve                      Commands for exploiting systems vulnerable to modern CVEs
  nb-ad-dump-                    Commands for Dumping Hashes in AD
  nb-ad-gpp-                     Commands for GPP AD attack
  nb-ad-ipv6-                    Commands for IPv6 AD attack
  nb-ad-enum-                    Commands for AD internal enumeration
-
- Post-Exploitation Phase
- -----------------------
- nb-pivot-                      Commands for pivoting with ssh
 
 DOC
 }
