@@ -33,6 +33,11 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  nb-crack-                      Used for crackign password hashes
  nb-encoding-                   Used for encoding / decoding data
  nb-os-                         Variety of commands for managing your OS
+ nb-srv-                        Commands for spawning file hosting services
+ nb-compile-                    Commands for compiling exploits
+ nb-shell-tty-                  Commands for upgrading tty shells
+ nb-shell-handlers-             Commands for spawning reverse shell handlers
+ nb-shell-handlers-msf-         Commands for spawning reverse shells with Metasploit
 
  Engagement / Project
  -----------------------------
@@ -69,14 +74,6 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  nb-enum-web-php-               Enumerate php web servers
  nb-enum-web-ssl-               Enumerate SSL certs and services
  nb-enum-web-vuln-              Check for common web vulnerabilities
-
- Exploitation Phase
- ------------------
- nb-srv-                        Commands for spawning file hosting services
- nb-exploit-                    Commands for compiling exploits
- nb-shell-tty-                  Commands for upgrading tty shells
- nb-shell-handlers-             Commands for spawning reverse shell handlers
- nb-shell-handlers-msf-         Commands for spawning reverse shells with Metasploit
 
  Active-Directory Phase
  -----------------------
