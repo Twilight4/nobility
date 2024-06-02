@@ -3,7 +3,6 @@
 # password profiling
 #pwdology
 #cupp
-#cewl
 
 # username profiling
 #username-anarchy
