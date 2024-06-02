@@ -29,10 +29,41 @@ nb-crack-hashcat() {
 	__check-hash
 
   # Capture the output of hashid command and extract the third line
-  ht=$(hashid ${__HASH} | awk 'NR==15{print $2}')
-  if [ $? -eq 0 ]; then
-    __info "Hash type: $ht"
-  fi
+  #ht=$(hashid ${__HASH} | awk 'NR==15{print $2}')
+  #if [ $? -eq 0 ]; then
+  #  __info "Hash type: $ht"
+  #fi
+
+# Create an expect script to interact with hash-identifier
+expect << EOF > output.txt
+spawn hash-identifier
+expect " HASH: "
+send "${__HASH}\r"
+expect {
+    "Possible Hashs:" {
+        send_user "\nHash type identified\n"
+    }
+}
+expect " HASH: "
+send "exit\r"
+expect eof
+EOF
+
+# Filter and save the relevant hash type information
+ht=$(awk '/Possible Hashs:/ {getline; print $2}' output.txt)
+
+# Check if hash type was identified
+if [ -z "$ht" ]; then
+  echo "Could not identify hash type"
+  exit 1
+fi
+
+# Use the identified hash type with hashcat
+echo "Hash type identified: $ht"
+
+
+
+
 
   # Determine hash mode based on hash type
   if [[ $ht == *"MD5"* ]]; then
