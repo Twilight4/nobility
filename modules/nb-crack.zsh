@@ -69,23 +69,17 @@ __info "Hash type: $ht"
       md=0
   elif [[ $ht == *"SHA-1"* ]]; then
       md=100
-  elif [[ $ht == *"SHA-256"* ]]; then
-      md=1400
   elif [[ $ht == *"NTLM"* ]]; then
       md=1000
-  elif [[ $ht == *"LM"* ]]; then
-      md=3000
+  elif [[ $ht == *"sha512crypt $6$, SHA512 (Unix)"* ]]; then
+      md=1800
+  elif [[ $ht == *"bcrypt $2*$, Blowfish (Unix)"* ]]; then
+      md=3200
   elif [[ $ht == *"NTLMv1"* ]]; then
       md=5500
   elif [[ $ht == *"NTLMv2"* ]]; then
       md=5600
-  elif [[ $ht == *"MS-Cache"* ]]; then
-      md=11000
-  elif [[ $ht == *"DCC"* ]]; then
-      md=2100
-  elif [[ $ht == *"WPA"* ]]; then
-      md=2500
-  elif [[ $ht == *"Kerberos 5"* ]]; then
+  elif [[ $ht == *"Kerberos 5 TGS-REP etype 23"* ]]; then
       md=13100
   elif [[ $ht == *"Kerberos 5, etype 23, AS-REP"* ]]; then
       md=18200
