@@ -17,10 +17,17 @@ nb-crack-hashcat-list     crack password from provided hashlist
 nb-crack-john             john alternative with hash format detection (use this if you don't know the hash format format)
 nb-crack-john-passwd      convert linux password files to john-readable format (/etc/passwd and /etc/shadow files)
 nb-crack-john-zip         crack a password protected zip archive
+nb-crack-john-7z          crack a password protected 7z archive
 nb-crack-john-rar         crack a password protected rar archive
 nb-crack-john-ssh         crack ssh key passwords
+nb-crack-install          installs necessary dependencies
 
 DOC
+}
+
+nb-crack-install() {
+  __info "Running $0..."
+  __pkgs hashcat john libcompress-raw-lzma-perl
 }
 
 nb-crack-hashcat() {
@@ -173,6 +180,40 @@ nb-crack-john-zip() {
     # Run John the Ripper with the provided wordlist on the generated hash
     __info "To show the cracked hash use: john zip_hash.txt --show"
     print -z "john --wordlist=${__PASSLIST} zip_hash.txt"
+  else
+    __err "File does not exist: $d. Exiting."
+    return
+  fi
+}
+
+nb-crack-john-7z() {
+  __check-project
+
+  # Check if the package 'libcompress-raw-lzma-perl' is installed
+  if ! dpkg -s libcompress-raw-lzma-perl >/dev/null 2>&1; then
+    __err "Package 'libcompress-raw-lzma-perl' is not installed. Please install it before running this script."
+    return
+  fi
+
+  # Prompt the user for the full path to the zip file
+  __ask "Set the full path to the zip file."
+  local d && __askpath d "PATH_TO_FILE" $PJ/
+
+  # Check if the path contains the tilde character
+  if [[ "$d" == "~"* ]]; then
+    __err "~ not allowed, use the full path"
+    return
+  fi
+
+  # Check if the 7z file exists
+  if [[ -f "$d" ]]; then
+    __info "Generating the has of the 7z file using 7z2john..."
+    7z2john $d > 7z_hash.txt
+    __ok "Generated the hash of the 7z file as 7z_hash.txt"
+
+    # Run John the Ripper with the provided wordlist on the generated hash
+    __info "To show the cracked hash use: john 7z_hash.txt --show"
+    print -z "john --wordlist=${__PASSLIST} 7z_hash.txt"
   else
     __err "File does not exist: $d. Exiting."
     return
