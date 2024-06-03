@@ -213,7 +213,7 @@ nb-crack-john-7z() {
 
     # Run John the Ripper with the provided wordlist on the generated hash
     __info "To show the cracked hash use: john 7z_hash.txt --show"
-    print -z "john --wordlist=${__PASSLIST} 7z_hash.txt"
+    print -z "hashcat -m 17200 -a 0 7z_hash.txt ${__PASSLIST}"
   else
     __err "File does not exist: $d. Exiting."
     return
