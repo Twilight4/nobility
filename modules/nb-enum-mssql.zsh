@@ -72,7 +72,7 @@ nb-enum-mssql-mssqlclient-local() {
     nb-vars-set-rhost
     nb-vars-set-user
     nb-vars-set-domain
-    print -z "mssqlclient.py -p 1433 ${__DOMAIN}/${__USER}@${__RHOST} -windows-auth"
+    print -z "mssqlclient.py -p 1433 ${__USER}@${__RHOST} -windows-auth"
 }
 
 nb-enum-mssql-hydra() {
