@@ -14,7 +14,7 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
 
  Commands
  --------
- nb-update            git pull the latest (MAIN branch) version of nobility
+ nb-update            git pull the nobility changes from github repository
  nb-status            check the current status of the locally cloned nobility repository
  nb-message-toggle    toggle the "Nobility loaded" shell startup message
 
@@ -30,11 +30,11 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  nb-vars-global-                Persistent environment variables used in all commands, all sessions
  nb-vars-                       Per-session, per-engagement variables used in all commands
 
- Utility
- -------
+ Utilities
+ ---------
  nb-crack-                      Commands for cracking password hashes
  nb-encoding-                   Commands for encoding / encrypting data
- nb-os-                         Commands for managing your OS
+ nb-lin-                         Commands for managing your OS
  nb-srv-                        Commands for spawning file hosting services
  nb-compile-                    Commands for compiling exploits
  nb-shell-tty-                  Commands for upgrading tty shells
@@ -42,8 +42,8 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  nb-shell-handlers-msf-         Commands for spawning reverse shells with Metasploit
  nb-pivot-                      Commands for pivoting with ssh
 
- Reconneissance Phase
- --------------------
+ Reconneissance/OSINT Phase
+ --------------------------
  nb-recon-org-                  Commands for organization files and data
  nb-recon-user-                 Commands for searching person's data
  nb-recon-github-               Commands for searching github repositories
@@ -51,8 +51,17 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  nb-recon-domains-              Commands for horizontal domain enumeration
  nb-recon-subs-                 Commands for vertical sub-domain enumeration 
 
- Active Enumeration Phase
- ------------------------
+ External Enumeration Phase
+ --------------------------
+ nb-enum-web-                   Enumerate web servers and services
+ nb-enum-web-aws-               Enumerate AWS hosted services
+ nb-enum-web-dirs-              Enumerate directories and files
+ nb-enum-web-php-               Enumerate php web servers
+ nb-enum-web-ssl-               Enumerate SSL certs and services
+ nb-enum-web-vuln-              Enumerate common web vulnerabilities
+
+ Internal Enumeration Phase
+ --------------------------
  nb-enum-network-               Enumerate and scan networks
  nb-enum-host-                  Enumerate and scan an individual host
  nb-enum-dhcp-                  Enumerate DHCP services
@@ -66,15 +75,12 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  nb-enum-oracle-                Enumerate Oracle database services
  nb-enum-pop3-                  Enumerate POP3 services
  nb-enum-rdp-                   Enumerate RDP services
- nb-enum-web-                   Enumerate web servers and services
- nb-enum-web-aws-               Enumerate AWS hosted services
- nb-enum-web-dirs-              Enumerate directories and files
- nb-enum-web-php-               Enumerate php web servers
- nb-enum-web-ssl-               Enumerate SSL certs and services
- nb-enum-web-vuln-              Enumerate common web vulnerabilities
 
- Active-Directory Exploitation Phase
- -----------------------------------
+Host Post-Exploitation Enumeration
+----------------------------------
+
+ Active-Directory Enumeration and Exploitation Phase
+ ---------------------------------------------------
  nb-ad-kerb-                    Commands for attacking kerberos
  nb-ad-ldap-                    Commands for LDAP enumeration
  nb-ad-smb-                     Commands for SMB services enumeration
