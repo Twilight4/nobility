@@ -76,17 +76,21 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  nb-enum-pop3-                  Enumerate POP3 services
  nb-enum-rdp-                   Enumerate RDP services
 
-Host Post-Exploitation Enumeration
-----------------------------------
+ Host Post-Exploitation Enumeration Phase
+ ----------------------------------------
+ nb-local-dump-                 Commands for manually dumping windows local hashes
+ nb-local-pillaging-            Commands for local pillaging
+ nb-local-cred-                 Commands for local credential hunting
+ nb-local-persist-              Commands for local persistence
 
- Active-Directory Enumeration and Exploitation Phase
+ Active Directory Enumeration and Exploitation Phase
  ---------------------------------------------------
  nb-ad-kerb-                    Commands for attacking kerberos
  nb-ad-ldap-                    Commands for LDAP enumeration
  nb-ad-smb-                     Commands for SMB services enumeration
  nb-ad-rce-                     Commands for RCE on target system
  nb-ad-cve                      Commands for exploiting systems vulnerable to modern CVEs
- nb-ad-dump-                    Commands for dumping hashes
+ nb-ad-dump-                    Commands for dumping windows hashes in domain
  nb-ad-gpp-                     Commands for GPP AD attack
  nb-ad-ipv6-                    Commands for IPv6 AD attack
  nb-ad-enum-                    Commands for AD internal enumeration
