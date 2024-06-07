@@ -10,32 +10,36 @@ nb-enum-network
 -------------
 The nb-enum-network namespace contains commands for scanning and enumerating a network.
 
-Initial Scan
-------------
-nb-enum-network-rustscan-initial     sweep a network with initial TCP syn requests
-nb-enum-network-rustscan-initial-all sweep a network with initial TCP syn requests
-
 Ping Sweep
 ----------
-nb-enum-network-nmap-ping-sweep       sweep a network subnet with ping requests
-nb-pivot-ping-sweep-msf               sweep a network subnet with ping requests
-nb-pivot-ping-sweep-linux             sweep a network subnet with ping requests on linux
-nb-pivot-ping-sweep-windows-cmd       sweep a network subnet with ping requests on windows
-nb-pivot-ping-sweep-windows-pwsh      sweep a network subnet with ping requests on windows powershell
+nb-enum-network-nmap-ping-sweep      sweep a network subnet with ping requests
+nb-pivot-ping-sweep-msf              sweep a network subnet with ping requests
+nb-pivot-ping-sweep-linux            sweep a network subnet with ping requests on linux
+nb-pivot-ping-sweep-windows-cmd      sweep a network subnet with ping requests on windows
+nb-pivot-ping-sweep-windows-pwsh     sweep a network subnet with ping requests on windows powershell
 
-Nmap Scan
+Rustscan Scan
+-------------
+nb-enum-network-rustscan-initial        scan with initial TCP syn requests
+nb-enum-network-rustscan-initial-all    scan with initial TCP syn requests
+
+Host Discovery
 ---------
-nb-enum-network-nmap-syn-sweep       sweep a network with TCP syn requests, top 1000 ports
-nb-enum-network-nmap-udp-sweep       sweep a network with UDP requests, top 100 ports
-nb-enum-network-nmap-all-sweep       sweep a network with TCP syn requests, all ports
-nb-enum-network-nmap-discovery       sweep a network with TCP syn requests and scripts, top 100 ports
+nb-enum-network-nmap-top             scan with TCP syn requests, top 1000 ports
+nb-enum-network-nmap-all             scan with TCP syn requests, all ports
+nb-enum-network-masscan-all          scan with TCP syn requests, all ports
+nb-enum-network-masscan-top          scan with TCP requests, uses $__TCP_PORTS global var
+nb-enum-network-masscan-windows      scan for common Windows ports
+nb-enum-network-masscan-linux        scan for common Linux ports
+nb-enum-network-masscan-web          scan for common web server ports
 
-Masscan Scan
-------------
-nb-enum-network-masscan-top          sweep a network with TCP requests, uses $__TCP_PORTS global var
-nb-enum-network-masscan-windows      sweep a network for common Windows ports
-nb-enum-network-masscan-linux        sweep a network for common Linux ports
-nb-enum-network-masscan-web          sweep a network for common web server ports
+Service Enumeration
+-------------------
+nb-enum-network-nmap-top-discovery       scan with TCP syn requests and scripts, top 1000 ports
+nb-enum-network-nmap-all-discovery       syn scan all ports with versioning and scripts, all ports
+
+
+
 
 Commands
 --------
@@ -78,34 +82,34 @@ nb-enum-network-tcpdump-bcasts() {
     print -z "sudo tcpdump -i ${__IFACE} ether broadcast and ether multicast -w $__PROJECT/networks/bcasts.pcap"
 }
 
-nb-enum-network-nmap-ping-sweep() {
+nb-enum-network-nmap-ping() {
     __check-project 
     nb-vars-set-network
     print -z "grc nmap -vvv -sn --open ${__NETWORK} -oA $(__netpath)/nmap-ping-sweep"
 }
 
-nb-enum-network-nmap-syn-sweep() {
+nb-enum-network-nmap-top() {
     __check-project 
     nb-vars-set-network
-    print -z "sudo grc nmap -vvv -n -Pn -sS --open --top-ports 100 ${__NETWORK} -oA $(__netpath)/nmap-syn-sweep"
+    print -z "sudo grc nmap -vvv -n -Pn -sS --open --top-ports 1000 ${__NETWORK} -oA $(__netpath)/nmap-top-syn-sweep"
 }
 
-nb-enum-network-nmap-udp-sweep() {
-    __check-project 
-    nb-vars-set-network
-    print -z "sudo grc nmap -vvv -n -Pn -sU --open --top-ports 100 ${__NETWORK} -oA $(__netpath)/nmap-udp-sweep"
-}
-
-nb-enum-network-nmap-all-sweep() {
+nb-enum-network-nmap-all() {
     __check-project 
     nb-vars-set-network
     print -z "sudo grc nmap -vvv -n -Pn -T4 --open -sS -p- ${__NETWORK} -oA $(__netpath)/nmap-all-sweep"
 }
 
-nb-enum-network-nmap-discovery() {
+nb-enum-network-nmap-all-discovery() {
     __check-project 
     nb-vars-set-network
-    print -z "grc nmap -vvv -n -Pn -sV -sC --top-ports 100 ${__NETWORK} -oA $(__netpath)/nmap-discovery"
+    print -z "sudo grc nmap -vvv -n -Pn -T4 --open -sS -p- -sC -sV ${__NETWORK} -oA $(__netpath)/nmap-all-sweep"
+}
+
+nb-enum-network-nmap-top-discovery() {
+    __check-project 
+    nb-vars-set-network
+    print -z "grc nmap -vvv -n -Pn -sV -sS -sC --top-ports 1000 ${__NETWORK} -oA $(__netpath)/nmap-discovery"
 }
 
 nb-enum-network-masscan-top() {
@@ -130,6 +134,13 @@ nb-enum-network-masscan-web() {
     __check-project 
     nb-vars-set-network
     print -z "sudo masscan ${__NETWORK} -p80,800,8000,8080,8888,443,4433,4443 -oL $(__netpath)/masscan-web.txt"
+}
+
+nb-enum-network-masscan-all() {
+    __check-iface
+    __check-project
+    nb-vars-set-rhost
+    print -z "masscan -p1-65535 --open-only ${__RHOST} --rate=1000 -e ${__IFACE} -oL $(__hostpath)/masscan-all-tcp.txt"
 }
 
 nb-pivot-ping-sweep-msf() {
