@@ -21,7 +21,8 @@ nb-enum-web-snmp                   create host list and scan IP with WORDLIST
 nb-enum-web-ffuf-crawl             crawl/spider a website for hidden folders and files
 nb-enum-web-vhosts-gobuster        brute force for virtual hosts with gobuster
 nb-enum-web-vhosts-ffuf            brute force for virtual hosts with ffuf
-nb-enum-web-eyewitness             scrape screenshots from target URL
+nb-enum-web-eyewitness-single      scrape screenshots from the target URL
+nb-enum-web-eyewitness-subs        scrape screenshots from the subdomains list file
 nb-enum-web-wordpress              enumerate Wordpress information
 nb-enum-web-wordpress-bruteforce   bruteforce Wordpress password, knowing the username
 nb-enum-web-headers                grab headers from a target url using curl
@@ -126,11 +127,18 @@ nb-enum-web-vhosts-ffuf() {
 ############################################################# 
 # screenshots
 #############################################################
-nb-enum-web-eyewitness() {
+nb-enum-web-eyewitness-single() {
     __check-project
     nb-vars-set-url
     mkdir -p $(__urlpath)/screens
     print -z "eyewitness --web --no-dns --no-prompt --single ${__URL} -d $(__urlpath)/screens --user-agent \"${__UA}\" "
+}
+
+nb-enum-web-eyewitness-subs() {
+    __check-project
+    mkdir -p $(__urlpath)/screens
+    local f && __askpath f SUBDOMAINS_FILE ${__PROJECT}
+    print -z "eyewitness -f $f -d $(__netpath)/subdomain-screens"
 }
 
 
