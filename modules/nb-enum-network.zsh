@@ -18,13 +18,9 @@ nb-pivot-ping-sweep-linux            sweep a network subnet with ping requests o
 nb-pivot-ping-sweep-windows-cmd      sweep a network subnet with ping requests on windows
 nb-pivot-ping-sweep-windows-pwsh     sweep a network subnet with ping requests on windows powershell
 
-Rustscan Scan
--------------
-nb-enum-network-rustscan-initial        scan with initial TCP syn requests
-nb-enum-network-rustscan-initial-all    scan with initial TCP syn requests
-
 Host Discovery
----------
+--------------
+nb-enum-network-rustscan-all         scan with initial TCP syn requests
 nb-enum-network-nmap-top             scan with TCP syn requests, top 1000 ports
 nb-enum-network-nmap-all             scan with TCP syn requests, all ports
 nb-enum-network-masscan-all          scan with TCP syn requests, all ports
@@ -35,8 +31,10 @@ nb-enum-network-masscan-web          scan for common web server ports
 
 Service Enumeration
 -------------------
-nb-enum-network-nmap-top-discovery       scan with TCP syn requests and scripts, top 1000 ports
-nb-enum-network-nmap-all-discovery       syn scan all ports with versioning and scripts, all ports
+nb-enum-network-rustscan-all-discovery    scan with initial TCP syn requests
+nb-enum-network-nmap-top-discovery        scan with TCP syn requests and scripts, top 1000 ports
+nb-enum-network-nmap-all-discovery        syn scan all ports with versioning and scripts, all ports
+
 
 
 
