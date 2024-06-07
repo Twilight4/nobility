@@ -10,9 +10,10 @@ nb-enum-network
 -------------
 The nb-enum-network namespace contains commands for scanning and enumerating a network.
 
-Go-to Initial Scans
--------------------
+Initial Scan
+------------
 nb-enum-network-rustscan-initial     sweep a network with initial TCP syn requests
+nb-enum-network-rustscan-initial-all sweep a network with initial TCP syn requests
 
 Nmap Scan
 ---------
@@ -52,7 +53,7 @@ nb-enum-network-rustscan-initial() {
 nb-enum-network-rustscan-initial-all() {
     __check-project 
     nb-vars-set-network
-    print -z "rustscan -a ${__NETWORK} -r 1-65535 --ulimit 5000 -- -sV -sC -T4 -Pn -oA $(__netpath)/rustscan-initial-all"
+    print -z "rustscan -a ${__NETWORK} -r 1-65535 --ulimit 5000 -- --open -A -Pn -oA $(__netpath)/rustscan-initial-all"
 }
 
 nb-enum-network-tcpdump() {
