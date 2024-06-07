@@ -10,20 +10,30 @@ nb-enum-network
 -------------
 The nb-enum-network namespace contains commands for scanning and enumerating a network.
 
-Commands
---------
-nb-enum-network-install              installs dependencies
-nb-enum-network-tcpdump              capture traffic to and from a network
-nb-enum-network-tcpdump-bcasts       capture ethernet broadcasts and multi-cast traffic
+Go-to Initial Scans
+-------------------
+nb-enum-network-rustscan-initial     sweep a network with initial TCP syn requests
+
+Nmap Scan
+---------
 nb-enum-network-nmap-ping-sweep      sweep a network with ping requests
 nb-enum-network-nmap-syn-sweep       sweep a network with TCP syn requests, top 1000 ports
 nb-enum-network-nmap-udp-sweep       sweep a network with UDP requests, top 100 ports
 nb-enum-network-nmap-all-sweep       sweep a network with TCP syn requests, all ports
 nb-enum-network-nmap-discovery       sweep a network with TCP syn requests and scripts, top 100 ports
+
+Masscan Scan
+------------
 nb-enum-network-masscan-top          sweep a network with TCP requests, uses $__TCP_PORTS global var
 nb-enum-network-masscan-windows      sweep a network for common Windows ports
 nb-enum-network-masscan-linux        sweep a network for common Linux ports
 nb-enum-network-masscan-web          sweep a network for common web server ports
+
+Commands
+--------
+nb-enum-network-install              installs dependencies
+nb-enum-network-tcpdump              capture traffic to and from a network
+nb-enum-network-tcpdump-bcasts       capture ethernet broadcasts and multi-cast traffic
 
 DOC
 }
@@ -33,6 +43,17 @@ nb-enum-network-install() {
     __pkgs tcpdump nmap masscan
 }
 
+nb-enum-network-rustscan-initial() {
+    __check-project 
+    nb-vars-set-network
+    print -z "rustscan -a ${__NETWORK} -r 1-65535 --ulimit 5000 -- --open -oA $(__netpath)/rustscan-initial"
+}
+
+nb-enum-network-rustscan-initial-all() {
+    __check-project 
+    nb-vars-set-network
+    print -z "rustscan -a ${__NETWORK} -r 1-65535 --ulimit 5000 -- -sV -sC -T4 -Pn -oA $(__netpath)/rustscan-initial-all"
+}
 
 nb-enum-network-tcpdump() {
     __check-project 
