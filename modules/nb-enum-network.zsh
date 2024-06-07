@@ -8,18 +8,18 @@ nb-enum-network-help() {
 
 nb-enum-network
 -------------
-The nb-enum-network namespace contains commands for scanning and enumerating a network.
+The nb-enum-network namespace contains commands for scanning and enumerating target hosts/network.
 
-Ping Sweep
-----------
+Ping Sweep/Host Discovery
+-------------------------
 nb-enum-network-nmap-ping-sweep      sweep a network subnet with ping requests
 nb-pivot-ping-sweep-msf              sweep a network subnet with ping requests
 nb-pivot-ping-sweep-linux            sweep a network subnet with ping requests on linux
 nb-pivot-ping-sweep-windows-cmd      sweep a network subnet with ping requests on windows
 nb-pivot-ping-sweep-windows-pwsh     sweep a network subnet with ping requests on windows powershell
 
-Host Discovery
---------------
+Opern Ports Discovery
+---------------------
 nb-enum-network-rustscan-all         scan with initial TCP syn requests
 nb-enum-network-nmap-top             scan with TCP syn requests, top 1000 ports
 nb-enum-network-nmap-all             scan with TCP syn requests, all ports
@@ -35,6 +35,11 @@ nb-enum-network-rustscan-all-discovery    scan with initial TCP syn requests
 nb-enum-network-nmap-top-discovery        scan with TCP syn requests and scripts, top 1000 ports
 nb-enum-network-nmap-all-discovery        syn scan all ports with versioning and scripts, all ports
 
+Super Fast and Aggressive Scan
+------------------------------
+nb-enum-network-rustscan-aggressive        TCP syn scan all ports super fast and furious
+nb-enum-network-rustscan-aggressive        
+
 
 
 
@@ -44,6 +49,7 @@ Commands
 nb-enum-network-install              installs dependencies
 nb-enum-network-tcpdump              capture traffic to and from a network
 nb-enum-network-tcpdump-bcasts       capture ethernet broadcasts and multi-cast traffic
+nb-enum-network-nmap-lse-grep           search nmap lse scripts
 
 DOC
 }
@@ -53,14 +59,31 @@ nb-enum-network-install() {
     __pkgs tcpdump nmap masscan
 }
 
-nb-enum-network-rustscan-initial() {
+nb-enum-network-nmap-lse-grep() {
+    local q && __askvar q QUERY
+    print -z "ls /usr/share/nmap/scripts/* | grep -ie \"${q}\" "
+}
+
+nb-enum-network-rustscan-aggressive() {
+    __check-project
+    nb-vars-set-rhost
+    print -z "rustscan -a ${__RHOST} -r 1-65535 --ulimit 5000 -- -A -T4 -Pn -v -n --stats-every=20s --min-parallelism=100 --min-rate=10000 -oA $(__hostpath)/rustscan-aggressive-all"
+}
+
+nb-enum-network-nmap-aggressive-all() {
+    __check-project 
+    nb-vars-set-rhost
+    print -z "sudo grc nmap -A -Pn -T4 -p- -v -n --stats-every=20s --min-parallelism=100 --min-rate=300 -oN $(__hostpath)/nmap-aggressive-all.nmap ${__RHOST}"
+}
+
+nb-enum-network-rustscan-all() {
     __check-project 
     __ask "Enter alive hosts which you scanned with ping sweep"
     nb-vars-set-rhost
     print -z "rustscan -a ${__RHOST} -r 1-65535 --ulimit 5000 -- --open -oA $(__netpath)/rustscan-initial"
 }
 
-nb-enum-network-rustscan-initial-all() {
+nb-enum-network-rustscan-all-discovery() {
     __check-project 
     __ask "Enter alive hosts which you scanned with ping sweep"
     nb-vars-set-rhost
@@ -70,8 +93,8 @@ nb-enum-network-rustscan-initial-all() {
 nb-enum-network-tcpdump() {
     __check-project 
     nb-vars-set-iface
-    nb-vars-set-network
-    print -z "sudo tcpdump -i ${__IFACE} net ${__NETWORK} -w $(__netpath)/network.pcap"
+    nb-vars-set-rhost
+    print -z "sudo tcpdump -i ${__IFACE} net ${__RHOST} -w $(__netpath)/network.pcap"
 }
 
 nb-enum-network-tcpdump-bcasts() {
@@ -82,56 +105,56 @@ nb-enum-network-tcpdump-bcasts() {
 
 nb-enum-network-nmap-ping() {
     __check-project 
-    nb-vars-set-network
-    print -z "grc nmap -vvv -sn --open ${__NETWORK} -oA $(__netpath)/nmap-ping-sweep"
+    nb-vars-set-rhost
+    print -z "grc nmap -vvv -sn --open ${__RHOST} -oA $(__netpath)/nmap-ping-sweep"
 }
 
 nb-enum-network-nmap-top() {
     __check-project 
-    nb-vars-set-network
-    print -z "sudo grc nmap -vvv -n -Pn -sS --open --top-ports 1000 ${__NETWORK} -oA $(__netpath)/nmap-top-syn-sweep"
+    nb-vars-set-rhost
+    print -z "sudo grc nmap -vvv -n -Pn -sS --open --top-ports 1000 ${__RHOST} -oA $(__netpath)/nmap-top"
 }
 
 nb-enum-network-nmap-all() {
     __check-project 
-    nb-vars-set-network
-    print -z "sudo grc nmap -vvv -n -Pn -T4 --open -sS -p- ${__NETWORK} -oA $(__netpath)/nmap-all-sweep"
+    nb-vars-set-rhost
+    print -z "sudo grc nmap -vvv -n -Pn -T4 --open -sS -p- ${__RHOST} -oA $(__netpath)/nmap-all"
 }
 
 nb-enum-network-nmap-all-discovery() {
     __check-project 
-    nb-vars-set-network
-    print -z "sudo grc nmap -vvv -n -Pn -T4 --open -sS -p- -sC -sV ${__NETWORK} -oA $(__netpath)/nmap-all-sweep"
+    nb-vars-set-rhost
+    print -z "sudo grc nmap -vvv -n -Pn -T4 --open -sS -p- -sC -sV --stats-every=20s  ${__RHOST} -oA $(__netpath)/nmap-all-discovery"
 }
 
 nb-enum-network-nmap-top-discovery() {
     __check-project 
-    nb-vars-set-network
-    print -z "grc nmap -vvv -n -Pn -sV -sS -sC --top-ports 1000 ${__NETWORK} -oA $(__netpath)/nmap-discovery"
+    nb-vars-set-rhost
+    print -z "grc nmap -vvv -n -Pn -sV -sS -sC --top-ports 1000 ${__RHOST} -oA $(__netpath)/nmap-top-discovery"
 }
 
 nb-enum-network-masscan-top() {
     __check-project 
-    nb-vars-set-network
-    print -z "sudo masscan ${__NETWORK} -p${__TCP_PORTS} -oL $(__netpath)/masscan-top.txt"
+    nb-vars-set-rhost
+    print -z "sudo masscan ${__RHOST} -p${__TCP_PORTS} -oL $(__netpath)/masscan-top.txt"
 }
 
 nb-enum-network-masscan-windows() {
     __check-project 
-    nb-vars-set-network
-    print -z "sudo masscan ${__NETWORK} -p135-139,445,3389,389,636,88 -oL $(__netpath)/masscan-windows.txt"
+    nb-vars-set-rhost
+    print -z "sudo masscan ${__RHOST} -p135-139,445,3389,389,636,88 -oL $(__netpath)/masscan-windows.txt"
 }
 
 nb-enum-network-masscan-linux() {
     __check-project 
-    nb-vars-set-network
-    print -z "sudo masscan ${__NETWORK} -p22,111,2222 -oL $(__netpath)/masscan-linux.txt"
+    nb-vars-set-rhost
+    print -z "sudo masscan ${__RHOST} -p22,111,2222 -oL $(__netpath)/masscan-linux.txt"
 }
 
 nb-enum-network-masscan-web() {
     __check-project 
-    nb-vars-set-network
-    print -z "sudo masscan ${__NETWORK} -p80,800,8000,8080,8888,443,4433,4443 -oL $(__netpath)/masscan-web.txt"
+    nb-vars-set-rhost
+    print -z "sudo masscan ${__RHOST} -p80,800,8000,8080,8888,443,4433,4443 -oL $(__netpath)/masscan-web.txt"
 }
 
 nb-enum-network-masscan-all() {
