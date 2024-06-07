@@ -52,7 +52,7 @@ nb-enum-dns-nmap-sweep() {
 nb-enum-dns-nmap-mail-sweep() {
     __check-project
     nb-vars-set-network
-    print -z "sudo grc nmap -n -Pn -sS -sV -sC --scipt smtp-commands -p25,143,110,465,587,993,995 ${__NETWORK} -oA $(__netpath)/mail-sweep"
+    print -z "sudo grc nmap -n -Pn -sV -sC --script smtp-commands -p25,143,110,465,587,993,995 ${__NETWORK} -oA $(__netpath)/mail-sweep"
 }
 
 nb-enum-dns-tcpdump() {
