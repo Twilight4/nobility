@@ -18,8 +18,8 @@ nb-enum-network-ping-sweep-linux          sweep a network subnet with ping reque
 nb-enum-network-ping-sweep-windows-cmd    sweep a network subnet with ping requests on windows
 nb-enum-network-ping-sweep-windows-pwsh   sweep a network subnet with ping requests on windows powershell
 
-Opern Ports Discovery
----------------------
+Open Ports Discovery
+--------------------
 nb-enum-network-rustscan-all              scan with TCP syn requests, all ports
 nb-enum-network-nmap-top                  scan with TCP syn requests, top 1000 ports
 nb-enum-network-nmap-all                  scan with TCP syn requests, all ports
@@ -37,19 +37,15 @@ nb-enum-network-nmap-discovery-all        scan all ports with versioning and scr
 
 Super Fast and Aggressive Scan
 ------------------------------
-nb-enum-network-rustscan-aggressive-all       TCP syn rustscan scan all ports super fast and furious, all ports
-nb-enum-network-nmap-aggressive-all           TCP syn nmap scan all ports super fast and furious, all ports
-
-
-
-
+nb-enum-network-rustscan-aggressive-all   TCP syn rustscan scan all ports super fast and furious, all ports
+nb-enum-network-nmap-aggressive-all       TCP syn nmap scan all ports super fast and furious, all ports
 
 Commands
 --------
 nb-enum-network-install              installs dependencies
 nb-enum-network-tcpdump              capture traffic to and from a network
 nb-enum-network-tcpdump-bcasts       capture ethernet broadcasts and multi-cast traffic
-nb-enum-network-nmap-lse-grep           search nmap lse scripts
+nb-enum-network-nmap-lse-grep        search nmap lse scripts
 
 DOC
 }
@@ -67,27 +63,27 @@ nb-enum-network-nmap-lse-grep() {
 nb-enum-network-rustscan-aggressive-all() {
     __check-project
     nb-vars-set-rhost
-    print -z "rustscan -a ${__RHOST} -r 1-65535 --ulimit 5000 -- -A -T4 -Pn -v -n --stats-every=20s --min-parallelism=100 --min-rate=10000 -oA $(__hostpath)/rustscan-aggressive-all"
+    print -z "rustscan -a ${__RHOST} -r 1-65535 --ulimit 5000 -- -A -T4 -Pn -v -n --stats-every=20s --min-parallelism=100 --min-rate=10000 -oA $(__netpath)/rustscan-aggressive-all"
 }
 
 nb-enum-network-nmap-aggressive-all() {
     __check-project 
     nb-vars-set-rhost
-    print -z "sudo grc nmap -A -Pn -T4 -p- -v -n --stats-every=20s --min-parallelism=100 --min-rate=300 -oN $(__hostpath)/nmap-aggressive-all.nmap ${__RHOST}"
+    print -z "sudo grc nmap -A -Pn -T4 -p- -v -n --stats-every=20s --min-parallelism=100 --min-rate=300 -oA $(__netpath)/nmap-aggressive-all.nmap ${__RHOST}"
 }
 
 nb-enum-network-rustscan-all() {
     __check-project 
     __ask "Enter alive hosts which you scanned with ping sweep"
     nb-vars-set-rhost
-    print -z "rustscan -a ${__RHOST} -r 1-65535 --ulimit 5000 -- --open -oA $(__netpath)/rustscan-initial"
+    print -z "rustscan -a ${__RHOST} -r 1-65535 --ulimit 5000 -- --open -oA $(__netpath)/rustscan-all"
 }
 
 nb-enum-network-rustscan-discovery-all() {
     __check-project 
     __ask "Enter alive hosts which you scanned with ping sweep"
     nb-vars-set-rhost
-    print -z "rustscan -a ${__RHOST} -r 1-65535 --ulimit 5000 -- --open -A -Pn -oA $(__netpath)/rustscan-initial-all"
+    print -z "rustscan -a ${__RHOST} -r 1-65535 --ulimit 5000 -- --open -A -Pn -oA $(__netpath)/rustscan-discovery-all"
 }
 
 nb-enum-network-tcpdump() {
@@ -124,13 +120,13 @@ nb-enum-network-nmap-all() {
 nb-enum-network-nmap-discovery-all() {
     __check-project 
     nb-vars-set-rhost
-    print -z "sudo grc nmap -vvv -n -Pn -T4 --open -sS -p- -sC -sV --stats-every=20s  ${__RHOST} -oA $(__netpath)/nmap-all-discovery"
+    print -z "sudo grc nmap -vvv -n -Pn -T4 --open -sS -p- -sC -sV --stats-every=20s  ${__RHOST} -oA $(__netpath)/nmap-discovery-all"
 }
 
 nb-enum-network-nmap-discovery-top() {
     __check-project 
     nb-vars-set-rhost
-    print -z "grc nmap -vvv -n -Pn -sV -sS -sC --top-ports 1000 ${__RHOST} -oA $(__netpath)/nmap-top-discovery"
+    print -z "grc nmap -vvv -n -Pn -sV -sS -sC --top-ports 1000 ${__RHOST} -oA $(__netpath)/nmap-discovery-top"
 }
 
 nb-enum-network-masscan-top() {
@@ -161,7 +157,7 @@ nb-enum-network-masscan-all() {
     __check-iface
     __check-project
     nb-vars-set-rhost
-    print -z "masscan -p1-65535 --open-only ${__RHOST} --rate=1000 -e ${__IFACE} -oL $(__hostpath)/masscan-all-tcp.txt"
+    print -z "masscan -p1-65535 --open-only ${__RHOST} --rate=1000 -e ${__IFACE} -oL $(__netpath)/masscan-all.txt"
 }
 
 nb-pivot-ping-sweep-msf() {
