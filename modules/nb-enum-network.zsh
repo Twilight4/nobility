@@ -12,33 +12,33 @@ The nb-enum-network namespace contains commands for scanning and enumerating tar
 
 Ping Sweep/Host Discovery
 -------------------------
-nb-enum-network-nmap-ping-sweep      sweep a network subnet with ping requests
-nb-pivot-ping-sweep-msf              sweep a network subnet with ping requests
-nb-pivot-ping-sweep-linux            sweep a network subnet with ping requests on linux
-nb-pivot-ping-sweep-windows-cmd      sweep a network subnet with ping requests on windows
-nb-pivot-ping-sweep-windows-pwsh     sweep a network subnet with ping requests on windows powershell
+nb-enum-network-nmap-ping-sweep           sweep a network subnet with ping requests
+nb-enum-network-ping-sweep-msf            sweep a network subnet with ping requests
+nb-enum-network-ping-sweep-linux          sweep a network subnet with ping requests on linux
+nb-enum-network-ping-sweep-windows-cmd    sweep a network subnet with ping requests on windows
+nb-enum-network-ping-sweep-windows-pwsh   sweep a network subnet with ping requests on windows powershell
 
 Opern Ports Discovery
 ---------------------
-nb-enum-network-rustscan-all         scan with initial TCP syn requests
-nb-enum-network-nmap-top             scan with TCP syn requests, top 1000 ports
-nb-enum-network-nmap-all             scan with TCP syn requests, all ports
-nb-enum-network-masscan-all          scan with TCP syn requests, all ports
-nb-enum-network-masscan-top          scan with TCP requests, uses $__TCP_PORTS global var
-nb-enum-network-masscan-windows      scan for common Windows ports
-nb-enum-network-masscan-linux        scan for common Linux ports
-nb-enum-network-masscan-web          scan for common web server ports
+nb-enum-network-rustscan-all              scan with TCP syn requests, all ports
+nb-enum-network-nmap-top                  scan with TCP syn requests, top 1000 ports
+nb-enum-network-nmap-all                  scan with TCP syn requests, all ports
+nb-enum-network-masscan-all               scan with TCP syn requests, all ports
+nb-enum-network-masscan-top               scan with TCP requests, uses $__TCP_PORTS global var
+nb-enum-network-masscan-windows           scan for common Windows ports
+nb-enum-network-masscan-linux             scan for common Linux ports
+nb-enum-network-masscan-web               scan for common web server ports
 
 Service Enumeration
 -------------------
-nb-enum-network-rustscan-all-discovery    scan with initial TCP syn requests
-nb-enum-network-nmap-top-discovery        scan with TCP syn requests and scripts, top 1000 ports
-nb-enum-network-nmap-all-discovery        syn scan all ports with versioning and scripts, all ports
+nb-enum-network-rustscan-discovery-all    scan with initial TCP syn requests, all ports
+nb-enum-network-nmap-discovery-top        scan with TCP syn requests and scripts, top 1000 ports
+nb-enum-network-nmap-discovery-all        scan all ports with versioning and scripts, all ports
 
 Super Fast and Aggressive Scan
 ------------------------------
-nb-enum-network-rustscan-aggressive        TCP syn scan all ports super fast and furious
-nb-enum-network-rustscan-aggressive        
+nb-enum-network-rustscan-aggressive-all       TCP syn rustscan scan all ports super fast and furious, all ports
+nb-enum-network-nmap-aggressive-all           TCP syn nmap scan all ports super fast and furious, all ports
 
 
 
@@ -64,7 +64,7 @@ nb-enum-network-nmap-lse-grep() {
     print -z "ls /usr/share/nmap/scripts/* | grep -ie \"${q}\" "
 }
 
-nb-enum-network-rustscan-aggressive() {
+nb-enum-network-rustscan-aggressive-all() {
     __check-project
     nb-vars-set-rhost
     print -z "rustscan -a ${__RHOST} -r 1-65535 --ulimit 5000 -- -A -T4 -Pn -v -n --stats-every=20s --min-parallelism=100 --min-rate=10000 -oA $(__hostpath)/rustscan-aggressive-all"
@@ -83,7 +83,7 @@ nb-enum-network-rustscan-all() {
     print -z "rustscan -a ${__RHOST} -r 1-65535 --ulimit 5000 -- --open -oA $(__netpath)/rustscan-initial"
 }
 
-nb-enum-network-rustscan-all-discovery() {
+nb-enum-network-rustscan-discovery-all() {
     __check-project 
     __ask "Enter alive hosts which you scanned with ping sweep"
     nb-vars-set-rhost
@@ -121,13 +121,13 @@ nb-enum-network-nmap-all() {
     print -z "sudo grc nmap -vvv -n -Pn -T4 --open -sS -p- ${__RHOST} -oA $(__netpath)/nmap-all"
 }
 
-nb-enum-network-nmap-all-discovery() {
+nb-enum-network-nmap-discovery-all() {
     __check-project 
     nb-vars-set-rhost
     print -z "sudo grc nmap -vvv -n -Pn -T4 --open -sS -p- -sC -sV --stats-every=20s  ${__RHOST} -oA $(__netpath)/nmap-all-discovery"
 }
 
-nb-enum-network-nmap-top-discovery() {
+nb-enum-network-nmap-discovery-top() {
     __check-project 
     nb-vars-set-rhost
     print -z "grc nmap -vvv -n -Pn -sV -sS -sC --top-ports 1000 ${__RHOST} -oA $(__netpath)/nmap-top-discovery"
