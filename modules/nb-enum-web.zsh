@@ -93,18 +93,33 @@ nb-enum-web-crawl() {
 nb-enum-web-vhosts-gobuster() {
     __check-project
     nb-vars-set-url
-    local w && __askpath w WORDLIST /usr/share/seclists/Discovery/DNS/subdomains-top1million-20000.txt
+    local w && __askpath w WORDLIST /usr/share/seclists/Discovery/DNS/namelist.txt
     __check-threads
-    print -z "gobuster vhost -u http://${__URL} -w ${w} -a \"${__UA}\" -t ${__THREADS} -o $(__urlpath)/vhosts.txt"
+    print -z "gobuster vhost -u http://${__URL} -w ${w} -a \"${__UA}\" -t ${__THREADS} -o $(__urlpath)/vhosts-gobuster.txt"
 }
 
 nb-enum-web-vhosts-ffuf() {
     __check-project
     nb-vars-set-domain
     nb-vars-set-url
-    local w && __askpath w WORDLIST /usr/share/seclists/Discovery/DNS/subdomains-top1million-20000.txt
+    local w && __askpath w WORDLIST /usr/share/seclists/Discovery/DNS/namelist.txt
     __check-threads
-    print -z "ffuf -c -p 0.1 -fc 404 -fs 612 -u http://${__URL} -w ${w} -t ${__THREADS} -H \"HOST: FUZZ.${__DOMAIN}\" -o $(__urlpath)/vhosts.csv -of csv"
+    local s && __askvar s SUBDOMAIN
+
+    # Run the curl command and extract the Content-Length number
+    cl=$(curl -s -I http://${__URL} -H "HOST: $s" | grep "Content-Length:")
+
+    # Remove any trailing newline character
+    length=${cl//$'\n'/}
+
+    # Print the content length
+    __info "Content Length: $length"
+
+    # Information
+    __info "Add the gathered vhosts/subdomains to /etc/hosts"
+    __ok "nb-project-host"
+
+    print -z "ffuf -c -p 0.1 -fc 404 -fs $length -u http://${__URL} -w ${w}:FUZZ -t ${__THREADS} -H \"HOST: FUZZ.${__DOMAIN}\" -o $(__urlpath)/vhosts-ffuf.csv -of csv"
 }
 
 

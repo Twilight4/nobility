@@ -13,6 +13,7 @@ Commands are executed against specific name servers (__RHOST) rather than public
 
 Commands
 --------
+nb-enum-dns-zone-transfer        attempt zone transfer with dig
 nb-enum-dns-install              installs dependencies
 nb-enum-dns-nmap-sweep           scan a network for services
 nb-enum-dns-nmap-mail-sweep      scan a network for mail services
@@ -33,6 +34,13 @@ DOC
 nb-enum-dns-install() {
     __info "Running $0..."
     __pkgs tcpdump nmap dnsutils dnsrecon 
+}
+
+nb-enum-dns-zone-transfer() {
+    __check-project
+    nb-vars-set-domain
+    nb-vars-set-rhost
+    print -z "dig axfr ${__DOMAIN} @${__RHOST}"
 }
 
 nb-enum-dns-nmap-sweep() {

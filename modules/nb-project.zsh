@@ -93,10 +93,10 @@ nb-project-end() {
 
 nb-project-host() {
     __check-project
-    nb-vars-set-rhost
+    local hs && __askvar hs HOSTS
     nb-vars-set-domain
 
-	print -z "echo '${__RHOST} ${__DOMAIN}' | sudo tee -a /etc/hosts"
+	print -z "echo '$hs ${__DOMAIN}' | sudo tee -a /etc/hosts"
 }
 
 nb-project-scope() {
