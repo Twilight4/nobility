@@ -10,12 +10,8 @@ nb-enum-host
 -------------
 The nb-enum-host namespace contains commands for scanning and enumerating an individual host.
 
-Commands
---------
-nb-enum-host-install                 installs dependencies
-nb-enum-host-tcpdump                 capture traffic to and from a host
-nb-enum-host-nmap-aggressive-all     TCP syn scan all ports very aggresively and fast
-nb-enum-host-rustscan-all            TCP syn scan all ports using better nmap alternative with classic scan
+Host Discovery
+--------------
 nb-enum-host-nmap-top                syn scan of the top 1000 ports
 nb-enum-host-nmap-top-discovery      syn scan of the top 1000 ports with versioning and scripts
 nb-enum-host-nmap-all                syn scan all ports 
@@ -23,7 +19,18 @@ nb-enum-host-nmap-all-discovery      syn scan all ports with versioning and scri
 nb-enum-host-nmap-udp                udp scan top 100 ports
 nb-enum-host-masscan-all-tcp         scan all tcp ports
 nb-enum-host-masscan-all-udp         scan all udp ports
+
+Service Enumeration
+-------------------
+nb-enum-host-nmap-aggressive-all         TCP syn scan all ports very aggresively and fast
+nb-enum-host-rustscan-aggressive-all     TCP syn scan all ports using better nmap alternative with classic scan
+
+Commands
+---------
+nb-enum-host-install                 installs dependencies
+nb-enum-host-tcpdump                 capture traffic to and from a host
 nb-enum-host-nmap-lse-grep           search nmap lse scripts
+
 
 DOC
 }
@@ -46,10 +53,10 @@ nb-enum-host-nmap-aggressive-all() {
     print -z "sudo grc nmap -A -sV -sC -Pn -T4 -p- -v -n --stats-every=20s --min-parallelism=100 --min-rate=300 -oN $(__hostpath)/nmap-aggressive-all.nmap ${__RHOST}"
 }
 
-nb-enum-host-rustscan-all() {
+nb-enum-host-rustscan-aggressive-all() {
     __check-project
     nb-vars-set-rhost
-    print -z "rustscan -a ${__RHOST} -r 1-65535 --ulimit 5000 -- -sV -sC -T4 -Pn --min-rate=10000 -oA $(__hostpath)/rustscan-all"
+    print -z "rustscan -a ${__RHOST} -r 1-65535 --ulimit 5000 -- -sV -sC -T4 -Pn --min-rate=10000 -oA $(__hostpath)/rustscan-aggressive-all"
 }
 
 nb-enum-host-nmap-top(){

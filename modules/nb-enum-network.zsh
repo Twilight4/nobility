@@ -15,9 +15,16 @@ Initial Scan
 nb-enum-network-rustscan-initial     sweep a network with initial TCP syn requests
 nb-enum-network-rustscan-initial-all sweep a network with initial TCP syn requests
 
+Ping Sweep
+----------
+nb-enum-network-nmap-ping-sweep       sweep a network subnet with ping requests
+nb-pivot-ping-sweep-msf               sweep a network subnet with ping requests
+nb-pivot-ping-sweep-linux             sweep a network subnet with ping requests on linux
+nb-pivot-ping-sweep-windows-cmd       sweep a network subnet with ping requests on windows
+nb-pivot-ping-sweep-windows-pwsh      sweep a network subnet with ping requests on windows powershell
+
 Nmap Scan
 ---------
-nb-enum-network-nmap-ping-sweep      sweep a network with ping requests
 nb-enum-network-nmap-syn-sweep       sweep a network with TCP syn requests, top 1000 ports
 nb-enum-network-nmap-udp-sweep       sweep a network with UDP requests, top 100 ports
 nb-enum-network-nmap-all-sweep       sweep a network with TCP syn requests, all ports
@@ -46,14 +53,16 @@ nb-enum-network-install() {
 
 nb-enum-network-rustscan-initial() {
     __check-project 
-    nb-vars-set-network
-    print -z "rustscan -a ${__NETWORK} -r 1-65535 --ulimit 5000 -- --open -oA $(__netpath)/rustscan-initial"
+    __ask "Enter alive hosts which you scanned with ping sweep"
+    nb-vars-set-rhost
+    print -z "rustscan -a ${__RHOST} -r 1-65535 --ulimit 5000 -- --open -oA $(__netpath)/rustscan-initial"
 }
 
 nb-enum-network-rustscan-initial-all() {
     __check-project 
-    nb-vars-set-network
-    print -z "rustscan -a ${__NETWORK} -r 1-65535 --ulimit 5000 -- --open -A -Pn -oA $(__netpath)/rustscan-initial-all"
+    __ask "Enter alive hosts which you scanned with ping sweep"
+    nb-vars-set-rhost
+    print -z "rustscan -a ${__RHOST} -r 1-65535 --ulimit 5000 -- --open -A -Pn -oA $(__netpath)/rustscan-initial-all"
 }
 
 nb-enum-network-tcpdump() {
@@ -121,4 +130,48 @@ nb-enum-network-masscan-web() {
     __check-project 
     nb-vars-set-network
     print -z "sudo masscan ${__NETWORK} -p80,800,8000,8080,8888,443,4433,4443 -oL $(__netpath)/masscan-web.txt"
+}
+
+nb-pivot-ping-sweep-msf() {
+    __ask "Network with subnet ex. 10.10.10.10/23"
+    local sb && __askvar sb NETWORK_SUBNET
+
+    __ask "Do you have meterpreter shell runnning? (y/n)"
+    local sh && __askvar sh "ANSWER"
+
+    if [[ $sh == "n" ]]; then
+      __err "Start a meterpreter shell first using on ${__LHOST}:${__LPORT} before proceeding."
+      __info "Use nb-shell-handlers-msf-listener"
+      exit 1
+    fi
+
+    __msf << VAR
+use post/multi/gather/ping_sweep;
+set RHOSTS $sb;
+set SESSION 1;
+run;
+exit
+VAR
+}
+
+nb-pivot-ping-sweep-linux() {
+    __ask "Enter the network without the /23"
+    local sb && __askvar sb NETWORK_SUBNET
+
+    __info "Use the following command in linux:"
+    __ok "for i in $(seq 254); do ping $sb$i -c1 -W1 & done | grep from"
+}
+
+nb-pivot-ping-sweep-windows-cmd() {
+    local sb && __askvar sb NETWORK_SUBNET
+
+    __info "Use the following command in windows cmd:"
+    __ok "for /L %i in (1 1 254) do ping $sb.%i -n 1 -w 100"
+}
+
+nb-pivot-ping-sweep-windows-pwsh() {
+    local sb && __askvar sb NETWORK_SUBNET
+
+    __info "Use the following command in windows powershell:"
+    __ok "1..254 | % {\"172.16.5.\$(\$_): \$(Test-Connection -count 1 -comp \"$sb\".\$(\$_) -quiet)\"}"
 }
