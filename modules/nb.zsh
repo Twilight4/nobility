@@ -62,8 +62,7 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
 
  Internal Enumeration Phase
  --------------------------
- nb-enum-network-               Enumerate and scan networks
- nb-enum-host-                  Enumerate and scan an individual host
+ nb-enum-network-               Enumerate and scan target hosts/networks
  nb-enum-dhcp-                  Enumerate DHCP services
  nb-enum-dns-                   Enumerate DNS services
  nb-enum-ftp-                   Enumerate FTP services
@@ -71,6 +70,7 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  nb-enum-ldap-                  Enumerate LDAP and Active Directory services
  nb-enum-mssql-                 Enumerate MSSQL database services
  nb-enum-mysql-                 Enumerate MYSQL database services
+ nb-enum-smtp-                  Enumerate SMTP services
  nb-enum-nfs-                   Enumerate NFS shares and services
  nb-enum-oracle-                Enumerate Oracle database services
  nb-enum-pop3-                  Enumerate POP3 services

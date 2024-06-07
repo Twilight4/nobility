@@ -8,7 +8,7 @@ nb-enum-network-help() {
 
 nb-enum-network
 -------------
-The nb-enum-network namespace contains commands for scanning and enumerating target hosts/network.
+The nb-enum-network namespace contains commands for scanning and enumerating target hosts/networks.
 
 Ping Sweep/Host Discovery
 -------------------------
