@@ -5,7 +5,7 @@ This tool is tailored for security consultants. Unlike other pentesting framewor
 
 Nobility helps you remember how to use every tool in your arsenal and doesn't hide them behind scripting that can be cumbersome to maintain or update. Each Nobility module is interactive, sparing the need to memorize the syntax. Simply execute the module like so: `nb-recon-subs-ffuf`, and Nobility will prompt you for all required options. Utilize Nobility to build a composable, on-the-fly workflow for every scenario. 
 
-# Key Features
+## Key Features
 * **Prefilled Commands**: Streamlines terminal integrations by automatically prefilling commands
 * **Organized Commands**: Well-organized commands with tab auto-completion
 * **Seamless Integration**: Zsh/Oh-My-Zsh shell plugin ensures easy integration into your environment
@@ -19,12 +19,12 @@ Nobility helps you remember how to use every tool in your arsenal and doesn't hi
 * **Linux System Management**: Optimized for Linux management, simplifying system tasks
 * **Dependency Installers**: Includes installers for dependencies, ensuring a smooth and hassle-free setup process
 
-# Installation
+## Installation
 Nobility requires the following:
 * [Zsh](https://github.com/zsh-users/zsh)
 * [Oh-my-zsh](https://ohmyz.sh/) (optional)
 
-## Installation with Oh-my-zsh
+### Installation with Oh-my-zsh
 ```bash
 # Clone the repo to your oh-my-zsh custom plugins directory
 git clone https://github.com/Twilight4/nobility.git ~/.oh-my-zsh/custom/plugins/nobility
@@ -36,7 +36,7 @@ plugins=(git nobility)
 source ~/.zshrc
 ```
 
-## Manual installation
+### Manual installation
 ```bash
 # Clone the repo to your zsh directory
 git clone https://github.com/Twilight4/nobility.git ~/.config/nobility

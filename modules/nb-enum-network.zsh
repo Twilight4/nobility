@@ -160,7 +160,7 @@ nb-enum-network-masscan-all() {
     print -z "masscan -p1-65535 --open-only ${__RHOST} --rate=1000 -e ${__IFACE} -oL $(__netpath)/masscan-all.txt"
 }
 
-nb-pivot-ping-sweep-msf() {
+nb-enum-network-ping-sweep-msf() {
     __ask "Network with subnet ex. 10.10.10.10/23"
     local sb && __askvar sb NETWORK_SUBNET
 
@@ -182,7 +182,7 @@ exit
 VAR
 }
 
-nb-pivot-ping-sweep-linux() {
+nb-enum-network-ping-sweep-linux() {
     __ask "Enter the network without the /23"
     local sb && __askvar sb NETWORK_SUBNET
 
@@ -190,14 +190,14 @@ nb-pivot-ping-sweep-linux() {
     __ok "for i in $(seq 254); do ping $sb$i -c1 -W1 & done | grep from"
 }
 
-nb-pivot-ping-sweep-windows-cmd() {
+nb-enum-network-ping-sweep-windows-cmd() {
     local sb && __askvar sb NETWORK_SUBNET
 
     __info "Use the following command in windows cmd:"
     __ok "for /L %i in (1 1 254) do ping $sb.%i -n 1 -w 100"
 }
 
-nb-pivot-ping-sweep-windows-pwsh() {
+nb-enum-network-ping-sweep-windows-pwsh() {
     local sb && __askvar sb NETWORK_SUBNET
 
     __info "Use the following command in windows powershell:"
