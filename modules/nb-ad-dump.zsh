@@ -13,6 +13,7 @@ The nb-ad-dump namespace contains commands for hash dumping in Active Directory 
 Commands
 --------
 nb-ad-dump-install         installs dependencies
+nb-ad-dump-secrets-local   dump secrets from the SAM system hives
 nb-ad-dump-secrets         dump secrets from the remote machine
 nb-ad-dump-ntds            extract only NTDS.DIT data (NTLM hashes only)
 nb-ad-dump-cme-ntds        extract only NTDS.DIT data with CME (NTLM hashes only)
@@ -21,6 +22,21 @@ nb-ad-dump-cme-lsa         dump LSA hashes
 nb-ad-dump-cme-lsassy      dump LSASSY hashes
 
 DOC
+}
+
+nb-ad-dump-secrets-local() {
+    __check-project
+
+    __ask "Select a SAM.save file"
+    local sam && __askpath sam FILE $(pwd)
+
+    __ask "Select a SECURITY.save file"
+    local sec __askpath sec FILE $(pwd)
+
+    __ask "Select a SYSTEM.save file"
+    local sys && __askpath sys FILE $(pwd)
+
+    print -z "secretsdump.py -sam $sam -security $sec -system $sys LOCAL"
 }
 
 nb-ad-dump-install() {
