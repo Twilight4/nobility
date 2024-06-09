@@ -14,7 +14,6 @@ Initial Enumeration - Without Authentication
 --------------------------------------------
 nb-ad-enum-responder            starts responder with passive analysis mode enabled (passively listen to the network and not send any poisoned packets)
 nb-ad-enum-fping                fping active checks to validates which hosts are active on a network subnet
-nb-ad-enum-nmap                 scan the list of active hosts within the network
 nb-ad-enum-ldapsearch-pass-pol  retrieve password policy using ldapsearch
 
 Enumerating Users - Without Authentication
@@ -257,13 +256,6 @@ nb-ad-enum-kerbrute-users() {
       nb-vars-set-wordlist
       print -z "kerbrute userenum -d ${__DOMAIN} --dc $dc ${__WORDLIST} -o $(__netadpath)/kerbrute-user-enum.txt"
     fi
-}
-
-nb-ad-enum-nmap() {
-    __check-project
-    __ask "Specify the file with the list of active hosts"
-    local f && __askpath f FILE $HOME/desktop/projects/
-    print -z "sudo grc nmap -v -A -iL $f -oA $(__netadpath)/hosts-enum"
 }
 
 nb-ad-enum-fping() {
