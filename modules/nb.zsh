@@ -89,7 +89,7 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  nb-ad-ldap-                    Commands for LDAP enumeration
  nb-ad-smb-                     Commands for SMB services enumeration
  nb-ad-rce-                     Commands for RCE on target system
- nb-ad-cve                      Commands for exploiting systems vulnerable to modern CVEs
+ nb-ad-cve-                     Commands for exploiting systems vulnerable to modern CVEs
  nb-ad-dump-                    Commands for dumping windows hashes in domain
  nb-ad-gpp-                     Commands for GPP AD attack
  nb-ad-ipv6-                    Commands for IPv6 AD attack
