@@ -76,13 +76,13 @@ This approach enables you to compose your workflow dynamically, adapting to spec
 ### Variables
 ```bash
 # Each time you use nb-vars-set-* command or within a namespace,
-# to persist the vars in other terminal sessions you need to use command (namespaces should include this by default):
+# you can persist the vars in other terminal sessions using command (namespaces should include this by default):
 nb-vars-save
 
 # To load previously saved vars (use in new terminal sessions), use command: (you can set this command in .zshrc file):
 nb-vars-load
 
-# If you made a mistake you can clear the variables
+# You can always clear the variables with command:
 nb-vars-clear
 ```
 
