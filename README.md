@@ -24,19 +24,7 @@ Nobility requires the following:
 * [Zsh](https://github.com/zsh-users/zsh)
 * [Oh-my-zsh](https://ohmyz.sh/) (optional)
 
-### Installation with Oh-my-zsh
-```bash
-# Clone the repo to your oh-my-zsh custom plugins directory
-git clone https://github.com/Twilight4/nobility.git ~/.oh-my-zsh/custom/plugins/nobility
-
-# Edit `~/.zshrc` to load the plugin
-plugins=(git nobility)
-
-# Source `.zshrc` to load the plugin and you're done. On first load, nobility will install a few core packages
-source ~/.zshrc
-```
-
-### Manual installation
+### Installation Method #1: Manually
 ```bash
 # Clone the repo to your zsh directory
 git clone https://github.com/Twilight4/nobility.git ~/.config/nobility
@@ -48,15 +36,36 @@ echo 'source ~/.config/nobility/nobility.plugin.zsh' >> ~/.zshrc
 source ~/.zshrc
 ```
 
+### Installation Method #2: Oh-my-zsh
+```bash
+# Clone the repo to your oh-my-zsh custom plugins directory
+git clone https://github.com/Twilight4/nobility.git ~/.oh-my-zsh/custom/plugins/nobility
+
+# Edit `~/.zshrc` to load the plugin
+plugins=(git nobility)
+
+# Source `.zshrc` to load the plugin and you're done. On first load, nobility will install a few core packages
+source ~/.zshrc
+```
+
+### Upgrading
+Simply run the following command:
+
+```bash
+nb-update
+```
+
+Assuming you did not modify any of the content in the nobility directory, this should pull the latest code from this GitHub repo, after which you can run nobility modules as usual.
+
 # Getting Started
 Nobility categorizes commands into namespaces, denoted by the `nb-` prefix, exemplified by commands like `nb-enum-web` or `nb-recon-domains`. To see an overview of all namespaces simply use `nb-help` command. 
 
 Each namespace features its own dedicated help command, such as `nb-enum-web-help` which provides a listing of available commands. All commands support tab completion and search. 
 
 ## Installing Dependencies
-To set up the necessary dependencies for each namespace, execute the `nb-namespace-install` command. This command ensures the installation of all tools relevant to the specified namespace. For installation of tools across all namespaces, use the `nb-install-all` command.
+To set up the necessary dependencies for each namespace, execute the `nb-<namespace>-install` command. This command ensures the installation of all tools relevant to the specified namespace. For installation of tools across all namespaces, use the `nb-install-all` command.
 
-# Workflow
+## Workflow
 Nobility is designed to offer a sophisticated and flexible workflow. It eliminates the conventional, tedious process of manually navigating through notes, searching for commands, copying, pasting, and adjusting values before execution. 
 
 In contrast to heavily automated scripts or frameworks that execute entire workflows, often obfuscating the underlying tools and techniques which are cumbersome to modify, Nobility strikes a balance. Embracing the principles of the KISS principle (Keep It Simple, Stupid), each module within Nobility is deliberately small and distinct, minimizing unnecessary complications. This design allows you to quickly execute individual commands, providing well-organized output. 
@@ -77,7 +86,7 @@ nb-vars-load
 nb-vars-clear
 ```
 
-### Preparation
+### Pre-Engagement
 ```bash
 # Create a project structure
 nb-project-start
@@ -162,7 +171,7 @@ nb-enum-dns-dnsrecon
 nb-recon-org-theharvester
 ```
 
-### Active Directory Exploitation
+### Active Directory Pentesting
 ```bash
 # SMB Relay
 nb-ad-smb-relay-enum
