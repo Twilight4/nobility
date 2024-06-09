@@ -21,17 +21,7 @@ DOC
 
 nb-ad-ipv6-install() {
     __info "Running $0..."
-    __pkgs impacket
-
-    __info "Choose option 'I' to install mitm6 from github"
-    if [ -f "/opt/pipmykali/" ]; then
-    then
-        pushd /opt/pipmykali/ &> /dev/null
-        sudo ./pipmykali.sh
-        popd &> /dev/null
-      else
-        nb-install-pipmykali
-    fi
+    __pkgs impacket mitm6
 }
 
 nb-ad-ipv6-ntlmrelayx() {

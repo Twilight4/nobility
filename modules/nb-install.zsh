@@ -38,7 +38,7 @@ nb-install-rustscan
 nb-install-nessus
 nb-install-dnscat2
 nb-install-dnscat2-powershell
-nb-install-chsel
+nb-install-chisel
 nb-install-kerbrute
 nb-install-protonvpn
 nb-install-impacket
