@@ -17,7 +17,18 @@ nb-ad-rce-evil-winrm           connect via winrm to a target host
 nb-ad-rce-psexec               connect via psexec to a target host
 nb-ad-rce-wmiexec              connect via wmiexec to a target host
 nb-ad-rce-psexec-msf           connect via metasploit's psexec to a target host
+
+Misc
+----
+nb-ad-rce-nmap-winrm           run a scan to see if any host has winrm enabled, to be able to use evil-winrm
+
 DOC
+}
+
+nb-ad-rce-nmap-winrm() {
+    nb-vars-set-rhost
+
+    print -z "nmap -sT -p 5985 ${__RHOST}"
 }
 
 nb-ad-rce-wmiexec() {
