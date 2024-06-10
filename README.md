@@ -20,9 +20,7 @@ Nobility helps you remember how to use every tool in your arsenal and doesn't hi
 * **Dependency Installers**: Includes installers for dependencies, ensuring a smooth and hassle-free setup process
 
 ## Installation
-Nobility requires the following:
-* [Zsh](https://github.com/zsh-users/zsh)
-* [Oh-my-zsh](https://ohmyz.sh/) (optional)
+Nobility only requires [Zsh](https://github.com/zsh-users/zsh).
 
 ### Installation Method #1: Manually
 ```bash
