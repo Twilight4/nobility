@@ -21,8 +21,8 @@ Tools
 -----
 These installers are for individual tools.
 
-nb-install-wordlist-seclists
-nb-install-wordlist-payloadallthethings
+nb-install-seclists
+nb-install-payloadallthethings
 nb-install-github-search
 nb-install-git-secrets
 nb-install-pentest-tools
@@ -180,7 +180,7 @@ nb-install-node() {
     fi
 }
 
-nb-install-wordlist-seclists() {
+nb-install-seclists() {
     local name="seclists"
     local url="https://github.com/danielmiessler/SecLists"
     local path="/usr/share/wordlists/$name"
