@@ -367,7 +367,7 @@ nb-install-winpeas() {
     __cyan "This will install WinPEASx64.exe"
     __ask "CONTINUE?"
     if __check-proceed; then
-        wget https://github.com/carlospolop/PEASS-ng/releases/download/20240324-2c3cd766/linpeas.sh -O "$win"
+        wget https://github.com/peass-ng/PEASS-ng/releases/download/20240609-52b58bf5/winPEASx64.exe -O "$win"
     fi
 }
 
@@ -383,7 +383,7 @@ nb-install-linpeas() {
     __cyan "This will install LinPEAS.sh"
     __ask "CONTINUE?"
     if __check-proceed; then
-        wget https://github.com/carlospolop/PEASS-ng/releases/download/20240324-2c3cd766/winPEASx64.exe -O "$lin"
+        wget https://github.com/peass-ng/PEASS-ng/releases/download/20240609-52b58bf5/linpeas.sh -O "$lin"
     fi
 }
 
