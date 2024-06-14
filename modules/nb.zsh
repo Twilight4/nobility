@@ -34,7 +34,7 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  ---------
  nb-crack-                      Commands for cracking password hashes
  nb-encoding-                   Commands for encoding / encrypting data
- nb-lin-                         Commands for managing your OS
+ nb-lin-                        Commands for managing your OS
  nb-srv-                        Commands for spawning file hosting services
  nb-compile-                    Commands for compiling exploits
  nb-shell-tty-                  Commands for upgrading tty shells
