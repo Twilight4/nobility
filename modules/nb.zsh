@@ -14,9 +14,9 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
 
  Commands
  --------
- nb-update            git pull the nobility changes from github repository
- nb-status            check the current status of the locally cloned nobility repository
- nb-message-toggle    toggle the "Nobility loaded" shell startup message
+ nb-update                      git pull the nobility changes from github repository
+ nb-status                      check the current status of the locally cloned nobility repository
+ nb-message-toggle              toggle the "Nobility loaded" shell startup message
 
  Namespaces
  ----------
