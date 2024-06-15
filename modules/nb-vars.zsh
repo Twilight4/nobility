@@ -307,17 +307,17 @@ nb-vars-set-wordlist() {
 
 nb-vars-set-wordlist-usernames() {
   __ask "Choose a wordlist: "
-  __WORDLIST=$(__menu $(find /usr/share/seclists/Usernames | sort))
+  __WORDLIST=$(__menu $(find /usr/share/wordlists/seclists/Usernames | sort))
 }
 
 nb-vars-set-wordlist-web() {
   __ask "Choose a wordlist: "
-  __WORDLIST=$(__menu $(find /usr/share/seclists/Discovery/Web-Content | sort))
+  __WORDLIST=$(__menu $(find /usr/share/wordlists/seclists/Discovery/Web-Content | sort))
 }
 
 nb-vars-set-wordlist-dns() {
   __ask "Choose a wordlist: "
-  __WORDLIST=$(__menu $(find /usr/share/seclists/Discovery/DNS | sort))
+  __WORDLIST=$(__menu $(find /usr/share/wordlists/seclists/Discovery/DNS | sort))
 }
 
 
@@ -328,7 +328,7 @@ export __PASSLIST="/usr/share/wordlists/seclists/Passwords/Leaked-Databases/rock
 
 nb-vars-set-passlist() {
   __ask "Choose a passlist: "
-  __PASSLIST=$(__menu $(find /usr/share/seclists/Passwords | sort))
+  __PASSLIST=$(__menu $(find /usr/share/wordlists/seclists/Passwords | sort))
 }
 
 # Helpers

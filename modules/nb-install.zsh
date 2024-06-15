@@ -183,13 +183,14 @@ nb-install-node() {
 nb-install-seclists() {
     local name="seclists"
     local url="https://github.com/danielmiessler/SecLists"
-    local path="/usr/share/wordlists/$name"
+    local p="/usr/share/wordlists/$name"
 
-    __info "$name"
+    __info "Installing $name..."
 
     if [[ ! -d $path ]]
     then
-        git clone --depth 1 $url $path
+        sudo git clone --depth 1 $url $p
+        __info "Successfully installed $name... in $p"
     else
         __warn "already installed in $path"
         pushd $path 
