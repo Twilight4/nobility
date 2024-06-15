@@ -152,7 +152,7 @@ nb-ad-rce-freerdp() {
             local d && __askpath d DIRECTORY $HOME/desktop/projects
             print -z "wlfreerdp /v:${__RHOST} /u:'${__USER}' /p:'${__PASS}' /cert:ignore +drive:smbfolder,$d"
         else
-            print -z "wlfreerdp /v:${__RHOST} /u:'${__USER}' /p:'${__PASS}'"
+            print -z "wlfreerdp /v:${__RHOST} /u:'${__USER}' /p:'${__PASS}' /cert:ignore"
         fi
     elif [[ $login == "h" ]]; then
         __ask "Enter the NTLM hash for authentication"
@@ -165,7 +165,7 @@ nb-ad-rce-freerdp() {
             local d && __askpath d DIRECTORY $HOME/desktop/projects
             print -z "wlfreerdp /v:${__RHOST} /u:'${__USER}' /pth:'${__HASH}' /cert:ignore +drive:smbfolder,$d"
         else
-            print -z "wlfreerdp /v:${__RHOST} /u:'${__USER}' /pth:'${__HASH}'"
+            print -z "wlfreerdp /v:${__RHOST} /u:'${__USER}' /pth:'${__HASH}' /cert:ignore"
         fi
     else
         echo

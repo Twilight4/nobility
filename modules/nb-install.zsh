@@ -461,23 +461,21 @@ nb-install-rpivot() {
 
 nb-install-rustscan() {
     # Check for the newest version manually
-    local rustscan_version="1.8.0"
-    local deb_file="rustscan_${rustscan_version}_amd64.deb"
-    local download_url="https://github.com/RustScan/RustScan/releases/download/${rustscan_version}/${deb_file}"
+    local download_url="https://github.com/RustScan/RustScan/releases/download/2.2.3/rustscan_2.2.3_amd64.deb"
 
     # Download RustScan .deb file
-    __info "Downloading RustScan ${rustscan_version}..."
+    __info "Downloading RustScan..."
     wget "$download_url" -P /tmp || { echo "Failed to download RustScan."; return 1; }
 
     # Install RustScan
-    __info "Installing RustScan ${rustscan_version}..."
-    sudo dpkg -i "/tmp/${deb_file}" || { echo "Failed to install RustScan."; return 1; }
+    __info "Installing RustScan..."
+    sudo dpkg -i "/tmp/rustscan_2.2.3_amd64.deb" || { echo "Failed to install RustScan."; return 1; }
 
     # Clean up
     __info "Cleaning up..."
-    rm "/tmp/${deb_file}" || { echo "Failed to clean up."; return 1; }
+    rm "/tmp/rustscan_2.2.3_amd64.deb" || { echo "Failed to clean up."; return 1; }
 
-    __ok "RustScan ${rustscan_version} installed successfully."
+    __ok "RustScan installed successfully."
 }
 
 nb-install-nessus() {
