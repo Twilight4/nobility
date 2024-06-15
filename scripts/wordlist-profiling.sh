@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
 # password profiling
+#cewl
 #pwdology
 #cupp
 
