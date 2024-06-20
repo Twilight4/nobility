@@ -79,7 +79,7 @@ nb-vars-clear() {
   __URL=""
   __UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
   __WORDLIST=""
-  __PASSLIST="/usr/share/wordlists/seclists/Passwords/Leaked-Databases/rockyou.txt"
+  __PASSLIST="/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt"
 
   # Save the changes
   nb-vars-save
@@ -307,28 +307,28 @@ nb-vars-set-wordlist() {
 
 nb-vars-set-wordlist-usernames() {
   __ask "Choose a wordlist: "
-  __WORDLIST=$(__menu $(find /usr/share/wordlists/seclists/Usernames | sort))
+  __WORDLIST=$(__menu $(find /usr/share/seclists/Usernames | sort))
 }
 
 nb-vars-set-wordlist-web() {
   __ask "Choose a wordlist: "
-  __WORDLIST=$(__menu $(find /usr/share/wordlists/seclists/Discovery/Web-Content | sort))
+  __WORDLIST=$(__menu $(find /usr/share/seclists/Discovery/Web-Content | sort))
 }
 
 nb-vars-set-wordlist-dns() {
   __ask "Choose a wordlist: "
-  __WORDLIST=$(__menu $(find /usr/share/wordlists/seclists/Discovery/DNS | sort))
+  __WORDLIST=$(__menu $(find /usr/share/seclists/Discovery/DNS | sort))
 }
 
 
 ############################################################# 
 # __PASSLIST
 #############################################################
-export __PASSLIST="/usr/share/wordlists/seclists/Passwords/Leaked-Databases/rockyou.txt"
+export __PASSLIST="/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt"
 
 nb-vars-set-passlist() {
   __ask "Choose a passlist: "
-  __PASSLIST=$(__menu $(find /usr/share/wordlists/seclists/Passwords | sort))
+  __PASSLIST=$(__menu $(find /usr/share/seclists/Passwords | sort))
 }
 
 # Helpers

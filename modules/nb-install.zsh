@@ -183,7 +183,7 @@ nb-install-node() {
 nb-install-seclists() {
     local name="seclists"
     local url="https://github.com/danielmiessler/SecLists"
-    local p="/usr/share/wordlists/$name"
+    local p="/usr/share/$name"
 
     __info "Installing $name..."
 
