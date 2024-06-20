@@ -165,11 +165,14 @@ nb-ad-smb-null-smbget-download-rec() {
   print -z "smbget -R smb://${__RHOST}/${__SHARE}"
 }
 
-nb-ad-smb-null-smbget-download-rec() {
+nb-ad-smb-user-smbget-download-rec() {
   __check-project
   nb-vars-set-rhost
   __check-share
-  print -z "smbget -R smb://${__RHOST}/${__SHARE}"
+  nb-vars-set-user
+  nb-vars-set-pass
+  nb-vars-set-domain
+  print -z "smbget -U ${__DOMAIN}/${__USER}%${__PASS} -R smb://${__RHOST}/${__SHARE}"
 }
 
 nb-ad-smb-brute-hydra() {
