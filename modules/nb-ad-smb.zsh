@@ -12,65 +12,66 @@ The nb-ad-smb namespace contains commands for scanning and enumerating smb servi
 
 Protocol Attacks
 ----------------
-nb-ad-smb-brute-hydra              brute force password/login for a user account with hydra
-nb-ad-smb-brute-cme                brute force password/login for a user account with cme
-nb-ad-smb-pass-spray               perform password spraying
+nb-ad-smb-brute-hydra                brute force password/login for a user account with hydra
+nb-ad-smb-brute-cme                  brute force password/login for a user account with cme
+nb-ad-smb-pass-spray                 perform password spraying
 
 Automated Enumeration tools
 -------------------------------------
-nb-ad-smb-nmap-sweep               scan a network for services
-nb-ad-smb-null-enum4               enumerate with enum4linux
-nb-ad-smb-null-enum4-aggressive    aggressively enumerate with enum4linux
-nb-ad-smb-null-rpcclient           use rcpclient for queries
+nb-ad-smb-nmap-sweep                 scan a network for services
+nb-ad-smb-null-enum4                 enumerate with enum4linux
+nb-ad-smb-null-enum4-aggressive      aggressively enumerate with enum4linux
+nb-ad-smb-null-rpcclient             use rcpclient for queries
 
 Shares Enumeration
 -------------------------------------
 NULL Session
 ------------
-nb-ad-smb-null-cme-list            list shares with cme
-nb-ad-smb-null-samrdump            info using impacket
-nb-ad-smb-null-smbmap-list         query with smbmap
-nb-ad-smb-null-smbmap-list-rec     list shares recursively
-nb-ad-smb-null-smbclient-list      list shares
-nb-ad-smb-null-smbclient-list-rec  list shares recursively
+nb-ad-smb-null-cme-list              list shares with cme
+nb-ad-smb-null-cme-spider            spider available shares on the remote host or subnet
+nb-ad-smb-null-samrdump              info using impacket
+nb-ad-smb-null-smbmap-list           query with smbmap
+nb-ad-smb-null-smbmap-list-rec       list shares recursively
+nb-ad-smb-null-smbclient-list        list shares
+nb-ad-smb-null-smbclient-list-rec    list shares recursively
 
 AUTH Session
 ------------
-nb-ad-smb-user-cme-list            list shares with cme authenticated session
-nb-ad-smb-user-cme-spider          spider available shares on the remote host or subnet
-nb-ad-smb-user-samrdump            info using impacket
-nb-ad-smb-user-smbmap-list         query with smbmap authenticated session
-nb-ad-smb-user-smbmap-list-rec     list shares recursively with authentication
-nb-ad-smb-user-smbclient-list      list shares
-nb-ad-smb-user-smbclient-list-rec  list shares recursively
+nb-ad-smb-user-cme-list              list shares with cme authenticated session
+nb-ad-smb-user-cme-spider            spider available shares on the remote host or subnet
+nb-ad-smb-user-samrdump              info using impacket
+nb-ad-smb-user-smbmap-list           query with smbmap authenticated session
+nb-ad-smb-user-smbmap-list-rec       list shares recursively with authentication
+nb-ad-smb-user-smbclient-list        list shares
+nb-ad-smb-user-smbclient-list-rec    list shares recursively
 
 Connecting to Service
 -------------------------------------
-nb-ad-smb-null-smbclient-connect   connect with a null session
-nb-ad-smb-user-smbclient-connect   connect with an authenticated session
+nb-ad-smb-null-smbclient-connect     connect with a null session
+nb-ad-smb-user-smbclient-connect     connect with an authenticated session
 
 Download / Upload
 -------------------------------------
 NULL Session
 ------------
-nb-ad-smb-null-smbmap-download     download a file from a share
-nb-ad-smb-null-smbget-download-rec recursively download the SMB share
-nb-ad-smb-null-smbmap-upload       upload a file to a share
+nb-ad-smb-null-smbmap-download       download a file from a share
+nb-ad-smb-null-smbget-download-rec   recursively download the SMB share
+nb-ad-smb-null-smbmap-upload         upload a file to a share
 
 AUTH Session
 ------------
-nb-ad-smb-user-smbmap-download     download a file from a share
-nb-ad-smb-user-smbget-download-rec recursively download the SMB share
-nb-ad-smb-user-smbmap-upload       upload a file to a share
+nb-ad-smb-user-smbmap-download       download a file from a share
+nb-ad-smb-user-smbget-download-rec   recursively download the SMB share
+nb-ad-smb-user-smbmap-upload         upload a file to a share
 
-Other Commands
+Misc Commands
 -------------------------------------
-nb-ad-smb-install                  installs dependencies
-nb-ad-smb-tcpdump                  capture traffic to and from a host
-nb-ad-smb-user-smb-mount           mount an SMB share
-nb-ad-smb-responder                spoof and get responses using responder
-nb-ad-smb-net-use-null             print a net use statement for windows
-nb-ad-smb-nbtscan                  scan a local network 
+nb-ad-smb-install                    installs dependencies
+nb-ad-smb-tcpdump                    capture traffic to and from a host
+nb-ad-smb-user-smb-mount             mount an SMB share
+nb-ad-smb-responder                  spoof and get responses using responder
+nb-ad-smb-net-use-null               print a net use statement for windows
+nb-ad-smb-nbtscan                    scan a local network 
 
 SMB Relay
 ---------
@@ -349,6 +350,16 @@ nb-ad-smb-null-cme-list() {
   __check-project
   nb-vars-set-rhost
   print -z "crackmapexec smb ${__RHOST} --shares -u '' -p ''"
+}
+
+nb-ad-smb-null-cme-spider() {
+    __check-project
+    nb-vars-set-network
+    __ask "Enter name of the share to spider"
+    __check-share
+
+    print -z "crackmapexec smb ${__NETWORK} -u '' -p '' -M spider_plus --share '${__SHARE}' | tee $(__netadpath)/cme-null-shares-spider-sweep.txt"
+    __ok "Results have been written to /tmp/cme_spider_plus/${__NETWORK}.json"
 }
 
 nb-ad-smb-user-cme-spider() {
