@@ -125,13 +125,44 @@ nb-ad-smb-null-smbmap-download() {
   print -z "smbmap -H ${__RHOST} --download \"${__SHARE}\\\\$file\""
 }
 
+nb-ad-smb-user-smbmap-download() {
+  __check-project
+  __check-share
+  nb-vars-set-rhost
+  nb-vars-set-user
+  nb-vars-set-pass
+  nb-vars-set-domain
+  __ask "Enter file to download"
+  local file && __askvar file FILE
+  print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST} --download \"${__SHARE}\\\\$file\""
+}
+
 nb-ad-smb-null-smbmap-upload() {
   __check-project
   nb-vars-set-rhost
   __check-share
-  __ask "File to download"
+  __ask "File to upload"
   local file && __askvar file FILE
   print -z "smbmap -H ${__RHOST} --upload $file \"${__SHARE}\\\\$file\""
+}
+
+nb-ad-smb-user-smbmap-upload() {
+  __check-project
+  __check-share
+  nb-vars-set-rhost
+  nb-vars-set-user
+  nb-vars-set-pass
+  nb-vars-set-domain
+  __ask "File to upload"
+  local file && __askvar file FILE
+  print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST} --upload $file \"${__SHARE}\\\\$file\""
+}
+
+nb-ad-smb-null-smbget-download-rec() {
+  __check-project
+  nb-vars-set-rhost
+  __check-share
+  print -z "smbget -R smb://${__RHOST}/${__SHARE}"
 }
 
 nb-ad-smb-null-smbget-download-rec() {
