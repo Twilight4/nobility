@@ -29,6 +29,7 @@ nb-pivot-msf-reverse-proxy            forwards remote port to local port
 Using SSH
 ---------
 nb-pivot-ssh-dynamic-proxy            forwards local port to remote port using ssh's dynamic socks4 proxy
+nb-pivot-ssh-local-proxy              forwards local port to remote port
 nb-pivot-ssh-reverse-proxy            forwards remote port to local port
 
 Commands
@@ -60,7 +61,7 @@ nb-pivot-ssh-dynamic-proxy() {
     __info "Add the proxy to proxychains.conf using command:"
     __ok "echo 'socks4 	127.0.0.1 ${__LPORT}' | sudo tee -a /etc/proxychains.conf"
 
-    print -z "ssh -D ${__LPORT} -CqN ${__USER}@${__RHOST}" 
+    print -z "ssh -D ${__LPORT} -CqN ${__USER}@${__RHOST} -f -N"
 }
 
 nb-pivot-ssh-reverse-proxy() {
@@ -68,7 +69,15 @@ nb-pivot-ssh-reverse-proxy() {
     nb-vars-set-rhost
     nb-vars-set-rport
     nb-vars-set-lport
-    print -z "ssh -R ${__LPORT}:127.0.0.1:${__RPORT} ${__USER}@${__RHOST}" 
+    print -z "ssh -R ${__LPORT}:127.0.0.1:${__RPORT} ${__USER}@${__RHOST} -f -N"
+}
+
+nb-pivot-ssh-local-proxy() {
+    nb-vars-set-user
+    nb-vars-set-rhost
+    nb-vars-set-rport
+    nb-vars-set-lport
+    print -z "ssh -L ${__LPORT}:127.0.0.1:${__RPORT} ${__USER}@${__RHOST} -f -N"
 }
 
 nb-pivot-msf-local-proxy() {
