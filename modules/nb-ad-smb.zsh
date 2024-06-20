@@ -39,7 +39,7 @@ AUTH Session
 nb-ad-smb-user-cme-list            list shares with cme authenticated session
 nb-ad-smb-user-cme-spider          spider available shares on the remote host or subnet
 nb-ad-smb-user-samrdump            info using impacket
-nb-ad-smb-user-smbmap              query with smbmap authenticated session
+nb-ad-smb-user-smbmap-list         query with smbmap authenticated session
 nb-ad-smb-user-smbmap-list-rec     list shares recursively with authentication
 nb-ad-smb-user-smbclient-list      list shares
 nb-ad-smb-user-smbclient-list-rec  list shares recursively
@@ -56,6 +56,7 @@ NULL Session
 nb-ad-smb-null-smbmap-download     download a file from a share
 nb-ad-smb-null-smbget-download-rec recursively download the SMB share
 nb-ad-smb-null-smbmap-upload       upload a file to a share
+
 AUTH Session
 ------------
 nb-ad-smb-user-smbmap-download     download a file from a share
@@ -278,7 +279,7 @@ nb-ad-smb-cme-spray() {
   print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASS}' --local-auth --continue-on-success"
 }
 
-nb-ad-smb-user-smbmap() {
+nb-ad-smb-user-smbmap-list() {
   __check-project
   nb-vars-set-rhost
   nb-vars-set-user
@@ -393,11 +394,27 @@ nb-ad-smb-null-smbclient-list() {
   print -r -z "smbclient -L //${__RHOST} -N "
 }
 
+nb-ad-smb-user-smbclient-list() {
+  __check-project
+  nb-vars-set-rhost
+  nb-vars-set-user
+  __check-share
+  print -r -z "smbclient -L //${__RHOST}/${__SHARE} -U ${__USER}"
+}
+
 nb-ad-smb-null-smbclient-list-rec() {
   __check-project
   nb-vars-set-rhost
   __check-share
   print -r -z "smbclient //${__RHOST}/${__SHARE} -c 'recurse;ls'"
+}
+
+nb-ad-smb-user-smbclient-list-rec() {
+  __check-project
+  nb-vars-set-rhost
+  nb-vars-set-user
+  __check-share
+  print -r -z "smbclient //${__RHOST}/${__SHARE} -U ${__USER} -c 'recurse;ls'"
 }
 
 nb-ad-smb-null-smbclient-connect() {
@@ -428,6 +445,14 @@ nb-ad-smb-null-samrdump() {
   __check-project
   nb-vars-set-rhost
   print -z "impacket-samrdump ${__RHOST}"
+}
+
+nb-ad-smb-user-samrdump() {
+  __check-project
+  nb-vars-set-rhost
+  nb-vars-set-user
+  nb-vars-set-pass
+  print -z "impacket-samrdump ${__USER}:${__PASS}@${__RHOST}"
 }
 
 nb-ad-smb-responder() {
