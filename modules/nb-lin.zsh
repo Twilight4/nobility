@@ -14,22 +14,13 @@ Commands
 --------
 nb-lin-pkg-query            query if a package is installed or not  
 nb-lin-flush-iptables       flushes ip tables
-nb-lin-get-gateway          get router IP address
-nb-lin-get-hosts            get list of host IP addresses found via nmap
-nb-lin-get-hostnames        get list of host names using nmap and the IP of a known DNS server
 nb-lin-download-html        download IP and print with html2text
 nb-lin-scan-tcp             scan IP with masscan
 nb-lin-scan-udp             scan IP with nmap
-nb-lin-ps-grep              search list of processes
 nb-lin-ps-dtach             run a script in the background
-nb-lin-path-add             add a new path to the PATH environment variable
 nb-lin-file-replace         replace an existing value in a file
-nb-lin-file-dos-to-unix     convert file with dos endings to unix
-nb-lin-file-unix-to-dos     convert file with unix endings to dos
 nb-lin-file-sort-uniq       sort a file uniq in place 
 nb-lin-file-sort-uniq-ip    sort a file of IP addresses uniq in place
-nb-lin-sudoers-easy         removes the requirment for sudo for common commands like nmap
-nb-lin-sudoers-harden       removes sudo exclusions
 
 DOC
 }
@@ -38,7 +29,7 @@ nb-lin-pkg-query() {
     local query && __askvar query PACKAGE 
     for pkg in "${query}"
     do
-    pacman -Q | grep -qw $pkg && __ok "${pkg} is installed" || __warn "${pkg} not installed"
+    dpkg -l | grep -qw $pkg && __ok "${pkg} is installed" || __warn "${pkg} not installed"
     done 
 }
 
@@ -64,43 +55,6 @@ nb-lin-flush-iptables() {
     echo "" 
     iptables -L
     echo ""
-}
-
-nb-lin-get-gateway() {
-   INTERFACE=${1:-tap0}
-   ip route | grep via | grep "$INTERFACE" | cut -d" " -f3 
-}
-
-nb-lin-get-hosts() {
-    PORT=${1:-"none"}
-    NETWORK=${2:-"10.11.1.0"}
-    PATTERN="Nmap scan report for ${NETWORK:0:-1}"
-
-    get_ip() {
-        cut -d" " -f5 $1
-    }
-	
-    if [[ $PORT == "none" ]]; then
-        print -z 'grc nmap "$NETWORK"/24 -sn | grep "$PATTERN" | get_ip'
-    else
-        print -z 'grc nmap "$NETWORK"/24 -p "$PORT" --open | grep "$PATTERN" | get_ip'
-    fi
-}
-
-nb-lin-get-hostnames() {
-    DNS=$1
-    NETWORK=${2:-"10.11.1.0"}
-    PATTERN="Nmap scan report for "
-
-    get_ip() {
-        cut -d" " -f5- $1
-    }
-
-    if [[ ${#1} -gt 0 ]]; then
-        grc nmap "$NETWORK"/24 --dns-server "$DNS" -sn | grep "$PATTERN" | get_ip
-    else
-        echo "DNS server address required"
-    fi
 }
 
 nb-lin-download-html() { 
@@ -130,21 +84,10 @@ nb-lin-scan-udp() {
     run "$IP"
 }
 
-nb-lin-ps-grep() { 
-    local query && __askvar query QUERY 
-    print -z "ps aux | grep -v grep | grep -i -e VSZ -e ${query}" 
-}
-
 nb-lin-ps-dtach() { 
     __ask "Enter full path to script to run dtach'd"
     local p && __askpath p PATH $(pwd)
     dtach -A ${p} /bin/zsh 
-}
-
-nb-lin-path-add() { 
-    __ask "Enter new path to append to current PATH"
-    local p && __askpath p PATH /   
-    print -z "echo \"export PATH=\$PATH:${p}\" | tee -a $HOME/.config/zsh/.zshrc"
 }
 
 nb-lin-file-replace() {
@@ -153,18 +96,6 @@ nb-lin-file-replace() {
     local file && __askpath file FILE $(pwd)
     print -z "sed 's/${replace}/${with}/g' ${file} > ${file}"
 } 
-
-nb-lin-file-dos-to-unix() { 
-    local file=$1 
-    [[ -z "${file}" ]] && __askpath file FILE $(pwd)
-    print -z "tr -d \"\015\" < ${file} > ${file}.unix"
-}
-
-nb-lin-file-unix-to-dos() {
-    local file=$1 
-    [[ -z "${file}" ]] && __askpath file FILE $(pwd)
-    print -z "sed -e 's/$/\r/' ${file} > ${file}.dos"
-}
 
 nb-lin-file-sort-uniq() {
     local file=$1 
@@ -176,14 +107,4 @@ nb-lin-file-sort-uniq-ip() {
     local file=$1 
     [[ -z "${file}" ]] && __askpath file FILE $(pwd)
     print -z "cat ${file} | sort -u | sort -V -o ${file}"
-}
-
-nb-lin-sudoers-easy() {
-    __warn "This is dangerous for OPSEC! Remove when done."
-	
-    print -z "echo \"$USER ALL=(ALL:ALL) NOPASSWD: /usr/bin/nmap, /usr/bin/masscan, /usr/sbin/tcpdump\" | sudo tee /etc/sudoers.d/$(whoami)"
-}
-
-nb-lin-sudoers-harden() {
-    print -z "sudo rm /etc/sudoers.d/$(whoami)"
 }
