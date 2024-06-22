@@ -60,5 +60,5 @@ nb-enum-web-dirs-gobuster() {
     nb-vars-set-url
     nb-vars-set-wordlist
     __check-threads
-    print -z "gobuster dir -u ${__URL} -a \"${__UA}\" -t 100 -w ${__WORDLIST} | tee $(__urlpath)/gobuster-dirs.txt "
+    print -z "gobuster dir -u ${__URL} -a \"${__UA}\" -t ${__THREADS} -w ${__WORDLIST} | tee $(__urlpath)/gobuster-dirs.txt "
 }
