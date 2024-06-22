@@ -26,13 +26,7 @@ DOC
 
 nb-compile-install() {
     __info "Running $0..."
-
-    if command -v pacman &> /dev/null; then
-       sudo pacman -Syu
-    fi
-
-    __pkgs exploitdb
-    __pkgs mingw-w64 gcc gcc-multilib
+    __pkgs exploitdb mingw-w64 gcc gcc-multilib
 }
 
 nb-compile-searchsploit-nmap() {

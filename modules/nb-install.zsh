@@ -58,20 +58,16 @@ __addpath() {
 __pkgs() {
     __info "checking for and installing dependencies..."
 
-    if command -v pacman &>/dev/null; then
-        __info "Using pacman package manager."
-        for pkg in "$@"; do
-            __info "$pkg"
-            pacman -Qq $pkg &>/dev/null && __warn "$pkg already installed" || sudo pacman -S --noconfirm $pkg
-        done
-    elif command -v apt-get &>/dev/null; then
-        __info "Using apt-get package manager."
+    if command -v apt-get &>/dev/null; then
+        __info "Updating packages..."
+        sudo apt-get update
+        __info "Installing packages..."
         for pkg in "$@"; do
             __info "$pkg"
             dpkg -s $pkg &>/dev/null && __warn "$pkg already installed" || sudo apt-get install -y $pkg
         done
     else
-        __warn "Neither pacman nor apt-get found. Cannot install packages."
+        __warn "apt-get not found. Can not install packages."
     fi
 }
 
@@ -227,19 +223,15 @@ nb-install-github-search() {
     if [[ ! -d $p ]]
     then
         git clone $url $p
-
-        #after commands
         pushd $p
-        cat requirements.txt
-        echo "Install tools listed in requirements using pacman"
+        pip3 install -r requirements.txt
         popd
         __addpath $p
     else
         __warn "already installed in $p"
         pushd $p 
         git pull
-        cat requirements.txt
-        echo "Install tools listed in requirements using pacman"
+        pip3 install -r requirements.txt
         popd
     fi
 }
@@ -337,12 +329,9 @@ nb-install-link-finder() {
     if [[ ! -d $p ]]
     then
         git clone $url $p
-
-        #after commands
         pushd $p 
         sudo python setup.py install
-        cat requirements.txt
-        echo "Install tools listed in requirements using pacman"
+        pip3 install -r requirements.txt
         popd
 
     else
@@ -350,8 +339,7 @@ nb-install-link-finder() {
         pushd $p 
         git pull
         python setup.py install
-        cat requirements.txt
-        echo "Install tools listed in requirements using pacman"
+        pip3 install -r requirements.txt
         popd
     fi
 }
