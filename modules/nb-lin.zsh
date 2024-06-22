@@ -12,7 +12,7 @@ The nb-lin namespace provides commands for managing your OS.
 
 Commands
 --------
-nb-lin-pkg-query            query if a package is installed or not  
+nb-lin-pkg-query            
 nb-lin-flush-iptables       flushes ip tables
 nb-lin-download-html        download IP and print with html2text
 nb-lin-scan-tcp             scan IP with masscan
@@ -23,14 +23,6 @@ nb-lin-file-sort-uniq       sort a file uniq in place
 nb-lin-file-sort-uniq-ip    sort a file of IP addresses uniq in place
 
 DOC
-}
-
-nb-lin-pkg-query() {
-    local query && __askvar query PACKAGE 
-    for pkg in "${query}"
-    do
-    dpkg -l | grep -qw $pkg && __ok "${pkg} is installed" || __warn "${pkg} not installed"
-    done 
 }
 
 nb-lin-flush-iptables() {
