@@ -34,7 +34,6 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  ---------
  nb-crack-                      Commands for cracking password hashes
  nb-encoding-                   Commands for encoding / encrypting data
- nb-lin-                        Commands for managing your OS
  nb-srv-                        Commands for spawning file hosting services
  nb-compile-                    Commands for compiling exploits
  nb-shell-tty-                  Commands for upgrading tty shells
@@ -47,11 +46,7 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  nb-recon-org-                  Commands for organization files and data
  nb-recon-user-                 Commands for searching person's data
  nb-recon-github-               Commands for searching github repositories
- nb-recon-networks-             Commands for identiying an organization's networks
- nb-recon-domains-              Commands for horizontal domain enumeration
- nb-recon-subs-                 Commands for vertical sub-domain enumeration 
-
- External Enumeration Phase
+ nb-recon-networks-             Commands for identiying an organization's networks nb-recon-domains-              Commands for horizontal domain enumeration nb-recon-subs-                 Commands for vertical sub-domain enumeration External Enumeration Phase
  --------------------------
  nb-enum-web-                   Enumerate web servers and services
  nb-enum-web-aws-               Enumerate AWS hosted services
