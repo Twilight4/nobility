@@ -10,15 +10,18 @@ nb-enum-network
 -------------
 The nb-enum-network namespace contains commands for scanning and enumerating target hosts/networks.
 
-Ping Sweep/Host Discovery
--------------------------
+Host Discovery Scanning
+-----------------------
+nb-enum-network-nmap-ping                 sweep a network subnet with ping requests (hostnames and hosts)
+nb-enum-network-nmap-hostnames            use nmap to get list of hostnames
+nb-enum-network-ping-linux-hosts          use ping to get the list of IPs on a network subnet
 nb-enum-network-netdiscover               sweep a network subnet using netdiscover
 nb-enum-network-arp-scan                  sweep a network subnet using arp-scan
-nb-enum-network-nmap-hostnames            get list of host names using nmap and the IP of a known DNS server
-nb-enum-network-ping-nmap                 sweep a network subnet with ping requests
+
+Ping Sweep
+----------
 nb-enum-network-ping-msf                  sweep a network subnet with ping requests
 nb-enum-network-ping-linux                sweep a network subnet with ping requests on linux
-nb-enum-network-ping-linux-hosts          sweep a network subnet with ping requests on linux and only output host IPs
 nb-enum-network-ping-windows-cmd          sweep a network subnet with ping requests on windows
 nb-enum-network-ping-windows-pwsh         sweep a network subnet with ping requests on windows powershell
 
@@ -122,7 +125,7 @@ nb-enum-network-arp-scan() {
     print -z "sudo arp-scan -I ${__IFACE} -l"
 }
 
-nb-enum-network-ping-nmap() {
+nb-enum-network-nmap-ping() {
     __check-project 
     __ask "Network with subnet ex. 10.0.0.0/23"
     local sb && __askvar sb NETWORK_SUBNET
