@@ -14,15 +14,13 @@ Ping Sweep/Host Discovery
 -------------------------
 nb-enum-network-netdiscover               sweep a network subnet using netdiscover
 nb-enum-network-arp-scan                  sweep a network subnet using arp-scan
+nb-enum-network-nmap-hostnames            get list of host names using nmap and the IP of a known DNS server
 nb-enum-network-ping-nmap                 sweep a network subnet with ping requests
 nb-enum-network-ping-msf                  sweep a network subnet with ping requests
 nb-enum-network-ping-linux                sweep a network subnet with ping requests on linux
 nb-enum-network-ping-linux-hosts          sweep a network subnet with ping requests on linux and only output host IPs
 nb-enum-network-ping-windows-cmd          sweep a network subnet with ping requests on windows
 nb-enum-network-ping-windows-pwsh         sweep a network subnet with ping requests on windows powershell
-
-
-nb-enum-network-nmap-hostnames            get list of host names using nmap and the IP of a known DNS server
 
 Open Ports Discovery
 --------------------
@@ -56,29 +54,15 @@ nb-enum-network-nmap-lse-grep        search nmap lse scripts
 DOC
 }
 
-nb-enum-network-nmap-hostnames() {
-    DNS=$1
-    NETWORK=${2:-"10.11.1.0"}
-    PATTERN="Nmap scan report for "
-
-    get_ip() {
-        cut -d" " -f5- $1
-    }
-
-    if [[ ${#1} -gt 0 ]]; then
-        grc nmap "$NETWORK"/24 --dns-server "$DNS" -sn | grep "$PATTERN" | get_ip
-    else
-        echo "DNS server address required"
-    fi
-}
-
-
-
-
-
 nb-enum-network-install() {
     __info "Running $0..."
     __pkgs tcpdump nmap masscan
+}
+
+nb-enum-network-nmap-hostnames() {
+    __ask "Network with subnet ex. 10.0.0.0/23"
+    local sb && __askvar sb NETWORK_SUBNET
+    print -z "grc nmap -sn $sb -oG - | grep \"Host:\" | awk '{print \$3}' | tr -d '()'"
 }
 
 nb-enum-network-nmap-lse-grep() {
