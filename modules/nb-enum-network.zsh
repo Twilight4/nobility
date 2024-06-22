@@ -36,7 +36,7 @@ nb-enum-network-masscan-windows           scan for common Windows ports
 nb-enum-network-masscan-linux             scan for common Linux ports
 nb-enum-network-masscan-web               scan for common web server ports
 
-Service Enumeration
+Service Discovery
 -------------------
 nb-enum-network-rustscan-discovery-all    scan with initial TCP syn requests, all ports
 nb-enum-network-nmap-discovery-top        scan with TCP syn requests and scripts, top 1000 ports
@@ -129,31 +129,31 @@ nb-enum-network-nmap-ping() {
     __check-project 
     __ask "Network with subnet ex. 10.0.0.0/23"
     local sb && __askvar sb NETWORK_SUBNET
-    print -z "grc nmap -vvv -sn --open $sb -oA $(__netpath)/nmap-ping-sweep"
+    print -z "grc nmap -sn --open $sb -oA $(__netpath)/nmap-ping-sweep"
 }
 
 nb-enum-network-nmap-top() {
     __check-project 
     nb-vars-set-rhost
-    print -z "sudo grc nmap -vvv -n -Pn -sS --open --top-ports 1000 ${__RHOST} -oA $(__netpath)/nmap-top"
+    print -z "sudo grc nmap -n -Pn -sS --open --top-ports 1000 ${__RHOST} -oA $(__netpath)/nmap-top"
 }
 
 nb-enum-network-nmap-all() {
     __check-project 
     nb-vars-set-rhost
-    print -z "sudo grc nmap -vvv -n -Pn -T4 --open -sS -p- ${__RHOST} -oA $(__netpath)/nmap-all"
+    print -z "sudo grc nmap -n -Pn -T4 --open -sS -p- ${__RHOST} -oA $(__netpath)/nmap-all"
 }
 
 nb-enum-network-nmap-discovery-all() {
     __check-project 
     nb-vars-set-rhost
-    print -z "sudo grc nmap -vvv -n -Pn -T4 --open -sS -p- -sC -sV --stats-every=20s  ${__RHOST} -oA $(__netpath)/nmap-discovery-all"
+    print -z "sudo grc nmap -n -Pn -T4 --open -sS -p- -sC -sV --stats-every=20s  ${__RHOST} -oA $(__netpath)/nmap-discovery-all"
 }
 
 nb-enum-network-nmap-discovery-top() {
     __check-project 
     nb-vars-set-rhost
-    print -z "grc nmap -vvv -n -Pn -sV -sS -sC --top-ports 1000 ${__RHOST} -oA $(__netpath)/nmap-discovery-top"
+    print -z "grc nmap -n -Pn -sV -sS -sC --top-ports 1000 ${__RHOST} -oA $(__netpath)/nmap-discovery-top"
 }
 
 nb-enum-network-masscan-top() {
