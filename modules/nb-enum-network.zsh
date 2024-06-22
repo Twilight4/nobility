@@ -12,11 +12,13 @@ The nb-enum-network namespace contains commands for scanning and enumerating tar
 
 Ping Sweep/Host Discovery
 -------------------------
-nb-enum-network-nmap-ping-sweep           sweep a network subnet with ping requests
-nb-enum-network-ping-sweep-msf            sweep a network subnet with ping requests
-nb-enum-network-ping-sweep-linux          sweep a network subnet with ping requests on linux
-nb-enum-network-ping-sweep-windows-cmd    sweep a network subnet with ping requests on windows
-nb-enum-network-ping-sweep-windows-pwsh   sweep a network subnet with ping requests on windows powershell
+nb-enum-network-netdiscover               sweep a network subnet using netdiscover
+nb-enum-network-arp-scan                  sweep a network subnet using arp-scan
+nb-enum-network-ping-nmap                 sweep a network subnet with ping requests
+nb-enum-network-ping-msf                  sweep a network subnet with ping requests
+nb-enum-network-ping-linux                sweep a network subnet with ping requests on linux
+nb-enum-network-ping-windows-cmd          sweep a network subnet with ping requests on windows
+nb-enum-network-ping-windows-pwsh         sweep a network subnet with ping requests on windows powershell
 
 Open Ports Discovery
 --------------------
@@ -99,7 +101,7 @@ nb-enum-network-tcpdump-bcasts() {
     print -z "sudo tcpdump -i ${__IFACE} ether broadcast and ether multicast -w $__PROJECT/networks/bcasts.pcap"
 }
 
-nb-enum-network-nmap-ping() {
+nb-enum-network-ping-nmap() {
     __check-project 
     nb-vars-set-rhost
     print -z "grc nmap -vvv -sn --open ${__RHOST} -oA $(__netpath)/nmap-ping-sweep"
@@ -160,7 +162,7 @@ nb-enum-network-masscan-all() {
     print -z "masscan -p1-65535 --open-only ${__RHOST} --rate=1000 -e ${__IFACE} -oL $(__netpath)/masscan-all.txt"
 }
 
-nb-enum-network-ping-sweep-msf() {
+nb-enum-network-ping-msf() {
     __ask "Network with subnet ex. 10.10.10.10/23"
     local sb && __askvar sb NETWORK_SUBNET
 
@@ -182,7 +184,7 @@ exit
 VAR
 }
 
-nb-enum-network-ping-sweep-linux() {
+nb-enum-network-ping-linux() {
     __ask "Enter the network without the /23"
     local sb && __askvar sb NETWORK_SUBNET
 
@@ -190,14 +192,14 @@ nb-enum-network-ping-sweep-linux() {
     __ok "for i in $(seq 254); do ping $sb$i -c1 -W1 & done | grep from"
 }
 
-nb-enum-network-ping-sweep-windows-cmd() {
+nb-enum-network-ping-windows-cmd() {
     local sb && __askvar sb NETWORK_SUBNET
 
     __info "Use the following command in windows cmd:"
     __ok "for /L %i in (1 1 254) do ping $sb.%i -n 1 -w 100"
 }
 
-nb-enum-network-ping-sweep-windows-pwsh() {
+nb-enum-network-ping-windows-pwsh() {
     local sb && __askvar sb NETWORK_SUBNET
 
     __info "Use the following command in windows powershell:"
