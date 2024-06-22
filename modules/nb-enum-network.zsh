@@ -103,7 +103,9 @@ nb-enum-network-tcpdump-bcasts() {
 
 nb-enum-network-netdiscover() {
     __check-project 
-    print -z "sudo netdiscover -r 192.168.0.1/24"
+    __ask "Network with subnet ex. 10.0.0.0/23"
+    local sb && __askvar sb NETWORK_SUBNET
+    print -z "sudo netdiscover -r $sb"
 }
 
 nb-enum-network-arp-scan() {
@@ -114,8 +116,9 @@ nb-enum-network-arp-scan() {
 
 nb-enum-network-ping-nmap() {
     __check-project 
-    nb-vars-set-rhost
-    print -z "grc nmap -vvv -sn --open ${__RHOST} -oA $(__netpath)/nmap-ping-sweep"
+    __ask "Network with subnet ex. 10.0.0.0/23"
+    local sb && __askvar sb NETWORK_SUBNET
+    print -z "grc nmap -vvv -sn --open $sb -oA $(__netpath)/nmap-ping-sweep"
 }
 
 nb-enum-network-nmap-top() {
@@ -174,7 +177,7 @@ nb-enum-network-masscan-all() {
 }
 
 nb-enum-network-ping-msf() {
-    __ask "Network with subnet ex. 10.10.10.10/23"
+    __ask "Network with subnet ex. 10.0.0.0/23"
     local sb && __askvar sb NETWORK_SUBNET
 
     __ask "Do you have meterpreter shell runnning? (y/n)"
@@ -196,14 +199,15 @@ VAR
 }
 
 nb-enum-network-ping-linux() {
-    __ask "Enter the network without the /23"
+    __ask "Enter the network without the last digit like this: 192.168.0."
     local sb && __askvar sb NETWORK_SUBNET
 
     __info "Use the following command in linux:"
-    __ok "for i in $(seq 254); do ping $sb$i -c1 -W1 & done | grep from"
+    __ok "for i in \$(seq 254); do ping $sb\$i -c1 -W1 & done | grep from"
 }
 
 nb-enum-network-ping-windows-cmd() {
+    __ask "Network with subnet ex. 10.0.0.0/23"
     local sb && __askvar sb NETWORK_SUBNET
 
     __info "Use the following command in windows cmd:"
@@ -211,6 +215,7 @@ nb-enum-network-ping-windows-cmd() {
 }
 
 nb-enum-network-ping-windows-pwsh() {
+    __ask "Network with subnet ex. 10.0.0.0/23"
     local sb && __askvar sb NETWORK_SUBNET
 
     __info "Use the following command in windows powershell:"
