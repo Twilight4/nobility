@@ -101,6 +101,17 @@ nb-enum-network-tcpdump-bcasts() {
     print -z "sudo tcpdump -i ${__IFACE} ether broadcast and ether multicast -w $__PROJECT/networks/bcasts.pcap"
 }
 
+nb-enum-network-netdiscover() {
+    __check-project 
+    print -z "sudo netdiscover -r 192.168.0.1/24"
+}
+
+nb-enum-network-arp-scan() {
+    __check-project 
+    nb-vars-set-iface
+    print -z "sudo arp-scan -I ${__IFACE} -l"
+}
+
 nb-enum-network-ping-nmap() {
     __check-project 
     nb-vars-set-rhost
