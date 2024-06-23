@@ -76,13 +76,13 @@ nb-enum-network-nmap-lse-grep() {
 nb-enum-network-rustscan-aggressive-all() {
     __check-project
     nb-vars-set-rhost
-    print -z "rustscan -a ${__RHOST} -r 1-65535 --ulimit 5000 -- -A -T4 -Pn -v -n --stats-every=20s --min-parallelism=100 --min-rate=1000 -oA $(__netpath)/rustscan-aggressive-all"
+    print -z "rustscan -a ${__RHOST} -r 1-65535 --ulimit 5000 -- -A -T4 -Pn -n --stats-every=20s --min-parallelism=100 --min-rate=1000 -oA $(__netpath)/rustscan-aggressive-all"
 }
 
 nb-enum-network-nmap-aggressive-all() {
     __check-project 
     nb-vars-set-rhost
-    print -z "sudo grc nmap -A -Pn -T4 -p- -v -n --stats-every=10s --min-parallelism=100 --min-rate=1000 -oA $(__netpath)/nmap-aggressive-all.nmap ${__RHOST}"
+    print -z "sudo grc nmap -A -Pn -T4 -p- -n --stats-every=10s --min-parallelism=100 --min-rate=1000 -oA $(__netpath)/nmap-aggressive-all.nmap ${__RHOST}"
 }
 
 nb-enum-network-rustscan-all() {
