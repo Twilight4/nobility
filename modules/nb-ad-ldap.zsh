@@ -24,8 +24,9 @@ nb-enum-ldap-search-anon-users              use ldap anonymous search to enumera
 
 Enumeration - With Authentication
 ---------------------------------
-nb-enum-ldap-wsearch-auth-domain-admins-auth       use windapsearch.py to enumerate domain admin users
-nb-enum-ldap-wsearch-auth-privileged-users-auth    use windapsearch.py to enumerate privileged users
+nb-enum-ldap-wsearch-auth-domain-admins       use windapsearch.py to enumerate domain admin users
+nb-enum-ldap-wsearch-auth-privileged-users    use windapsearch.py to enumerate privileged users
+nb-enum-ldap-wsearch-anon-users               use windapsearch.py to enumerate users
 
 Commands
 --------
@@ -38,7 +39,17 @@ nb-enum-ldap-hydra          brute force passwords for a user account
 DOC
 }
 
-nb-ad-enum-wsearch-auth-domain-admins-auth() {
+nb-enum-ldap-wsearch-anon-users() {
+    __check-project
+    nb-vars-set-domain
+
+	  __ask "Enter the IP address of the target DC controller"
+    local dc && __askvar dc DC_IP
+
+    print -z "python3 windapsearch.py -d ${__DOMAIN} --dc-ip $dc -U"
+}
+
+nb-enum-ldap-wsearch-auth-domain-admins-auth() {
     __check-project
     nb-vars-set-user
     nb-vars-set-pass
@@ -50,7 +61,7 @@ nb-ad-enum-wsearch-auth-domain-admins-auth() {
     print -z "python3 windapsearch.py --dc-ip $dc -u ${__USER}@${__DOMAIN} -p ${__PASS} --da"
 }
 
-nb-ad-enum-wsearch-auth-privileged-users-auth() {
+nb-enum-ldap-wsearch-auth-privileged-users-auth() {
     __check-project
     nb-vars-set-user
     nb-vars-set-pass
