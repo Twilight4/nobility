@@ -43,6 +43,7 @@ nb-install-kerbrute
 nb-install-protonvpn
 nb-install-impacket
 nb-install-ldapdomaindump
+nb-install-windapsearch
 
 DOC
 }
@@ -622,6 +623,25 @@ nb-install-ldapdomaindump() {
         sudo git clone --depth 1 $url $path
         sudo chmod +x /opt/ldapdomaindump/bin/*
         sudo ln -sf /opt/ldapdomaindump/bin/* /bin/
+    else
+        __warn "already installed in $path"
+        pushd $path 
+        git pull
+        popd
+    fi
+}
+
+nb-install-windapsearch() {
+    local name="windapsearch"
+    local url="https://github.com/ropnop/windapsearch"
+    local p="/opt/$name"
+
+    __info "Installing $name..."
+
+    if [[ ! -d $path ]]
+    then
+        sudo git clone --depth 1 $url $p
+        __info "Successfully installed $name... in $p"
     else
         __warn "already installed in $path"
         pushd $path 

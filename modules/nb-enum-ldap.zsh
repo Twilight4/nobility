@@ -21,12 +21,12 @@ Enumeration - Without Authentication
 ------------------------------------
 nb-enum-ldap-search-anon-pass-pol           retrieve password policy using ldapsearch
 nb-enum-ldap-search-anon-users              use ldap anonymous search to enumerate valid usernames
+nb-enum-ldap-wsearch-anon-users             use windapsearch.py to enumerate users
 
 Enumeration - With Authentication
 ---------------------------------
-nb-enum-ldap-wsearch-auth-domain-admins       use windapsearch.py to enumerate domain admin users
-nb-enum-ldap-wsearch-auth-privileged-users    use windapsearch.py to enumerate privileged users
-nb-enum-ldap-wsearch-anon-users               use windapsearch.py to enumerate users
+nb-enum-ldap-wsearch-auth-domain-admins     use windapsearch.py to enumerate domain admin users
+nb-enum-ldap-wsearch-auth-privileged-users  use windapsearch.py to enumerate privileged users
 
 Commands
 --------
