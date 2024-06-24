@@ -72,7 +72,7 @@ nb-ad-enum-ldap-anon-users() {
 	  __ask "Enter the IP address of the target DC server"
     local dc && __askvar dc DC_IP
     
-    print -z "ldapsearch -h $dc -x -b \"DC=${__DOMAIN},DC=LOCAL\" -s sub \"(&(objectclass=user))\"  | grep sAMAccountName: | cut -f2 -d\" \""
+    print -z "ldapsearch -H ldap://$dc:389 -x -b \"DC=${__DOMAIN},DC=LOCAL\" -s sub \"(&(objectclass=user))\" | grep sAMAccountName: | cut -f2 -d\" \""
 }
 
 nb-ad-enum-cme-users() {

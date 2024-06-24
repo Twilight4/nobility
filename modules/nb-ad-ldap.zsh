@@ -17,8 +17,8 @@ nb-ad-ldap-install        installs dependencies
 nb-ad-ldap-nmap-sweep     scan a network for services
 nb-ad-ldap-tcpdump        capture traffic to and from a host
 nb-ad-ldap-ctx            query ldap naming contexts
-nb-ad-ldap-search-anon    connect with anonymous bind and query ldap
-nb-ad-ldap-search-auth    connect with authenticated bind and query ldap
+nb-ad-ldapsearch-anon    connect with anonymous bind and query ldap
+nb-ad-ldapsearch-auth    connect with authenticated bind and query ldap
 nb-ad-ldap-whoami         send ldap whoami request
 nb-ad-ldap-hydra          brute force passwords for a user account
 
@@ -46,25 +46,25 @@ nb-ad-ldap-tcpdump() {
 nb-ad-ldap-ctx() {
     __ask "Enter the address of the target DC, GC or LDAP server"
     nb-vars-set-rhost
-    print -z "ldapsearch -x -h ${__RHOST} -s base namingcontexts"
+    print -z "ldapsearch -x -H ldap://${__RHOST}:389 -s base namingcontexts"
 }
 
-nb-ad-ldap-search-anon() {
+nb-ad-ldapsearch-anon() {
     __ask "Enter the address of the target DC, GC or LDAP server"
     nb-vars-set-rhost
     __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
     local dn && __askvar dn DN
-    print -z "ldapsearch -x -h ${__RHOST} -p 389 -s sub -b \"${dn}\" "
+    print -z "ldapsearch -x -H ldap://${__RHOST}:389 -s sub -b \"${dn}\" "
 }
 
-nb-ad-ldap-search-auth() {
+nb-ad-ldapsearch-auth() {
     __ask "Enter the address of the target DC, GC or LDAP server"
     nb-vars-set-rhost
     __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
     local dn && __askvar dn DN
     __ask "Enter a user account with bind and read permissions to the directory"
     __check-user
-    print -z "ldapsearch -x -h ${__RHOST} -D '${dn}' \"(objectClass=*)\" -w \"${__USER}\" "
+    print -z "ldapsearch -x -H ldap://${__RHOST}:389 -D '${dn}' \"(objectClass=*)\" -w \"${__USER}\" "
 }
 
 nb-ad-ldap-whoami() {
