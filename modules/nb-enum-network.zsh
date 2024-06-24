@@ -218,7 +218,7 @@ nb-enum-network-ping-linux() {
 nb-enum-network-ping-linux-hosts() {
     __ask "Enter the network without the last digit like this: 192.168.0."
     local sb && __askvar sb NETWORK_SUBNET
-    print -z "for i in \$(seq 254); do ping 192.168.0.\$i -c1 -W1 & done | grep from | awk '{print \$4}' | cut -d: -f1"
+    print -z "for i in \$(seq 254); do ping $sb\$i -c1 -W1 & done | grep from | awk '{print \$4}' | cut -d: -f1"
 }
 
 nb-enum-network-ping-windows-cmd() {
