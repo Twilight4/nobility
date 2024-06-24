@@ -46,8 +46,8 @@ nb-ad-dump-install() {
 
 nb-ad-dump-secrets() {
     __check-project
-    __check-domain
-    __check-user
+    nb-vars-set-domain
+    nb-vars-set-user
 
     __ask "Provide target machine IP"
     nb-vars-set-rhost
@@ -59,7 +59,7 @@ nb-ad-dump-secrets() {
     if [[ $login == "p" ]]; then
         echo
         __ask "Enter a password for authentication"
-        __check-pass
+        nb-vars-set-pass
         print -z "impacket-secretsdump ${__DOMAIN}/${__USER}:\"${__PASS}\"@${__RHOST} | tee ${__domainadpath}/${__USER}-hashdump.txt"
     elif [[ $login == "h" ]]; then
         echo
@@ -74,7 +74,7 @@ nb-ad-dump-secrets() {
 
 nb-ad-dump-ntds() {
     __check-project
-    __check-domain
+    nb-vars-set-domain
 
     __ask "Provide IP of domain controller"
     nb-vars-set-rhost

@@ -152,7 +152,7 @@ nb-ad-enum-cme-loggedon-auth() {
 
 nb-ad-enum-cme-pass-pol-auth() {
     __check-project
-    nb-vars-set-network
+    nb-vars-set-rhost
     nb-vars-set-user
 
     __ask "Do you want to log in using a password or a hash? (p/h)"
@@ -167,17 +167,17 @@ nb-ad-enum-cme-pass-pol-auth() {
             nb-vars-set-domain
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --pass-pol | tee $(__netadpath)/cme-pass-pol.txt"
+            print -z "crackmapexec smb ${__RHOST} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --pass-pol | tee $(__netadpath)/cme-pass-pol.txt"
         else
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' --pass-pol | tee $(__netadpath)/cme-pass-pol.txt"
+            print -z "crackmapexec smb ${__RHOST} -u ${__USER} -p '${__PASS}' --pass-pol | tee $(__netadpath)/cme-pass-pol.txt"
         fi
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
         __check-hash
-        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --pass-pol | tee $(__netadpath)/cme-pass-pol.txt"
+        print -z "crackmapexec smb ${__RHOST} -u ${__USER} -H ${__HASH} --local-auth --pass-pol | tee $(__netadpath)/cme-pass-pol.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
@@ -238,7 +238,7 @@ nb-ad-enum-ldapdomaindump() {
 
 nb-ad-enum-bloodhound() {
     __check-project
-	  __check-domain
+	  nb-vars-set-domain
 	  __ask "Enter the IP address of the target DC server"
     local dc && __askvar dc DC_IP
     __ask "Enter a user account"
@@ -246,12 +246,12 @@ nb-ad-enum-bloodhound() {
     __ask "Enter a password for authentication"
     nb-vars-set-pass
 
-    pushd $(__domadpath) &> /dev/null
+    #pushd $(__domadpath) &> /dev/null
     print -z "sudo bloodhound-python -d ${__DOMAIN} -u ${__USER} -p '${__PASS}' -ns $dc -c all"
     __info "Output saved in 'bloodhound' directory"
     __info "You can zip the .json files together to upload to bloodhound GUI using command:"
     __ok "zip -r bloodhound-data.zip *.json"
-    popd &> /dev/null
+    #popd &> /dev/null
 }
 
 nb-ad-enum-cme-pass-auth() {
