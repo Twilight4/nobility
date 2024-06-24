@@ -34,6 +34,7 @@ nb-ad-smb-null-smbmap-list           query with smbmap
 nb-ad-smb-null-smbmap-list-rec       list shares recursively
 nb-ad-smb-null-smbclient-list        list shares
 nb-ad-smb-null-smbclient-list-rec    list shares recursively
+nb-ad-smb-null-enum4-users           dump users list using enum4linux
 
 AUTH Session
 ------------
@@ -44,6 +45,7 @@ nb-ad-smb-user-smbmap-list           query with smbmap authenticated session
 nb-ad-smb-user-smbmap-list-rec       list shares recursively with authentication
 nb-ad-smb-user-smbclient-list        list shares
 nb-ad-smb-user-smbclient-list-rec    list shares recursively
+nb-ad-smb-user-enum4-users           dump users list using enum4linux
 
 Connecting to Service
 -------------------------------------
@@ -88,6 +90,26 @@ DOC
 nb-ad-smb-install() {
   __info "Running $0..."
   __pkgs nmap tcpdump smbmap enum4linux smbclient impacket responder nbtscan rpcclient
+}
+
+nb-ad-smb-null-enum4-users() {
+    __check-project
+    nb-vars-set-domain
+	  __ask "Enter the IP address of the target DC server"
+    local dc && __askvar dc DC_IP
+
+    print -z "enum4linux -U $dc | grep \"user:\" | cut -f2 -d\"[\" | cut -f1 -d\"] | tee $(__netadpath)/enum4linux-user-enum.txt"
+}
+
+nb-ad-smb-user-enum4-users() {
+    __check-project
+    nb-vars-set-domain
+    nb-vars-set-user
+    nb-vars-set-pass
+	  __ask "Enter the IP address of the target DC server"
+    local dc && __askvar dc DC_IP
+
+    print -z "enum4linux -u ${__USER} -p ${__PASS} -U $dc | grep \"user:\" | cut -f2 -d\"[\" | cut -f1 -d\"] | tee $(__netadpath)/enum4linux-user-enum.txt"
 }
 
 nb-ad-smb-nmap-sweep() {
@@ -340,7 +362,7 @@ nb-ad-smb-null-enum4() {
   print -z "enum4linux -a ${__RHOST} | tee $(__hostpath)/enumlinux.txt"
 }
 
-nb-ad-smb-null-enum4-aggresssive() {
+nb-ad-smb-null-enum4-aggressive() {
   __check-project
   nb-vars-set-rhost
   print -z "enum4linux -A ${__RHOST} | tee $(__hostpath)/enumlinux.txt"
