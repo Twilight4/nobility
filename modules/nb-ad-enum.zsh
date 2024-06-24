@@ -14,13 +14,11 @@ Initial Enumeration - Without Authentication
 --------------------------------------------
 nb-ad-enum-responder            starts responder with passive analysis mode enabled (passively listen to the network and not send any poisoned packets)
 nb-ad-enum-fping                fping active checks to validates which hosts are active on a network subnet
-nb-ad-enum-ldapsearch-pass-pol  retrieve password policy using ldapsearch
 
 Enumerating Users - Without Authentication
 ------------------------------------------
 nb-ad-enum-kerbrute-users       use kerbrute to enumerate valid usernames 
 nb-ad-enum-cme-users            use crackmapexec to enumerate valid usernames
-nb-ad-enum-ldap-anon-users      use ldap anonymous search to enumerate valid usernames
 
 Domain Enumeration - With Authentication
 ----------------------------------------
@@ -28,8 +26,6 @@ nb-ad-enum-cme-users-auth       use crackmapexec with authentication to enumerat
 nb-ad-enum-cme-groups-auth      use crackmapexec with authentication to enumerate domain groups
 nb-ad-enum-cme-loggedon-auth    use crackmapexec with authentication to enumerate logged-on users
 nb-ad-enum-cme-pass-pol-auth    use crackmapexec to retrieve password policy
-nb-ad-enum-wsearch-domain-admins-auth     use windapsearch.py to enumerate domain admin users
-nb-ad-enum-wsearch-privileged-users-auth  use windapsearch.py to enumerate privileged users
 
 Other Commands - With Authentication
 ------------------------------------
@@ -40,39 +36,6 @@ nb-ad-enum-cme-petipotam-auth   use crackmapexec petipotam module
 nb-ad-enum-cme-command-auth     the password/hash and execute command
 
 DOC
-}
-
-nb-ad-enum-wsearch-domain-admins-auth() {
-    __check-project
-    nb-vars-set-user
-    nb-vars-set-pass
-    nb-vars-set-domain
-
-	  __ask "Enter the IP address of the target DC controller"
-    local dc && __askvar dc DC_IP
-
-    print -z "python3 windapsearch.py --dc-ip $dc -u ${__USER}@${__DOMAIN} -p ${__PASS} --da"
-}
-
-nb-ad-enum-wsearch-privileged-users-auth() {
-    __check-project
-    nb-vars-set-user
-    nb-vars-set-pass
-    nb-vars-set-domain
-
-	  __ask "Enter the IP address of the target DC server"
-    local dc && __askvar dc DC_IP
-
-    print -z "python3 windapsearch.py --dc-ip $dc -u ${__USER}@${__DOMAIN} -p ${__PASS} -PU"
-}
-
-nb-ad-enum-ldap-anon-users() {
-    __check-project
-    nb-vars-set-domain
-	  __ask "Enter the IP address of the target DC server"
-    local dc && __askvar dc DC_IP
-    
-    print -z "ldapsearch -H ldap://$dc:389 -x -b \"DC=${__DOMAIN},DC=LOCAL\" -s sub \"(&(objectclass=user))\" | grep sAMAccountName: | cut -f2 -d\" \""
 }
 
 nb-ad-enum-cme-users() {
@@ -185,14 +148,6 @@ nb-ad-enum-cme-loggedon-auth() {
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
     fi
-}
-
-nb-ad-enum-ldapsearch-pass-pol() {
-    __check-project
-    nb-vars-set-domain
-    nb-vars-set-rhost
-
-    print -z "ldapsearch -h ${__RHOST} -x -b \"DC=${__DOMAIN},DC=LOCAL\" -s sub "*" | grep -m 1 -B 10 pwdHistoryLength | tee $(__netadpath)/ldapsearch-pass-pol.txt"
 }
 
 nb-ad-enum-cme-pass-pol-auth() {
