@@ -52,15 +52,15 @@ nb-ad-ldap-ctx() {
 nb-ad-ldap-search-anon() {
     __ask "Enter the address of the target DC, GC or LDAP server"
     nb-vars-set-rhost
-    __ask "Enter a distinguished name (DN), such as: DC=example,DC=com"
+    __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
     local dn && __askvar dn DN
-    print -z "ldapsearch -x -h ${__RHOST} -s sub -b \"${dn}\" "
+    print -z "ldapsearch -x -h ${__RHOST} -p 389 -s sub -b \"${dn}\" "
 }
 
 nb-ad-ldap-search-auth() {
     __ask "Enter the address of the target DC, GC or LDAP server"
     nb-vars-set-rhost
-    __ask "Enter a distinguished name (DN), such as: DC=example,DC=com"
+    __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
     local dn && __askvar dn DN
     __ask "Enter a user account with bind and read permissions to the directory"
     __check-user

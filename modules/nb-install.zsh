@@ -556,6 +556,7 @@ nb-install-kerbrute() {
 
     # Move kerbrute to path
     __info "Installing kerbrute ${ver}..."
+    sudo chmod +x /tmp/kerbrute
     sudo mv "/tmp/kerbrute" /bin/kerbrute || { echo "Failed to install kerbrute."; return 1; }
     __ok "kerbrute ${ver} installed successfully."
 }

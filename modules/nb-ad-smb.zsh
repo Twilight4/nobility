@@ -528,7 +528,7 @@ nb-ad-smb-relay-enum() {
     __check-project
   	nb-vars-set-network
 
-    print -z "grc nmap --script=smb2-security-mode -p 445 ${__NETWORK} -oA $(netadpath)/nmap-smb-security"
+    print -z "sudo grc nmap --script=smb2-security-mode -p 445 ${__NETWORK} -oA $(netadpath)/nmap-smb-security"
 }
 
 nb-ad-smb-relay-ntlmrelay() {
