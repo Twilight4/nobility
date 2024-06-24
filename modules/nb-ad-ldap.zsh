@@ -19,8 +19,13 @@ nb-enum-ldap-search-auth    connect with authenticated bind and query ldap
 
 Enumeration - Without Authentication
 ------------------------------------
-nb-enum-ldap-search-pass-pol      retrieve password policy using ldapsearch
-nb-enum-ldap-search-anon-users    use ldap anonymous search to enumerate valid usernames
+nb-enum-ldap-search-anon-pass-pol           retrieve password policy using ldapsearch
+nb-enum-ldap-search-anon-users              use ldap anonymous search to enumerate valid usernames
+
+Enumeration - With Authentication
+---------------------------------
+nb-enum-ldap-wsearch-auth-domain-admins-auth       use windapsearch.py to enumerate domain admin users
+nb-enum-ldap-wsearch-auth-privileged-users-auth    use windapsearch.py to enumerate privileged users
 
 Commands
 --------
@@ -33,6 +38,30 @@ nb-enum-ldap-hydra          brute force passwords for a user account
 DOC
 }
 
+nb-ad-enum-wsearch-auth-domain-admins-auth() {
+    __check-project
+    nb-vars-set-user
+    nb-vars-set-pass
+    nb-vars-set-domain
+
+	  __ask "Enter the IP address of the target DC controller"
+    local dc && __askvar dc DC_IP
+
+    print -z "python3 windapsearch.py --dc-ip $dc -u ${__USER}@${__DOMAIN} -p ${__PASS} --da"
+}
+
+nb-ad-enum-wsearch-auth-privileged-users-auth() {
+    __check-project
+    nb-vars-set-user
+    nb-vars-set-pass
+    nb-vars-set-domain
+
+	  __ask "Enter the IP address of the target DC server"
+    local dc && __askvar dc DC_IP
+
+    print -z "python3 windapsearch.py --dc-ip $dc -u ${__USER}@${__DOMAIN} -p ${__PASS} -PU"
+}
+
 nb-enum-ldap-search-anon-users() {
     __check-project
     nb-vars-set-domain
@@ -42,7 +71,7 @@ nb-enum-ldap-search-anon-users() {
     print -z "ldapsearch -H ldap://$dc:389 -x -b \"DC=${__DOMAIN},DC=LOCAL\" -s sub \"(&(objectclass=user))\" | grep sAMAccountName: | cut -f2 -d\" \""
 }
 
-nb-enum-ldap-ldapsearch-pass-pol() {
+nb-enum-ldap-search-anon-pass-pol() {
     __check-project
     nb-vars-set-domain
     nb-vars-set-rhost
@@ -74,7 +103,7 @@ nb-enum-ldap-ctx() {
     print -z "ldapsearch -x -H ldap://${__RHOST}:389 -s base namingcontexts"
 }
 
-nb-enum-ldapsearch-anon() {
+nb-enum-ldap-search-anon() {
     __ask "Enter the address of the target DC, GC or LDAP server"
     nb-vars-set-rhost
     __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
@@ -82,7 +111,7 @@ nb-enum-ldapsearch-anon() {
     print -z "ldapsearch -x -H ldap://${__RHOST}:389 -s sub -b \"${dn}\" "
 }
 
-nb-enum-ldapsearch-auth() {
+nb-enum-ldap-search-auth() {
     __ask "Enter the address of the target DC, GC or LDAP server"
     nb-vars-set-rhost
     __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
