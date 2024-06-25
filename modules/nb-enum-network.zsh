@@ -215,13 +215,43 @@ nb-enum-network-nmap-top() {
 nb-enum-network-nmap-all() {
     __check-project 
     nb-vars-set-rhost
-    print -z "sudo grc nmap -n -Pn -T4 --open -sS -p- ${__RHOST} -oA $(__netpath)/nmap-all"
+
+    __ask "Do you want to scan a network subnet or a host? (n/h)"
+    local scan && __askvar scan "SCAN_TYPE"
+
+    if [[ $scan == "h" ]]; then
+      echo
+      nb-vars-set-rhost
+      print -z "sudo grc nmap -n -Pn -T4 --open -sS -p- ${__RHOST} -oA $(__hostpath)/nmap-all"
+    if [[ $scan == "n" ]]; then
+      echo
+      nb-vars-set-network
+      print -z "sudo grc nmap -n -Pn -T4 --open -sS -p- ${__NETWORK} -oA $(__netpath)/nmap-all"
+    else
+        echo
+        __err "Invalid option. Please choose 'n' for network or 'h' for host."
+    fi
 }
 
 nb-enum-network-nmap-discovery-all() {
     __check-project 
     nb-vars-set-rhost
-    print -z "sudo grc nmap -n -Pn -T4 --open -sS -p- -sC -sV --stats-every=20s  ${__RHOST} -oA $(__netpath)/nmap-discovery-all"
+
+    __ask "Do you want to scan a network subnet or a host? (n/h)"
+    local scan && __askvar scan "SCAN_TYPE"
+
+    if [[ $scan == "h" ]]; then
+      echo
+      nb-vars-set-rhost
+      print -z "sudo grc nmap -n -Pn -T4 --open -sS -p- -sC -sV --stats-every=20s ${__RHOST} -oA $(__hostpath)/nmap-discovery-all"
+    if [[ $scan == "n" ]]; then
+      echo
+      nb-vars-set-network
+      print -z "sudo grc nmap -n -Pn -T4 --open -sS -p- -sC -sV --stats-every=20s ${__NETWORK} -oA $(__netpath)/nmap-discovery-all"
+    else
+        echo
+        __err "Invalid option. Please choose 'n' for network or 'h' for host."
+    fi
 }
 
 nb-enum-network-nmap-discovery-top() {
