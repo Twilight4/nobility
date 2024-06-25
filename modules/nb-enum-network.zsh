@@ -75,14 +75,28 @@ nb-enum-network-nmap-lse-grep() {
 
 nb-enum-network-rustscan-aggressive-all() {
     __check-project
-    nb-vars-set-rhost
-    print -z "rustscan -a ${__RHOST} -r 1-65535 -- -A -T4 -Pn -n --stats-every=20s --min-parallelism=100 --min-rate=1000 -oA $(__netpath)/rustscan-aggressive-all"
+
+    __ask "Do you want to scan a network subnet or a host? (n/h)"
+    local scan && __askvar scan "SCAN_TYPE"
+
+    if [[ $scan == "h" ]]; then
+      echo
+      nb-vars-set-rhost
+      print -z "rustscan -a ${__RHOST} -r 1-65535 -- -A -T4 -Pn -n --stats-every=20s --min-parallelism=100 --min-rate=1000 -oA $(__hostpath)/rustscan-aggressive-all"
+    elif [[ $scan == "n" ]]; then
+      echo
+      nb-vars-set-network
+      print -z "rustscan -a ${__NETWORK} -r 1-65535 -- -A -T4 -Pn -n --stats-every=20s --min-parallelism=100 --min-rate=1000 -oA $(__netpath)/rustscan-aggressive-all"
+    else
+        echo
+        __err "Invalid option. Please choose 'n' for network or 'h' for host."
+    fi
 }
 
 nb-enum-network-nmap-aggressive-all() {
     __check-project 
     nb-vars-set-rhost
-    print -z "sudo grc nmap -A -Pn -T4 -p- -n --stats-every=10s --min-parallelism=100 --min-rate=1000 -oA $(__netpath)/nmap-aggressive-all.nmap ${__RHOST}"
+    print -z "sudo grc nmap -A -Pn -T4 -p- -n --stats-every=10s --min-parallelism=100 --min-rate=1000 ${__RHOST} -oA $(__netpath)/nmap-aggressive-all.nmap"
 }
 
 nb-enum-network-rustscan-all() {

@@ -81,6 +81,7 @@ nb-enum-ldap-search-anon-users() {
     local dc && __askvar dc DC_IP
     
     print -z "ldapsearch -H ldap://$dc:389 -x -b \"DC=${__DOMAIN},DC=LOCAL\" -s sub \"(&(objectclass=user))\" | grep sAMAccountName: | cut -f2 -d\" \""
+    #print -z "ldapsearch -H ldap://$dc:389 -x -b \"DC=${__DOMAIN},DC=LOCAL\" '(objectClass=user)' sAMAccountName | grep sAMAccountName | awk '{print $2}'"
 }
 
 nb-enum-ldap-search-anon-dc() {
