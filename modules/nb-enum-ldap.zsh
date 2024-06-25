@@ -19,6 +19,7 @@ nb-enum-ldap-search-auth    connect with authenticated bind and query ldap
 
 Enumeration - Without Authentication
 ------------------------------------
+nb-enum-ldap-search-anon-dc                 use ldap anonymous search to enumerate namingcontexts (needed for other ldapsearch commands)
 nb-enum-ldap-search-anon-pass-pol           retrieve password policy using ldapsearch
 nb-enum-ldap-search-anon-users              use ldap anonymous search to enumerate valid usernames
 nb-enum-ldap-wsearch-anon-users             use windapsearch.py to enumerate users
@@ -80,6 +81,14 @@ nb-enum-ldap-search-anon-users() {
     local dc && __askvar dc DC_IP
     
     print -z "ldapsearch -H ldap://$dc:389 -x -b \"DC=${__DOMAIN},DC=LOCAL\" -s sub \"(&(objectclass=user))\" | grep sAMAccountName: | cut -f2 -d\" \""
+}
+
+nb-enum-ldap-search-anon-dc() {
+    __check-project
+	  __ask "Enter the IP address of the target DC server"
+    local dc && __askvar dc DC_IP
+
+    print -z "ldapsearch -H ldap://$dc:389 -x -s base namingcontexts"
 }
 
 nb-enum-ldap-search-anon-pass-pol() {
