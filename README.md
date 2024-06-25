@@ -46,7 +46,7 @@ plugins=(git nobility)
 source ~/.zshrc
 ```
 
-### Upgrading
+### Updating
 Simply run the `nb-update` command. Assuming you did not modify any of the content in the nobility directory, this should pull the latest code from this GitHub repo, after which you can run nobility modules as usual.
 
 # Getting Started
@@ -101,8 +101,8 @@ nb-project-rescope
 
 ### Web Recon
 ```bash
-# Scan individual host all ports with TCP syn using rustscan
-nb-enum-host-rustscan-all
+# Scan the network all ports with TCP syn using rustscan
+nb-enum-network-rustscan-all
 
 # Identifying technologies
 nb-enum-web-whatweb
@@ -173,7 +173,7 @@ nb-ad-smb-relay-ntlmrelay
 # IPv6 Attack
 nb-ad-ipv6
 
-# Internal Enumeration
+# Domain Enumeration
 nb-ad-enum-ldapdomaindump
 
 # Kerberoasting
