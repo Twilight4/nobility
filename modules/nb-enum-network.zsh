@@ -76,7 +76,7 @@ nb-enum-network-nmap-lse-grep() {
 nb-enum-network-rustscan-aggressive-all() {
     __check-project
     nb-vars-set-rhost
-    print -z "rustscan -a ${__RHOST} -r 1-65535 --ulimit 5000 -- -A -T4 -Pn -n --stats-every=20s --min-parallelism=100 --min-rate=1000 -oA $(__netpath)/rustscan-aggressive-all"
+    print -z "rustscan -a ${__RHOST} -r 1-65535 -- -A -T4 -Pn -n --stats-every=20s --min-parallelism=100 --min-rate=1000 -oA $(__netpath)/rustscan-aggressive-all"
 }
 
 nb-enum-network-nmap-aggressive-all() {
@@ -89,14 +89,14 @@ nb-enum-network-rustscan-all() {
     __check-project 
     __ask "Enter alive hosts which you scanned with ping sweep"
     nb-vars-set-rhost
-    print -z "rustscan -a ${__RHOST} -r 1-65535 --ulimit 5000 -- --open -oA $(__netpath)/rustscan-all"
+    print -z "rustscan -a ${__RHOST} -r 1-65535 -- --open -oA $(__netpath)/rustscan-all"
 }
 
 nb-enum-network-rustscan-discovery-all() {
     __check-project 
     __ask "Enter alive hosts which you scanned with ping sweep"
     nb-vars-set-rhost
-    print -z "rustscan -a ${__RHOST} -r 1-65535 --ulimit 5000 -- --open -A -Pn -oA $(__netpath)/rustscan-discovery-all"
+    print -z "rustscan -a ${__RHOST} -r 1-65535 -- --open -A -Pn -oA $(__netpath)/rustscan-discovery-all"
 }
 
 nb-enum-network-tcpdump() {
