@@ -11,9 +11,9 @@ Nobility helps you remember how to use every tool in your arsenal and doesn't hi
 * **Seamless Integration**: Zsh/Oh-My-Zsh shell plugin ensures easy integration into your environment
 * **Customizable Settings**: Tailor Nobility to your preferences with customizable settings and global variables
 * **Recon Phase**: Access OSINT commands for efficient information gathering
-* **Enumeration Phase**: Effortlessly enumerate common services, saving time in penetration testing
+* **Enumeration Phase**: Assistance in enumerating common services, saving time in penetration testing
 * **Exploit Phase**: Assistance in compiling exploits for simplified vulnerability exploitation
-* **AD Phase**: Assistance in **Active Directory** types of attack
+* **AD Phase**: Assistance in **Active Directory** exploitation, enumeration and attacks
 * **Reverse Shell Handlers**: Manage reverse shell handlers easily, enhancing network-pentesting capabilities
 * **Content Serving Commands**: Serve content effortlessly, making file sharing and testing straightforward
 * **Linux System Management**: Optimized for Linux management, simplifying system tasks
@@ -30,7 +30,7 @@ git clone https://github.com/Twilight4/nobility.git ~/.config/nobility
 # Source the plugin in `~/.zshrc`
 echo 'source ~/.config/nobility/nobility.plugin.zsh' >> ~/.zshrc
 
-# Source `.zshrc` to load the plugin
+# Source `~/.zshrc` to load the plugin
 source ~/.zshrc
 ```
 
@@ -42,7 +42,7 @@ git clone https://github.com/Twilight4/nobility.git ~/.oh-my-zsh/custom/plugins/
 # Edit `~/.zshrc` to load the plugin
 plugins=(git nobility)
 
-# Source `.zshrc` to load the plugin and you're done. On first load, nobility will install a few core packages
+# Source `~/.zshrc` to load the plugin
 source ~/.zshrc
 ```
 
@@ -163,7 +163,7 @@ nb-enum-dns-dnsrecon
 nb-recon-org-theharvester
 ```
 
-### Active Directory Pentesting
+### Active Directory Auditing
 ```bash
 # SMB Relay
 nb-ad-smb-relay-enum
