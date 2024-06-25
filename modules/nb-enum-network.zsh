@@ -95,7 +95,6 @@ nb-enum-network-rustscan-aggressive-all() {
 
 nb-enum-network-nmap-aggressive-all() {
     __check-project 
-    nb-vars-set-rhost
 
     __ask "Do you want to scan a network subnet or a host? (n/h)"
     local scan && __askvar scan "SCAN_TYPE"
@@ -116,8 +115,6 @@ nb-enum-network-nmap-aggressive-all() {
 
 nb-enum-network-rustscan-all() {
     __check-project 
-    __ask "Enter alive hosts which you scanned with ping sweep"
-    nb-vars-set-rhost
 
     __ask "Do you want to scan a network subnet or a host? (n/h)"
     local scan && __askvar scan "SCAN_TYPE"
@@ -128,6 +125,7 @@ nb-enum-network-rustscan-all() {
       print -z "rustscan -a ${__RHOST} -r 1-65535 -- --open -oA $(__hostpath)/rustscan-all"
     elif [[ $scan == "n" ]]; then
       echo
+      __ask "Enter alive hosts which you scanned with ping sweep"
       nb-vars-set-network
       print -z "rustscan -a ${__NETWORK} -r 1-65535 -- --open -oA $(__netpath)/rustscan-all"
     else
@@ -138,8 +136,6 @@ nb-enum-network-rustscan-all() {
 
 nb-enum-network-rustscan-discovery-all() {
     __check-project 
-    __ask "Enter alive hosts which you scanned with ping sweep"
-    nb-vars-set-rhost
 
     __ask "Do you want to scan a network subnet or a host? (n/h)"
     local scan && __askvar scan "SCAN_TYPE"
@@ -150,6 +146,7 @@ nb-enum-network-rustscan-discovery-all() {
       print -z "rustscan -a ${__RHOST} -r 1-65535 -- --open -A -Pn -oA $(__hostpath)/rustscan-discovery-all"
     elif [[ $scan == "n" ]]; then
       echo
+      __ask "Enter alive hosts which you scanned with ping sweep"
       nb-vars-set-network
       print -z "rustscan -a ${__NETWORK} -r 1-65535 -- --open -A -Pn -oA $(__netpath)/rustscan-discovery-all"
     else
@@ -193,7 +190,6 @@ nb-enum-network-nmap-ping() {
 
 nb-enum-network-nmap-top() {
     __check-project 
-    nb-vars-set-rhost
 
     __ask "Do you want to scan a network subnet or a host? (n/h)"
     local scan && __askvar scan "SCAN_TYPE"
@@ -214,7 +210,6 @@ nb-enum-network-nmap-top() {
 
 nb-enum-network-nmap-all() {
     __check-project 
-    nb-vars-set-rhost
 
     __ask "Do you want to scan a network subnet or a host? (n/h)"
     local scan && __askvar scan "SCAN_TYPE"
@@ -235,7 +230,6 @@ nb-enum-network-nmap-all() {
 
 nb-enum-network-nmap-discovery-all() {
     __check-project 
-    nb-vars-set-rhost
 
     __ask "Do you want to scan a network subnet or a host? (n/h)"
     local scan && __askvar scan "SCAN_TYPE"
@@ -256,20 +250,62 @@ nb-enum-network-nmap-discovery-all() {
 
 nb-enum-network-nmap-discovery-top() {
     __check-project 
-    nb-vars-set-rhost
-    print -z "grc nmap -n -Pn -sV -sS -sC --top-ports 1000 ${__RHOST} -oA $(__netpath)/nmap-discovery-top"
+
+    __ask "Do you want to scan a network subnet or a host? (n/h)"
+    local scan && __askvar scan "SCAN_TYPE"
+
+    if [[ $scan == "h" ]]; then
+      echo
+      nb-vars-set-rhost
+      print -z "grc nmap -n -Pn -sV -sS -sC --top-ports 1000 ${__RHOST} -oA $(__hostpath)/nmap-discovery-top"
+    if [[ $scan == "n" ]]; then
+      echo
+      nb-vars-set-network
+      print -z "grc nmap -n -Pn -sV -sS -sC --top-ports 1000 ${__NETWORK} -oA $(__netpath)/nmap-discovery-top"
+    else
+        echo
+        __err "Invalid option. Please choose 'n' for network or 'h' for host."
+    fi
 }
 
 nb-enum-network-masscan-top() {
     __check-project 
-    nb-vars-set-rhost
-    print -z "sudo masscan ${__RHOST} -p${__TCP_PORTS} -oL $(__netpath)/masscan-top.txt"
+
+    __ask "Do you want to scan a network subnet or a host? (n/h)"
+    local scan && __askvar scan "SCAN_TYPE"
+
+    if [[ $scan == "h" ]]; then
+      echo
+      nb-vars-set-rhost
+      print -z "sudo masscan ${__RHOST} -p${__TCP_PORTS} -oL $(__hostpath)/masscan-top.txt"
+    if [[ $scan == "n" ]]; then
+      echo
+      nb-vars-set-network
+      print -z "sudo masscan ${__NETWORK} -p${__TCP_PORTS} -oL $(__netpath)/masscan-top.txt"
+    else
+        echo
+        __err "Invalid option. Please choose 'n' for network or 'h' for host."
+    fi
 }
 
 nb-enum-network-masscan-windows() {
     __check-project 
-    nb-vars-set-rhost
-    print -z "sudo masscan ${__RHOST} -p135-139,445,3389,389,636,88 -oL $(__netpath)/masscan-windows.txt"
+
+    __ask "Do you want to scan a network subnet or a host? (n/h)"
+    local scan && __askvar scan "SCAN_TYPE"
+
+    if [[ $scan == "h" ]]; then
+      echo
+      nb-vars-set-rhost
+      print -z "sudo masscan ${__RHOST} -p135-139,445,3389,389,636,88 -oL $(__hostpath)/masscan-windows.txt"
+    if [[ $scan == "n" ]]; then
+      echo
+      nb-vars-set-network
+      print -z "sudo masscan ${__NETWORK} -p135-139,445,3389,389,636,88 -oL $(__netpath)/masscan-windows.txt"
+    else
+        echo
+        __err "Invalid option. Please choose 'n' for network or 'h' for host."
+    fi
 }
 
 nb-enum-network-masscan-linux() {
