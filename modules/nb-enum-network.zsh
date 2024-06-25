@@ -198,7 +198,7 @@ nb-enum-network-nmap-top() {
       echo
       nb-vars-set-rhost
       print -z "sudo grc nmap -n -Pn -sS --open --top-ports 1000 ${__RHOST} -oA $(__hostpath)/nmap-top"
-    if [[ $scan == "n" ]]; then
+    elif [[ $scan == "n" ]]; then
       echo
       nb-vars-set-network
       print -z "sudo grc nmap -n -Pn -sS --open --top-ports 1000 ${__NETWORK} -oA $(__netpath)/nmap-top"
@@ -218,7 +218,7 @@ nb-enum-network-nmap-all() {
       echo
       nb-vars-set-rhost
       print -z "sudo grc nmap -n -Pn -T4 --open -sS -p- ${__RHOST} -oA $(__hostpath)/nmap-all"
-    if [[ $scan == "n" ]]; then
+    elif [[ $scan == "n" ]]; then
       echo
       nb-vars-set-network
       print -z "sudo grc nmap -n -Pn -T4 --open -sS -p- ${__NETWORK} -oA $(__netpath)/nmap-all"
@@ -238,7 +238,7 @@ nb-enum-network-nmap-discovery-all() {
       echo
       nb-vars-set-rhost
       print -z "sudo grc nmap -n -Pn -T4 --open -sS -p- -sC -sV --stats-every=20s ${__RHOST} -oA $(__hostpath)/nmap-discovery-all"
-    if [[ $scan == "n" ]]; then
+    elif [[ $scan == "n" ]]; then
       echo
       nb-vars-set-network
       print -z "sudo grc nmap -n -Pn -T4 --open -sS -p- -sC -sV --stats-every=20s ${__NETWORK} -oA $(__netpath)/nmap-discovery-all"
@@ -258,7 +258,7 @@ nb-enum-network-nmap-discovery-top() {
       echo
       nb-vars-set-rhost
       print -z "grc nmap -n -Pn -sV -sS -sC --top-ports 1000 ${__RHOST} -oA $(__hostpath)/nmap-discovery-top"
-    if [[ $scan == "n" ]]; then
+    elif [[ $scan == "n" ]]; then
       echo
       nb-vars-set-network
       print -z "grc nmap -n -Pn -sV -sS -sC --top-ports 1000 ${__NETWORK} -oA $(__netpath)/nmap-discovery-top"
@@ -278,7 +278,7 @@ nb-enum-network-masscan-top() {
       echo
       nb-vars-set-rhost
       print -z "sudo masscan ${__RHOST} -p${__TCP_PORTS} -oL $(__hostpath)/masscan-top.txt"
-    if [[ $scan == "n" ]]; then
+    elif [[ $scan == "n" ]]; then
       echo
       nb-vars-set-network
       print -z "sudo masscan ${__NETWORK} -p${__TCP_PORTS} -oL $(__netpath)/masscan-top.txt"
@@ -298,7 +298,7 @@ nb-enum-network-masscan-windows() {
       echo
       nb-vars-set-rhost
       print -z "sudo masscan ${__RHOST} -p135-139,445,3389,389,636,88 -oL $(__hostpath)/masscan-windows.txt"
-    if [[ $scan == "n" ]]; then
+    elif [[ $scan == "n" ]]; then
       echo
       nb-vars-set-network
       print -z "sudo masscan ${__NETWORK} -p135-139,445,3389,389,636,88 -oL $(__netpath)/masscan-windows.txt"
@@ -310,21 +310,63 @@ nb-enum-network-masscan-windows() {
 
 nb-enum-network-masscan-linux() {
     __check-project 
-    nb-vars-set-rhost
-    print -z "sudo masscan ${__RHOST} -p22,111,2222 -oL $(__netpath)/masscan-linux.txt"
+
+    __ask "Do you want to scan a network subnet or a host? (n/h)"
+    local scan && __askvar scan "SCAN_TYPE"
+
+    if [[ $scan == "h" ]]; then
+      echo
+      nb-vars-set-rhost
+      print -z "sudo masscan ${__RHOST} -p22,111,2222 -oL $(__hostpath)/masscan-linux.txt"
+    elif [[ $scan == "n" ]]; then
+      echo
+      nb-vars-set-network
+      print -z "sudo masscan ${__NETWORK} -p22,111,2222 -oL $(__netpath)/masscan-linux.txt"
+    else
+        echo
+        __err "Invalid option. Please choose 'n' for network or 'h' for host."
+    fi
 }
 
 nb-enum-network-masscan-web() {
     __check-project 
-    nb-vars-set-rhost
-    print -z "sudo masscan ${__RHOST} -p80,800,8000,8080,8888,443,4433,4443 -oL $(__netpath)/masscan-web.txt"
+
+    __ask "Do you want to scan a network subnet or a host? (n/h)"
+    local scan && __askvar scan "SCAN_TYPE"
+
+    if [[ $scan == "h" ]]; then
+      echo
+      nb-vars-set-rhost
+      print -z "sudo masscan ${__RHOST} -p80,800,8000,8080,8888,443,4433,4443 -oL $(__hostpath)/masscan-web.txt"
+    elif [[ $scan == "n" ]]; then
+      echo
+      nb-vars-set-network
+      print -z "sudo masscan ${__NETWORK} -p80,800,8000,8080,8888,443,4433,4443 -oL $(__netpath)/masscan-web.txt"
+    else
+        echo
+        __err "Invalid option. Please choose 'n' for network or 'h' for host."
+    fi
 }
 
 nb-enum-network-masscan-all() {
     __check-iface
     __check-project
-    nb-vars-set-rhost
-    print -z "masscan -p1-65535 --open-only ${__RHOST} --rate=1000 -e ${__IFACE} -oL $(__netpath)/masscan-all.txt"
+
+    __ask "Do you want to scan a network subnet or a host? (n/h)"
+    local scan && __askvar scan "SCAN_TYPE"
+
+    if [[ $scan == "h" ]]; then
+      echo
+      nb-vars-set-rhost
+      print -z "masscan -p1-65535 --open-only ${__RHOST} --rate=1000 -e ${__IFACE} -oL $(__hostpath)/masscan-all.txt"
+    elif [[ $scan == "n" ]]; then
+      echo
+      nb-vars-set-network
+      print -z "masscan -p1-65535 --open-only ${__NETWORK} --rate=1000 -e ${__IFACE} -oL $(__netpath)/masscan-all.txt"
+    else
+        echo
+        __err "Invalid option. Please choose 'n' for network or 'h' for host."
+    fi
 }
 
 nb-enum-network-ping-msf() {
