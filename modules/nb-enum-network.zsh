@@ -80,11 +80,9 @@ nb-enum-network-rustscan-aggressive-all() {
     local scan && __askvar scan "SCAN_TYPE"
 
     if [[ $scan == "h" ]]; then
-      echo
       nb-vars-set-rhost
       print -z "rustscan -a ${__RHOST} -r 1-65535 -- -A -T4 -Pn -n --stats-every=20s --min-parallelism=100 --min-rate=1000 -oA $(__hostpath)/rustscan-aggressive-all"
     elif [[ $scan == "n" ]]; then
-      echo
       nb-vars-set-network
       print -z "rustscan -a ${__NETWORK} -r 1-65535 -- -A -T4 -Pn -n --stats-every=20s --min-parallelism=100 --min-rate=1000 -oA $(__netpath)/rustscan-aggressive-all"
     else
@@ -100,11 +98,9 @@ nb-enum-network-nmap-aggressive-all() {
     local scan && __askvar scan "SCAN_TYPE"
 
     if [[ $scan == "h" ]]; then
-      echo
       nb-vars-set-rhost
       print -z "sudo grc nmap -A -Pn -T4 -p- -n --stats-every=10s --min-parallelism=100 --min-rate=1000 ${__RHOST} -oA $(__hostpath)/nmap-aggressive-all.nmap"
     elif [[ $scan == "n" ]]; then
-      echo
       nb-vars-set-network
       print -z "sudo grc nmap -A -Pn -T4 -p- -n --stats-every=10s --min-parallelism=100 --min-rate=1000 ${__NETWORk} -oA $(__netpath)/nmap-aggressive-all.nmap"
     else
@@ -120,11 +116,9 @@ nb-enum-network-rustscan-all() {
     local scan && __askvar scan "SCAN_TYPE"
 
     if [[ $scan == "h" ]]; then
-      echo
       nb-vars-set-rhost
       print -z "rustscan -a ${__RHOST} -r 1-65535 -- --open -oA $(__hostpath)/rustscan-all"
     elif [[ $scan == "n" ]]; then
-      echo
       __ask "Enter alive hosts which you scanned with ping sweep"
       nb-vars-set-network
       print -z "rustscan -a ${__NETWORK} -r 1-65535 -- --open -oA $(__netpath)/rustscan-all"
@@ -141,11 +135,9 @@ nb-enum-network-rustscan-discovery-all() {
     local scan && __askvar scan "SCAN_TYPE"
 
     if [[ $scan == "h" ]]; then
-      echo
       nb-vars-set-rhost
       print -z "rustscan -a ${__RHOST} -r 1-65535 -- --open -A -Pn -oA $(__hostpath)/rustscan-discovery-all"
     elif [[ $scan == "n" ]]; then
-      echo
       __ask "Enter alive hosts which you scanned with ping sweep"
       nb-vars-set-network
       print -z "rustscan -a ${__NETWORK} -r 1-65535 -- --open -A -Pn -oA $(__netpath)/rustscan-discovery-all"
@@ -195,11 +187,9 @@ nb-enum-network-nmap-top() {
     local scan && __askvar scan "SCAN_TYPE"
 
     if [[ $scan == "h" ]]; then
-      echo
       nb-vars-set-rhost
       print -z "sudo grc nmap -n -Pn -sS --open --top-ports 1000 ${__RHOST} -oA $(__hostpath)/nmap-top"
     elif [[ $scan == "n" ]]; then
-      echo
       nb-vars-set-network
       print -z "sudo grc nmap -n -Pn -sS --open --top-ports 1000 ${__NETWORK} -oA $(__netpath)/nmap-top"
     else
@@ -215,11 +205,9 @@ nb-enum-network-nmap-all() {
     local scan && __askvar scan "SCAN_TYPE"
 
     if [[ $scan == "h" ]]; then
-      echo
       nb-vars-set-rhost
       print -z "sudo grc nmap -n -Pn -T4 --open -sS -p- ${__RHOST} -oA $(__hostpath)/nmap-all"
     elif [[ $scan == "n" ]]; then
-      echo
       nb-vars-set-network
       print -z "sudo grc nmap -n -Pn -T4 --open -sS -p- ${__NETWORK} -oA $(__netpath)/nmap-all"
     else
@@ -235,11 +223,9 @@ nb-enum-network-nmap-discovery-all() {
     local scan && __askvar scan "SCAN_TYPE"
 
     if [[ $scan == "h" ]]; then
-      echo
       nb-vars-set-rhost
       print -z "sudo grc nmap -n -Pn -T4 --open -sS -p- -sC -sV --stats-every=20s ${__RHOST} -oA $(__hostpath)/nmap-discovery-all"
     elif [[ $scan == "n" ]]; then
-      echo
       nb-vars-set-network
       print -z "sudo grc nmap -n -Pn -T4 --open -sS -p- -sC -sV --stats-every=20s ${__NETWORK} -oA $(__netpath)/nmap-discovery-all"
     else
@@ -255,11 +241,9 @@ nb-enum-network-nmap-discovery-top() {
     local scan && __askvar scan "SCAN_TYPE"
 
     if [[ $scan == "h" ]]; then
-      echo
       nb-vars-set-rhost
       print -z "grc nmap -n -Pn -sV -sS -sC --top-ports 1000 ${__RHOST} -oA $(__hostpath)/nmap-discovery-top"
     elif [[ $scan == "n" ]]; then
-      echo
       nb-vars-set-network
       print -z "grc nmap -n -Pn -sV -sS -sC --top-ports 1000 ${__NETWORK} -oA $(__netpath)/nmap-discovery-top"
     else
@@ -275,11 +259,9 @@ nb-enum-network-masscan-top() {
     local scan && __askvar scan "SCAN_TYPE"
 
     if [[ $scan == "h" ]]; then
-      echo
       nb-vars-set-rhost
       print -z "sudo masscan ${__RHOST} -p${__TCP_PORTS} -oL $(__hostpath)/masscan-top.txt"
     elif [[ $scan == "n" ]]; then
-      echo
       nb-vars-set-network
       print -z "sudo masscan ${__NETWORK} -p${__TCP_PORTS} -oL $(__netpath)/masscan-top.txt"
     else
@@ -295,11 +277,9 @@ nb-enum-network-masscan-windows() {
     local scan && __askvar scan "SCAN_TYPE"
 
     if [[ $scan == "h" ]]; then
-      echo
       nb-vars-set-rhost
       print -z "sudo masscan ${__RHOST} -p135-139,445,3389,389,636,88 -oL $(__hostpath)/masscan-windows.txt"
     elif [[ $scan == "n" ]]; then
-      echo
       nb-vars-set-network
       print -z "sudo masscan ${__NETWORK} -p135-139,445,3389,389,636,88 -oL $(__netpath)/masscan-windows.txt"
     else
@@ -315,11 +295,9 @@ nb-enum-network-masscan-linux() {
     local scan && __askvar scan "SCAN_TYPE"
 
     if [[ $scan == "h" ]]; then
-      echo
       nb-vars-set-rhost
       print -z "sudo masscan ${__RHOST} -p22,111,2222 -oL $(__hostpath)/masscan-linux.txt"
     elif [[ $scan == "n" ]]; then
-      echo
       nb-vars-set-network
       print -z "sudo masscan ${__NETWORK} -p22,111,2222 -oL $(__netpath)/masscan-linux.txt"
     else
@@ -335,11 +313,9 @@ nb-enum-network-masscan-web() {
     local scan && __askvar scan "SCAN_TYPE"
 
     if [[ $scan == "h" ]]; then
-      echo
       nb-vars-set-rhost
       print -z "sudo masscan ${__RHOST} -p80,800,8000,8080,8888,443,4433,4443 -oL $(__hostpath)/masscan-web.txt"
     elif [[ $scan == "n" ]]; then
-      echo
       nb-vars-set-network
       print -z "sudo masscan ${__NETWORK} -p80,800,8000,8080,8888,443,4433,4443 -oL $(__netpath)/masscan-web.txt"
     else
@@ -356,11 +332,9 @@ nb-enum-network-masscan-all() {
     local scan && __askvar scan "SCAN_TYPE"
 
     if [[ $scan == "h" ]]; then
-      echo
       nb-vars-set-rhost
       print -z "masscan -p1-65535 --open-only ${__RHOST} --rate=1000 -e ${__IFACE} -oL $(__hostpath)/masscan-all.txt"
     elif [[ $scan == "n" ]]; then
-      echo
       nb-vars-set-network
       print -z "masscan -p1-65535 --open-only ${__NETWORK} --rate=1000 -e ${__IFACE} -oL $(__netpath)/masscan-all.txt"
     else
