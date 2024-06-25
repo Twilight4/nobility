@@ -96,21 +96,66 @@ nb-enum-network-rustscan-aggressive-all() {
 nb-enum-network-nmap-aggressive-all() {
     __check-project 
     nb-vars-set-rhost
-    print -z "sudo grc nmap -A -Pn -T4 -p- -n --stats-every=10s --min-parallelism=100 --min-rate=1000 ${__RHOST} -oA $(__netpath)/nmap-aggressive-all.nmap"
+
+    __ask "Do you want to scan a network subnet or a host? (n/h)"
+    local scan && __askvar scan "SCAN_TYPE"
+
+    if [[ $scan == "h" ]]; then
+      echo
+      nb-vars-set-rhost
+      print -z "sudo grc nmap -A -Pn -T4 -p- -n --stats-every=10s --min-parallelism=100 --min-rate=1000 ${__RHOST} -oA $(__hostpath)/nmap-aggressive-all.nmap"
+    elif [[ $scan == "n" ]]; then
+      echo
+      nb-vars-set-network
+      print -z "sudo grc nmap -A -Pn -T4 -p- -n --stats-every=10s --min-parallelism=100 --min-rate=1000 ${__NETWORk} -oA $(__netpath)/nmap-aggressive-all.nmap"
+    else
+        echo
+        __err "Invalid option. Please choose 'n' for network or 'h' for host."
+    fi
 }
 
 nb-enum-network-rustscan-all() {
     __check-project 
     __ask "Enter alive hosts which you scanned with ping sweep"
     nb-vars-set-rhost
-    print -z "rustscan -a ${__RHOST} -r 1-65535 -- --open -oA $(__netpath)/rustscan-all"
+
+    __ask "Do you want to scan a network subnet or a host? (n/h)"
+    local scan && __askvar scan "SCAN_TYPE"
+
+    if [[ $scan == "h" ]]; then
+      echo
+      nb-vars-set-rhost
+      print -z "rustscan -a ${__RHOST} -r 1-65535 -- --open -oA $(__hostpath)/rustscan-all"
+    elif [[ $scan == "n" ]]; then
+      echo
+      nb-vars-set-network
+      print -z "rustscan -a ${__NETWORK} -r 1-65535 -- --open -oA $(__netpath)/rustscan-all"
+    else
+        echo
+        __err "Invalid option. Please choose 'n' for network or 'h' for host."
+    fi
 }
 
 nb-enum-network-rustscan-discovery-all() {
     __check-project 
     __ask "Enter alive hosts which you scanned with ping sweep"
     nb-vars-set-rhost
-    print -z "rustscan -a ${__RHOST} -r 1-65535 -- --open -A -Pn -oA $(__netpath)/rustscan-discovery-all"
+
+    __ask "Do you want to scan a network subnet or a host? (n/h)"
+    local scan && __askvar scan "SCAN_TYPE"
+
+    if [[ $scan == "h" ]]; then
+      echo
+      nb-vars-set-rhost
+      print -z "rustscan -a ${__RHOST} -r 1-65535 -- --open -A -Pn -oA $(__hostpath)/rustscan-discovery-all"
+    elif [[ $scan == "n" ]]; then
+      echo
+      nb-vars-set-network
+      print -z "rustscan -a ${__NETWORK} -r 1-65535 -- --open -A -Pn -oA $(__netpath)/rustscan-discovery-all"
+    else
+        echo
+        __err "Invalid option. Please choose 'n' for network or 'h' for host."
+    fi
 }
 
 nb-enum-network-tcpdump() {
@@ -149,7 +194,22 @@ nb-enum-network-nmap-ping() {
 nb-enum-network-nmap-top() {
     __check-project 
     nb-vars-set-rhost
-    print -z "sudo grc nmap -n -Pn -sS --open --top-ports 1000 ${__RHOST} -oA $(__netpath)/nmap-top"
+
+    __ask "Do you want to scan a network subnet or a host? (n/h)"
+    local scan && __askvar scan "SCAN_TYPE"
+
+    if [[ $scan == "h" ]]; then
+      echo
+      nb-vars-set-rhost
+      print -z "sudo grc nmap -n -Pn -sS --open --top-ports 1000 ${__RHOST} -oA $(__hostpath)/nmap-top"
+    if [[ $scan == "n" ]]; then
+      echo
+      nb-vars-set-network
+      print -z "sudo grc nmap -n -Pn -sS --open --top-ports 1000 ${__NETWORK} -oA $(__netpath)/nmap-top"
+    else
+        echo
+        __err "Invalid option. Please choose 'n' for network or 'h' for host."
+    fi
 }
 
 nb-enum-network-nmap-all() {
