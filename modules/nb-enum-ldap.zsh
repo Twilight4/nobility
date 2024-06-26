@@ -157,38 +157,51 @@ nb-enum-ldap-tcpdump() {
 }
 
 nb-enum-ldap-ctx() {
-    __ask "Enter the address of the target DC, GC or LDAP server"
-    nb-vars-set-rhost
-    print -z "ldapsearch -x -H ldap://${__RHOST}:389 -s base namingcontexts"
+    __check-project
+
+	  __ask "Enter the IP address of the target DC server"
+    local dc && __askvar dc DC_IP
+
+    print -z "ldapsearch -x -H ldap://$dc:389 -s base namingcontexts"
 }
 
 nb-enum-ldap-search-anon() {
-    __ask "Enter the address of the target DC, GC or LDAP server"
-    nb-vars-set-rhost
+    __check-project
+
+	  __ask "Enter the IP address of the target DC server"
+    local dc && __askvar dc DC_IP
+
     __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
     local dn && __askvar dn DN
-    print -z "ldapsearch -x -H ldap://${__RHOST}:389 -s sub -b \"${dn}\" "
+
+    print -z "ldapsearch -x -H ldap://$dc:389 -s sub -b \"${dn}\" "
 }
 
 nb-enum-ldap-search-auth() {
-    __ask "Enter the address of the target DC, GC or LDAP server"
-    nb-vars-set-rhost
+    __check-project
+    nb-vars-set-user
+
+	  __ask "Enter the IP address of the target DC server"
+    local dc && __askvar dc DC_IP
+
     __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
     local dn && __askvar dn DN
-    __ask "Enter a user account with bind and read permissions to the directory"
-    __check-user
-    print -z "ldapsearch -x -H ldap://${__RHOST}:389 -D '${dn}' \"(objectClass=*)\" -w \"${__USER}\" "
+
+    print -z "ldapsearch -x -H ldap://$dc:389 -D '${dn}' \"(objectClass=*)\" -w \"${__USER}\" "
 }
 
 nb-enum-ldap-whoami() {
-    __ask "Enter the address of the target DC, GC or LDAP server"
-    nb-vars-set-rhost
-    print -z "ldapwhoami -h ${__RHOST} -w \"non-existing-user\" "
+    __check-project
+
+	  __ask "Enter the IP address of the target DC server"
+    local dc && __askvar dc DC_IP
+
+    print -z "ldapwhoami -H ldap://$dc:389 -w \"non-existing-user\" "
 }
 
 nb-enum-ldap-hydra() {
     __check-project
     nb-vars-set-rhost
-    __check-user
+    nb-vars-set-user
     print -z "hydra -l ${__USER} -P ${__PASSLIST} -e -o $(__hostpath)/ldap-hydra-brute.txt ${__RHOST} LDAP -F"
 }
