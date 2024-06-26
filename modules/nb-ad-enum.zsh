@@ -22,10 +22,11 @@ nb-ad-enum-cme-users            use crackmapexec to enumerate valid usernames
 
 Domain Enumeration - With Authentication
 ----------------------------------------
-nb-ad-enum-cme-users-auth       use crackmapexec with authentication to enumerate valid usernames
-nb-ad-enum-cme-groups-auth      use crackmapexec with authentication to enumerate domain groups
-nb-ad-enum-cme-loggedon-auth    use crackmapexec with authentication to enumerate logged-on users
-nb-ad-enum-cme-pass-pol-auth    use crackmapexec to retrieve password policy
+nb-ad-enum-impacket-getadusers-auth   use impacket-getadusers to enumerate valid usernames
+nb-ad-enum-cme-users-auth             use crackmapexec with authentication to enumerate valid usernames
+nb-ad-enum-cme-groups-auth            use crackmapexec with authentication to enumerate domain groups
+nb-ad-enum-cme-loggedon-auth          use crackmapexec with authentication to enumerate logged-on users
+nb-ad-enum-cme-pass-pol-auth          use crackmapexec to retrieve password policy
 
 Other Commands - With Authentication
 ------------------------------------
@@ -44,6 +45,18 @@ nb-ad-enum-cme-users() {
     local dc && __askvar dc DC_IP
 
     print -z "crackmapexec smb $dc --users | tee $(__netadpath)/cme-users-enum.txt"
+}
+
+nb-ad-enum-impacket-getadusers-auth() {
+    __check-project
+    nb-vars-set-domain
+    nb-vars-set-user
+    nb-vars-set-pass
+
+	  __ask "Enter the IP address of the target DC server"
+    local dc && __askvar dc DC_IP
+
+    print -z "impacket-GetADUsers -all ${__DOMAIN}/${__USER}:'${__PASS}' -dc-ip $dc -outputfile $(__domadpath)/adusers.txt"
 }
 
 nb-ad-enum-cme-users-auth() {
