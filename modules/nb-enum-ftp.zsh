@@ -31,7 +31,7 @@ nb-enum-ftp-install() {
 nb-enum-ftp-nmap-sweep() {
     __check-project
     nb-vars-set-network
-    print -z "sudo grc nmap -n -Pn -sV -sC -p 21 ${__NETWORK} -oA $(__netpath)/ftp-sweep"
+    print -z "sudo grc nmap -v -n -Pn -sV -sC -p 21 ${__NETWORK} -oA $(__netpath)/ftp-sweep"
 }
 
 nb-enum-ftp-hydra() {

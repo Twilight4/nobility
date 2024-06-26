@@ -39,7 +39,7 @@ nb-enum-oracle-install() {
 nb-enum-oracle-nmap-sweep() {
     __check-project
     nb-vars-set-network
-    print -z "sudo grc nmap -n -Pn -sS -p 1521 ${__NETWORK} -oA $(__netpath)/oracle-sweep"
+    print -z "sudo grc nmap -v -n -Pn -sS -p 1521 ${__NETWORK} -oA $(__netpath)/oracle-sweep"
 }
 
 nb-enum-oracle-tcpdump() {

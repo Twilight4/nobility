@@ -45,7 +45,7 @@ nb-enum-dns-zone-transfer() {
 nb-enum-dns-nmap-sweep() {
     __check-project
     nb-vars-set-network
-    print -z "sudo grc nmap -n -Pn -sS -sV -sC -p53 ${__NETWORK} -oA $(__netpath)/dns-sweep"
+    print -z "sudo grc nmap -v -n -Pn -sS -sV -sC -p53 ${__NETWORK} -oA $(__netpath)/dns-sweep"
 }
 
 nb-enum-dns-tcpdump() {
@@ -95,7 +95,7 @@ nb-enum-dns-nmap-ad() {
     __check-project
     nb-vars-set-domain
     nb-vars-set-rhost
-    print -z "grc nmap --script dns-srv-enum --script-args dns-srv-enum.domain=${__DOMAIN} ${__RHOST} -o $(__dompath)/nmap-AD.txt"
+    print -z "grc nmap -v --script dns-srv-enum --script-args dns-srv-enum.domain=${__DOMAIN} ${__RHOST} -o $(__dompath)/nmap-AD.txt"
 }
 
 nb-enum-dns-dnsrecon() {

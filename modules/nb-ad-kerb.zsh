@@ -29,7 +29,7 @@ nb-ad-kerb-install() {
 nb-ad-kerb-nmap-sweep() {
     __check-project
     nb-vars-set-network
-    print -z "sudo nmap -n -Pn -sS -p88 ${__NETWORK} -oA $(__netadpath)/kerb-sweep"
+    print -z "sudo nmap -n -Pn -v -sS -p88 ${__NETWORK} -oA $(__netadpath)/kerb-sweep"
 }
 
 nb-ad-kerb-tcpdump() {

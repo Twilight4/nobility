@@ -45,7 +45,7 @@ nb-enum-web-install() {
 nb-enum-web-nmap-sweep() {
     __check-project
     nb-vars-set-network
-    print -z "sudo grc nmap -n -Pn -sS -p80,443,8080 ${__NETWORK} -oA $(__netpath)/web-sweep"
+    print -z "sudo grc nmap -v -n -Pn -sS -p80,443,8080 ${__NETWORK} -oA $(__netpath)/web-sweep"
 }
 
 nb-enum-web-tcpdump() {

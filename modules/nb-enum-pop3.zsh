@@ -28,7 +28,7 @@ nb-enum-pop3-install() {
 nb-enum-pop3-nmap-sweep() {
     __check-project
     nb-vars-set-network
-    print -z "sudo grc nmap -n -Pn -sS -p 110,995 ${__NETWORK} -oA $(__netpath)/pop3-sweep"
+    print -z "sudo grc nmap -v -n -Pn -sS -p 110,995 ${__NETWORK} -oA $(__netpath)/pop3-sweep"
 }
 
 nb-enum-pop3-tcpdump() {

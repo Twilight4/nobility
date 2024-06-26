@@ -108,7 +108,7 @@ nb-enum-ldap-install() {
 nb-enum-ldap-nmap-sweep() {
     __check-project
     nb-vars-set-network
-    print -z "sudo grc nmap -n -Pn -sS -sU -p389,636,3269 ${__NETWORK} -oA $(__netpath)/ldap-sweep"
+    print -z "sudo grc nmap -v -n -Pn -sS -sU -p389,636,3269 ${__NETWORK} -oA $(__netpath)/ldap-sweep"
 }
 
 nb-enum-ldap-tcpdump() {

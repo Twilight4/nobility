@@ -37,7 +37,7 @@ nb-enum-web-vuln-nikto() {
 
 nb-enum-web-vuln-nmap-rfi() {
     nb-vars-set-rhost
-    print -z "grc nmap -vv -n -Pn -p80 --script http-rfi-spider --script-args http-rfi-spider.url='/' ${__RHOST}"
+    print -z "grc nmap -v -n -Pn -p80 --script http-rfi-spider --script-args http-rfi-spider.url='/' ${__RHOST}"
 }
 
 nb-enum-web-vuln-shellshock-agent() {

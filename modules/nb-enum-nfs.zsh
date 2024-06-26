@@ -29,7 +29,7 @@ nb-enum-nfs-install() {
 nb-enum-nfs-nmap-sweep() {
     __check-project
     nb-vars-set-network
-    print -z "sudo grc nmap -n -Pn -sS -sU -p U:111,T:111,U:2049,T:2049 ${__NETWORK} -oA $(__netpath)/nfs-sweep"
+    print -z "sudo grc nmap -v -n -Pn -sS -sU -p U:111,T:111,U:2049,T:2049 ${__NETWORK} -oA $(__netpath)/nfs-sweep"
 }
 
 nb-enum-nfs-tcpdump() {

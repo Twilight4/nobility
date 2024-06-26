@@ -97,7 +97,7 @@ nb-enum-rdp-hydra() {
 nb-enum-rdp-nmap-sweep() {
     __check-project
     nb-vars-set-network
-    print -z "grc nmap -n -Pn -sS -p3389 ${__NETWORK} -oA $(__netpath)/rdp-sweep"
+    print -z "grc nmap -n -Pn -sS -v -p3389 ${__NETWORK} -oA $(__netpath)/rdp-sweep"
 }
 
 nb-enum-rdp-tcpdump() {

@@ -30,7 +30,7 @@ nb-enum-mysql-install() {
 nb-enum-mysql-nmap-sweep() {
     __check-project
     nb-vars-set-network
-    print -z "sudo grc nmap -n -Pn -sS -sV -sC --script mysql-enum -p 3306 ${__NETWORK} -oA $(__netpath)/mysql-sweep"
+    print -z "sudo grc nmap -v -n -Pn -sS -sV -sC --script mysql-enum -p 3306 ${__NETWORK} -oA $(__netpath)/mysql-sweep"
 }
 
 nb-enum-mysql-tcpdump() {

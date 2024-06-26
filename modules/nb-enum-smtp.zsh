@@ -22,13 +22,13 @@ DOC
 nb-enum-smtp-sweep() {
     __check-project
     nb-vars-set-network
-    print -z "sudo grc nmap -n -Pn -sV -sC --script smtp-commands -p25,143,110,465,587,993,995 ${__NETWORK} -oA $(__netpath)/smtp-sweep"
+    print -z "sudo grc nmap -n -Pn -v -sV -sC --script smtp-commands -p25,143,110,465,587,993,995 ${__NETWORK} -oA $(__netpath)/smtp-sweep"
 }
 
 nb-enum-smtp-open-relay() {
     __check-project
     nb-vars-set-network
-    print -z "sudo grc nmap -n -p25 -Pn --script smtp-open-relay ${__NETWORK} -oA $(__netpath)/smtp-open-relay-check"
+    print -z "sudo grc nmap -n -p25 -v -Pn --script smtp-open-relay ${__NETWORK} -oA $(__netpath)/smtp-open-relay-check"
 }
 
 nb-enum-smtp-connect() {

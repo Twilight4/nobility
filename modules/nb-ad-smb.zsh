@@ -115,7 +115,7 @@ nb-ad-smb-user-enum4-users() {
 nb-ad-smb-nmap-sweep() {
   __check-project
   nb-vars-set-network
-  print -z "sudo grc nmap -sV -sC --script=smb-enum-shares.nse,smb-enum-users.nse -n -Pn -sS -p445,137-139 ${__NETWORK} -oA $(__netpath)/smb-sweep"
+  print -z "sudo grc nmap -v -sV -sC --script=smb-enum-shares.nse,smb-enum-users.nse -n -Pn -sS -p445,137-139 ${__NETWORK} -oA $(__netpath)/smb-sweep"
 }
 
 nb-ad-smb-tcpdump() {
@@ -550,7 +550,7 @@ nb-ad-smb-relay-enum() {
     __check-project
   	nb-vars-set-network
 
-    print -z "sudo grc nmap --script=smb2-security-mode -p 445 ${__NETWORK} -oA $(netadpath)/nmap-smb-security"
+    print -z "sudo grc nmap -v --script=smb2-security-mode -p 445 ${__NETWORK} -oA $(netadpath)/nmap-smb-security"
 }
 
 nb-ad-smb-relay-ntlmrelay() {

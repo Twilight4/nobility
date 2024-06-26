@@ -28,7 +28,7 @@ DOC
 nb-ad-rce-nmap-winrm() {
     nb-vars-set-rhost
 
-    print -z "nmap -sT -p 5985 ${__RHOST}"
+    print -z "nmap -v -sT -p 5985 ${__RHOST}"
 }
 
 nb-ad-rce-wmiexec() {
