@@ -52,7 +52,7 @@ nb-enum-web-dirs-ffuf() {
     nb-vars-set-url
     nb-vars-set-wordlist
     __check-threads
-    print -z "ffuf -c -p 0.1 -t ${__THREADS} -H \"User-Agent: Mozilla\" -fs 5602 -fc 404 -w ${__WORDLIST} -u ${__URL}/FUZZ -o $(__urlpath)/ffuf-dirs.csv -of csv"
+    print -z "ffuf -c -p 0.1 -t ${__THREADS} -H \"User-Agent: Mozilla\" -fs 5602 -fc 404 -w ${__WORDLIST} -u http://${__URL}/FUZZ -o $(__urlpath)/ffuf-dirs.csv -of csv"
 }
 
 nb-enum-web-dirs-gobuster() {

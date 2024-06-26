@@ -94,7 +94,6 @@ nb-ad-smb-install() {
 
 nb-ad-smb-null-enum4-users() {
     __check-project
-    nb-vars-set-domain
 	  __ask "Enter the IP address of the target DC server"
     local dc && __askvar dc DC_IP
 
@@ -103,7 +102,6 @@ nb-ad-smb-null-enum4-users() {
 
 nb-ad-smb-user-enum4-users() {
     __check-project
-    nb-vars-set-domain
     nb-vars-set-user
     nb-vars-set-pass
 	  __ask "Enter the IP address of the target DC server"
@@ -465,8 +463,9 @@ nb-ad-smb-user-smbclient-list() {
   __check-project
   nb-vars-set-rhost
   nb-vars-set-user
+  nb-vars-set-pass
   __check-share
-  print -r -z "smbclient -L //${__RHOST}/${__SHARE} -U ${__USER}"
+  print -r -z "smbclient -L //${__RHOST}/${__SHARE} -U ${__USER}%${__PASS}"
 }
 
 nb-ad-smb-null-smbclient-list-rec() {
@@ -480,8 +479,9 @@ nb-ad-smb-user-smbclient-list-rec() {
   __check-project
   nb-vars-set-rhost
   nb-vars-set-user
+  nb-vars-set-pass
   __check-share
-  print -r -z "smbclient //${__RHOST}/${__SHARE} -U ${__USER} -c 'recurse;ls'"
+  print -r -z "smbclient //${__RHOST}/${__SHARE} -U ${__USER}%${__PASS} -c 'recurse;ls'"
 }
 
 nb-ad-smb-null-smbclient-connect() {
@@ -495,8 +495,9 @@ nb-ad-smb-user-smbclient-connect() {
   __check-project
   nb-vars-set-rhost
   nb-vars-set-user
+  nb-vars-set-pass
   __check-share
-  print -r -z "smbclient //${__RHOST}/${__SHARE} -U ${__USER} "
+  print -r -z "smbclient //${__RHOST}/${__SHARE} -U ${__USER}%${__PASS} "
 }
 
 nb-enum-user-smb-mount() {
@@ -543,7 +544,7 @@ nb-ad-smb-nbtscan() {
 nb-ad-smb-null-rpcclient() {
   __check-project
   nb-vars-set-rhost
-  print -z "rpcclient -U \"\" ${__RHOST}"
+  print -z "rpcclient -U \"\" -N ${__RHOST}"
 }
 
 nb-ad-smb-relay-enum() {
