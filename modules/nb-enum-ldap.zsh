@@ -47,9 +47,9 @@ nb-enum-ldap-wsearch-anon-users() {
     nb-vars-set-domain
 
 	  __ask "Enter the IP address of the target DC controller"
-    local dc && __askvar dc DC_IP
+    nb-vars-set-dchost
 
-    print -z "python3 windapsearch.py -d ${__DOMAIN} --dc-ip $dc -U | tee $(__netpath)/wsearch-users.txt"
+    print -z "python3 windapsearch.py -d ${__DOMAIN} --dc-ip ${__DCHOST} -U | tee $(__dcpath)/wsearch-users.txt"
 }
 
 nb-enum-ldap-wsearch-auth-domain-admins-auth() {
@@ -59,9 +59,9 @@ nb-enum-ldap-wsearch-auth-domain-admins-auth() {
     nb-vars-set-domain
 
 	  __ask "Enter the IP address of the target DC controller"
-    local dc && __askvar dc DC_IP
+    nb-vars-set-dchost
 
-    print -z "python3 windapsearch.py --dc-ip $dc -u ${__USER}@${__DOMAIN} -p ${__PASS} --da | tee $(__netpath)/wsearch-domain-admins.txt"
+    print -z "python3 windapsearch.py --dc-ip ${__DCHOST} -u ${__USER}@${__DOMAIN} -p ${__PASS} --da | tee $(__dcpath)/wsearch-domain-admins.txt"
 }
 
 nb-enum-ldap-wsearch-auth-privileged-users-auth() {
@@ -71,22 +71,22 @@ nb-enum-ldap-wsearch-auth-privileged-users-auth() {
     nb-vars-set-domain
 
 	  __ask "Enter the IP address of the target DC server"
-    local dc && __askvar dc DC_IP
+    nb-vars-set-dchost
 
-    print -z "python3 windapsearch.py --dc-ip $dc -u ${__USER}@${__DOMAIN} -p ${__PASS} -PU | tee $(__netpath)/wsearch-users.txt"
+    print -z "python3 windapsearch.py --dc-ip ${__DCHOST} -u ${__USER}@${__DOMAIN} -p ${__PASS} -PU | tee $(__dcpath)/wsearch-users.txt"
 }
 
 nb-enum-ldap-search-anon-users() {
     __check-project
 
 	  __ask "Enter the IP address of the target DC server"
-    local dc && __askvar dc DC_IP
+    nb-vars-set-dchost
 
     __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
     local dn && __askvar dn DN
     
-    print -z "ldapsearch -H ldap://$dc:389 -x -b \"$dn\" -s sub \"(&(objectclass=user))\" | grep sAMAccountName: | cut -f2 -d\" \" | tee $(__netpath)/ldapsearch-users.txt"
-    #print -z "ldapsearch -H ldap://$dc:389 -x -b \"DC=${__DOMAIN},DC=LOCAL\" '(objectClass=user)' sAMAccountName | grep sAMAccountName | awk '{print $2}'"
+    print -z "ldapsearch -H ldap://${__DCHOST}:389 -x -b \"$dn\" -s sub \"(&(objectclass=user))\" | grep sAMAccountName: | cut -f2 -d\" \" | tee $(__dcpath)/ldapsearch-users.txt"
+    #print -z "ldapsearch -H ldap://${__DCHOST}:389 -x -b \"DC=${__DOMAIN},DC=LOCAL\" '(objectClass=user)' sAMAccountName | grep sAMAccountName | awk '{print $2}'"
 }
 
 nb-enum-ldap-search-auth-users() {
@@ -95,12 +95,12 @@ nb-enum-ldap-search-auth-users() {
     nb-vars-set-pass
 
 	  __ask "Enter the IP address of the target DC server"
-    local dc && __askvar dc DC_IP
+    nb-vars-set-dchost
 
     __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
     local dn && __askvar dn DN
 
-    print -z "ldapsearch -x -H 'ldap://$dc' -D '${__USER}' -w '${__PASS}' -b \"$dn\" -s sub \"(&(objectCategory=person)(objectClass=user)(! (useraccountcontrol:1.2.840.113556.1.4.803:=2)))\" samaccountname | grep sAMAccountName | tee $(__netpath)/ldapsearch-users.txt"
+    print -z "ldapsearch -x -H 'ldap://${__DCHOST}' -D '${__USER}' -w '${__PASS}' -b \"$dn\" -s sub \"(&(objectCategory=person)(objectClass=user)(! (useraccountcontrol:1.2.840.113556.1.4.803:=2)))\" samaccountname | grep sAMAccountName | tee $(__dcpath)/ldapsearch-users.txt"
 }
 
 nb-enum-ldap-search-auth-kerb() {
@@ -109,33 +109,33 @@ nb-enum-ldap-search-auth-kerb() {
     nb-vars-set-pass
 
 	  __ask "Enter the IP address of the target DC server"
-    local dc && __askvar dc DC_IP
+    nb-vars-set-dchost
 
     __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
     local dn && __askvar dn DN
 
-    print -z "ldapsearch -x -H 'ldap://$dc' -D '${__USER}' -w '${__PASS}' -b \"$dn\" -s sub \"(&(objectCategory=person)(objectClass=user)(! (useraccountcontrol:1.2.840.113556.1.4.803:=2))(serviceprincipalname=*/*))\" serviceprincipalname | grep -B 1 servicePrincipalName | tee $(__netpath)/ldapsearch-kerberoastable.txt"
+    print -z "ldapsearch -x -H 'ldap://${__DCHOST}' -D '${__USER}' -w '${__PASS}' -b \"$dn\" -s sub \"(&(objectCategory=person)(objectClass=user)(! (useraccountcontrol:1.2.840.113556.1.4.803:=2))(serviceprincipalname=*/*))\" serviceprincipalname | grep -B 1 servicePrincipalName | tee $(__dcpath)/ldapsearch-kerberoastable.txt"
 }
 
 nb-enum-ldap-search-anon-dc() {
     __check-project
     
 	  __ask "Enter the IP address of the target DC server"
-    local dc && __askvar dc DC_IP
+    nb-vars-set-dchost
 
-    print -z "ldapsearch -H ldap://$dc:389 -x -s base namingcontexts"
+    print -z "ldapsearch -H ldap://${__DCHOST}:389 -x -s base namingcontexts"
 }
 
 nb-enum-ldap-search-anon-pass-pol() {
     __check-project
 
 	  __ask "Enter the IP address of the target DC server"
-    local dc && __askvar dc DC_IP
+    nb-vars-set-dchost
 
     __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
     local dn && __askvar dn DN
 
-    print -z "ldapsearch -H ldap://$dc -x -b \"$dn\" -s sub "*" | grep -m 1 -B 10 pwdHistoryLength | tee $(__netpath)/ldapsearch-pass-pol.txt"
+    print -z "ldapsearch -H ldap://${__DCHOST} -x -b \"$dn\" -s sub "*" | grep -m 1 -B 10 pwdHistoryLength | tee $(__dcpath)/ldapsearch-pass-pol.txt"
 }
 
 nb-enum-ldap-install() {
@@ -160,21 +160,21 @@ nb-enum-ldap-ctx() {
     __check-project
 
 	  __ask "Enter the IP address of the target DC server"
-    local dc && __askvar dc DC_IP
+    nb-vars-set-dchost
 
-    print -z "ldapsearch -x -H ldap://$dc:389 -s base namingcontexts"
+    print -z "ldapsearch -x -H ldap://${__DCHOST}:389 -s base namingcontexts"
 }
 
 nb-enum-ldap-search-anon() {
     __check-project
 
 	  __ask "Enter the IP address of the target DC server"
-    local dc && __askvar dc DC_IP
+    nb-vars-set-dchost
 
     __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
     local dn && __askvar dn DN
 
-    print -z "ldapsearch -x -H ldap://$dc:389 -s sub -b \"${dn}\" "
+    print -z "ldapsearch -x -H ldap://${__DCHOST}:389 -s sub -b \"${dn}\" "
 }
 
 nb-enum-ldap-search-auth() {
@@ -182,21 +182,21 @@ nb-enum-ldap-search-auth() {
     nb-vars-set-user
 
 	  __ask "Enter the IP address of the target DC server"
-    local dc && __askvar dc DC_IP
+    nb-vars-set-dchost
 
     __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
     local dn && __askvar dn DN
 
-    print -z "ldapsearch -x -H ldap://$dc:389 -D '${dn}' \"(objectClass=*)\" -w \"${__USER}\" "
+    print -z "ldapsearch -x -H ldap://${__DCHOST}:389 -D '${dn}' \"(objectClass=*)\" -w \"${__USER}\" "
 }
 
 nb-enum-ldap-whoami() {
     __check-project
 
 	  __ask "Enter the IP address of the target DC server"
-    local dc && __askvar dc DC_IP
+    nb-vars-set-dchost
 
-    print -z "ldapwhoami -H ldap://$dc:389 -w \"non-existing-user\" "
+    print -z "ldapwhoami -H ldap://${__DCHOST}:389 -w \"non-existing-user\" "
 }
 
 nb-enum-ldap-hydra() {
