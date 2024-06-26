@@ -8,7 +8,7 @@ nb-ad-enum-help() {
 
 nb-ad-enum
 ------------
-The nb-ad-enum namespace contains commands for enumerating Active Directory DC, GC and LDAP servers.
+The nb-ad-enum namespace contains commands for enumerating Active Directory server.
 
 Initial Enumeration - Without Authentication
 --------------------------------------------
@@ -47,7 +47,7 @@ nb-ad-enum-cme-users() {
     print -z "crackmapexec smb $dc --users | tee $(__netadpath)/cme-users-enum.txt"
 }
 
-nb-ad-enum-impacket-getadusers-auth() {
+nb-ad-enum-auth-impacket-getadusers() {
     __check-project
     nb-vars-set-domain
     nb-vars-set-user
@@ -59,7 +59,7 @@ nb-ad-enum-impacket-getadusers-auth() {
     print -z "impacket-GetADUsers -all ${__DOMAIN}/${__USER}:'${__PASS}' -dc-ip $dc -outputfile $(__domadpath)/adusers.txt"
 }
 
-nb-ad-enum-cme-users-auth() {
+nb-ad-enum-auth-cme-users() {
     __check-project
     nb-vars-set-user
 	  __ask "Enter the IP address of the target DC server"
@@ -94,7 +94,7 @@ nb-ad-enum-cme-users-auth() {
     fi
 }
 
-nb-ad-enum-cme-groups-auth() {
+nb-ad-enum-auth-cme-groups() {
     __check-project
     nb-vars-set-user
 	  __ask "Enter the IP address of the target DC server"
@@ -129,7 +129,7 @@ nb-ad-enum-cme-groups-auth() {
     fi
 }
 
-nb-ad-enum-cme-loggedon-auth() {
+nb-ad-enum-auth-cme-loggedon() {
     __check-project
     nb-vars-set-user
     nb-vars-set-network
@@ -163,7 +163,7 @@ nb-ad-enum-cme-loggedon-auth() {
     fi
 }
 
-nb-ad-enum-cme-pass-pol-auth() {
+nb-ad-enum-auth-cme-pass-pol() {
     __check-project
     nb-vars-set-rhost
     nb-vars-set-user
@@ -235,7 +235,7 @@ nb-ad-enum-install() {
     __pkgs bloodhound neo4j bloodhound.py
 }
 
-nb-ad-enum-ldapdomaindump() {
+nb-ad-enum-auth-ldapdomaindump() {
     __check-project
 	  __check-domain
 	  __ask "Enter the IP address of the target DC server"
@@ -249,7 +249,7 @@ nb-ad-enum-ldapdomaindump() {
     __info "Output saved in 'ldapdomaindump' directory"
 }
 
-nb-ad-enum-bloodhound() {
+nb-ad-enum-auth-bloodhound() {
     __check-project
 	  nb-vars-set-domain
 	  __ask "Enter the IP address of the target DC server"
@@ -267,7 +267,7 @@ nb-ad-enum-bloodhound() {
     #popd &> /dev/null
 }
 
-nb-ad-enum-cme-pass-auth() {
+nb-ad-enum-auth-cme-pass() {
     __check-project
     nb-vars-set-network
     nb-vars-set-user
@@ -301,7 +301,7 @@ nb-ad-enum-cme-pass-auth() {
     fi
 }
 
-nb-ad-enum-cme-command-auth() {
+nb-ad-enum-auth-cme-command() {
     __check-project
     nb-vars-set-network
     nb-vars-set-user
@@ -338,7 +338,7 @@ nb-ad-enum-cme-command-auth() {
     fi
 }
 
-nb-ad-enum-cme-petipotam-auth() {
+nb-ad-enum-auth-cme-petipotam() {
     __check-project
     nb-vars-set-network
     nb-vars-set-user
