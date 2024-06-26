@@ -157,7 +157,7 @@ nb-enum-network-tcpdump() {
 nb-enum-network-tcpdump-bcasts() {
     __check-project 
     nb-vars-set-iface
-    print -z "sudo tcpdump -i ${__IFACE} ether broadcast and ether multicast -w $__PROJECT/networks/bcasts.pcap"
+    print -z "sudo tcpdump -i ${__IFACE} ether broadcast and ether multicast -w $(netpath)/bcasts.pcap"
 }
 
 nb-enum-network-netdiscover() {

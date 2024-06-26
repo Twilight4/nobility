@@ -27,6 +27,7 @@ __IFACE       the interface to use for commands, ex: eth0
 __DOMAIN      the domain to use for commands, ex: example.org
 __NETWORK     the subnet to use for commands, ex: 10.1.2.0/24
 __RHOST       the remote host or target, ex: 10.1.2.3, ex: target.example.org
+__DCHOST      the remote domain controller IP, ex: 10.1.2.3, ex: target.example.org
 __RPORT       the remote port; ex: 80
 __LHOST       the accessible local IP address, ex: 10.1.2.3
 __LPORT       the accessible local PORT, ex: 4444
@@ -54,6 +55,7 @@ nb-vars() {
   echo "$(__cyan __DOMAIN: ) ${__DOMAIN}"
   echo "$(__cyan __NETWORK: ) ${__NETWORK}"
   echo "$(__cyan __RHOST: ) ${__RHOST}"
+  echo "$(__cyan __DCHOST: ) ${__DCHOST}"
   echo "$(__cyan __RPORT: ) ${__RPORT}"
   echo "$(__cyan __LHOST: ) ${__LHOST}"
   echo "$(__cyan __LPORT: ) ${__LPORT}"
@@ -71,6 +73,7 @@ nb-vars-clear() {
   __DOMAIN=""
   __NETWORK=""
   __RHOST=""
+  __DCHOST=""
   __RPORT=""
   __LHOST=""
   __LPORT=""
@@ -91,6 +94,7 @@ nb-vars-save() {
   echo "${__DOMAIN}" > $__VARS/DOMAIN
   echo "${__NETWORK}" > $__VARS/NETWORK
   echo "${__RHOST}" > $__VARS/RHOST
+  echo "${__DCHOST}" > $__VARS/DCHOST
   echo "${__RPORT}" > $__VARS/RPORT
   echo "${__LHOST}" > $__VARS/LHOST
   echo "${__LPORT}" > $__VARS/LPORT
@@ -111,6 +115,7 @@ nb-vars-load() {
     __DOMAIN=$(cat $__VARS/DOMAIN)
     __NETWORK=$(cat $__VARS/NETWORK)
     __RHOST=$(cat $__VARS/RHOST)
+    __DCHOST=$(cat $__VARS/DCHOST)
     __RPORT=$(cat $__VARS/RPORT)
     __LHOST=$(cat $__VARS/LHOST)
     __LPORT=$(cat $__VARS/LPORT)
@@ -203,6 +208,12 @@ export __RHOST=""
 
 nb-vars-set-rhost() { __prefill __RHOST RHOST ${__RHOST} && nb-vars-save &>/dev/null }
 
+############################################################# 
+# __DCHOST
+#############################################################
+export __DCHOST=""
+
+nb-vars-set-rhost() { __prefill __DCHOST RHOST ${__DCHOST} && nb-vars-save &>/dev/null }
 
 ############################################################# 
 # __RPORT
@@ -359,6 +370,13 @@ __netpath() {
 __hostpath() { 
     __check-project
     local result=${__PROJECT}/hosts/${__RHOST}
+    mkdir -p "${result}"
+    echo "${result}"
+}
+
+__dcpath() { 
+    __check-project
+    local result=${__PROJECT}/hosts/${__DCHOST}
     mkdir -p "${result}"
     echo "${result}"
 }
