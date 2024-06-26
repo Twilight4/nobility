@@ -10,28 +10,36 @@ nb-ad-enum
 ------------
 The nb-ad-enum namespace contains commands for enumerating Active Directory server.
 
-Initial Enumeration - Without Authentication
+Protocol Attacks
+----------------
+nb-ad-smb-brute-hydra                brute force password/login for a user account with hydra
+nb-ad-smb-brute-cme                  brute force password/login for a user account with cme
+nb-ad-smb-pass-spray                 perform password spraying
+
+Initial Passive Enumeration
 --------------------------------------------
 nb-ad-enum-responder                 starts responder with passive analysis mode enabled (passively listen to the network)
 nb-ad-enum-fping                     fping active checks to validates which hosts are active on a network subnet
 
-Enumerating Users - Without Authentication
-------------------------------------------
+Enumerating Users
+============================================
+NULL Session
+------------
 nb-ad-enum-kerbrute-users            use kerbrute to brute force valid usernames 
 nb-ad-enum-null-cme-users                 use crackmapexec to enumerate valid usernames
 nb-ad-enum-null-enum4-users               dump users list using enum4linux
 
-Domain Enumeration - With Authentication
-----------------------------------------
+AUTH Session
+------------
 nb-ad-enum-auth-impacket-getadusers  use impacket-getadusers to enumerate valid usernames
 nb-ad-enum-auth-cme-users            use crackmapexec with authentication to enumerate valid usernames
+nb-ad-enum-auth-enum4-users          dump users list using enum4linux
+
+Authenticated Domain Enumeration
+----------------------------------------
 nb-ad-enum-auth-cme-groups           use crackmapexec with authentication to enumerate domain groups
 nb-ad-enum-auth-cme-loggedon         use crackmapexec with authentication to enumerate logged-on users
 nb-ad-enum-auth-cme-pass-pol         use crackmapexec to retrieve password policy
-nb-ad-enum-auth-enum4-users          dump users list using enum4linux
-
-Other Commands - With Authentication
-------------------------------------
 nb-ad-enum-auth-ldapdomaindump       enumerate with ldapdomaindump
 nb-ad-enum-auth-bloodhound           enumerate with bloodhound
 nb-ad-enum-auth-cme-pass             pass the password/hash
