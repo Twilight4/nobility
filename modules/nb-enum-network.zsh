@@ -99,10 +99,10 @@ nb-enum-network-nmap-aggressive-all() {
 
     if [[ $scan == "h" ]]; then
       nb-vars-set-rhost
-      print -z "sudo grc nmap -A -Pn -T4 -p- -n --stats-every=10s --min-parallelism=100 --min-rate=1000 ${__RHOST} -oA $(__hostpath)/nmap-aggressive-all.nmap"
+      print -z "sudo grc nmap -A -Pn -T4 -p- -n --stats-every=10s --min-parallelism=100 --min-rate=1000 ${__RHOST} -oA $(__hostpath)/nmap-aggressive-all"
     elif [[ $scan == "n" ]]; then
       nb-vars-set-network
-      print -z "sudo grc nmap -A -Pn -T4 -p- -n --stats-every=10s --min-parallelism=100 --min-rate=1000 ${__NETWORk} -oA $(__netpath)/nmap-aggressive-all.nmap"
+      print -z "sudo grc nmap -A -Pn -T4 -p- -n --stats-every=10s --min-parallelism=100 --min-rate=1000 ${__NETWORk} -oA $(__netpath)/nmap-aggressive-all"
     else
         echo
         __err "Invalid option. Please choose 'n' for network or 'h' for host."

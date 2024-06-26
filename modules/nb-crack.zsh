@@ -14,7 +14,8 @@ Commands
 --------
 nb-crack-hashcat          crack password hash using hashcat with provided hash format
 nb-crack-hashcat-list     crack password from provided hashlist
-nb-crack-john             john alternative with hash format detection (use this if you don't know the hash format format)
+nb-crack-john             john alternative with hash format detection
+nb-crack-john-list        john alternative with hash format detection for provided hashlist
 nb-crack-john-passwd      convert linux password files to john-readable format (/etc/passwd and /etc/shadow files)
 nb-crack-john-zip         crack a password protected zip archive
 nb-crack-john-7z          crack a password protected 7z archive
@@ -118,6 +119,14 @@ nb-crack-john() {
 	__check-hash
 
   print -z "john --wordlist=${__PASSLIST} --stdout ${__HASH} -o $(__netpath)/john-cracked.txt"
+}
+
+nb-crack-john-list() {
+  __check-project
+	__ask "Enter the hashlist"
+  local hs && __askpath hs "HASHLIST" $HOME/desktop/projects/
+
+  print -z "john $hs --wordlist=${__PASSLIST} --stdout -o $(__netpath)/john-cracked.txt"
 }
 
 nb-crack-john-passwd() {
