@@ -26,6 +26,7 @@ nb-enum-ldap-anon-wsearch-users             use windapsearch.py to enumerate use
 nb-enum-ldap-anon-search-pass-pol           retrieve password policy using ldapsearch
 nb-enum-ldap-anon-search-kerb               use authenticated ldapsearch to enumerate kerberoastable accounts
 nb-enum-ldap-anon-wsearch-domain-admins     use windapsearch.py to enumerate domain admin users
+nb-enum-ldap-anon-wsearch-privileged-users  use windapsearch.py to enumerate privileged users
 
 AUTH Session
 ------------
@@ -101,6 +102,16 @@ nb-enum-ldap-auth-wsearch-privileged-users() {
     nb-vars-set-dchost
 
     print -z "python3 windapsearch.py --dc-ip ${__DCHOST} -u ${__USER}@${__DOMAIN} -p ${__PASS} -PU | tee $(__dcpath)/wsearch-users.txt"
+}
+
+nb-enum-ldap-anon-wsearch-privileged-users() {
+    __check-project
+    nb-vars-set-domain
+
+	  __ask "Enter the IP address of the target DC server"
+    nb-vars-set-dchost
+
+    print -z "python3 windapsearch.py --dc-ip ${__DCHOST} -d ${__DOMAIN} -PU | tee $(__dcpath)/wsearch-users.txt"
 }
 
 nb-enum-ldap-anon-search-users() {
