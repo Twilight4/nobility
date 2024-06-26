@@ -82,6 +82,7 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  ---------------------------------------------------
  nb-ad-kerb-                    Commands for attacking kerberos
  nb-ad-smb-                     Commands for SMB services enumeration
+ nb-ad-smb-relay                Commands for SMB relay AD attack
  nb-ad-rce-                     Commands for RCE on target system
  nb-ad-cve-                     Commands for exploiting systems vulnerable to modern CVEs
  nb-ad-dump-                    Commands for dumping windows hashes in domain

