@@ -17,8 +17,9 @@ nb-ad-enum-fping                     fping active checks to validates which host
 
 Enumerating Users - Without Authentication
 ------------------------------------------
-nb-ad-enum-kerbrute-users            use kerbrute to enumerate valid usernames 
-nb-ad-enum-cme-users                 use crackmapexec to enumerate valid usernames
+nb-ad-enum-kerbrute-users            use kerbrute to brute force valid usernames 
+nb-ad-enum-null-cme-users                 use crackmapexec to enumerate valid usernames
+nb-ad-enum-null-enum4-users               dump users list using enum4linux
 
 Domain Enumeration - With Authentication
 ----------------------------------------
@@ -27,6 +28,7 @@ nb-ad-enum-auth-cme-users            use crackmapexec with authentication to enu
 nb-ad-enum-auth-cme-groups           use crackmapexec with authentication to enumerate domain groups
 nb-ad-enum-auth-cme-loggedon         use crackmapexec with authentication to enumerate logged-on users
 nb-ad-enum-auth-cme-pass-pol         use crackmapexec to retrieve password policy
+nb-ad-enum-auth-enum4-users          dump users list using enum4linux
 
 Other Commands - With Authentication
 ------------------------------------
@@ -39,7 +41,25 @@ nb-ad-enum-auth-cme-command          the password/hash and execute command
 DOC
 }
 
-nb-ad-enum-cme-users() {
+nb-ad-enum-null-enum4-users() {
+    __check-project
+	  __ask "Enter the IP address of the target DC server"
+    local dc && __askvar dc DC_IP
+
+    print -z "enum4linux -U $dc | grep \"user:\" | cut -f2 -d\"[\" | cut -f1 -d\"] | tee $(__netadpath)/enum4linux-user-enum.txt"
+}
+
+nb-ad-enum-auth-enum4-users() {
+    __check-project
+    nb-vars-set-user
+    nb-vars-set-pass
+	  __ask "Enter the IP address of the target DC server"
+    local dc && __askvar dc DC_IP
+
+    print -z "enum4linux -u ${__USER} -p ${__PASS} -U $dc | grep \"user:\" | cut -f2 -d\"[\" | cut -f1 -d\"] | tee $(__netadpath)/enum4linux-user-enum.txt"
+}
+
+nb-ad-enum-null-cme-users() {
     __check-project
 	  __ask "Enter the IP address of the target DC server"
     local dc && __askvar dc DC_IP
