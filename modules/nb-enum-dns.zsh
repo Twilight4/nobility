@@ -108,6 +108,5 @@ nb-enum-dns-dnsrecon() {
 nb-enum-dns-dnsrecon-reverse() {
     __check-project
     nb-vars-set-rhost
-    mkdir -p ${__PROJECT}/domains
-    print -z "dnsrecon -r ${__NETWORK} -n ${__RHOST} -c ${__PROJECT}/domains/revdns.csv"
+    print -z "dnsrecon -r ${__NETWORK} -n ${__RHOST} -c $(__dompath)/revdns.csv"
 }

@@ -138,7 +138,7 @@ nb-enum-web-eyewitness-subs() {
     __check-project
     mkdir -p $(__urlpath)/screens
     local f && __askpath f SUBDOMAINS_FILE ${__PROJECT}
-    print -z "eyewitness -f $f -d $(__netpath)/subdomain-screens"
+    print -z "eyewitness -f $f -d $(__dompath)/subdomain-screens"
 }
 
 
