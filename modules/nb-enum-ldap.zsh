@@ -21,13 +21,15 @@ Enumeration
 ANON Session
 ------------
 nb-enum-ldap-anon-search-dc                 use ldap anonymous search to enumerate namingcontexts (needed for other ldapsearch commands)
-nb-enum-ldap-anon-search-pass-pol           retrieve password policy using ldapsearch
 nb-enum-ldap-anon-search-users              use ldap anonymous search to enumerate valid usernames
 nb-enum-ldap-anon-wsearch-users             use windapsearch.py to enumerate users
+nb-enum-ldap-anon-search-pass-pol           retrieve password policy using ldapsearch
 
 AUTH Session
 ------------
 nb-enum-ldap-auth-search-users              use authenticated ldapsearch to enumerate valid usernames
+nb-enum-ldap-auth-wsearch-users             use windapsearch.py to enumerate users
+nb-enum-ldap-auth-search-pass-pol           retrieve password policy using ldapsearch
 nb-enum-ldap-auth-search-kerb               use authenticated ldapsearch to enumerate kerberoastable accounts
 nb-enum-ldap-auth-wsearch-domain-admins     use windapsearch.py to enumerate domain admin users
 nb-enum-ldap-auth-wsearch-privileged-users  use windapsearch.py to enumerate privileged users
@@ -63,6 +65,18 @@ nb-enum-ldap-auth-wsearch-domain-admins() {
     nb-vars-set-dchost
 
     print -z "python3 windapsearch.py --dc-ip ${__DCHOST} -u ${__USER}@${__DOMAIN} -p ${__PASS} --da | tee $(__dcpath)/wsearch-domain-admins.txt"
+}
+
+nb-enum-ldap-auth-wsearch-users() {
+    __check-project
+    nb-vars-set-user
+    nb-vars-set-pass
+    nb-vars-set-domain
+
+	  __ask "Enter the IP address of the target DC controller"
+    nb-vars-set-dchost
+
+    print -z "python3 windapsearch.py --dc-ip ${__DCHOST} -u ${__USER}@${__DOMAIN} -p ${__PASS} -U | tee $(__dcpath)/wsearch-users.txt"
 }
 
 nb-enum-ldap-auth-wsearch-privileged-users() {
@@ -118,6 +132,21 @@ nb-enum-ldap-auth-search-kerb() {
     print -z "ldapsearch -x -H 'ldap://${__DCHOST}' -D '${__USER}' -w '${__PASS}' -b \"$dn\" -s sub \"(&(objectCategory=person)(objectClass=user)(! (useraccountcontrol:1.2.840.113556.1.4.803:=2))(serviceprincipalname=*/*))\" serviceprincipalname | grep -B 1 servicePrincipalName | tee $(__dcpath)/ldapsearch-kerberoastable.txt"
 }
 
+nb-enum-ldap-anon-search-kerb() {
+    __check-project
+    nb-vars-set-user
+    nb-vars-set-pass
+
+	  __ask "Enter the IP address of the target DC server"
+    nb-vars-set-dchost
+
+    __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
+    local dn && __askvar dn DN
+
+    print -z "ldapsearch -x -H 'ldap://${__DCHOST}' -D '${__USER}' -w '${__PASS}' -b \"$dn\" -s sub \"(&(objectCategory=person)(objectClass=user)(! (useraccountcontrol:1.2.840.113556.1.4.803:=2))(serviceprincipalname=*/*))\" serviceprincipalname | grep -B 1 servicePrincipalName | tee $(__dcpath)/ldapsearch-kerberoastable.txt"
+}
+
+
 nb-enum-ldap-anon-search-dc() {
     __check-project
     
@@ -136,7 +165,21 @@ nb-enum-ldap-anon-search-pass-pol() {
     __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
     local dn && __askvar dn DN
 
-    print -z "ldapsearch -H ldap://${__DCHOST} -x -b \"$dn\" -s sub "*" | grep -m 1 -B 10 pwdHistoryLength | tee $(__dcpath)/ldapsearch-pass-pol.txt"
+    print -z "ldapsearch -H ldap://${__DCHOST} -x -b \"$dn\" -s sub \"*\" | grep -m 1 -B 10 pwdHistoryLength | tee $(__dcpath)/ldapsearch-pass-pol.txt"
+}
+
+nb-enum-ldap-auth-search-pass-pol() {
+    __check-project
+    nb-vars-set-user
+    nb-vars-set-pass
+
+	  __ask "Enter the IP address of the target DC server"
+    nb-vars-set-dchost
+
+    __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
+    local dn && __askvar dn DN
+
+    print -z "ldapsearch -H ldap://${__DCHOST} -D '${__USER}' -w '${__PASS}' -x -b \"$dn\" -s sub \"*\" | grep -m 1 -B 10 pwdHistoryLength | tee $(__dcpath)/ldapsearch-pass-pol.txt"
 }
 
 nb-enum-ldap-install() {
