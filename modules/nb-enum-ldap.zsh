@@ -84,8 +84,8 @@ nb-enum-ldap-search-anon-users() {
     #print -z "ldapsearch -H ldap://$dc:389 -x -b \"DC=${__DOMAIN},DC=LOCAL\" '(objectClass=user)' sAMAccountName | grep sAMAccountName | awk '{print $2}'"
 }
 
-nb-enum-ldap-search-anon-users() {
-    __check-proj
+nb-enum-ldap-search-auth-users() {
+    __check-project
     nb-vars-set-user
     nb-vars-set-pass
 
@@ -96,6 +96,20 @@ nb-enum-ldap-search-anon-users() {
     local dn && __askvar dn DN
 
     print -z "ldapsearch -x -H 'ldap://$dc' -D '${__USER}' -w '${__PASS}' -b \"$dn\" -s sub \"(&(objectCategory=person)(objectClass=user)(! (useraccountcontrol:1.2.840.113556.1.4.803:=2)))\" samaccountname | grep sAMAccountName"
+}
+
+nb-enum-ldap-search-auth-kerb() {
+    __check-project
+    nb-vars-set-user
+    nb-vars-set-pass
+
+	  __ask "Enter the IP address of the target DC server"
+    local dc && __askvar dc DC_IP
+
+    __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
+    local dn && __askvar dn DN
+
+    print -z "ldapsearch -x -H 'ldap://$dc' -D '${__USER}' -w '${__PASS}' -b \"$dn\" -s sub \"(&(objectCategory=person)(objectClass=user)(! (useraccountcontrol:1.2.840.113556.1.4.803:=2))(serviceprincipalname=*/*))\" serviceprincipalname | grep -B 1 servicePrincipalName"
 }
 
 nb-enum-ldap-search-anon-dc() {
