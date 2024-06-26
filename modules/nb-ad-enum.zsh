@@ -28,6 +28,7 @@ NULL Session
 nb-ad-enum-kerbrute-users            use kerbrute to brute force valid usernames 
 nb-ad-enum-null-cme-users            use crackmapexec to enumerate valid usernames
 nb-ad-enum-null-enum4-users          dump users list using enum4linux
+nb-ad-enum-null-cme-pass-pol         use crackmapexec to retrieve password policy
 
 AUTH Session
 ------------
@@ -225,6 +226,24 @@ nb-ad-enum-auth-cme-pass-pol() {
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
     fi
 }
+
+nb-ad-enum-null-cme-pass-pol() {
+    __check-project
+    nb-vars-set-rhost
+    nb-vars-set-user
+
+    __ask "Do you want to add a domain? (y/n)"
+    local add_domain && __askvar add_domain "ADD_DOMAIN_OPTION"
+
+    if [[ $add_domain == "y" ]]; then
+        __ask "Enter the domain"
+        nb-vars-set-domain
+        print -z "crackmapexec smb ${__RHOST} -u '' -d ${__DOMAIN} -p '' --pass-pol | tee $(__hostpath)/cme-pass-pol.txt"
+    else
+        print -z "crackmapexec smb ${__RHOST} -u '' -p '' --pass-pol | tee $(__hostpath)/cme-pass-pol.txt"
+    fi
+}
+
 
 nb-ad-enum-kerbrute-users() {
     __check-project
