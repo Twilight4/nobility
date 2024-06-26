@@ -186,7 +186,7 @@ nb-ad-smb-auth-smbmap-list-rec() {
   nb-vars-set-domain
   __check-share
   __info "You can add --dir-only flag"
-  print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST} -R '${__SHARE}'"
+  print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST} -r '${__SHARE}'"
 }
 
 nb-ad-smb-null-enum4() {

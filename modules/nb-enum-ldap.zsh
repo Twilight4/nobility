@@ -8,28 +8,29 @@ nb-enum-ldap-help() {
 
 nb-enum-ldap
 ------------
-The nb-enum-ldap namespace contains commands for scanning and 
-enumerating Active Directory DC, GC and LDAP servers.
+The nb-enum-ldap namespace contains commands for scanning and enumerating LDAP servers.
 
 Check Authentication
 --------------------
-nb-enum-ldap-nmap-sweep     scan a network for services
-nb-enum-ldap-search-anon    connect with anonymous bind and query ldap
-nb-enum-ldap-search-auth    connect with authenticated bind and query ldap
+nb-enum-ldap-nmap-sweep                     scan a network for services
+nb-enum-ldap-search-anon                    connect with anonymous bind and query ldap
+nb-enum-ldap-search-auth                    connect with authenticated bind and query ldap
 
-Enumeration - Without Authentication
-------------------------------------
-nb-enum-ldap-search-anon-dc                 use ldap anonymous search to enumerate namingcontexts (needed for other ldapsearch commands)
-nb-enum-ldap-search-anon-pass-pol           retrieve password policy using ldapsearch
-nb-enum-ldap-search-anon-users              use ldap anonymous search to enumerate valid usernames
-nb-enum-ldap-wsearch-anon-users             use windapsearch.py to enumerate users
+Enumeration
+============================================
+ANON Session
+------------
+nb-enum-ldap-anon-search-dc                 use ldap anonymous search to enumerate namingcontexts (needed for other ldapsearch commands)
+nb-enum-ldap-anon-search-pass-pol           retrieve password policy using ldapsearch
+nb-enum-ldap-anon-search-users              use ldap anonymous search to enumerate valid usernames
+nb-enum-ldap-anon-wsearch-users             use windapsearch.py to enumerate users
 
-Enumeration - With Authentication
----------------------------------
-nb-enum-ldap-search-auth-users              use authenticated ldapsearch to enumerate valid usernames
-nb-enum-ldap-search-auth-kerb               use authenticated ldapsearch to enumerate kerberoastable accounts
-nb-enum-ldap-wsearch-auth-domain-admins     use windapsearch.py to enumerate domain admin users
-nb-enum-ldap-wsearch-auth-privileged-users  use windapsearch.py to enumerate privileged users
+AUTH Session
+------------
+nb-enum-ldap-auth-search-users              use authenticated ldapsearch to enumerate valid usernames
+nb-enum-ldap-auth-search-kerb               use authenticated ldapsearch to enumerate kerberoastable accounts
+nb-enum-ldap-auth-wsearch-domain-admins     use windapsearch.py to enumerate domain admin users
+nb-enum-ldap-auth-wsearch-privileged-users  use windapsearch.py to enumerate privileged users
 
 Commands
 --------
@@ -42,7 +43,7 @@ nb-enum-ldap-hydra          brute force passwords for a user account
 DOC
 }
 
-nb-enum-ldap-wsearch-anon-users() {
+nb-enum-ldap-anon-wsearch-users() {
     __check-project
     nb-vars-set-domain
 
@@ -52,7 +53,7 @@ nb-enum-ldap-wsearch-anon-users() {
     print -z "python3 windapsearch.py -d ${__DOMAIN} --dc-ip ${__DCHOST} -U | tee $(__dcpath)/wsearch-users.txt"
 }
 
-nb-enum-ldap-wsearch-auth-domain-admins-auth() {
+nb-enum-ldap-auth-wsearch-domain-admins() {
     __check-project
     nb-vars-set-user
     nb-vars-set-pass
@@ -64,7 +65,7 @@ nb-enum-ldap-wsearch-auth-domain-admins-auth() {
     print -z "python3 windapsearch.py --dc-ip ${__DCHOST} -u ${__USER}@${__DOMAIN} -p ${__PASS} --da | tee $(__dcpath)/wsearch-domain-admins.txt"
 }
 
-nb-enum-ldap-wsearch-auth-privileged-users-auth() {
+nb-enum-ldap-auth-wsearch-privileged-users() {
     __check-project
     nb-vars-set-user
     nb-vars-set-pass
@@ -76,7 +77,7 @@ nb-enum-ldap-wsearch-auth-privileged-users-auth() {
     print -z "python3 windapsearch.py --dc-ip ${__DCHOST} -u ${__USER}@${__DOMAIN} -p ${__PASS} -PU | tee $(__dcpath)/wsearch-users.txt"
 }
 
-nb-enum-ldap-search-anon-users() {
+nb-enum-ldap-anon-search-users() {
     __check-project
 
 	  __ask "Enter the IP address of the target DC server"
@@ -89,7 +90,7 @@ nb-enum-ldap-search-anon-users() {
     #print -z "ldapsearch -H ldap://${__DCHOST}:389 -x -b \"DC=${__DOMAIN},DC=LOCAL\" '(objectClass=user)' sAMAccountName | grep sAMAccountName | awk '{print $2}'"
 }
 
-nb-enum-ldap-search-auth-users() {
+nb-enum-ldap-auth-search-users() {
     __check-project
     nb-vars-set-user
     nb-vars-set-pass
@@ -103,7 +104,7 @@ nb-enum-ldap-search-auth-users() {
     print -z "ldapsearch -x -H 'ldap://${__DCHOST}' -D '${__USER}' -w '${__PASS}' -b \"$dn\" -s sub \"(&(objectCategory=person)(objectClass=user)(! (useraccountcontrol:1.2.840.113556.1.4.803:=2)))\" samaccountname | grep sAMAccountName | tee $(__dcpath)/ldapsearch-users.txt"
 }
 
-nb-enum-ldap-search-auth-kerb() {
+nb-enum-ldap-auth-search-kerb() {
     __check-project
     nb-vars-set-user
     nb-vars-set-pass
@@ -117,7 +118,7 @@ nb-enum-ldap-search-auth-kerb() {
     print -z "ldapsearch -x -H 'ldap://${__DCHOST}' -D '${__USER}' -w '${__PASS}' -b \"$dn\" -s sub \"(&(objectCategory=person)(objectClass=user)(! (useraccountcontrol:1.2.840.113556.1.4.803:=2))(serviceprincipalname=*/*))\" serviceprincipalname | grep -B 1 servicePrincipalName | tee $(__dcpath)/ldapsearch-kerberoastable.txt"
 }
 
-nb-enum-ldap-search-anon-dc() {
+nb-enum-ldap-anon-search-dc() {
     __check-project
     
 	  __ask "Enter the IP address of the target DC server"
@@ -126,7 +127,7 @@ nb-enum-ldap-search-anon-dc() {
     print -z "ldapsearch -H ldap://${__DCHOST}:389 -x -s base namingcontexts"
 }
 
-nb-enum-ldap-search-anon-pass-pol() {
+nb-enum-ldap-anon-search-pass-pol() {
     __check-project
 
 	  __ask "Enter the IP address of the target DC server"
