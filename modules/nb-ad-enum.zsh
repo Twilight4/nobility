@@ -12,29 +12,29 @@ The nb-ad-enum namespace contains commands for enumerating Active Directory DC, 
 
 Initial Enumeration - Without Authentication
 --------------------------------------------
-nb-ad-enum-responder            starts responder with passive analysis mode enabled (passively listen to the network and not send any poisoned packets)
-nb-ad-enum-fping                fping active checks to validates which hosts are active on a network subnet
+nb-ad-enum-responder                 starts responder with passive analysis mode enabled (passively listen to the network)
+nb-ad-enum-fping                     fping active checks to validates which hosts are active on a network subnet
 
 Enumerating Users - Without Authentication
 ------------------------------------------
-nb-ad-enum-kerbrute-users       use kerbrute to enumerate valid usernames 
-nb-ad-enum-cme-users            use crackmapexec to enumerate valid usernames
+nb-ad-enum-kerbrute-users            use kerbrute to enumerate valid usernames 
+nb-ad-enum-cme-users                 use crackmapexec to enumerate valid usernames
 
 Domain Enumeration - With Authentication
 ----------------------------------------
-nb-ad-enum-impacket-getadusers-auth   use impacket-getadusers to enumerate valid usernames
-nb-ad-enum-cme-users-auth             use crackmapexec with authentication to enumerate valid usernames
-nb-ad-enum-cme-groups-auth            use crackmapexec with authentication to enumerate domain groups
-nb-ad-enum-cme-loggedon-auth          use crackmapexec with authentication to enumerate logged-on users
-nb-ad-enum-cme-pass-pol-auth          use crackmapexec to retrieve password policy
+nb-ad-enum-auth-impacket-getadusers  use impacket-getadusers to enumerate valid usernames
+nb-ad-enum-auth-cme-users            use crackmapexec with authentication to enumerate valid usernames
+nb-ad-enum-auth-cme-groups           use crackmapexec with authentication to enumerate domain groups
+nb-ad-enum-auth-cme-loggedon         use crackmapexec with authentication to enumerate logged-on users
+nb-ad-enum-auth-cme-pass-pol         use crackmapexec to retrieve password policy
 
 Other Commands - With Authentication
 ------------------------------------
-nb-ad-enum-ldapdomaindump       enumerate with ldapdomaindump
-nb-ad-enum-bloodhound           enumerate with bloodhound
-nb-ad-enum-cme-pass-auth        pass the password/hash
-nb-ad-enum-cme-petipotam-auth   use crackmapexec petipotam module
-nb-ad-enum-cme-command-auth     the password/hash and execute command
+nb-ad-enum-auth-ldapdomaindump       enumerate with ldapdomaindump
+nb-ad-enum-auth-bloodhound           enumerate with bloodhound
+nb-ad-enum-auth-cme-pass             pass the password/hash
+nb-ad-enum-auth-cme-petipotam        use crackmapexec petipotam module
+nb-ad-enum-auth-cme-command          the password/hash and execute command
 
 DOC
 }

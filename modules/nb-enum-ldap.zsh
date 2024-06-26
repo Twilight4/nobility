@@ -27,7 +27,7 @@ nb-enum-ldap-wsearch-anon-users             use windapsearch.py to enumerate use
 Enumeration - With Authentication
 ---------------------------------
 nb-enum-ldap-search-auth-users              use authenticated ldapsearch to enumerate valid usernames
-nb-enum-ldap-search-auth-kerb              use authenticated ldapsearch to enumerate kerberoastable accounts
+nb-enum-ldap-search-auth-kerb               use authenticated ldapsearch to enumerate kerberoastable accounts
 nb-enum-ldap-wsearch-auth-domain-admins     use windapsearch.py to enumerate domain admin users
 nb-enum-ldap-wsearch-auth-privileged-users  use windapsearch.py to enumerate privileged users
 
