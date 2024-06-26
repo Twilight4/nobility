@@ -8,23 +8,24 @@ nb-ad-smb-help() {
 
 nb-ad-smb
 ------------
-The nb-ad-smb namespace contains commands for scanning and enumerating smb services.
-
-Protocol Attacks
-----------------
-nb-ad-smb-brute-hydra                brute force password/login for a user account with hydra
-nb-ad-smb-brute-cme                  brute force password/login for a user account with cme
-nb-ad-smb-pass-spray                 perform password spraying
+The nb-ad-smb namespace contains commands for scanning and enumerating smb services/shares.
 
 Automated Enumeration tools
--------------------------------------
-nb-ad-smb-nmap-sweep                 scan a network for services
+=====================================
+NULL Session
+------------
 nb-ad-smb-null-enum4                 enumerate with enum4linux
 nb-ad-smb-null-enum4-aggressive      aggressively enumerate with enum4linux
 nb-ad-smb-null-rpcclient             use rcpclient for queries
 
+AUTH Session
+------------
+nb-ad-smb-auth-enum4                 enumerate with enum4linux
+nb-ad-smb-auth-enum4-aggressive      aggressively enumerate with enum4linux
+nb-ad-smb-auth-rpcclient             use rcpclient for queries
+
 Shares Enumeration
--------------------------------------
+=====================================
 NULL Session
 ------------
 nb-ad-smb-null-cme-list              list shares with cme
@@ -34,26 +35,24 @@ nb-ad-smb-null-smbmap-list           query with smbmap
 nb-ad-smb-null-smbmap-list-rec       list shares recursively
 nb-ad-smb-null-smbclient-list        list shares
 nb-ad-smb-null-smbclient-list-rec    list shares recursively
-nb-ad-smb-null-enum4-users           dump users list using enum4linux
 
 AUTH Session
 ------------
-nb-ad-smb-user-cme-list              list shares with cme authenticated session
-nb-ad-smb-user-cme-spider            spider available shares on the remote host or subnet
-nb-ad-smb-user-samrdump              info using impacket
-nb-ad-smb-user-smbmap-list           query with smbmap authenticated session
-nb-ad-smb-user-smbmap-list-rec       list shares recursively with authentication
-nb-ad-smb-user-smbclient-list        list shares
-nb-ad-smb-user-smbclient-list-rec    list shares recursively
-nb-ad-smb-user-enum4-users           dump users list using enum4linux
+nb-ad-smb-auth-cme-list              list shares with cme authenticated session
+nb-ad-smb-auth-cme-spider            spider available shares on the remote host or subnet
+nb-ad-smb-auth-samrdump              info using impacket
+nb-ad-smb-auth-smbmap-list           query with smbmap authenticated session
+nb-ad-smb-auth-smbmap-list-rec       list shares recursively with authentication
+nb-ad-smb-auth-smbclient-list        list shares
+nb-ad-smb-auth-smbclient-list-rec    list shares recursively
 
 Connecting to Service
 -------------------------------------
 nb-ad-smb-null-smbclient-connect     connect with a null session
-nb-ad-smb-user-smbclient-connect     connect with an authenticated session
+nb-ad-smb-auth-smbclient-connect     connect with an authenticated session
 
 Download / Upload
--------------------------------------
+====================================
 NULL Session
 ------------
 nb-ad-smb-null-smbmap-download       download a file from a share
@@ -62,15 +61,16 @@ nb-ad-smb-null-smbmap-upload         upload a file to a share
 
 AUTH Session
 ------------
-nb-ad-smb-user-smbmap-download       download a file from a share
-nb-ad-smb-user-smbget-download-rec   recursively download the SMB share
-nb-ad-smb-user-smbmap-upload         upload a file to a share
+nb-ad-smb-auth-smbmap-download       download a file from a share
+nb-ad-smb-auth-smbget-download-rec   recursively download the SMB share
+nb-ad-smb-auth-smbmap-upload         upload a file to a share
 
 Misc Commands
 -------------------------------------
+nb-ad-smb-nmap-sweep                 scan a network for services
 nb-ad-smb-install                    installs dependencies
 nb-ad-smb-tcpdump                    capture traffic to and from a host
-nb-ad-smb-user-smb-mount             mount an SMB share
+nb-ad-smb-auth-smb-mount             mount an SMB share
 nb-ad-smb-responder                  spoof and get responses using responder
 nb-ad-smb-net-use-null               print a net use statement for windows
 nb-ad-smb-nbtscan                    scan a local network 
@@ -90,24 +90,6 @@ DOC
 nb-ad-smb-install() {
   __info "Running $0..."
   __pkgs nmap tcpdump smbmap enum4linux smbclient impacket responder nbtscan rpcclient
-}
-
-nb-ad-smb-null-enum4-users() {
-    __check-project
-	  __ask "Enter the IP address of the target DC server"
-    local dc && __askvar dc DC_IP
-
-    print -z "enum4linux -U $dc | grep \"user:\" | cut -f2 -d\"[\" | cut -f1 -d\"] | tee $(__netadpath)/enum4linux-user-enum.txt"
-}
-
-nb-ad-smb-user-enum4-users() {
-    __check-project
-    nb-vars-set-user
-    nb-vars-set-pass
-	  __ask "Enter the IP address of the target DC server"
-    local dc && __askvar dc DC_IP
-
-    print -z "enum4linux -u ${__USER} -p ${__PASS} -U $dc | grep \"user:\" | cut -f2 -d\"[\" | cut -f1 -d\"] | tee $(__netadpath)/enum4linux-user-enum.txt"
 }
 
 nb-ad-smb-nmap-sweep() {
@@ -146,7 +128,7 @@ nb-ad-smb-null-smbmap-download() {
   print -z "smbmap -H ${__RHOST} --download \"${__SHARE}\\\\$file\""
 }
 
-nb-ad-smb-user-smbmap-download() {
+nb-ad-smb-auth-smbmap-download() {
   __check-project
   __check-share
   nb-vars-set-rhost
@@ -167,7 +149,7 @@ nb-ad-smb-null-smbmap-upload() {
   print -z "smbmap -H ${__RHOST} --upload $file \"${__SHARE}\\\\$file\""
 }
 
-nb-ad-smb-user-smbmap-upload() {
+nb-ad-smb-auth-smbmap-upload() {
   __check-project
   __check-share
   nb-vars-set-rhost
@@ -186,7 +168,7 @@ nb-ad-smb-null-smbget-download-rec() {
   print -z "smbget -R smb://${__RHOST}/${__SHARE}"
 }
 
-nb-ad-smb-user-smbget-download-rec() {
+nb-ad-smb-auth-smbget-download-rec() {
   __check-project
   nb-vars-set-rhost
   __check-share
@@ -196,145 +178,7 @@ nb-ad-smb-user-smbget-download-rec() {
   print -z "smbget -U ${__DOMAIN}/${__USER}%${__PASS} -R smb://${__RHOST}/${__SHARE}"
 }
 
-nb-ad-smb-brute-hydra() {
-    __check-project
-    nb-vars-set-rhost
-
-    __ask "You wanna brute force login/password/both? (l/p/b)"
-    local login && __askvar login "LOGIN_OPTION"
-
-    __ask "Is the service running on default port? (y/n)"
-    local df && __askvar df "DEFAULT_PORT"
-
-    if [[ $df == "n" ]]; then
-      __ask "Enter port number"
-      local pn && __askvar pn "PORT_NUMBER"
-    fi
-
-    if [[ $login == "p" ]]; then
-      nb-vars-set-user
-      if [[ $df == "n" ]]; then
-        print -z "hydra -l ${__USER} -P ${__PASSLIST} -s $pn -o $(__hostpath)/smb-hydra-brute.txt ${__RHOST} smb -t 64 -F"
-      else
-        print -z "hydra -l ${__USER} -P ${__PASSLIST} -o $(__hostpath)/smb-hydra-brute.txt ${__RHOST} smb -t 64 -F"
-      fi
-    elif [[ $login == "l" ]]; then
-      nb-vars-set-wordlist
-      nb-vars-set-pass
-      if [[ $df == "n" ]]; then
-        print -z "hydra -L ${__WORDLIST} -p ${__PASS} -s $pn -o $(__hostpath)/smb-hydra-brute.txt ${__RHOST} smb -t 64 -F"
-      else
-        print -z "hydra -L ${__WORDLIST} -p ${__PASS} -o $(__hostpath)/smb-hydra-brute.txt ${__RHOST} smb -t 64 -F"
-      fi
-    elif [[ $login == "b" ]]; then
-      __ask "Do you wanna manually specify wordlists? (y/n)"
-      local sw && __askvar sw "SPECIFY_WORDLIST"
-      if [[ $sw == "y" ]]; then
-        __ask "Select a user list"
-        __askpath ul FILE $HOME/desktop/projects/
-        __ask "Select a password list"
-        __askpath pl FILE $HOME/desktop/projects/
-
-        if [[ $df == "n" ]]; then
-          print -z "hydra -L $ul -P $pl -s $pn -o $(__hostpath)/smb-hydra-brute.txt ${__RHOST} smb -t 64 -F"
-        else
-          print -z "hydra -L ${__WORDLIST} -P ${__PASSLIST} -o $(__hostpath)/smb-hydra-brute.txt ${__RHOST} smb -t 64 -F"
-        fi
-      else
-        nb-vars-set-wordlist
-        if [[ $df == "n" ]]; then
-          print -z "hydra -L ${__WORDLIST} -P ${__PASSLIST} -s $pn -o $(__hostpath)/smb-hydra-brute.txt ${__RHOST} smb -t 64 -F"
-        else
-          print -z "hydra -L ${__WORDLIST} -P ${__PASSLIST} -o $(__hostpath)/smb-hydra-brute.txt ${__RHOST} smb -t 64 -F"
-        fi
-      fi
-    else
-      echo
-      __err "Invalid option. Please choose 'p' for password or 'l' for login or 'b' for both."
-    fi
-}
-
-nb-ad-smb-pass-spray() {
-    __check-project
-    nb-vars-set-domain
-
-	  __ask "Enter the IP address of the target DC controller"
-    local dc && __askvar dc DC_IP
-
-    __ask "Select a user list"
-    __askpath ul FILE $HOME/desktop/projects/
-
-	  __ask "Enter the password for spraying"
-    local pw && __askvar pw PASSWORD
-
-    print -z "kerbrute passwordspray -d ${__DOMAIN} --dc $dc $ul $pw -o $(__netadpath)/kerbrute-password-spray.txt"
-}
-
-nb-ad-smb-brute-cme() {
-    __check-project
-    nb-vars-set-rhost
-
-    __ask "You wanna brute force login/password/both? (l/p/b)"
-    local login && __askvar login "LOGIN_OPTION"
-
-    __ask "Do you want to add a domain? (y/n)"
-    local add_domain && __askvar add_domain "ADD_DOMAIN_OPTION"
-
-    if [[ $login == "p" ]]; then
-      nb-vars-set-user
-      if [[ $add_domain == "y" ]]; then
-        nb-vars-set-domain
-        print -z "crackmapexec smb ${__RHOST} -u '${__USER}' -p '${__PASSLIST}' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/smb-cme-brute-pass.txt"
-      else
-        print -z "crackmapexec smb ${__RHOST} -u '${__USER}' -p '${__PASSLIST}' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute-pass.txt"
-      fi
-    elif [[ $login == "l" ]]; then
-      nb-vars-set-wordlist
-      nb-vars-set-pass
-      if [[ $add_domain == "y" ]]; then
-        nb-vars-set-domain
-        print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASS}' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/smb-cme-brute-user.txt"
-      else
-        print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASS}' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute-user.txt"
-      fi
-    elif [[ $login == "b" ]]; then
-      __ask "Do you wanna manually specify wordlists? (y/n)"
-      local sw && __askvar sw "SPECIFY_WORDLIST"
-      if [[ $sw == "y" ]]; then
-        __ask "Select a user list"
-        __askpath ul FILE $HOME/desktop/projects/
-        __ask "Select a password list"
-        __askpath pl FILE $HOME/desktop/projects/
-        if [[ $add_domain == "y" ]]; then
-          nb-vars-set-domain
-          print -z "crackmapexec smb ${__RHOST} -u '$ul' -p '$pl' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/smb-cme-brute-userpass.txt"
-        else
-          print -z "crackmapexec smb ${__RHOST} -u '$ul' -p '$pl' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute-userpass.txt"
-        fi
-      else
-        nb-vars-set-wordlist
-        if [[ $add_domain == "y" ]]; then
-          nb-vars-set-domain
-          print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASSLIST}' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/smb-cme-brute-userpass.txt"
-        else
-          print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASSLIST}' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute-userpass.txt"
-        fi
-      fi
-    else
-      echo
-      __err "Invalid option. Please choose 'p' for password or 'l' for login or 'b' for both."
-    fi
-}
-
-nb-ad-smb-cme-spray() {
-  __check-project
-  nb-vars-set-rhost
-  nb-vars-set-wordlist
-  nb-vars-set-pass
-  print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASS}' --local-auth --continue-on-success"
-}
-
-nb-ad-smb-user-smbmap-list() {
+nb-ad-smb-auth-smbmap-list() {
   __check-project
   nb-vars-set-rhost
   nb-vars-set-user
@@ -343,7 +187,7 @@ nb-ad-smb-user-smbmap-list() {
   print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST}"
 }
 
-nb-ad-smb-user-smbmap-list-rec() {
+nb-ad-smb-auth-smbmap-list-rec() {
   __check-project
   nb-vars-set-rhost
   nb-vars-set-user
@@ -358,6 +202,22 @@ nb-ad-smb-null-enum4() {
   __check-project
   nb-vars-set-rhost
   print -z "enum4linux -a ${__RHOST} | tee $(__hostpath)/enumlinux.txt"
+}
+
+nb-ad-smb-auth-enum4-aggressive() {
+  __check-project
+  nb-vars-set-rhost
+  nb-vars-set-user
+  nb-vars-set-pass
+  print -z "enum4linux -u ${__USER} -p ${__PASS} -A ${__RHOST} | tee $(__hostpath)/enumlinux.txt"
+}
+
+nb-ad-smb-auth-enum4() {
+  __check-project
+  nb-vars-set-rhost
+  nb-vars-set-user
+  nb-vars-set-pass
+  print -z "enum4linux -u ${__USER} -p ${__PASS} -a ${__RHOST} | tee $(__hostpath)/enumlinux.txt"
 }
 
 nb-ad-smb-null-enum4-aggressive() {
@@ -382,7 +242,7 @@ nb-ad-smb-null-cme-spider() {
     __ok "Results have been written to /tmp/cme_spider_plus/${__NETWORK}.json"
 }
 
-nb-ad-smb-user-cme-spider() {
+nb-ad-smb-auth-cme-spider() {
     __check-project
     nb-vars-set-network
     nb-vars-set-user
@@ -419,7 +279,7 @@ nb-ad-smb-user-cme-spider() {
     __ok "Results have been written to /tmp/cme_spider_plus/${__NETWORK}.json"
 }
 
-nb-ad-smb-user-cme-list() {
+nb-ad-smb-auth-cme-list() {
     __check-project
     nb-vars-set-network
     nb-vars-set-user
@@ -459,7 +319,7 @@ nb-ad-smb-null-smbclient-list() {
   print -r -z "smbclient -L //${__RHOST} -N "
 }
 
-nb-ad-smb-user-smbclient-list() {
+nb-ad-smb-auth-smbclient-list() {
   __check-project
   nb-vars-set-rhost
   nb-vars-set-user
@@ -475,7 +335,7 @@ nb-ad-smb-null-smbclient-list-rec() {
   print -r -z "smbclient //${__RHOST}/${__SHARE} -c 'recurse;ls'"
 }
 
-nb-ad-smb-user-smbclient-list-rec() {
+nb-ad-smb-auth-smbclient-list-rec() {
   __check-project
   nb-vars-set-rhost
   nb-vars-set-user
@@ -491,7 +351,7 @@ nb-ad-smb-null-smbclient-connect() {
   print -r -z "smbclient //${__RHOST}/${__SHARE} -N "
 }
 
-nb-ad-smb-user-smbclient-connect() {
+nb-ad-smb-auth-smbclient-connect() {
   __check-project
   nb-vars-set-rhost
   nb-vars-set-user
@@ -500,7 +360,7 @@ nb-ad-smb-user-smbclient-connect() {
   print -r -z "smbclient //${__RHOST}/${__SHARE} -U ${__USER}%${__PASS} "
 }
 
-nb-enum-user-smb-mount() {
+nb-enum-auth-smb-mount() {
   __check-project
   nb-vars-set-rhost
   nb-vars-set-user
@@ -515,7 +375,7 @@ nb-ad-smb-null-samrdump() {
   print -z "impacket-samrdump ${__RHOST}"
 }
 
-nb-ad-smb-user-samrdump() {
+nb-ad-smb-auth-samrdump() {
   __check-project
   nb-vars-set-rhost
   nb-vars-set-user
@@ -545,6 +405,14 @@ nb-ad-smb-null-rpcclient() {
   __check-project
   nb-vars-set-rhost
   print -z "rpcclient -U \"\" -N ${__RHOST}"
+}
+
+nb-ad-smb-auth-rpcclient() {
+  __check-project
+  nb-vars-set-rhost
+  nb-vars-set-user
+  nb-vars-set-pass
+  print -z "rpcclient -U \"${__USER}\" --password ${__PASS} ${__RHOST}"
 }
 
 nb-ad-smb-relay-enum() {
