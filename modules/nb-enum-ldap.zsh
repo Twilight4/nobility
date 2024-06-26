@@ -24,6 +24,8 @@ nb-enum-ldap-anon-search-dc                 use ldap anonymous search to enumera
 nb-enum-ldap-anon-search-users              use ldap anonymous search to enumerate valid usernames
 nb-enum-ldap-anon-wsearch-users             use windapsearch.py to enumerate users
 nb-enum-ldap-anon-search-pass-pol           retrieve password policy using ldapsearch
+nb-enum-ldap-anon-search-kerb               use authenticated ldapsearch to enumerate kerberoastable accounts
+nb-enum-ldap-anon-wsearch-domain-admins     use windapsearch.py to enumerate domain admin users
 
 AUTH Session
 ------------
@@ -65,6 +67,16 @@ nb-enum-ldap-auth-wsearch-domain-admins() {
     nb-vars-set-dchost
 
     print -z "python3 windapsearch.py --dc-ip ${__DCHOST} -u ${__USER}@${__DOMAIN} -p ${__PASS} --da | tee $(__dcpath)/wsearch-domain-admins.txt"
+}
+
+nb-enum-ldap-anon-wsearch-domain-admins() {
+    __check-project
+    nb-vars-set-domain
+
+	  __ask "Enter the IP address of the target DC controller"
+    nb-vars-set-dchost
+
+    print -z "python3 windapsearch.py --dc-ip ${__DCHOST} -d ${__DOMAIN} --da | tee $(__dcpath)/wsearch-domain-admins.txt"
 }
 
 nb-enum-ldap-auth-wsearch-users() {
@@ -134,8 +146,6 @@ nb-enum-ldap-auth-search-kerb() {
 
 nb-enum-ldap-anon-search-kerb() {
     __check-project
-    nb-vars-set-user
-    nb-vars-set-pass
 
 	  __ask "Enter the IP address of the target DC server"
     nb-vars-set-dchost
@@ -143,9 +153,8 @@ nb-enum-ldap-anon-search-kerb() {
     __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
     local dn && __askvar dn DN
 
-    print -z "ldapsearch -x -H 'ldap://${__DCHOST}' -D '${__USER}' -w '${__PASS}' -b \"$dn\" -s sub \"(&(objectCategory=person)(objectClass=user)(! (useraccountcontrol:1.2.840.113556.1.4.803:=2))(serviceprincipalname=*/*))\" serviceprincipalname | grep -B 1 servicePrincipalName | tee $(__dcpath)/ldapsearch-kerberoastable.txt"
+    print -z "ldapsearch -x -H 'ldap://${__DCHOST}' -b \"$dn\" -s sub \"(&(objectCategory=person)(objectClass=user)(! (useraccountcontrol:1.2.840.113556.1.4.803:=2))(serviceprincipalname=*/*))\" serviceprincipalname | grep -B 1 servicePrincipalName | tee $(__dcpath)/ldapsearch-kerberoastable.txt"
 }
-
 
 nb-enum-ldap-anon-search-dc() {
     __check-project
