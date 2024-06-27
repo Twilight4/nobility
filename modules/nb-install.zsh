@@ -44,6 +44,8 @@ nb-install-protonvpn
 nb-install-impacket
 nb-install-ldapdomaindump
 nb-install-windapsearch
+nb-install-username-anarchy
+nb-install-username-generator
 
 DOC
 }
@@ -634,6 +636,45 @@ nb-install-ldapdomaindump() {
 nb-install-windapsearch() {
     local name="windapsearch"
     local url="https://github.com/ropnop/windapsearch"
+    local p="/opt/$name"
+
+    __info "Installing $name..."
+
+    if [[ ! -d $path ]]
+    then
+        sudo git clone --depth 1 $url $p
+        sudo ln -s /opt/windapsearch/windapsearch.py /bin/
+        __info "Successfully installed $name... in $p"
+    else
+        __warn "already installed in $path"
+        pushd $path 
+        git pull
+        popd
+    fi
+}
+
+nb-install-username-anarchy() {
+    local name="username-anarchy"
+    local url="https://github.com/urbanadventurer/username-anarchy"
+    local p="/opt/$name"
+
+    __info "Installing $name..."
+
+    if [[ ! -d $path ]]
+    then
+        sudo git clone --depth 1 $url $p
+        __info "Successfully installed $name... in $p"
+    else
+        __warn "already installed in $path"
+        pushd $path 
+        git pull
+        popd
+    fi
+}
+
+nb-install-windapsearch() {
+    local name="username_generator"
+    local url="https://github.com/shroudri/username_generator"
     local p="/opt/$name"
 
     __info "Installing $name..."

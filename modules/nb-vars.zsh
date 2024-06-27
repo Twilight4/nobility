@@ -213,7 +213,7 @@ nb-vars-set-rhost() { __prefill __RHOST RHOST ${__RHOST} && nb-vars-save &>/dev/
 #############################################################
 export __DCHOST=""
 
-nb-vars-set-dchost() { __prefill __DCHOST RHOST ${__DCHOST} && nb-vars-save &>/dev/null }
+nb-vars-set-dchost() { __prefill __DCHOST DCHOST ${__DCHOST} && nb-vars-save &>/dev/null }
 
 ############################################################# 
 # __RPORT
