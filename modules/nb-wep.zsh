@@ -12,8 +12,8 @@ The wep namespace provides commands for weaponization/target profiling such as c
 
 Password Profiling
 ------------------------
-nb-wep-pass-cewl
-nb-wep-pass-pwdology
+nb-wep-pass-cewl                scrape the website for keywords and generate custom wordlist
+nb-wep-pass-pwdology            generate custom password list with pwdology
 nb-wep-pass-cupp                use cupp to generate custom profiled passwords
 nb-wep-pass-rule                use hashcat rules to generated rule-based wordlist 
 nb-wep-pass-policy              tailor the wordlist according to the password policy
@@ -29,8 +29,33 @@ DOC
 
 nb-wep-install() {
     __info "Running $0..."
+    __pkgs cewl hashcat cupp
+
     nb-install-username-anarchy
     nb-install-username-generator
+}
+
+nb-wep-pass-cewl() {
+    __check-project
+    nb-vars-set-url
+
+    __ask "Enter depth of spidering (default 2)"
+    local d && __askvar d "DEPTH"
+
+    __ask "Enter minimum word length (default 3)"
+    local m && __askvar m "LENGTH"
+
+    print -z "cewl ${__URL} -d $d -m $m --lowercase -w cewl-wordlist"
+}
+
+nb-wep-pass-pwdology() {
+    __check-project
+
+}
+
+nb-wep-user-l2username() {
+    __check-project
+
 }
 
 nb-wep-pass-rule() {
