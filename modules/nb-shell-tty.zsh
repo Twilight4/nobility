@@ -37,6 +37,7 @@ Ctrl-Z
 # In Kali
 $ stty raw -echo
 $ fg
+2x Return
 
 # In reverse shell
 $ reset

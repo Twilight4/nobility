@@ -343,7 +343,7 @@ nb-srv-nc-file() {
     echo "$__COMMAND" | wl-copy
     __info "Command to use on a target system copied to clipboard"
 
-    nc -nvlp ${__LPORT} -w 5 > incoming.txt
+    nc -nvlp ${__LPORT} -w 5 > incoming
 }
 
 nb-srv-nc-b64() {
