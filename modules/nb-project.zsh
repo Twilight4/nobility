@@ -39,7 +39,7 @@ nb-project-start() {
     local fullpath=$HOME/desktop/projects/${cname}
 
     # create dir structure
-    mkdir -p ${fullpath}/{evidence,credentials,data,logs,misc,wireless,scope,client-supplied-info/emails,files/{downloads,uploads},scans/{raw,pretty},ssl,tool-output}
+    mkdir -p ${fullpath}/{data,logs,misc,wireless,scope,client-supplied-info/emails,files/{downloads,uploads},tool-output}
 
     # set project to be tool-output
     __PROJECT=${fullpath}/tool-output

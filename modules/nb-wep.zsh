@@ -15,11 +15,8 @@ Password Profiling
 nb-wep-pass-cewl
 nb-wep-pass-pwdology
 nb-wep-pass-cupp                use cupp to generate custom profiled passwords
-nb-wep-sed-pass-pol             tailor the wordlist according to the password policy
-
-Password Mangling
-------------------------
-nb-wep-pass-mangle-rule         use hashcat rules to mangle the wordlist 
+nb-wep-pass-rule                use hashcat rules to generated rule-based wordlist 
+nb-wep-pass-policy              tailor the wordlist according to the password policy
 
 Username Profiling
 ------------------------
@@ -34,6 +31,21 @@ nb-wep-install() {
     __info "Running $0..."
     nb-install-username-anarchy
     nb-install-username-generator
+}
+
+nb-wep-pass-rule() {
+    __check-project
+
+    __info "To list available rules for hashcat run command:"
+    __ok "ls /usr/share/hashcat/rules/"
+
+    __ask "Provide filename with list of potential passwords"
+    local filename && __askpath filename "FILENAME"
+
+    __ask "Enter password rule for mutation"
+    local rule && __askvar rule "RULE"
+
+    print -z "hashcat --force $filename -r $rule --stdout | sort -u > mut_password.list"
 }
 
 nb-wep-user-anarchy() {
@@ -60,7 +72,7 @@ nb-wep-pass-cupp() {
     print -z "cupp -i"
 }
 
-nb-wep-sed-pass-pol() {
+nb-wep-pass-policy() {
     __check-project
 
     __ask "Remove shorter than:"
