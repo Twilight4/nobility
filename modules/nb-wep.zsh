@@ -13,10 +13,19 @@ The wep namespace provides commands for weaponization/target profiling such as c
 Password Profiling
 ------------------------
 nb-wep-pass-cewl
+nb-wep-pass-pwdology
+nb-wep-pass-cupp
 
 Username Profiling
 ------------------------
 nb-wep-user-anarchy       use username-anarchy to create common username permutations based on the full names 
+nb-wep-user-generator     use username_generator.py to create common username permutations based on the full names 
+nb-wep-user-l2username    use linkedin2username to create common username permutations based on the full names 
+
+Commands
+------------------------
+# password rules
+# password policy
 
 DOC
 }
