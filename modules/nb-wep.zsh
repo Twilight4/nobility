@@ -14,18 +14,18 @@ Password Profiling
 ------------------------
 nb-wep-pass-cewl
 nb-wep-pass-pwdology
-nb-wep-pass-cupp          use cupp to generate custom profiled passwords
-nb-wep-sed-pass-pol       tailor the wordlist according to the password policy
+nb-wep-pass-cupp                use cupp to generate custom profiled passwords
+nb-wep-sed-pass-pol             tailor the wordlist according to the password policy
 
 Password Mangling
 ------------------------
-                          use hashcat rules to mangle the wordlist 
+nb-wep-pass-mangle-rule         use hashcat rules to mangle the wordlist 
 
 Username Profiling
 ------------------------
-nb-wep-user-anarchy       use username-anarchy to create common username permutations based on the full names 
-nb-wep-user-generator     use username_generator.py to create common username permutations based on the full names 
-nb-wep-user-l2username    use linkedin2username to create common username permutations based on the full names 
+nb-wep-user-anarchy             use username-anarchy to create common username permutations based on the full names 
+nb-wep-user-generator           use username_generator.py to create common username permutations based on the full names 
+nb-wep-user-l2username          use linkedin2username to create common username permutations based on the full names 
 
 DOC
 }
