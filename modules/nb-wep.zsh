@@ -14,18 +14,18 @@ Password Profiling
 ------------------------
 nb-wep-pass-cewl
 nb-wep-pass-pwdology
-nb-wep-pass-cupp
+nb-wep-pass-cupp          use cupp to generate custom profiled passwords
+nb-wep-sed-pass-pol       tailor the wordlist according to the password policy
+
+Password Mangling
+------------------------
+                          use hashcat rules to mangle the wordlist 
 
 Username Profiling
 ------------------------
 nb-wep-user-anarchy       use username-anarchy to create common username permutations based on the full names 
 nb-wep-user-generator     use username_generator.py to create common username permutations based on the full names 
 nb-wep-user-l2username    use linkedin2username to create common username permutations based on the full names 
-
-Commands
-------------------------
-# password rules
-# password policy
 
 DOC
 }
@@ -37,10 +37,47 @@ nb-wep-install() {
 }
 
 nb-wep-user-anarchy() {
-    nb-vars-set-lhost
-    nb-vars-set-lport
+    __check-project
+
     __ask "Provide filename with list of potential names"
     local filename && __askpath filename "FILENAME"
     
     print -z "/opt/username-anarchy/username-anarchy --input-file $filename --select-format first,flast,first.last,firstl > unames.txt"
+}
+
+nb-wep-user-generator() {
+    __check-project
+
+    __ask "Provide filename with list of potential names"
+    local filename && __askpath filename "FILENAME"
+    
+    print -z "python3 /opt/username_generator/username_generator.py -w $filename > gen-users.txt"
+}
+
+nb-wep-pass-cupp() {
+    __check-project
+
+    print -z "cupp -i"
+}
+
+nb-wep-sed-pass-pol() {
+    __check-project
+
+    __ask "Remove shorter than:"
+    local n && __askvar n "NUMBER"
+
+    __ask "Remove no special chars?"
+    local ans && __askvar ans "ANSWER"
+
+    __ask "Remove no special chars?"
+    local nn && __askvar nn "ANSWER"
+
+    # remove shorter than 8
+    #sed -ri '/^.{,7}$/d' $filename
+
+    # remove no special chars
+    #sed -ri '/[!-/:-@\[-`\{-~]+/!d' $filename
+
+    # remove no numbers
+    #sed -ri '/[0-9]+/!d' $filename
 }
