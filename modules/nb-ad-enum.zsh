@@ -29,6 +29,7 @@ nb-ad-enum-kerbrute-users            use kerbrute to brute force valid usernames
 nb-ad-enum-null-cme-users            use crackmapexec to enumerate valid usernames
 nb-ad-enum-null-enum4-users          dump users list using enum4linux
 nb-ad-enum-null-cme-pass-pol         use crackmapexec to retrieve password policy
+nb-ad-enum-null-impacket-getadusers  use impacket-getadusers to enumerate valid usernames
 
 AUTH Session
 ------------
@@ -87,6 +88,15 @@ nb-ad-enum-auth-impacket-getadusers() {
     nb-vars-set-dchost
 
     print -z "impacket-GetADUsers -all ${__DOMAIN}/${__USER}:'${__PASS}' -dc-ip ${__DCHOST} -outputfile $(__dcpath)/adusers.txt"
+}
+
+nb-ad-enum-null-impacket-getadusers() {
+    __check-project
+
+	  __ask "Enter the IP address of the target DC server"
+    nb-vars-set-dchost
+
+    print -z "impacket-GetADUsers -all -dc-ip ${__DCHOST} -debug -outputfile $(__dcpath)/adusers.txt"
 }
 
 nb-ad-enum-auth-cme-users() {
