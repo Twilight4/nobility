@@ -40,6 +40,7 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  nb-shell-handlers-             Commands for spawning reverse shell handlers
  nb-shell-handlers-msf-         Commands for spawning reverse shells with Metasploit
  nb-pivot-                      Commands for pivoting with ssh
+ nb-wep-                        Commands for weaponization/target profiling
 
  Reconneissance/OSINT Phase
  --------------------------
