@@ -29,7 +29,20 @@ nb-ad-kerb-install() {
 nb-ad-kerb-nmap-sweep() {
     __check-project
     nb-vars-set-network
-    print -z "sudo nmap -n -Pn -v -sS -p88 ${__NETWORK} -oA $(__netpath)/kerb-sweep"
+
+    __ask "Do you want to scan a network subnet or a host? (n/h)"
+    local scan && __askvar scan "SCAN_TYPE"
+
+    if [[ $scan == "h" ]]; then
+      nb-vars-set-rhost
+      print -z "sudo nmap -n -Pn -v -sS -p88 ${__RHOST} -oA $(__hostpath)/kerb-sweep"
+    elif [[ $scan == "n" ]]; then
+      nb-vars-set-network
+      print -z "sudo nmap -n -Pn -v -sS -p88 ${__NETWORK} -oA $(__netpath)/kerb-sweep"
+    else
+        echo
+        __err "Invalid option. Please choose 'n' for network or 'h' for host."
+    fi
 }
 
 nb-ad-kerb-tcpdump() {
