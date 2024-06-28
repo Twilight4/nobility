@@ -46,6 +46,10 @@ plugins=(git nobility)
 source ~/.zshrc
 ```
 
+### Tip: Zsh completion menu
+For better-looking default completion selection menu I use [fzf-tab](https://github.com/Aloxaf/fzf-tab).
+![screenshot](https://imgur.com/swappy-20240627-163351-Mff6FUg)
+
 ### Updating
 Simply run the `nb-update` command. Assuming you did not modify any of the content in the nobility directory, this should pull the latest code from this GitHub repo, after which you can run nobility modules as usual.
 
