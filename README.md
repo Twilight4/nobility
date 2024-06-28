@@ -48,6 +48,7 @@ source ~/.zshrc
 
 ### Tip: Zsh completion menu
 For better-looking default completion selection menu I use [fzf-tab](https://github.com/Aloxaf/fzf-tab).
+
 ![screenshot](https://imgur.com/swappy-20240627-163351-Mff6FUg)
 
 ### Updating
