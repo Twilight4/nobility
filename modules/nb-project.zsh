@@ -41,6 +41,9 @@ nb-project-start() {
     # create dir structure
     mkdir -p ${fullpath}/{data,logs,misc,wireless,scope,client-supplied-info/emails,files/{downloads,uploads},tool-output}
 
+    # create empty files
+    touch ${fullpath}/data/{creds.txt,users.txt}
+
     # set project to be tool-output
     __PROJECT=${fullpath}/tool-output
 
