@@ -27,8 +27,20 @@ nb-enum-pop3-install() {
 
 nb-enum-pop3-nmap-sweep() {
     __check-project
-    nb-vars-set-network
-    print -z "sudo grc nmap -v -n -Pn -sS -p 110,995 ${__NETWORK} -oA $(__netpath)/pop3-sweep"
+
+    __ask "Do you want to scan a network subnet or a host? (n/h)"
+    local scan && __askvar scan "SCAN_TYPE"
+
+    if [[ $scan == "h" ]]; then
+      nb-vars-set-rhost
+      print -z "sudo grc nmap -v -n -Pn -sS -p 110,995 ${__RHOST} -oA $(__hostpath)/pop3-sweep"
+    elif [[ $scan == "n" ]]; then
+      nb-vars-set-network
+      print -z "sudo grc nmap -v -n -Pn -sS -p 110,995 ${__NETWORK} -oA $(__netpath)/pop3-sweep"
+    else
+        echo
+        __err "Invalid option. Please choose 'n' for network or 'h' for host."
+    fi
 }
 
 nb-enum-pop3-tcpdump() {

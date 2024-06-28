@@ -29,8 +29,20 @@ nb-enum-mysql-install() {
 
 nb-enum-mysql-nmap-sweep() {
     __check-project
-    nb-vars-set-network
-    print -z "sudo grc nmap -v -n -Pn -sS -sV -sC --script mysql-enum -p 3306 ${__NETWORK} -oA $(__netpath)/mysql-sweep"
+
+    __ask "Do you want to scan a network subnet or a host? (n/h)"
+    local scan && __askvar scan "SCAN_TYPE"
+
+    if [[ $scan == "h" ]]; then
+      nb-vars-set-rhost
+      print -z "sudo grc nmap -v -n -Pn -sS -sV -sC --script mysql-enum -p 3306 ${__RHOST} -oA $(__hostpath)/mysql-sweep"
+    elif [[ $scan == "n" ]]; then
+      nb-vars-set-network
+      print -z "sudo grc nmap -v -A -Pn -T4 -p- -n --stats-every=10s --min-parallelism=100 --min-rate=1000 ${__NETWORK} -oA $(__netpath)/nmap-aggressive-all"
+    else
+        echo
+        __err "Invalid option. Please choose 'n' for network or 'h' for host."
+    fi
 }
 
 nb-enum-mysql-tcpdump() {
