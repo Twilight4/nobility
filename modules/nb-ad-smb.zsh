@@ -85,8 +85,20 @@ nb-ad-smb-install() {
 
 nb-ad-smb-nmap-sweep() {
   __check-project
-  nb-vars-set-network
-  print -z "sudo grc nmap -v -sV -sC --script=smb-enum-shares.nse,smb-enum-users.nse -n -Pn -sS -p445,137-139 ${__NETWORK} -oA $(__netpath)/smb-sweep"
+
+  __ask "Do you want to scan a network subnet or a host? (n/h)"
+  local scan && __askvar scan "SCAN_TYPE"
+
+  if [[ $scan == "h" ]]; then
+    nb-vars-set-rhost
+    print -z "sudo grc nmap -v -sV -sC --script=smb-enum-shares.nse,smb-enum-users.nse -n -Pn -sS -p445,137-139 ${__RHOST} -oA $(__netpath)/smb-sweep"
+  elif [[ $scan == "n" ]]; then
+    nb-vars-set-network
+    print -z "sudo grc nmap -v -sV -sC --script=smb-enum-shares.nse,smb-enum-users.nse -n -Pn -sS -p445,137-139 ${__NETWORK} -oA $(__netpath)/smb-sweep"
+  else
+      echo
+      __err "Invalid option. Please choose 'n' for network or 'h' for host."
+  fi
 }
 
 nb-ad-smb-tcpdump() {

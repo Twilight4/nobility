@@ -35,8 +35,20 @@ nb-enum-mssql-install() {
 
 nb-enum-mssql-nmap-sweep() {
     __check-project
-    nb-vars-set-network
-    print -z "sudo grc nmap -n -Pn -sS -sC -sV -v -p 1433,1434 ${__NETWORK} -oA $(__netpath)/mssql-sweep"
+
+    __ask "Do you want to scan a network subnet or a host? (n/h)"
+    local scan && __askvar scan "SCAN_TYPE"
+
+    if [[ $scan == "h" ]]; then
+      nb-vars-set-rhost
+      print -z "sudo grc nmap -n -Pn -sS -sC -sV -v -p 1433,1434 ${__RHOST} -oA $(__hostpath)/mssql-sweep"
+    elif [[ $scan == "n" ]]; then
+      nb-vars-set-network
+      print -z "sudo grc nmap -n -Pn -sS -sC -sV -v -p 1433,1434 ${__NETWORK} -oA $(__netpath)/mssql-sweep"
+    else
+        echo
+        __err "Invalid option. Please choose 'n' for network or 'h' for host."
+    fi
 }
 
 nb-enum-mssql-tcpdump() {

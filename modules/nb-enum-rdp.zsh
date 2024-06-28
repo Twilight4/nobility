@@ -96,8 +96,20 @@ nb-enum-rdp-hydra() {
 
 nb-enum-rdp-nmap-sweep() {
     __check-project
-    nb-vars-set-network
-    print -z "grc nmap -n -Pn -sS -v -p3389 ${__NETWORK} -oA $(__netpath)/rdp-sweep"
+
+    __ask "Do you want to scan a network subnet or a host? (n/h)"
+    local scan && __askvar scan "SCAN_TYPE"
+
+    if [[ $scan == "h" ]]; then
+      nb-vars-set-rhost
+      print -z "grc nmap -n -Pn -sS -v -p3389 ${__RHOST} -oA $(__hostpath)/rdp-sweep"
+    elif [[ $scan == "n" ]]; then
+      nb-vars-set-network
+      print -z "grc nmap -n -Pn -sS -v -p3389 ${__NETWORK} -oA $(__netpath)/rdp-sweep"
+    else
+      echo
+      __err "Invalid option. Please choose 'n' for network or 'h' for host."
+    fi
 }
 
 nb-enum-rdp-tcpdump() {

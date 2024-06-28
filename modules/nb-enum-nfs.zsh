@@ -28,7 +28,6 @@ nb-enum-nfs-install() {
 
 nb-enum-nfs-nmap-sweep() {
     __check-project
-    nb-vars-set-network
 
     __ask "Do you want to scan a network subnet or a host? (n/h)"
     local scan && __askvar scan "SCAN_TYPE"
