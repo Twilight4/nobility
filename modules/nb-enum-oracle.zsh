@@ -38,8 +38,20 @@ nb-enum-oracle-install() {
 
 nb-enum-oracle-nmap-sweep() {
     __check-project
-    nb-vars-set-network
-    print -z "sudo grc nmap -v -n -Pn -sS -p 1521 ${__NETWORK} -oA $(__netpath)/oracle-sweep"
+
+    __ask "Do you want to scan a network subnet or a host? (n/h)"
+    local scan && __askvar scan "SCAN_TYPE"
+
+    if [[ $scan == "h" ]]; then
+      nb-vars-set-rhost
+      print -z "sudo grc nmap -v -n -Pn -sS -p 1521 ${__RHOST} -oA $(__hostpath)/oracle-sweep"
+    elif [[ $scan == "n" ]]; then
+      nb-vars-set-network
+      print -z "sudo grc nmap -v -n -Pn -sS -p 1521 ${__NETWORK} -oA $(__netpath)/oracle-sweep"
+    else
+        echo
+        __err "Invalid option. Please choose 'n' for network or 'h' for host."
+    fi
 }
 
 nb-enum-oracle-tcpdump() {
