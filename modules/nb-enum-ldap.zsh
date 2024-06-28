@@ -209,8 +209,20 @@ nb-enum-ldap-install() {
 
 nb-enum-ldap-nmap-sweep() {
     __check-project
-    nb-vars-set-network
-    print -z "sudo grc nmap -v -n -Pn -sS -sU -p389,636,3269 ${__NETWORK} -oA $(__netpath)/ldap-sweep"
+
+    __ask "Do you want to scan a network subnet or a host? (n/h)"
+    local scan && __askvar scan "SCAN_TYPE"
+
+    if [[ $scan == "h" ]]; then
+      nb-vars-set-rhost
+      print -z "sudo grc nmap -v -n -Pn -sS -sU -p389,636,3269 ${__RHOST} -oA $(__hostpath)/ldap-sweep"
+    elif [[ $scan == "n" ]]; then
+      nb-vars-set-network
+      print -z "sudo grc nmap -v -n -Pn -sS -sU -p389,636,3269 ${__NETWORK} -oA $(__netpath)/ldap-sweep"
+    else
+      echo
+      __err "Invalid option. Please choose 'n' for network or 'h' for host."
+    fi
 }
 
 nb-enum-ldap-tcpdump() {

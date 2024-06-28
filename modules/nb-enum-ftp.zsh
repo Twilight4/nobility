@@ -30,8 +30,20 @@ nb-enum-ftp-install() {
 
 nb-enum-ftp-nmap-sweep() {
     __check-project
-    nb-vars-set-network
-    print -z "sudo grc nmap -v -n -Pn -sV -sC -p 21 ${__NETWORK} -oA $(__netpath)/ftp-sweep"
+
+    __ask "Do you want to scan a network subnet or a host? (n/h)"
+    local scan && __askvar scan "SCAN_TYPE"
+
+    if [[ $scan == "h" ]]; then
+      nb-vars-set-rhost
+      print -z "sudo grc nmap -v -n -Pn -sV -sC -p 21 ${__RHOST} -oA $(__hostpath)/ftp-sweep"
+    elif [[ $scan == "n" ]]; then
+      nb-vars-set-network
+      print -z "sudo grc nmap -v -n -Pn -sV -sC -p 21 ${__NETWORK} -oA $(__netpath)/ftp-sweep"
+    else
+        echo
+        __err "Invalid option. Please choose 'n' for network or 'h' for host."
+    fi
 }
 
 nb-enum-ftp-hydra() {

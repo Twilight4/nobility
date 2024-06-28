@@ -44,8 +44,20 @@ nb-enum-web-install() {
 
 nb-enum-web-nmap-sweep() {
     __check-project
-    nb-vars-set-network
-    print -z "sudo grc nmap -v -n -Pn -sS -p80,443,8080 ${__NETWORK} -oA $(__netpath)/web-sweep"
+
+    __ask "Do you want to scan a network subnet or a host? (n/h)"
+    local scan && __askvar scan "SCAN_TYPE"
+
+    if [[ $scan == "h" ]]; then
+      nb-vars-set-rhost
+      print -z "sudo grc nmap -v -n -Pn -sS -p80,443,8080 ${__RHOST} -oA $(__hostpath)/web-sweep"
+    elif [[ $scan == "n" ]]; then
+      nb-vars-set-network
+      print -z "sudo grc nmap -v -n -Pn -sS -p80,443,8080 ${__NETWORK} -oA $(__netpath)/web-sweep"
+    else
+        echo
+        __err "Invalid option. Please choose 'n' for network or 'h' for host."
+    fi
 }
 
 nb-enum-web-tcpdump() {
