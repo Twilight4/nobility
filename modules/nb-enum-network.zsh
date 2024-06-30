@@ -319,6 +319,7 @@ nb-enum-network-masscan-web() {
 }
 
 nb-enum-network-masscan-all() {
+    __check-project
     __check-iface
     __check-project
 
@@ -327,13 +328,14 @@ nb-enum-network-masscan-all() {
 
     if [[ $scan == "h" ]]; then
       nb-vars-set-rhost
-      print -z "masscan -p1-65535 --open-only ${__RHOST} --rate=1000 -e ${__IFACE} -oL $(__hostpath)/masscan-all.txt"
+      print -z "-oL $(__hostpath)/masscan-all.txt"
+      print -z "masscan -p1-65535,U:1-65535 ${__RHOST} --rate=1000 -p1-65535,U:1-65535 -e ${__IFACE} -oL $(__hostpath)/masscan-all.txt"
     elif [[ $scan == "n" ]]; then
       nb-vars-set-network
-      print -z "masscan -p1-65535 --open-only ${__NETWORK} --rate=1000 -e ${__IFACE} -oL $(__netpath)/masscan-all.txt"
+      print -z "masscan -p1-65535,U:1-65535 ${__NETWORK} --rate=1000 -p1-65535,U:1-65535 -e ${__IFACE} -oL $(__netpath)/masscan-all.txt"
     else
-        echo
-        __err "Invalid option. Please choose 'n' for network or 'h' for host."
+      echo
+      __err "Invalid option. Please choose 'n' for network or 'h' for host."
     fi
 }
 
