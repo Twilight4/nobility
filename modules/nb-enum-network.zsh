@@ -52,7 +52,6 @@ Commands
 nb-enum-network-install              installs dependencies
 nb-enum-network-tcpdump              capture traffic to and from a network
 nb-enum-network-tcpdump-bcasts       capture ethernet broadcasts and multi-cast traffic
-nb-enum-network-nmap-lse-grep        search nmap lse scripts
 
 DOC
 }
@@ -66,11 +65,6 @@ nb-enum-network-nmap-hostnames() {
     __ask "Network with subnet ex. 10.0.0.0/23"
     local sb && __askvar sb NETWORK_SUBNET
     print -z "grc nmap -v -sn $sb -oG - | grep \"Host:\" | awk '{print \$3}' | tr -d '()'"
-}
-
-nb-enum-network-nmap-lse-grep() {
-    local q && __askvar q QUERY
-    print -z "ls /usr/share/nmap/scripts/* | grep -ie \"${q}\" "
 }
 
 nb-enum-network-rustscan-aggressive-all() {
