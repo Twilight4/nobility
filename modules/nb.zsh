@@ -112,10 +112,10 @@ nb-message-toggle() {
     local line="__info \"Nobility ZSH plugin loaded\""
     if grep -qF "#$line" "$file"; then
         sed -i "s/#$line/$line/" "$file"
-        __info "Nobility startup message suppressed"
+        __info "Nobility startup message visible"
     else
         sed -i "s/$line/#$line/" "$file"
-        __info "Nobility startup message visible"
+        __info "Nobility startup message suppressed"
     fi
 }
 
