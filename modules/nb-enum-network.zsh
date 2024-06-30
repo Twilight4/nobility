@@ -27,7 +27,6 @@ nb-enum-network-ping-windows-pwsh         sweep a network subnet with ping reque
 
 Open Ports Discovery
 --------------------
-nb-enum-network-rustscan-all              scan with TCP syn requests, all ports
 nb-enum-network-nmap-top                  scan with TCP syn requests, top 1000 ports
 nb-enum-network-nmap-all                  scan with TCP syn requests, all ports
 nb-enum-network-masscan-all               scan with TCP syn requests, all ports
@@ -37,7 +36,7 @@ nb-enum-network-masscan-linux             scan for common Linux ports
 nb-enum-network-masscan-web               scan for common web server ports
 
 Service Discovery
--------------------
+-----------------
 nb-enum-network-rustscan-discovery-all    scan with initial TCP syn requests, all ports
 nb-enum-network-nmap-discovery-top        scan with TCP syn requests and scripts, top 1000 ports
 nb-enum-network-nmap-discovery-all        scan all ports with versioning and scripts, all ports
@@ -97,25 +96,6 @@ nb-enum-network-nmap-aggressive-all() {
     elif [[ $scan == "n" ]]; then
       nb-vars-set-network
       print -z "sudo grc nmap -v -A -Pn -T4 -p- -n --stats-every=10s --min-parallelism=100 --min-rate=1000 ${__NETWORK} -oA $(__netpath)/nmap-aggressive-all"
-    else
-        echo
-        __err "Invalid option. Please choose 'n' for network or 'h' for host."
-    fi
-}
-
-nb-enum-network-rustscan-all() {
-    __check-project 
-
-    __ask "Do you want to scan a network subnet or a host? (n/h)"
-    local scan && __askvar scan "SCAN_TYPE"
-
-    if [[ $scan == "h" ]]; then
-      nb-vars-set-rhost
-      print -z "rustscan -a ${__RHOST} -r 1-65535 -- --open -oA $(__hostpath)/rustscan-all"
-    elif [[ $scan == "n" ]]; then
-      __ask "Enter alive hosts which you scanned with ping sweep"
-      nb-vars-set-network
-      print -z "rustscan -a ${__NETWORK} -r 1-65535 -- --open -oA $(__netpath)/rustscan-all"
     else
         echo
         __err "Invalid option. Please choose 'n' for network or 'h' for host."
