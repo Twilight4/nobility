@@ -110,11 +110,19 @@ nb-status() {
 nb-message-toggle() {
     local file="$HOME/.config/zsh/plugins/nobility/nobility.plugin.zsh"
     local line="__info \"Nobility ZSH plugin loaded\""
+    local next_line="echo \"\""
+    
     if grep -qF "#$line" "$file"; then
+        # Uncomment the __info line
         sed -i "s/#$line/$line/" "$file"
+        # Uncomment the next line (echo "")
+        sed -i "/$line/{n;s/#$next_line/$next_line/;}" "$file"
         __info "Nobility startup message visible"
     else
+        # Comment the __info line
         sed -i "s/$line/#$line/" "$file"
+        # Comment the next line (echo "")
+        sed -i "/$line/{n;s/$next_line/#$next_line/;}" "$file"
         __info "Nobility startup message suppressed"
     fi
 }
