@@ -21,6 +21,7 @@ Tools
 -----
 These installers are for individual tools.
 
+nb-install-generic
 nb-install-seclists
 nb-install-payloadallthethings
 nb-install-github-search
@@ -565,10 +566,10 @@ nb-install-kerbrute() {
 }
 
 nb-install-protonvpn() {
-# can't log in issue - https://www.reddit.com/r/ProtonVPN/comments/wogofb/cant_log_into_proton_vpn_linux_app_any_more/
-# first try just rebooting, if doens't help - uninstall strongswan and related packages and reboot
-wget https://repo.protonvpn.com/debian/dists/unstable/main/binary-all/protonvpn-beta-release_1.0.3-3_all.deb
-sudo dpkg -i ./protonvpn-beta-release_1.0.3-3_all.deb && sudo apt update
+    # can't log in issue - https://www.reddit.com/r/ProtonVPN/comments/wogofb/cant_log_into_proton_vpn_linux_app_any_more/
+    # first try just rebooting, if doens't help - uninstall strongswan and related packages and reboot
+    wget https://repo.protonvpn.com/debian/dists/unstable/main/binary-all/protonvpn-beta-release_1.0.3-3_all.deb
+    sudo dpkg -i ./protonvpn-beta-release_1.0.3-3_all.deb && sudo apt update
 
     # Check for the newest version manually (beta app) - https://protonvpn.com/support/official-linux-vpn-debian/ 
     local version="1.0.3-3"
@@ -689,4 +690,8 @@ nb-install-windapsearch() {
         git pull
         popd
     fi
+}
+
+nb-install-arch-generic() {
+    paru --noconfirm --needed -S nmap metasploit postgresql gobuster whatweb exploitdb masscan john bloodhound bloodhound-python python-neo4j sliver-bin
 }
