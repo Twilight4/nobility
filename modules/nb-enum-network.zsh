@@ -74,10 +74,10 @@ nb-enum-network-rustscan-aggressive-all() {
 
     if [[ $scan == "h" ]]; then
       nb-vars-set-rhost
-      print -z "rustscan -a ${__RHOST} -r 1-65535 -- -A -T4 -Pn -n --stats-every=20s --min-parallelism=100 --min-rate=1000 -oA $(__hostpath)/rustscan-aggressive-all"
+      print -z "rustscan -a ${__RHOST} -r 1-65535 -- -A -T4 -Pn -n --stats-every=20s --open --min-parallelism=100 --min-rate=1000 -oA $(__hostpath)/rustscan-aggressive-all"
     elif [[ $scan == "n" ]]; then
       nb-vars-set-network
-      print -z "rustscan -a ${__NETWORK} -r 1-65535 -- -A -T4 -Pn -n --stats-every=20s --min-parallelism=100 --min-rate=1000 -oA $(__netpath)/rustscan-aggressive-all"
+      print -z "rustscan -a ${__NETWORK} -r 1-65535 -- -A -T4 -Pn -n --stats-every=20s --open --min-parallelism=100 --min-rate=1000 -oA $(__netpath)/rustscan-aggressive-all"
     else
         echo
         __err "Invalid option. Please choose 'n' for network or 'h' for host."
@@ -92,10 +92,10 @@ nb-enum-network-nmap-aggressive-all() {
 
     if [[ $scan == "h" ]]; then
       nb-vars-set-rhost
-      print -z "sudo grc nmap -v -A -Pn -T4 -p- -n --stats-every=10s --min-parallelism=100 --min-rate=1000 ${__RHOST} -oA $(__hostpath)/nmap-aggressive-all"
+      print -z "sudo grc nmap -v -A -Pn -T4 -p- -n --open --stats-every=10s --min-parallelism=100 --min-rate=1000 ${__RHOST} -oA $(__hostpath)/nmap-aggressive-all"
     elif [[ $scan == "n" ]]; then
       nb-vars-set-network
-      print -z "sudo grc nmap -v -A -Pn -T4 -p- -n --stats-every=10s --min-parallelism=100 --min-rate=1000 ${__NETWORK} -oA $(__netpath)/nmap-aggressive-all"
+      print -z "sudo grc nmap -v -A -Pn -T4 -p- -n --open --stats-every=10s --min-parallelism=100 --min-rate=1000 ${__NETWORK} -oA $(__netpath)/nmap-aggressive-all"
     else
         echo
         __err "Invalid option. Please choose 'n' for network or 'h' for host."
@@ -216,10 +216,10 @@ nb-enum-network-nmap-discovery-top() {
 
     if [[ $scan == "h" ]]; then
       nb-vars-set-rhost
-      print -z "grc nmap -v -n -Pn -sV -sS -sC --top-ports 1000 ${__RHOST} -oA $(__hostpath)/nmap-discovery-top"
+      print -z "grc nmap -v -n -Pn -sV -sS -sC --open --top-ports 1000 ${__RHOST} -oA $(__hostpath)/nmap-discovery-top"
     elif [[ $scan == "n" ]]; then
       nb-vars-set-network
-      print -z "grc nmap -v -n -Pn -sV -sS -sC --top-ports 1000 ${__NETWORK} -oA $(__netpath)/nmap-discovery-top"
+      print -z "grc nmap -v -n -Pn -sV -sS -sC --open --top-ports 1000 ${__NETWORK} -oA $(__netpath)/nmap-discovery-top"
     else
         echo
         __err "Invalid option. Please choose 'n' for network or 'h' for host."
