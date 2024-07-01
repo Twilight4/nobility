@@ -28,22 +28,24 @@ DOC
 }
 
 nb-shell-tty-full() {
-    __ok "Copy the commands below and use on the remote system"
-    cat << "DOC" 
+    __ok "Use the commands below on the remote system"
+    cat << "DOC" | bat --file-name "nb-shell-tty-full"
 # In reverse shell
-$ python -c 'import pty; pty.spawn("/bin/bash")'
+which python
+which python3
+python -c 'import pty; pty.spawn("/bin/bash")'   # select the available python version
 Ctrl-Z
 
-# In Kali
-$ stty raw -echo
-$ fg
-2x Return
+# In host system
+stty raw -echo
+fg
+#2x Return
 
 # In reverse shell
-$ reset
-$ export SHELL=bash
-$ export TERM=xterm-256color
-$ stty rows <num> columns <cols>
+reset
+export SHELL=bash
+export TERM=xterm-256color
+stty rows <num> columns <cols>
 DOC
 }
 
@@ -51,68 +53,68 @@ nb-shell-tty-python2() {
     __ok "Command to use on a target system copied to clipboard"
     __COMMAND="python -c 'import pty;pty.spawn(\"/bin/bash\")'"
     echo "$__COMMAND" | wl-copy
-    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-python2"
+    echo "$__COMMAND" | bat --file-name "nb-shell-tty-python2"
 }
 
 nb-shell-tty-python3() {
     __ok "Command to use on a target system copied to clipboard"
     __COMMAND="python3 -c 'import pty;pty.spawn(\"/bin/bash\")'"
     echo "$__COMMAND" | wl-copy
-    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-python3"
+    echo "$__COMMAND" | bat --file-name "nb-shell-tty-python3"
 }
 
 nb-shell-tty-sh() {
     __ok "Command to use on a target system copied to clipboard"
     __COMMAND="/bin/sh -i"
     echo "$__COMMAND" | wl-copy
-    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-sh"
+    echo "$__COMMAND" | bat --file-name "nb-shell-tty-sh"
 }
 
 nb-shell-tty-perl() {
     __ok "Command to use on a target system copied to clipboard"
     __COMMAND="perl -e 'exec \"/bin/sh\";'"
     echo "$__COMMAND" | wl-copy
-    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-perl"
+    echo "$__COMMAND" | bat --file-name "nb-shell-tty-perl"
 }
 
 nb-shell-tty-ruby() {
     __ok "Command to use on a target system copied to clipboard"
     __COMMAND="ruby: exec \"/bin/sh\""
     echo "$__COMMAND" | wl-copy
-    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-ruby"
+    echo "$__COMMAND" | bat --file-name "nb-shell-tty-ruby"
 }
 
 nb-shell-tty-lua() {
     __ok "Command to use on a target system copied to clipboard"
     __COMMAND="lua: os.execute('/bin/sh')"
     echo "$__COMMAND" | wl-copy
-    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-lua"
+    echo "$__COMMAND" | bat --file-name "nb-shell-tty-lua"
 }
 
 nb-shell-tty-awk() {
     __ok "Command to use on a target system copied to clipboard"
     __COMMAND="awk 'begin {system(\"/bin/sh\")}'"
     echo "$__COMMAND" | wl-copy
-    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-awk"
+    echo "$__COMMAND" | bat --file-name "nb-shell-tty-awk"
 }
 
 nb-shell-tty-find() {
     __ok "Command to use on a target system copied to clipboard"
     __COMMAND="find / -name nameoffile -exec /bin/awk 'BEGIN {system(\"/bin/sh\")}' \;"
     echo "$__COMMAND" | wl-copy
-    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-find"
+    echo "$__COMMAND" | bat --file-name "nb-shell-tty-find"
 }
 
 nb-shell-tty-find-exec() {
     __ok "Command to use on a target system copied to clipboard"
     __COMMAND="find . -exec /bin/sh \; -quit"
     echo "$__COMMAND" | wl-copy
-    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-find-exec"
+    echo "$__COMMAND" | bat --file-name "nb-shell-tty-find-exec"
 }
 
 nb-shell-tty-expect() {
     __ok "Command to use on a target system copied to clipboard"
     __COMMAND="/usr/bin/expect sh"
     echo "$__COMMAND" | wl-copy
-    echo "$__COMMAND" | \bat --file-name "nb-shell-tty-expect"
+    echo "$__COMMAND" | bat --file-name "nb-shell-tty-expect"
 }
