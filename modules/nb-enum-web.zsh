@@ -30,6 +30,7 @@ nb-enum-web-mirror                 mirrors the target website locally
 
 Brute Force
 -----------
+nb-enum-web-brute-default-post      brute force default credentials
 nb-enum-web-brute-get               brute force auth with get
 nb-enum-web-brute-password-post     brute force auth password with post request
 nb-enum-web-brute-login-post        brute force auth login with post request
@@ -203,6 +204,7 @@ nb-enum-web-brute-get() {
     __check-user
     __ask "Enter the URI for the get request, ex: /path"
     local uri && __askvar uri URI
+
     print -z "hydra -l ${__USER} -P ${__PASSLIST} ${__RHOST} http-get ${uri} -F"
 }
 
@@ -217,6 +219,7 @@ nb-enum-web-brute-password-post() {
     local un && __askvar un USER_NAME
     __ask "Enter the response value to check for failure"
     local fm && __askvar fm FAILURE
+
     print -z "hydra ${__RHOST} http-form-post \"${uri}:${uf}=^USER^&${pf}=^PASS^:${fm}\" -l ${un} -P ${__PASSLIST} -t 10 -w 30 -F"
 }
 
@@ -229,5 +232,19 @@ nb-enum-web-brute-login-post() {
     local pf && __askvar pf PASSWORD_FIELD
     __ask "Enter the response value to check for failure"
     local fm && __askvar fm FAILURE
+
     print -z "hydra ${__RHOST} http-form-post \"${uri}:${uf}=^USER^&${pf}=^PASS^:${fm}\" -l ${__WORDLIST} -p test -t 10 -w 30 -F"
+}
+
+nb-enum-web-brute-default-post() {
+    nb-vars-set-rhost
+    nb-vars-set-wordlist
+    __ask "Enter the URI for the post request, ex: /path"
+    local uri && __askvar uri URI
+    local uf && __askvar uf USER_FIELD
+    local pf && __askvar pf PASSWORD_FIELD
+    __ask "Enter the response value to check for failure"
+    local fm && __askvar fm FAILURE
+
+    print -z "hydra ${__RHOST} -C /usr/share/seclists/Passwords/Default-Credentials/avaya_defaultpasslist.txt http-form-post \"${uri}:${uf}=^USER^&${pf}=^PASS^:${fm}\" -t 10 -w 30 -F"
 }
