@@ -74,7 +74,7 @@ Misc Commands
 nb-ad-smb-nmap-sweep                 scan a network for services
 nb-ad-smb-install                    installs dependencies
 nb-ad-smb-tcpdump                    capture traffic to and from a host
-nb-ad-smb-auth-smb-mount             mount an SMB share
+nb-ad-smb-auth-mount                 mount an SMB share
 nb-ad-smb-responder                  spoof and get responses using responder
 nb-ad-smb-net-use-null               print a net use statement for windows
 nb-ad-smb-nbtscan                    scan a local network 
@@ -388,7 +388,7 @@ nb-ad-smb-auth-smbclient-connect() {
   print -r -z "smbclient //${__RHOST}/${__SHARE} -U ${__USER}%${__PASS} "
 }
 
-nb-enum-auth-smb-mount() {
+nb-ad-smb-auth-mount() {
   __check-project
   nb-vars-set-rhost
   nb-vars-set-user
