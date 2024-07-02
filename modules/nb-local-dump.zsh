@@ -10,5 +10,9 @@ nb-local-dump
 -------------
 The nb-local-dump namespace contains commands for manual dumping local hashes in windows.
 
+nb-local-dump-mimikittenz
+nb-local-dump-lazagne
+
 DOC
 }
+
