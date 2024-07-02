@@ -213,12 +213,12 @@ nb-ad-rce-cme-winrm() {
       echo
       __ask "Enter a password for authentication"
       nb-vars-set-pass
-      print -z "evil-winrm -i ${__RHOST} -u '${__USER}' -p '${__PASS}'"
+      print -z "crackmapexec winrm ${__RHOST} -u '${__USER}' -p '${__PASS}'"
   elif [[ $login == "h" ]]; then
       echo
       __ask "Enter the NTLM hash for authentication"
       __check-hash
-      print -z "evil-winrm -i ${__RHOST} -u '${__USER}' -H '${__HASH}'"
+      print -z "crackmapexec winrm ${__RHOST} -u '${__USER}' -H '${__HASH}'"
   else
       echo
       __err "Invalid option. Please choose 'p' for password or 'h' for hash."
