@@ -82,17 +82,15 @@ nb-ad-enum-null-cme-users() {
 
 nb-ad-enum-null-cme-rid() {
     __check-project
-	  __ask "Enter the IP address of the target DC server"
-    nb-vars-set-dchost
+    nb-vars-set-rhost
 
-    print -z "crackmapexec smb ${__DCHOST} -u '' -p '' --rid-brute | tee $(__dcpath)/cme-users-enum.txt"
+    print -z "crackmapexec smb ${__RHOST} -u '' -p '' --rid-brute | tee $(__hostpath)/cme-rid-brute.txt"
 }
 
 nb-ad-enum-auth-cme-rid() {
     __check-project
     nb-vars-set-user
-	  __ask "Enter the IP address of the target DC server"
-    nb-vars-set-dchost
+    nb-vars-set-rhost
 
     __ask "Do you want to log in using a password or a hash? (p/h)"
     local login && __askvar login "LOGIN_OPTION"
@@ -106,17 +104,17 @@ nb-ad-enum-auth-cme-rid() {
             nb-vars-set-domain
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__DCHOST} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --users | tee $(__dcpath)/cme-users-enum.txt"
+            print -z "crackmapexec smb ${__RHOST} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --rid-brute | tee $(__hostpath)/cme-rid-brute.txt"
         else
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__DCHOST} -u ${__USER} -p '${__PASS}' --users | tee $(__dcpath)/cme-users-enum.txt"
+            print -z "crackmapexec smb ${__RHOST} -u ${__USER} -p '${__PASS}' --rid-brute | tee $(__hostpath)/cme-rid-brute.txt"
         fi
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
         __check-hash
-        print -z "crackmapexec smb ${__DCHOST} -u ${__USER} -H ${__HASH} --local-auth --users | tee $(__dcpath)/cme-users-enum.txt"
+        print -z "crackmapexec smb ${__RHOST} -u ${__USER} -H ${__HASH} --local-auth --rid-brute | tee $(__hostpath)/cme-rid-brute.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
