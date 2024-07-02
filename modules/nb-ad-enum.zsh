@@ -26,22 +26,24 @@ Enumerating Users
 NULL Session
 ------------
 nb-ad-enum-kerbrute-users            use kerbrute to brute force valid usernames 
+nb-ad-enum-null-impacket-getadusers  use impacket-getadusers to enumerate valid usernames
 nb-ad-enum-null-cme-users            use crackmapexec to enumerate valid usernames
+nb-ad-enum-null-cme-rid              use crackmapexec to enumerate valid usernames by rid bruteforcing
 nb-ad-enum-null-enum4-users          dump users list using enum4linux
 nb-ad-enum-null-cme-pass-pol         use crackmapexec to retrieve password policy
-nb-ad-enum-null-impacket-getadusers  use impacket-getadusers to enumerate valid usernames
 
 AUTH Session
 ------------
 nb-ad-enum-auth-impacket-getadusers  use impacket-getadusers to enumerate valid usernames
 nb-ad-enum-auth-cme-users            use crackmapexec with authentication to enumerate valid usernames
+nb-ad-enum-auth-cme-rid              use crackmapexec to enumerate valid usernames by rid bruteforcing
 nb-ad-enum-auth-enum4-users          dump users list using enum4linux
+nb-ad-enum-auth-cme-pass-pol         use crackmapexec to retrieve password policy
 
 Authenticated Domain Enumeration
 ------------------------------------
 nb-ad-enum-auth-cme-groups           use crackmapexec with authentication to enumerate domain groups
 nb-ad-enum-auth-cme-loggedon         use crackmapexec with authentication to enumerate logged-on users
-nb-ad-enum-auth-cme-pass-pol         use crackmapexec to retrieve password policy
 nb-ad-enum-auth-ldapdomaindump       enumerate with ldapdomaindump
 nb-ad-enum-auth-bloodhound           enumerate with bloodhound
 nb-ad-enum-auth-cme-pass             pass the password/hash
@@ -75,7 +77,50 @@ nb-ad-enum-null-cme-users() {
 	  __ask "Enter the IP address of the target DC server"
     nb-vars-set-dchost
 
-    print -z "crackmapexec smb ${__DCHOST} --users | tee $(__dcpath)/cme-users-enum.txt"
+    print -z "crackmapexec smb ${__DCHOST} -u '' -p '' --users | tee $(__dcpath)/cme-users-enum.txt"
+}
+
+nb-ad-enum-null-cme-rid() {
+    __check-project
+	  __ask "Enter the IP address of the target DC server"
+    nb-vars-set-dchost
+
+    print -z "crackmapexec smb ${__DCHOST} -u '' -p '' --rid-brute | tee $(__dcpath)/cme-users-enum.txt"
+}
+
+nb-ad-enum-auth-cme-rid() {
+    __check-project
+    nb-vars-set-user
+	  __ask "Enter the IP address of the target DC server"
+    nb-vars-set-dchost
+
+    __ask "Do you want to log in using a password or a hash? (p/h)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    if [[ $login == "p" ]]; then
+        __ask "Do you want to add a domain? (y/n)"
+        local add_domain && __askvar add_domain "ADD_DOMAIN_OPTION"
+
+        if [[ $add_domain == "y" ]]; then
+            __ask "Enter the domain"
+            nb-vars-set-domain
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb ${__DCHOST} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --users | tee $(__dcpath)/cme-users-enum.txt"
+        else
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb ${__DCHOST} -u ${__USER} -p '${__PASS}' --users | tee $(__dcpath)/cme-users-enum.txt"
+        fi
+    elif [[ $login == "h" ]]; then
+        echo
+        __ask "Enter the NTLM hash for authentication"
+        __check-hash
+        print -z "crackmapexec smb ${__DCHOST} -u ${__USER} -H ${__HASH} --local-auth --users | tee $(__dcpath)/cme-users-enum.txt"
+    else
+        echo
+        __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+    fi
 }
 
 nb-ad-enum-auth-impacket-getadusers() {
