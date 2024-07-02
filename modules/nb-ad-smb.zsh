@@ -394,7 +394,12 @@ nb-ad-smb-auth-mount() {
   nb-vars-set-user
   nb-vars-set-pass
   __check-share
-  print -z "mount -t cifs -o ro,username=${__USER},password=${__PASS} '//${__RHOST}/${__SHARE}' /mnt/${__SHARE}/"
+  sudo mkdir -p /mnt/${__SHARE}/
+  print -z "sudo mount -t cifs -o ro,username=${__USER},password=${__PASS} '//${__RHOST}/${__SHARE}' /mnt/${__SHARE}/"
+
+  __info "You can now use rsync to mirror the mounted smb share using command:"
+  __info "Tip: Check specific directories you have access to inside of the share."
+  __ok "  sudo rsync -av /mnt/${__SHARE} ./"
 }
 
 nb-ad-smb-null-samrdump() {
