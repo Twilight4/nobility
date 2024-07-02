@@ -57,6 +57,7 @@ NULL Session
 ------------
 nb-ad-smb-null-smbclient-download-rec  recursively download files from SMB share
 nb-ad-smb-null-smbmap-download       download a file from a share
+nb-ad-smb-null-smbmap-download-pat   download files from a share using a pattern
 nb-ad-smb-null-smbget-download-rec   recursively download the SMB share
 nb-ad-smb-null-smbmap-upload         upload a file to a share
 
@@ -64,6 +65,7 @@ AUTH Session
 ------------
 nb-ad-smb-null-smbclient-download-rec  recursively download files from SMB share
 nb-ad-smb-auth-smbmap-download       download a file from a share
+nb-ad-smb-null-smbmap-download-pat   download files from a share using a pattern
 nb-ad-smb-auth-smbget-download-rec   recursively download the SMB share
 nb-ad-smb-auth-smbmap-upload         upload a file to a share
 
@@ -144,6 +146,35 @@ nb-ad-smb-auth-smbmap-download() {
   local file && __askvar file FILE
   print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST} --download \"${__SHARE}\\\\$file\" --no-banner"
 }
+
+nb-ad-smb-null-smbmap-download-pat() {
+  __check-project
+  __check-share
+  nb-vars-set-rhost
+  nb-vars-set-user
+  nb-vars-set-pass
+  nb-vars-set-domain
+  __ask "Enter the pattern"
+  local file && __askvar file FILE
+  print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST} -r ${__SHARE} -A $pat --no-banner"
+}
+
+nb-ad-smb-auth-smbmap-download-pat() {
+  __check-project
+  __check-share
+  nb-vars-set-rhost
+  nb-vars-set-user
+  nb-vars-set-pass
+  nb-vars-set-domain
+  __ask "Enter file to download"
+  local file && __askvar file FILE
+  print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST} -r ${__SHARE} -A $pat --no-banner"
+  print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST} --download \"${__SHARE}\\\\$file\" --no-banner"
+}
+
+
+
+
 
 nb-ad-smb-null-smbmap-upload() {
   __check-project
