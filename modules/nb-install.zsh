@@ -693,5 +693,5 @@ nb-install-windapsearch() {
 }
 
 nb-install-arch-generic() {
-    paru --needed -S nmap metasploit postgresql gobuster whatweb exploitdb masscan john bloodhound python-bloodhound python-neo4j sliver-bin hydra
+    paru --needed -S nmap metasploit postgresql gobuster whatweb exploitdb masscan john bloodhound python-bloodhound python-neo4j sliver-bin hydra enum4linux smbmap crackmapexec
 }

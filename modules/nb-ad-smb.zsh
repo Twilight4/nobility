@@ -335,7 +335,7 @@ nb-ad-smb-null-smbclient-list-rec() {
   __check-project
   nb-vars-set-rhost
   __check-share
-  print -r -z "smbclient //${__RHOST}/${__SHARE} -c 'recurse;ls'"
+  print -r -z "smbclient //${__RHOST}/${__SHARE} -N -c 'recurse;ls'"
 }
 
 nb-ad-smb-auth-smbclient-list-rec() {
