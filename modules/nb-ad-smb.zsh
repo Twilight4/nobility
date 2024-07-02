@@ -55,12 +55,14 @@ Download / Upload
 ====================================
 NULL Session
 ------------
+nb-ad-smb-null-smbclient-download-rec  recursively download files from SMB share
 nb-ad-smb-null-smbmap-download       download a file from a share
 nb-ad-smb-null-smbget-download-rec   recursively download the SMB share
 nb-ad-smb-null-smbmap-upload         upload a file to a share
 
 AUTH Session
 ------------
+nb-ad-smb-null-smbclient-download-rec  recursively download files from SMB share
 nb-ad-smb-auth-smbmap-download       download a file from a share
 nb-ad-smb-auth-smbget-download-rec   recursively download the SMB share
 nb-ad-smb-auth-smbmap-upload         upload a file to a share
@@ -416,4 +418,22 @@ nb-ad-smb-auth-rpcclient() {
   nb-vars-set-user
   nb-vars-set-pass
   print -z "rpcclient -U \"${__USER}\" --password ${__PASS} ${__RHOST}"
+}
+
+nb-ad-smb-null-smbclient-download-rec() {
+  __check-project
+  nb-vars-set-rhost
+  __check-share
+
+  print -r -z "smbclient //${__RHOST}/${__SHARE} -N -c 'recurse on; prompt off; mget *'"
+}
+
+nb-ad-smb-auth-smbclient-download-rec() {
+  __check-project
+  nb-vars-set-rhost
+  __check-share
+  nb-vars-set-user
+  nb-vars-set-pass
+
+  print -r -z "smbclient //${__RHOST}/${__SHARE} -U ${__USER}%${__PASS} -c 'recurse on; prompt off; mget *'"
 }
