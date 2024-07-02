@@ -29,6 +29,7 @@ nb-ad-enum-kerbrute-users            use kerbrute to brute force valid usernames
 nb-ad-enum-null-getadusers           use GetADUsers.py to enumerate valid usernames
 nb-ad-enum-null-cme-users            use crackmapexec to enumerate valid usernames
 nb-ad-enum-null-cme-rid              use crackmapexec to enumerate valid usernames by rid bruteforcing
+nb-ad-enum-null-lookupsid            use lookupsid.py to brute force sids of valid accounts
 nb-ad-enum-null-enum4-users          dump users list using enum4linux
 nb-ad-enum-null-cme-pass-pol         use crackmapexec to retrieve password policy
 
@@ -37,6 +38,7 @@ AUTH Session
 nb-ad-enum-auth-getadusers           use GetADUsers.py to enumerate valid usernames
 nb-ad-enum-auth-cme-users            use crackmapexec with authentication to enumerate valid usernames
 nb-ad-enum-auth-cme-rid              use crackmapexec to enumerate valid usernames by rid bruteforcing
+nb-ad-enum-auth-lookupsid            use lookupsid.py to brute force sids of valid accounts
 nb-ad-enum-auth-enum4-users          dump users list using enum4linux
 nb-ad-enum-auth-cme-pass-pol         use crackmapexec to retrieve password policy
 
@@ -85,6 +87,22 @@ nb-ad-enum-null-cme-rid() {
     nb-vars-set-rhost
 
     print -z "crackmapexec smb ${__RHOST} -u '' -p '' --rid-brute | tee $(__hostpath)/cme-rid-brute.txt"
+}
+
+nb-ad-enum-auth-lookupsid() {
+    __check-project
+    nb-vars-set-rhost
+    nb-vars-set-user
+    nb-vars-set-pass
+
+    print -z "lookupsid.py ${__USER}:${__PASS}@${__RHOST}"
+}
+
+nb-ad-enum-null-lookupsid() {
+    __check-project
+    nb-vars-set-rhost
+
+    print -z "lookupsid.py -no-pass ${__RHOST}"
 }
 
 nb-ad-enum-auth-cme-rid() {
@@ -296,7 +314,6 @@ nb-ad-enum-null-cme-pass-pol() {
         print -z "crackmapexec smb ${__RHOST} -u '' -p '' --pass-pol | tee $(__hostpath)/cme-pass-pol.txt"
     fi
 }
-
 
 nb-ad-enum-kerbrute-users() {
     __check-project
