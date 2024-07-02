@@ -48,17 +48,17 @@ nb-ad-rce-wmiexec() {
           nb-vars-set-domain
           __ask "Enter a password for authentication"
           nb-vars-set-pass
-          print -z "impacket-wmiexec ${__DOMAIN}/${__USER}:'${__PASS}'@${__RHOST}"
+          print -z "wmiexec.py ${__DOMAIN}/${__USER}:'${__PASS}'@${__RHOST}"
       else
           __ask "Enter a password for authentication"
           nb-vars-set-pass
-          print -z "impacket-wmiexec ${__USER}:'${__PASS}'@${__RHOST}"
+          print -z "wmiexec.py ${__USER}:'${__PASS}'@${__RHOST}"
       fi
   elif [[ $login == "h" ]]; then
       echo
       __ask "Enter the NTLM hash for authentication"
       __check-hash
-      print -z "impacket-wmiexec ${__USER}@${__RHOST} -hashes :${__HASH}"
+      print -z "wmiexec.py ${__USER}@${__RHOST} -hashes :${__HASH}"
   else
       echo
       __err "Invalid option. Please choose 'p' for password or 'h' for hash."
@@ -82,17 +82,17 @@ nb-ad-rce-psexec() {
           nb-vars-set-domain
           __ask "Enter a password for authentication"
           nb-vars-set-pass
-          print -z "impacket-psexec ${__DOMAIN}/${__USER}:'${__PASS}'@${__RHOST}"
+          print -z "psexec.py ${__DOMAIN}/${__USER}:'${__PASS}'@${__RHOST}"
       else
           __ask "Enter a password for authentication"
           nb-vars-set-pass
-          print -z "impacket-psexec ${__USER}:'${__PASS}'@${__RHOST}"
+          print -z "psexec.py ${__USER}:'${__PASS}'@${__RHOST}"
       fi
   elif [[ $login == "h" ]]; then
       echo
       __ask "Enter the NTLM hash for authentication"
       __check-hash
-      print -z "impacket-psexec ${__USER}@${__RHOST} -hashes :${__HASH}"
+      print -z "psexec.py ${__USER}@${__RHOST} -hashes :${__HASH}"
   else
       echo
       __err "Invalid option. Please choose 'p' for password or 'h' for hash."
