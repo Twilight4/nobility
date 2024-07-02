@@ -26,7 +26,7 @@ Enumerating Users
 NULL Session
 ------------
 nb-ad-enum-kerbrute-users            use kerbrute to brute force valid usernames 
-nb-ad-enum-null-impacket-getadusers  use impacket-getadusers to enumerate valid usernames
+nb-ad-enum-null-getadusers           use GetADUsers.py to enumerate valid usernames
 nb-ad-enum-null-cme-users            use crackmapexec to enumerate valid usernames
 nb-ad-enum-null-cme-rid              use crackmapexec to enumerate valid usernames by rid bruteforcing
 nb-ad-enum-null-enum4-users          dump users list using enum4linux
@@ -34,7 +34,7 @@ nb-ad-enum-null-cme-pass-pol         use crackmapexec to retrieve password polic
 
 AUTH Session
 ------------
-nb-ad-enum-auth-impacket-getadusers  use impacket-getadusers to enumerate valid usernames
+nb-ad-enum-auth-getadusers           use GetADUsers.py to enumerate valid usernames
 nb-ad-enum-auth-cme-users            use crackmapexec with authentication to enumerate valid usernames
 nb-ad-enum-auth-cme-rid              use crackmapexec to enumerate valid usernames by rid bruteforcing
 nb-ad-enum-auth-enum4-users          dump users list using enum4linux
@@ -121,7 +121,7 @@ nb-ad-enum-auth-cme-rid() {
     fi
 }
 
-nb-ad-enum-auth-impacket-getadusers() {
+nb-ad-enum-auth-getadusers() {
     __check-project
     nb-vars-set-domain
     nb-vars-set-user
@@ -130,16 +130,16 @@ nb-ad-enum-auth-impacket-getadusers() {
 	  __ask "Enter the IP address of the target DC server"
     nb-vars-set-dchost
 
-    print -z "impacket-GetADUsers -all ${__DOMAIN}/${__USER}:'${__PASS}' -dc-ip ${__DCHOST} -outputfile $(__dcpath)/adusers.txt"
+    print -z "GetADUsers.py -all ${__DOMAIN}/${__USER}:'${__PASS}' -dc-ip ${__DCHOST} -outputfile $(__dcpath)/adusers.txt"
 }
 
-nb-ad-enum-null-impacket-getadusers() {
+nb-ad-enum-null-getadusers() {
     __check-project
 
 	  __ask "Enter the IP address of the target DC server"
     nb-vars-set-dchost
 
-    print -z "impacket-GetADUsers -all -dc-ip ${__DCHOST} -debug -outputfile $(__dcpath)/adusers.txt"
+    print -z "GetADUsers.py -all -dc-ip ${__DCHOST} -debug -outputfile $(__dcpath)/adusers.txt"
 }
 
 nb-ad-enum-auth-cme-users() {

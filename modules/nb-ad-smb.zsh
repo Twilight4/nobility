@@ -402,7 +402,7 @@ nb-ad-smb-auth-mount() {
 nb-ad-smb-null-samrdump() {
   __check-project
   nb-vars-set-rhost
-  print -z "impacket-samrdump ${__RHOST}"
+  print -z "samrdump.py ${__RHOST}"
 }
 
 nb-ad-smb-auth-samrdump() {
@@ -410,7 +410,7 @@ nb-ad-smb-auth-samrdump() {
   nb-vars-set-rhost
   nb-vars-set-user
   nb-vars-set-pass
-  print -z "impacket-samrdump ${__USER}:${__PASS}@${__RHOST}"
+  print -z "samrdump.py ${__USER}:${__PASS}@${__RHOST}"
 }
 
 nb-ad-smb-responder() {

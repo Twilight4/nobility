@@ -77,14 +77,14 @@ nb-enum-mssql-mssqlclient() {
     nb-vars-set-rhost
     nb-vars-set-user
     local db && __askvar db DATABASE
-    print -z "impacket-mssqlclient -p 1433 ${__USER}@${__RHOST}"
+    print -z "mssqlclient -p 1433 ${__USER}@${__RHOST}"
 }
 
 nb-enum-mssql-mssqlclient-local() {
     nb-vars-set-rhost
     nb-vars-set-user
     nb-vars-set-domain
-    print -z "impacket-mssqlclient -p 1433 ${__USER}@${__RHOST} -windows-auth"
+    print -z "mssqlclient -p 1433 ${__USER}@${__RHOST} -windows-auth"
 }
 
 nb-enum-mssql-hydra() {
