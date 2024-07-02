@@ -211,8 +211,7 @@ nb-ad-smb-auth-smbmap-list() {
   nb-vars-set-rhost
   nb-vars-set-user
   nb-vars-set-pass
-  nb-vars-set-domain
-  print -z "smbmap -u '${__USER}' -p '${__PASS}' -d ${__DOMAIN} -H ${__RHOST} --no-banner"
+  print -z "smbmap -u '${__USER}' -p '${__PASS}' -H ${__RHOST} --no-banner"
 }
 
 nb-ad-smb-auth-smbmap-list-rec() {
@@ -220,10 +219,9 @@ nb-ad-smb-auth-smbmap-list-rec() {
   nb-vars-set-rhost
   nb-vars-set-user
   nb-vars-set-pass
-  nb-vars-set-domain
   __check-share
   __info "You can add --dir-only flag"
-  print -z "smbmap -u '${__USER}' -p '${__PASS}' -d ${__DOMAIN} -H ${__RHOST} -r '${__SHARE}' --no-banner"
+  print -z "smbmap -u '${__USER}' -p '${__PASS}' -H ${__RHOST} -r '${__SHARE}' --no-banner"
 }
 
 nb-ad-smb-null-enum4() {
@@ -352,8 +350,7 @@ nb-ad-smb-auth-smbclient-list() {
   nb-vars-set-rhost
   nb-vars-set-user
   nb-vars-set-pass
-  __check-share
-  print -r -z "smbclient -L //${__RHOST}/${__SHARE} -U ${__USER}%${__PASS}"
+  print -r -z "smbclient -L //${__RHOST}/ -U ${__USER}%${__PASS}"
 }
 
 nb-ad-smb-null-smbclient-list-rec() {

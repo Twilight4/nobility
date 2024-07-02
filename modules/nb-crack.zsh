@@ -126,7 +126,7 @@ nb-crack-john-list() {
 	__ask "Enter the hashlist"
   local hs && __askpath hs "HASHLIST" $HOME/desktop/projects/
 
-  print -z "john $hs --wordlist=${__PASSLIST} --stdout -o $(__netpath)/john-cracked.txt"
+  print -z "john $hs --wordlist=${__PASSLIST}"
 }
 
 nb-crack-john-passwd() {
