@@ -14,24 +14,23 @@ Commands
 --------
 nb-ad-rce-freerdp              connect via freerdp to a target host
 nb-ad-rce-evil-winrm           connect via winrm to a target host
+nb-ad-rce-cme-winrm            connect via cme winrm to a target host
 nb-ad-rce-psexec               connect via psexec to a target host
 nb-ad-rce-wmiexec              connect via wmiexec to a target host
 nb-ad-rce-psexec-msf           connect via metasploit's psexec to a target host
-
-Misc
-----
-nb-ad-rce-nmap-winrm           run a scan to see if any host has winrm enabled, to be able to use evil-winrm
+nb-ad-rce-nmap-winrm           scan hosts for open winrm port
 
 DOC
 }
 
 nb-ad-rce-nmap-winrm() {
-    nb-vars-set-rhost
-
-    print -z "nmap -v -sT -p 5985 ${__RHOST}"
+  __check-project
+  nb-vars-set-rhost
+  print -z "nmap -v -sT -p 5985 ${__RHOST}"
 }
 
 nb-ad-rce-wmiexec() {
+  __check-project
   nb-vars-set-rhost
   nb-vars-set-user
   echo
@@ -66,6 +65,7 @@ nb-ad-rce-wmiexec() {
 }
 
 nb-ad-rce-psexec() {
+  __check-project
   nb-vars-set-rhost
   nb-vars-set-user
   echo
@@ -100,6 +100,7 @@ nb-ad-rce-psexec() {
 }
 
 nb-ad-rce-psexec-msf() {
+  __check-project
   nb-vars-set-rhost
   nb-vars-set-user
   echo
@@ -134,6 +135,7 @@ nb-ad-rce-psexec-msf() {
 }
 
 nb-ad-rce-freerdp() {
+    __check-project
     nb-vars-set-rhost
     nb-vars-set-user
     echo
@@ -174,6 +176,32 @@ nb-ad-rce-freerdp() {
 }
 
 nb-ad-rce-evil-winrm() {
+  __check-project
+  nb-vars-set-rhost
+  nb-vars-set-user
+
+  echo
+  __ask "Do you want to log in using a password or a hash? (p/h)"
+  local login && __askvar login "LOGIN_OPTION"
+
+  if [[ $login == "p" ]]; then
+      echo
+      __ask "Enter a password for authentication"
+      nb-vars-set-pass
+      print -z "evil-winrm -i ${__RHOST} -u '${__USER}' -p '${__PASS}'"
+  elif [[ $login == "h" ]]; then
+      echo
+      __ask "Enter the NTLM hash for authentication"
+      __check-hash
+      print -z "evil-winrm -i ${__RHOST} -u '${__USER}' -H '${__HASH}'"
+  else
+      echo
+      __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+  fi
+}
+
+nb-ad-rce-cme-winrm() {
+  __check-project
   nb-vars-set-rhost
   nb-vars-set-user
 
