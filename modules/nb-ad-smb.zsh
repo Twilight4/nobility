@@ -111,7 +111,7 @@ nb-ad-smb-tcpdump() {
 nb-ad-smb-null-smbmap-list() {
   __check-project
   nb-vars-set-rhost
-  print -z "smbmap -H ${__RHOST}"
+  print -z "smbmap -H ${__RHOST} --no-banner"
 }
 
 nb-ad-smb-null-smbmap-list-rec() {
@@ -119,7 +119,7 @@ nb-ad-smb-null-smbmap-list-rec() {
   nb-vars-set-rhost
   __check-share
   __info "You can add --dir-only flag"
-  print -z "smbmap -H ${__RHOST} -r ${__SHARE}"
+  print -z "smbmap -H ${__RHOST} -r ${__SHARE} --no-banner"
 }
 
 nb-ad-smb-null-smbmap-download() {
@@ -128,7 +128,7 @@ nb-ad-smb-null-smbmap-download() {
   __check-share
   __ask "Enter file to download"
   local file && __askvar file FILE
-  print -z "smbmap -H ${__RHOST} --download \"${__SHARE}\\\\$file\""
+  print -z "smbmap -H ${__RHOST} --download \"${__SHARE}\\\\$file\" --no-banner"
 }
 
 nb-ad-smb-auth-smbmap-download() {
@@ -140,7 +140,7 @@ nb-ad-smb-auth-smbmap-download() {
   nb-vars-set-domain
   __ask "Enter file to download"
   local file && __askvar file FILE
-  print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST} --download \"${__SHARE}\\\\$file\""
+  print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST} --download \"${__SHARE}\\\\$file\" --no-banner"
 }
 
 nb-ad-smb-null-smbmap-upload() {
@@ -149,7 +149,7 @@ nb-ad-smb-null-smbmap-upload() {
   __check-share
   __ask "File to upload"
   local file && __askvar file FILE
-  print -z "smbmap -H ${__RHOST} --upload $file \"${__SHARE}\\\\$file\""
+  print -z "smbmap -H ${__RHOST} --upload $file \"${__SHARE}\\\\$file\" --no-banner"
 }
 
 nb-ad-smb-auth-smbmap-upload() {
@@ -161,7 +161,7 @@ nb-ad-smb-auth-smbmap-upload() {
   nb-vars-set-domain
   __ask "File to upload"
   local file && __askvar file FILE
-  print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST} --upload $file \"${__SHARE}\\\\$file\""
+  print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST} --upload $file \"${__SHARE}\\\\$file\" --no-banner"
 }
 
 nb-ad-smb-null-smbget-download-rec() {
@@ -187,7 +187,7 @@ nb-ad-smb-auth-smbmap-list() {
   nb-vars-set-user
   nb-vars-set-pass
   nb-vars-set-domain
-  print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST}"
+  print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST} --no-banner"
 }
 
 nb-ad-smb-auth-smbmap-list-rec() {
@@ -198,7 +198,7 @@ nb-ad-smb-auth-smbmap-list-rec() {
   nb-vars-set-domain
   __check-share
   __info "You can add --dir-only flag"
-  print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST} -r '${__SHARE}'"
+  print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST} -r '${__SHARE}' --no-banner"
 }
 
 nb-ad-smb-null-enum4() {
