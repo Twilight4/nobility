@@ -115,7 +115,7 @@ nb-ad-smb-tcpdump() {
 nb-ad-smb-null-smbmap-list() {
   __check-project
   nb-vars-set-rhost
-  print -z "smbmap -H ${__RHOST} --no-banner"
+  print -z "smbmap -H ${__RHOST} -u '' -p '' --no-banner"
 }
 
 nb-ad-smb-null-smbmap-list-rec() {
@@ -123,7 +123,7 @@ nb-ad-smb-null-smbmap-list-rec() {
   nb-vars-set-rhost
   __check-share
   __info "You can add --dir-only flag"
-  print -z "smbmap -H ${__RHOST} -r ${__SHARE} --no-banner"
+  print -z "smbmap -H ${__RHOST} -r ${__SHARE} -u '' -p '' --no-banner"
 }
 
 nb-ad-smb-null-smbmap-download() {
@@ -132,7 +132,7 @@ nb-ad-smb-null-smbmap-download() {
   __check-share
   __ask "Enter file to download"
   local file && __askvar file FILE
-  print -z "smbmap -H ${__RHOST} --download \"${__SHARE}\\\\$file\" --no-banner"
+  print -z "smbmap -H ${__RHOST} -u '' -p '' --download \"${__SHARE}\\\\$file\" --no-banner"
 }
 
 nb-ad-smb-auth-smbmap-download() {
@@ -165,7 +165,7 @@ nb-ad-smb-null-smbmap-download-pat() {
   nb-vars-set-rhost
   __ask "Enter the pattern (ex. xml)"
   local pat && __askvar file pat
-  print -z "smbmap -H ${__RHOST} -r ${__SHARE} -A $pat --no-banner"
+  print -z "smbmap -H ${__RHOST} -u '' -p '' -r ${__SHARE} -A $pat --no-banner"
 }
 
 nb-ad-smb-null-smbmap-upload() {
@@ -174,7 +174,7 @@ nb-ad-smb-null-smbmap-upload() {
   __check-share
   __ask "File to upload"
   local file && __askvar file FILE
-  print -z "smbmap -H ${__RHOST} --upload $file \"${__SHARE}\\\\$file\" --no-banner"
+  print -z "smbmap -H ${__RHOST} -u '' -p '' --upload $file \"${__SHARE}\\\\$file\" --no-banner"
 }
 
 nb-ad-smb-auth-smbmap-upload() {
