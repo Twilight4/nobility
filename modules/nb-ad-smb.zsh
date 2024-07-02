@@ -57,7 +57,7 @@ NULL Session
 ------------
 nb-ad-smb-null-smbclient-download-rec  recursively download files from SMB share
 nb-ad-smb-null-smbmap-download       download a file from a share
-nb-ad-smb-null-smbmap-download-pat   download files from a share using a pattern
+nb-ad-smb-null-smbmap-download-pat   download files from a share matching a pattern
 nb-ad-smb-null-smbget-download-rec   recursively download the SMB share
 nb-ad-smb-null-smbmap-upload         upload a file to a share
 
@@ -65,7 +65,7 @@ AUTH Session
 ------------
 nb-ad-smb-null-smbclient-download-rec  recursively download files from SMB share
 nb-ad-smb-auth-smbmap-download       download a file from a share
-nb-ad-smb-null-smbmap-download-pat   download files from a share using a pattern
+nb-ad-smb-null-smbmap-download-pat   download files from a share matching a pattern
 nb-ad-smb-auth-smbget-download-rec   recursively download the SMB share
 nb-ad-smb-auth-smbmap-upload         upload a file to a share
 
@@ -144,7 +144,7 @@ nb-ad-smb-auth-smbmap-download() {
   nb-vars-set-domain
   __ask "Enter file to download"
   local file && __askvar file FILE
-  print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST} --download \"${__SHARE}\\\\$file\" --no-banner"
+  print -z "smbmap -u '${__USER}' -p '${__PASS}' -d ${__DOMAIN} -H ${__RHOST} --download \"${__SHARE}\\\\$file\" --no-banner"
 }
 
 nb-ad-smb-auth-smbmap-download-pat() {
@@ -156,7 +156,7 @@ nb-ad-smb-auth-smbmap-download-pat() {
   nb-vars-set-domain
   __ask "Enter the pattern (ex. xml)"
   local pat && __askvar file pat
-  print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST} -r ${__SHARE} -A $pat --no-banner"
+  print -z "smbmap -u '${__USER}' -p '${__PASS}' -d ${__DOMAIN} -H ${__RHOST} -r ${__SHARE} -A $pat --no-banner"
 }
 
 nb-ad-smb-null-smbmap-download-pat() {
@@ -186,7 +186,7 @@ nb-ad-smb-auth-smbmap-upload() {
   nb-vars-set-domain
   __ask "File to upload"
   local file && __askvar file FILE
-  print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST} --upload $file \"${__SHARE}\\\\$file\" --no-banner"
+  print -z "smbmap -u '${__USER}' -p '${__PASS}' -d ${__DOMAIN} -H ${__RHOST} --upload $file \"${__SHARE}\\\\$file\" --no-banner"
 }
 
 nb-ad-smb-null-smbget-download-rec() {
@@ -212,7 +212,7 @@ nb-ad-smb-auth-smbmap-list() {
   nb-vars-set-user
   nb-vars-set-pass
   nb-vars-set-domain
-  print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST} --no-banner"
+  print -z "smbmap -u '${__USER}' -p '${__PASS}' -d ${__DOMAIN} -H ${__RHOST} --no-banner"
 }
 
 nb-ad-smb-auth-smbmap-list-rec() {
@@ -223,7 +223,7 @@ nb-ad-smb-auth-smbmap-list-rec() {
   nb-vars-set-domain
   __check-share
   __info "You can add --dir-only flag"
-  print -z "smbmap -u ${__USER} -p ${__PASS} -d ${__DOMAIN} -H ${__RHOST} -r '${__SHARE}' --no-banner"
+  print -z "smbmap -u '${__USER}' -p '${__PASS}' -d ${__DOMAIN} -H ${__RHOST} -r '${__SHARE}' --no-banner"
 }
 
 nb-ad-smb-null-enum4() {
@@ -392,9 +392,9 @@ nb-enum-auth-smb-mount() {
   __check-project
   nb-vars-set-rhost
   nb-vars-set-user
-  local p && __askvar p PASSWORD
+  nb-vars-set-pass
   __check-share
-  print -z "mount //${__RHOST}/${__SHARE} /mnt/${__SHARE} -o username=${__USER},password=${p}"
+  print -z "mount -t cifs -o ro,username=${__USER},password=${__PASS} '//${__RHOST}/${__SHARE}' /mnt/${__SHARE}/"
 }
 
 nb-ad-smb-null-samrdump() {
