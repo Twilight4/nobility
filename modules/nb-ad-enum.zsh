@@ -338,7 +338,7 @@ nb-ad-enum-install() {
 
 nb-ad-enum-auth-ldapdomaindump() {
     __check-project
-	  __check-domain
+	  nb-vars-set-domain
 	  __ask "Enter the IP address of the target DC server"
     nb-vars-set-dchost
     __ask "Enter a user account"
@@ -346,7 +346,7 @@ nb-ad-enum-auth-ldapdomaindump() {
     __ask "Enter a password for authentication"
     nb-vars-set-pass
 
-    print -z "ldapdomaindump ${__DCHOST} -u "${__DOMAIN}\\${__USER}" -p "${__PASS}" -o $(__dcpath)/ldapdomaindump"}
+    print -z "ldapdomaindump ${__DCHOST} -u "${__DOMAIN}\\${__USER}" -p "${__PASS}" -o $(__dcpath)/ldapdomaindump"
     __info "Output saved in 'ldapdomaindump' directory"
 }
 
@@ -602,4 +602,3 @@ nb-ad-enum-brute-cme() {
       __err "Invalid option. Please choose 'p' for password or 'l' for login or 'b' for both."
     fi
 }
-
