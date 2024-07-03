@@ -122,6 +122,8 @@ nb-install-all() {
         nb-shell-handlers-install
         nb-srv-install
         __info "Install finished"
+    else
+        __warn "Operation cancelled by user."
     fi
 }
 
@@ -148,6 +150,8 @@ nb-install-dev(){
     if __check-proceed
     then
         __pkgs python-pip php php-curl libldns-dev libssl-dev libcurl4-openssl-dev npm
+    else
+        __warn "Operation cancelled by user."
     fi
 }
 
@@ -362,6 +366,8 @@ nb-install-winpeas() {
     __ask "CONTINUE?"
     if __check-proceed; then
         wget https://github.com/peass-ng/PEASS-ng/releases/download/20240609-52b58bf5/winPEASx64.exe -O "$win"
+    else
+        __warn "Operation cancelled by user."
     fi
 }
 
@@ -378,6 +384,8 @@ nb-install-linpeas() {
     __ask "CONTINUE?"
     if __check-proceed; then
         wget https://github.com/peass-ng/PEASS-ng/releases/download/20240609-52b58bf5/linpeas.sh -O "$lin"
+    else
+        __warn "Operation cancelled by user."
     fi
 }
 
@@ -394,6 +402,8 @@ nb-install-amsi-bypass() {
     __ask "CONTINUE?"
     if __check-proceed; then
         wget https://gist.githubusercontent.com/shantanu561993/6483e524dc225a188de04465c8512909/raw/db219421ea911b820e9a484754f03a26fbfb9c27/AMSI_bypass_Reflection.ps1 -O "$amsi_path"
+    else
+        __warn "Operation cancelled by user."
     fi
 }
 
@@ -526,6 +536,8 @@ nb-install-dnscat2-powershell() {
     __ask "CONTINUE?"
     if __check-proceed; then
         curl -L https://raw.githubusercontent.com/lukebaggett/dnscat2-powershell/master/dnscat2.ps1 -O "$cat"
+    else
+        __warn "Operation cancelled by user."
     fi
 }
 
