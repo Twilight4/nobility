@@ -354,7 +354,7 @@ nb-install-winpeas() {
 
     # Check if file already exists
     if [ -f "$win" ]; then
-        echo "WinPEASx64.exe is already installed."
+        __warn "WinPEASx64.exe already installed in $win"
         return
     fi
 
@@ -370,7 +370,7 @@ nb-install-linpeas() {
 
     # Check if file already exists
     if [ -f "$lin" ]; then
-        echo "LinPEAS.sh is already installed."
+        __warn "LinPEAS.sh already installed in $lin"
         return
     fi
 
@@ -386,7 +386,7 @@ nb-install-amsi-bypass() {
 
     # Check if file already exists
     if [ -f "$amsi_path" ]; then
-        echo "amsi.ps1 is already installed."
+        __warn "amsi.ps1 already installed in $amsi_path"
         return
     fi
 
@@ -699,11 +699,11 @@ nb-install-arch-generic() {
 }
 
 nb-install-invoke-powershelltcp() {
-    local pws="$SV/Invoke-PowerShellTcp.ps1"
+    local pws="~/desktop/server/Invoke-PowerShellTcp.ps1"
 
     # Check if file already exists
     if [ -f "$pws" ]; then
-        echo "Invoke-PowerShellTcp.ps1 is already installed."
+        __warn "Invoke-PowerShellTcp.ps1 already installed in $pws"
         return
     fi
 
