@@ -696,3 +696,20 @@ nb-install-arch-generic() {
     paru --needed -S nmap metasploit postgresql gobuster whatweb exploitdb masscan john bloodhound python-bloodhound python-neo4j sliver-bin hydra enum4linux smbmap hashid hashcat evil-winrm
     pip3 install impacket
 }
+
+nb-install-invoke-powershelltcp() {
+    local pws="$SV/Invoke-PowerShellTcp.ps1"
+
+    # Check if file already exists
+    if [ -f "$pws" ]; then
+        echo "Invoke-PowerShellTcp.ps1 is already installed."
+        return
+    fi
+
+    __cyan "This will install Invoke-PowerShellTcp.ps1"
+    __ask "CONTINUE?"
+    if __check-proceed; then
+        wget https://raw.githubusercontent.com/samratashok/nishang/master/Shells/Invoke-PowerShellTcp.ps1 -O "$pws"
+    fi
+}
+
