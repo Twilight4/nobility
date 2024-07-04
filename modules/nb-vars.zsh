@@ -169,7 +169,7 @@ nb-vars-set-iface() {
   if [[ -z "${__IFACE}" ]]
   then
     __ask "Choose an interface: "
-    __IFACE=$(__menu $(ip addr list | awk -F': ' '/^[0-9]/ {print $2}')) 
+    __IFACE=$(__menu $(\ip addr list | awk '/^[0-9]+:/ {print $2}' | cut -d: -f1)) 
   else
     __prefill __IFACE IFACE ${__IFACE}
   fi

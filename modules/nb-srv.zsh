@@ -276,7 +276,7 @@ nb-srv-web() {
 
   pushd "$HOME/desktop/server" &> /dev/null
   __info "Serving content at $(hip) in $PWD"
-	sudo python3 -m http.server ${__LPORT}
+	python3 -m http.server ${__LPORT}
   popd &> /dev/null
 }
 

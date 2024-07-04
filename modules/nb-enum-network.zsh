@@ -308,11 +308,10 @@ nb-enum-network-masscan-all() {
 
     if [[ $scan == "h" ]]; then
       nb-vars-set-rhost
-      print -z "-oL $(__hostpath)/masscan-all.txt"
-      print -z "masscan -p1-65535,U:1-65535 ${__RHOST} --rate=1000 -p1-65535,U:1-65535 -e ${__IFACE} -oL $(__hostpath)/masscan-all.txt"
+      print -z "sudo masscan -p1-65535,U:1-65535 ${__RHOST} --rate=1000 -p1-65535,U:1-65535 -e ${__IFACE} -oL $(__hostpath)/masscan-all.txt"
     elif [[ $scan == "n" ]]; then
       nb-vars-set-network
-      print -z "masscan -p1-65535,U:1-65535 ${__NETWORK} --rate=1000 -p1-65535,U:1-65535 -e ${__IFACE} -oL $(__netpath)/masscan-all.txt"
+      print -z "sudo masscan -p1-65535,U:1-65535 ${__NETWORK} --rate=1000 -p1-65535,U:1-65535 -e ${__IFACE} -oL $(__netpath)/masscan-all.txt"
     else
       echo
       __err "Invalid option. Please choose 'n' for network or 'h' for host."

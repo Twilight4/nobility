@@ -656,6 +656,7 @@ nb-install-windapsearch() {
 
     if [[ ! -d $path ]]
     then
+        __pkgs python-ldap
         sudo git clone --depth 1 $url $p
         sudo ln -s /opt/windapsearch/windapsearch.py /bin/
         __info "Successfully installed $name... in $p"
@@ -686,7 +687,7 @@ nb-install-username-anarchy() {
     fi
 }
 
-nb-install-windapsearch() {
+nb-install-username-generator() {
     local name="username_generator"
     local url="https://github.com/shroudri/username_generator"
     local p="/opt/$name"
