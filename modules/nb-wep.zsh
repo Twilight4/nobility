@@ -33,15 +33,12 @@ DOC
 
 nb-wep-install() {
     __info "Running $0..."
-    __pkgs cewl hashcat cupp
+    __pkgs cewl hashcat cupp seeker blackeye ngrok
 
     nb-install-username-anarchy
     nb-install-username-generator
-    #seeker
     #stormbreaker
-    #ngrok
     #zphisher
-    #blackeye
 }
 
 nb-wep-pass-cewl() {
@@ -141,38 +138,48 @@ nb-wep-se-tools() {
 
     case $choice in
         1) 
-          tool="sudo python3 st.py"
-          __info "Forward port to external network using ngrok:"
-          __ok "  ngrok http 2525"
-
           # Check if tool is installed
           if ! which st.py > /dev/null; then
             __err "Storm-Breaker is not installed."
           fi
+
+          # Run the tool
+          clear
+          __info "Forward port to external network using ngrok:"
+          __ok "  ngrok http 2525"
+          pushd "/opt/Storm-Breaker/" &> /dev/null
+          sudo python3 st.py
+          popd &> /dev/null
           ;;
         2) 
-          tool="seeker"
-
           # Check if tool is installed
           if ! which seeker > /dev/null; then
             __err "Seeker is not installed."
           fi
+
+          # Run the tool
+          clear
+          sudo seeker
           ;;
         3) 
-          tool="zphishter"
-
           # Check if tool is installed
-          if ! which zphishter > /dev/null; then
-            __err "Zphishter is not installed."
+          if ! which zphisher > /dev/null; then
+            __err "Zphisher is not installed."
           fi
+
+          # Run the tool
+          clear
+          zphisher
           ;;
         4) 
-          tool="blackeye"
-
           # Check if tool is installed
           if ! which blackeye > /dev/null; then
             __err "Blackeye is not installed."
           fi
+
+          # Run the tool
+          clear
+          blackeye
           ;;
         *) 
           __err "Invalid selection"; return ;;
