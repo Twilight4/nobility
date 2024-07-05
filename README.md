@@ -1,21 +1,21 @@
-## Table of Contents
+# Table of Contents
 - [Nobility](#Nobility)
   - [Key Features](#Key-Features)
   - [Distributions Compatibility](#Distributions-Compatibility)
   - [Installation](#Installation)
-    - [Installation Method #1](#Installation-Method-#1:-Manually)
-    - [Installation Method #2](#Installation-Method-#2:-Oh-my-zsh)
+    - [Installation-Method-#1:-Manually](#Installation-Method-#1:-Manually)
+    - [Installation-Method-#2:-Oh-my-zsh](#Installation-Method-#2:-Oh-my-zsh)
     - [Tip: Zsh completion menu](#Tip:-Zsh-completion-menu)
     - [Updating](#Updating)
 - [Getting Started](#Getting-Started)
   - [Installing Dependencies](##Installing-Dependencies)
   - [Workflow](##Workflow)
   - [Example Workflow](##Example-Workflow)
-    - [Variables](##Variables)
-    - [Pre-Engagement](##Pre-Engagement)
-    - [Web Recon](##Web-Recon)
-    - [Organization OSINT](##Organization-OSINT)
-    - [Active Directory Auditing](##Active-Directory-Auditing)
+    - [Variables](###Variables)
+    - [Pre-Engagement](###Pre-Engagement)
+    - [Web Recon](###Web-Recon)
+    - [Organization OSINT](###Organization-OSINT)
+    - [Active Directory Auditing](###Active-Directory-Auditing)
 
 # Nobility
 Nobility is an organized colletion of shell modules designed to streamline your pentesting workflow by leveraging shell integrations such as autocompletion and prefilling, optimizing the productivity of your work and liberatating you from the hassle of juggling notes, endless copying and pasting, and tedious command editing. 
