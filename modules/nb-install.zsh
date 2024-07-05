@@ -787,4 +787,3 @@ nb-install-zphisher() {
         popd
     fi
 }
-

@@ -33,10 +33,7 @@ DOC
 
 nb-wep-install() {
     __info "Running $0..."
-    __pkgs cewl hashcat cupp seeker blackeye ngrok
-
-    nb-install-username-anarchy
-    nb-install-username-generator
+    __pkgs cewl hashcat cupp seeker blackeye ngrok set
 }
 
 nb-wep-pass-cewl() {
@@ -126,11 +123,12 @@ nb-wep-pass-policy() {
 nb-wep-se-tools() {
     __check-project
 
-    __info "Available tools:"
-    echo "1) Storm-Breaker - information gathering about the victm including: geolocation (mobile), device information, social media data extraction, access microphone, access webcam, make screenshots"
-    echo "2) Seeker - access current phone's GPS location if available"
-    echo "3) "
-    echo "4) "
+    __info "Available tools"
+    echo "1) Storm-Breaker - Access Webcam & Microphone & Location Finder"
+    echo "2) Seeker - Accurately Locate Smartphones using Social Engineering"
+    echo "3) Zphisher - Phishing tool with 30+ templates"
+    echo "4) Blackeye - Another Skiddie phishing tool"
+    echo "5) SET - Social Engineering Toolkit"
     echo
     local choice && __askvar choice "CHOICE"
 
@@ -138,7 +136,7 @@ nb-wep-se-tools() {
         1) 
           # Check if tool is installed
           if ! which /opt/Storm-Breaker/st.py > /dev/null; then
-            __err "Storm-Breaker is not installed."
+            __err "Storm-Breaker is not installed. Install with: nb-install-stormbreaker"
             exit 1
           fi
 
@@ -161,7 +159,7 @@ nb-wep-se-tools() {
         3) 
           # Check if tool is installed
           if ! which zphisher > /dev/null; then
-            __err "Zphisher is not installed."
+            __err "Zphisher is not installed. Install with: nb-install-zphisher."
           fi
 
           # Run the tool
@@ -177,6 +175,16 @@ nb-wep-se-tools() {
           # Run the tool
           clear
           blackeye
+          ;;
+        5) 
+          # Check if tool is installed
+          if ! which setoolkit > /dev/null; then
+            __err "Set is not installed."
+          fi
+
+          # Run the tool
+          clear
+          sudo setoolkit
           ;;
         *) 
           __err "Invalid selection"; return ;;
