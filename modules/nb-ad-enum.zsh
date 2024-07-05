@@ -375,12 +375,12 @@ nb-ad-enum-auth-bloodhound() {
     nb-vars-set-user
     __ask "Enter a password for authentication"
     nb-vars-set-pass
+    __info "Output will be saved in 'bloodhound' directory"
+    __info "Now you can zip the .json files together to upload to bloodhound:"
+    __ok "  zip -r bloodhound-data.zip *.json"
 
     #pushd $(__netpath) &> /dev/null
     print -z "sudo bloodhound-python -d ${__DOMAIN} -u ${__USER} -p '${__PASS}' -ns ${__DCHOST} -c all"
-    __info "Output saved in 'bloodhound' directory"
-    __info "You can zip the .json files together to upload to bloodhound GUI using command:"
-    __ok "zip -r bloodhound-data.zip *.json"
     #popd &> /dev/null
 }
 
