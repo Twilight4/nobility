@@ -603,9 +603,9 @@ nb-ad-enum-brute-cme() {
           print -z "crackmapexec smb ${__RHOST} -u '${__USER}' -p '$pl' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute-pass.txt"
         fi
       else
+        nb-vars-set-passlist
         if [[ $add_domain == "y" ]]; then
           nb-vars-set-domain
-          nb-vars-set-passlist
           print -z "crackmapexec smb ${__RHOST} -u '${__USER}' -p '${__PASSLIST}' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/smb-cme-brute-pass.txt"
         else
           print -z "crackmapexec smb ${__RHOST} -u '${__USER}' -p '${__PASSLIST}' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute-pass.txt"
@@ -624,35 +624,35 @@ nb-ad-enum-brute-cme() {
           print -z "crackmapexec smb ${__RHOST} -u '$ul' -p '${__PASS}' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute-pass.txt"
         fi
       else
+        nb-vars-set-wordlist
         if [[ $add_domain == "y" ]]; then
           nb-vars-set-domain
-          nb-vars-set-wordlist
           print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASS}' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/smb-cme-brute-pass.txt"
         else
           print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASS}' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute-pass.txt"
         fi
       fi
     elif [[ $login == "b" ]]; then
-      __ask "Do you wanna manually specify wordlists? (y/n)"
-      local sw && __askvar sw "SPECIFY_WORDLIST"
       if [[ $sw == "y" ]]; then
-        __ask "Select a user list"
-        __askpath ul FILE $HOME/desktop/projects/
         __ask "Select a password list"
         __askpath pl FILE $HOME/desktop/projects/
+        __ask "Select a user list"
+        __askpath ul FILE $HOME/desktop/projects/
+
         if [[ $add_domain == "y" ]]; then
           nb-vars-set-domain
-          print -z "crackmapexec smb ${__RHOST} -u '$ul' -p '$pl' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/smb-cme-brute-userpass.txt"
+          print -z "crackmapexec smb ${__RHOST} -u '$ul' -p '$pl' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/smb-cme-brute-pass.txt"
         else
-          print -z "crackmapexec smb ${__RHOST} -u '$ul' -p '$pl' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute-userpass.txt"
+          print -z "crackmapexec smb ${__RHOST} -u '$ul' -p '$pl' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute-pass.txt"
         fi
       else
         nb-vars-set-wordlist
+        nb-vars-set-passlist
         if [[ $add_domain == "y" ]]; then
           nb-vars-set-domain
-          print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASSLIST}' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/smb-cme-brute-userpass.txt"
+          print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASSLIST}' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/smb-cme-brute-pass.txt"
         else
-          print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASSLIST}' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute-userpass.txt"
+          print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASSLIST}' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute-pass.txt"
         fi
       fi
     else
