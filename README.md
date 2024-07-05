@@ -1,6 +1,6 @@
 # Table of Contents
 - [Nobility](#Nobility)
-  - [Key Features](##Key-Features)
+  - [Key Features](#Key-Features)
   - [Distributions Compatibility](##Distributions-Compatibility)
   - [Installation](##Installation)
     - [Installation-Method #1: Manually](###Installation-Method-#1:-Manually)
@@ -9,7 +9,7 @@
     - [Updating](###Updating)
 - [Getting Started](#Getting-Started)
   - [Installing Dependencies](##Installing-Dependencies)
-  - [Workflow](##Workflow)
+  - [Workflow Design](##Workflow-Design)
   - [Example Workflow](##Example-Workflow)
     - [Variables](###Variables)
     - [Pre-Engagement](###Pre-Engagement)
@@ -87,7 +87,7 @@ Each namespace features its own dedicated help command, such as `nb-enum-web-hel
 ## Installing Dependencies
 To set up the necessary dependencies for each namespace, execute the `nb-<namespace>-install` command. This command ensures the installation of all tools relevant to the specified namespace. For installation of tools across all namespaces, use the `nb-install-all` command.
 
-## Workflow
+## Workflow Design
 Nobility is designed to offer a sophisticated and flexible workflow. It eliminates the conventional, tedious process of manually navigating through notes, searching for commands, copying, pasting, and adjusting values before execution. 
 
 In contrast to heavily automated scripts or frameworks that execute entire workflows, often obfuscating the underlying tools and techniques which are cumbersome to modify, Nobility strikes a balance. Embracing the principles of the KISS principle (Keep It Simple, Stupid), each module within Nobility is deliberately small and distinct, minimizing unnecessary complications. This design allows you to quickly execute individual commands, providing well-organized output. 
