@@ -73,8 +73,16 @@ __pkgs() {
             __info "$pkg"
             dpkg -s $pkg &>/dev/null && __warn "$pkg already installed" || sudo apt-get install -y $pkg
         done
+    elif command -v paru &>/dev/null; then
+        __info "Updating packages..."
+        paru -Syu --noconfirm
+        __info "Installing packages..."
+        for pkg in "$@"; do
+            __info "$pkg"
+            paru -Qi $pkg &>/dev/null && __warn "$pkg already installed" || paru -S --noconfirm $pkg
+        done
     else
-        __warn "apt-get not found. Can not install packages."
+        __warn "Apt-get nor Paru not found. Can not install packages."
     fi
 }
 
