@@ -564,19 +564,6 @@ nb-ad-enum-pass-spray() {
     print -z "kerbrute passwordspray -d ${__DOMAIN} --dc ${__DCHOST} $ul $pw -o $(__dcpath)/kerbrute-password-spray.txt"
 }
 
-
-
-
-    if [[ $sw == "y" ]]; then
-      __ask "Select a user list"
-      __askpath ul FILE $HOME/desktop/projects/
-
-      print -z "sudo kerbrute userenum -d ${__DOMAIN} --dc ${__DCHOST} $ul -o $(__dcpath)/kerbrute-user-enum.txt"
-    else
-      nb-vars-set-wordlist
-      print -z "sudo kerbrute userenum -d ${__DOMAIN} --dc ${__DCHOST} ${__WORDLIST} -o $(__dcpath)/kerbrute-user-enum.txt"
-    fi
-
 nb-ad-enum-brute-cme() {
     __check-project
     nb-vars-set-rhost
