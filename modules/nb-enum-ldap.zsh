@@ -15,7 +15,7 @@ Check Authentication
 nb-enum-ldap-nmap-sweep                     scan a network for services
 nb-enum-ldap-search-anon                    connect with anonymous bind and query ldap
 nb-enum-ldap-search-auth                    connect with authenticated bind and query ldap
-nb-enum-ldap-anon-search-ctx                query ldap naming contexts
+nb-enum-ldap-search-ctx                     query ldap naming contexts
 
 Enumeration
 ============================================
@@ -30,6 +30,7 @@ nb-enum-ldap-anon-wsearch-privileged-users  use windapsearch.py to enumerate pri
 
 AUTH Session
 ------------
+nb-enum-ldap-auth-search-ctb                general all query but ctb (cut the bullshit)
 nb-enum-ldap-auth-search-users              use authenticated ldapsearch to enumerate valid usernames
 nb-enum-ldap-auth-wsearch-users             use windapsearch.py to enumerate users
 nb-enum-ldap-auth-search-pass-pol           retrieve password policy using ldapsearch
@@ -136,7 +137,7 @@ nb-enum-ldap-auth-search-users() {
     __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
     local dn && __askvar dn DN
 
-    print -z "ldapsearch -x -H 'ldap://${__DCHOST}' -D '${__USER}@${__DOMAIN}' -w '${__PASS}' -b \"$dn\" -s sub \"(&(objectCategory=person)(objectClass=user)(! (useraccountcontrol:1.2.840.113556.1.4.803:=2)))\" samaccountname | grep sAMAccountName | tee $(__dcpath)/ldapsearch-users.txt"
+    print -z "ldapsearch -x -H 'ldap://${__DCHOST}:389' -D '${__USER}@${__DOMAIN}' -w '${__PASS}' -b \"$dn\" -s sub \"(&(objectCategory=person)(objectClass=user)(! (useraccountcontrol:1.2.840.113556.1.4.803:=2)))\" samaccountname | grep sAMAccountName | tee $(__dcpath)/ldapsearch-users.txt"
 }
 
 nb-enum-ldap-auth-search-kerb() {
@@ -150,7 +151,7 @@ nb-enum-ldap-auth-search-kerb() {
     __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
     local dn && __askvar dn DN
 
-    print -z "ldapsearch -x -H 'ldap://${__DCHOST}' -D '${__USER}@${__DOMAIN}' -w '${__PASS}' -b \"$dn\" -s sub \"(&(objectCategory=person)(objectClass=user)(! (useraccountcontrol:1.2.840.113556.1.4.803:=2))(serviceprincipalname=*/*))\" serviceprincipalname | grep -B 1 servicePrincipalName | tee $(__dcpath)/ldapsearch-kerberoastable.txt"
+    print -z "ldapsearch -x -H 'ldap://${__DCHOST}:389' -D '${__USER}@${__DOMAIN}' -w '${__PASS}' -b \"$dn\" -s sub \"(&(objectCategory=person)(objectClass=user)(! (useraccountcontrol:1.2.840.113556.1.4.803:=2))(serviceprincipalname=*/*))\" serviceprincipalname | grep -B 1 servicePrincipalName | tee $(__dcpath)/ldapsearch-kerberoastable.txt"
 }
 
 nb-enum-ldap-anon-search-kerb() {
@@ -162,7 +163,7 @@ nb-enum-ldap-anon-search-kerb() {
     __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
     local dn && __askvar dn DN
 
-    print -z "ldapsearch -x -H 'ldap://${__DCHOST}' -b \"$dn\" -s sub \"(&(objectCategory=person)(objectClass=user)(! (useraccountcontrol:1.2.840.113556.1.4.803:=2))(serviceprincipalname=*/*))\" serviceprincipalname | grep -B 1 servicePrincipalName | tee $(__dcpath)/ldapsearch-kerberoastable.txt"
+    print -z "ldapsearch -x -H 'ldap://${__DCHOST}:389' -b \"$dn\" -s sub \"(&(objectCategory=person)(objectClass=user)(! (useraccountcontrol:1.2.840.113556.1.4.803:=2))(serviceprincipalname=*/*))\" serviceprincipalname | grep -B 1 servicePrincipalName | tee $(__dcpath)/ldapsearch-kerberoastable.txt"
 }
 
 nb-enum-ldap-anon-search-pass-pol() {
@@ -174,7 +175,7 @@ nb-enum-ldap-anon-search-pass-pol() {
     __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
     local dn && __askvar dn DN
 
-    print -z "ldapsearch -H ldap://${__DCHOST} -x -b \"$dn\" -s sub \"*\" | grep -m 1 -B 10 pwdHistoryLength | tee $(__dcpath)/ldapsearch-pass-pol.txt"
+    print -z "ldapsearch -H ldap://${__DCHOST}:389 -x -b \"$dn\" -s sub \"*\" | grep -m 1 -B 10 pwdHistoryLength | tee $(__dcpath)/ldapsearch-pass-pol.txt"
 }
 
 nb-enum-ldap-auth-search-pass-pol() {
@@ -188,7 +189,7 @@ nb-enum-ldap-auth-search-pass-pol() {
     __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
     local dn && __askvar dn DN
 
-    print -z "ldapsearch -H ldap://${__DCHOST} -D '${__USER}@${__DOMAIN}' -w '${__PASS}' -x -b \"$dn\" -s sub \"*\" | grep -m 1 -B 10 pwdHistoryLength | tee $(__dcpath)/ldapsearch-pass-pol.txt"
+    print -z "ldapsearch -H ldap://${__DCHOST}:389 -D '${__USER}@${__DOMAIN}' -w '${__PASS}' -x -b \"$dn\" -s sub \"*\" | grep -m 1 -B 10 pwdHistoryLength | tee $(__dcpath)/ldapsearch-pass-pol.txt"
 }
 
 nb-enum-ldap-install() {
@@ -221,7 +222,7 @@ nb-enum-ldap-tcpdump() {
     print -z "sudo tcpdump -i ${__IFACE} host ${__RHOST} and tcp port 389 and port 636 and port 3269 -w $(__hostpath)/ldap.pcap"
 }
 
-nb-enum-ldap-anon-search-ctx() {
+nb-enum-ldap-search-ctx() {
     __check-project
 
 	  __ask "Enter the IP address of the target DC server"
@@ -254,6 +255,20 @@ nb-enum-ldap-search-auth() {
     local dn && __askvar dn DN
 
     print -z "ldapsearch -x -H ldap://${__DCHOST}:389 -D '${__USER}@${__DOMAIN}' -b '${dn}' -w '${__PASS}' \"(objectClass=*)\""
+}
+
+nb-enum-ldap-auth-search-ctb() {
+    __check-project
+    nb-vars-set-user
+    nb-vars-set-domain
+
+	  __ask "Enter the IP address of the target DC server"
+    nb-vars-set-dchost
+
+    __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
+    local dn && __askvar dn DN
+
+    print -z "ldapsearch -x -H ldap://${__DCHOST}:389 -D '${__USER}@${__DOMAIN}' -b '${dn}' -w '${__PASS}' -s sub \"objectClass\" \"cn\" \"displayName\""
 }
 
 nb-enum-ldap-hydra() {
