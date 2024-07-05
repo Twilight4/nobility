@@ -252,7 +252,7 @@ nb-enum-ldap-search-auth() {
     __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
     local dn && __askvar dn DN
 
-    print -z "ldapsearch -x -H ldap://${__DCHOST}:389 -D ${__USER}    '${dn}' \"(objectClass=*)\" -w '${__PASS}' "
+    print -z "ldapsearch -x -H ldap://${__DCHOST}:389 -D '${__USER}' -b '${dn}' -w '${__PASS}' \"(objectClass=*)\""
 }
 
 nb-enum-ldap-hydra() {
