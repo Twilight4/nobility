@@ -5,8 +5,8 @@
   - [Installation](#Installation)
     - [Installation Method #1: Manually](#Installation-Method-1-Manually)
     - [Installation Method #2: Oh-my-zsh](#Installation-Method-2-Oh-my-zsh)
-    - [Tip: Zsh completion menu](#Tip-Zsh-completion-menu)
     - [Updating](#Updating)
+    - [Tip: Zsh completion menu](#Tip-Zsh-completion-menu)
 - [Getting Started](#Getting-Started)
   - [Installing Dependencies](#Installing-Dependencies)
   - [Workflow Design](#Workflow-Design)
@@ -71,13 +71,13 @@ plugins=(git nobility)
 source ~/.zshrc
 ```
 
+### Updating
+Simply run the `nb-update` command. Assuming you did not modify any of the content in the nobility directory, this should pull the latest code from this GitHub repo, after which you can run nobility modules as usual.
+
 ### Tip: Zsh completion menu
 For enhanced completion selection menu I use [fzf-tab](https://github.com/Aloxaf/fzf-tab).
 
 ![screenshot](https://i.imgur.com/Mff6FUg.png)
-
-### Updating
-Simply run the `nb-update` command. Assuming you did not modify any of the content in the nobility directory, this should pull the latest code from this GitHub repo, after which you can run nobility modules as usual.
 
 # Getting Started
 Nobility categorizes commands into namespaces, denoted by the `nb-` prefix, exemplified by commands like `nb-enum-web` or `nb-recon-domains`. To see an overview of all namespaces simply use `nb-help` command. 
