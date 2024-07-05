@@ -21,6 +21,7 @@ Enumeration
 ============================================
 ANON Session
 ------------
+nb-enum-ldap-anon-search-ctb                general all query but ctb (cut the bullshit)
 nb-enum-ldap-anon-search-users              use ldap anonymous search to enumerate valid usernames
 nb-enum-ldap-anon-wsearch-users             use windapsearch.py to enumerate users
 nb-enum-ldap-anon-search-pass-pol           retrieve password policy using ldapsearch
@@ -246,6 +247,7 @@ nb-enum-ldap-search-anon() {
 nb-enum-ldap-search-auth() {
     __check-project
     nb-vars-set-user
+    nb-vars-set-pass
     nb-vars-set-domain
 
 	  __ask "Enter the IP address of the target DC server"
@@ -260,6 +262,7 @@ nb-enum-ldap-search-auth() {
 nb-enum-ldap-auth-search-ctb() {
     __check-project
     nb-vars-set-user
+    nb-vars-set-pass
     nb-vars-set-domain
 
 	  __ask "Enter the IP address of the target DC server"
@@ -269,6 +272,19 @@ nb-enum-ldap-auth-search-ctb() {
     local dn && __askvar dn DN
 
     print -z "ldapsearch -x -H ldap://${__DCHOST}:389 -D '${__USER}@${__DOMAIN}' -b '${dn}' -w '${__PASS}' -s sub \"objectClass\" \"cn\" \"displayName\""
+}
+
+nb-enum-ldap-anon-search-ctb() {
+    __check-project
+    nb-vars-set-domain
+
+	  __ask "Enter the IP address of the target DC server"
+    nb-vars-set-dchost
+
+    __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
+    local dn && __askvar dn DN
+
+    print -z "ldapsearch -x -H ldap://${__DCHOST}:389 -b '${dn}' -s sub \"objectClass\" \"cn\" \"displayName\""
 }
 
 nb-enum-ldap-hydra() {
