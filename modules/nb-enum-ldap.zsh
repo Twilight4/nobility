@@ -15,12 +15,12 @@ Check Authentication
 nb-enum-ldap-nmap-sweep                     scan a network for services
 nb-enum-ldap-search-anon                    connect with anonymous bind and query ldap
 nb-enum-ldap-search-auth                    connect with authenticated bind and query ldap
+nb-enum-ldap-search-ctx                     query ldap naming contexts
 
 Enumeration
 ============================================
 ANON Session
 ------------
-nb-enum-ldap-anon-search-dc                 use ldap anonymous search to enumerate namingcontexts (needed for other ldapsearch commands)
 nb-enum-ldap-anon-search-users              use ldap anonymous search to enumerate valid usernames
 nb-enum-ldap-anon-wsearch-users             use windapsearch.py to enumerate users
 nb-enum-ldap-anon-search-pass-pol           retrieve password policy using ldapsearch
@@ -41,8 +41,6 @@ Commands
 --------
 nb-enum-ldap-install        installs dependencies
 nb-enum-ldap-tcpdump        capture traffic to and from a host
-nb-enum-ldap-ctx            query ldap naming contexts
-nb-enum-ldap-whoami         send ldap whoami request
 nb-enum-ldap-hydra          brute force passwords for a user account
 
 DOC
@@ -167,15 +165,6 @@ nb-enum-ldap-anon-search-kerb() {
     print -z "ldapsearch -x -H 'ldap://${__DCHOST}' -b \"$dn\" -s sub \"(&(objectCategory=person)(objectClass=user)(! (useraccountcontrol:1.2.840.113556.1.4.803:=2))(serviceprincipalname=*/*))\" serviceprincipalname | grep -B 1 servicePrincipalName | tee $(__dcpath)/ldapsearch-kerberoastable.txt"
 }
 
-nb-enum-ldap-anon-search-dc() {
-    __check-project
-    
-	  __ask "Enter the IP address of the target DC server"
-    nb-vars-set-dchost
-
-    print -z "ldapsearch -H ldap://${__DCHOST}:389 -x -s base namingcontexts"
-}
-
 nb-enum-ldap-anon-search-pass-pol() {
     __check-project
 
@@ -263,16 +252,7 @@ nb-enum-ldap-search-auth() {
     __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
     local dn && __askvar dn DN
 
-    print -z "ldapsearch -x -H ldap://${__DCHOST}:389 -D '${dn}' \"(objectClass=*)\" -w \"${__USER}\" "
-}
-
-nb-enum-ldap-whoami() {
-    __check-project
-
-	  __ask "Enter the IP address of the target DC server"
-    nb-vars-set-dchost
-
-    print -z "ldapwhoami -H ldap://${__DCHOST}:389 -w \"non-existing-user\" "
+    print -z "ldapsearch -x -H ldap://${__DCHOST}:389 -D ${__USER}    '${dn}' \"(objectClass=*)\" -w '${__PASS}' "
 }
 
 nb-enum-ldap-hydra() {
