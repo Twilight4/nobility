@@ -60,6 +60,7 @@ nb-ad-smb-null-smbmap-download       download a file from a share
 nb-ad-smb-null-smbmap-download-pat   download files from a share matching a pattern
 nb-ad-smb-null-smbget-download-rec   recursively download the SMB share
 nb-ad-smb-null-smbmap-upload         upload a file to a share
+nb-ad-smb-null-mount                 mount an SMB share
 
 AUTH Session
 ------------
@@ -68,13 +69,13 @@ nb-ad-smb-auth-smbmap-download       download a file from a share
 nb-ad-smb-null-smbmap-download-pat   download files from a share matching a pattern
 nb-ad-smb-auth-smbget-download-rec   recursively download the SMB share
 nb-ad-smb-auth-smbmap-upload         upload a file to a share
+nb-ad-smb-auth-mount                 mount an SMB share
 
 Misc Commands
 -------------------------------------
 nb-ad-smb-nmap-sweep                 scan a network for services
 nb-ad-smb-install                    installs dependencies
 nb-ad-smb-tcpdump                    capture traffic to and from a host
-nb-ad-smb-auth-mount                 mount an SMB share
 nb-ad-smb-responder                  spoof and get responses using responder
 nb-ad-smb-net-use-null               print a net use statement for windows
 nb-ad-smb-nbtscan                    scan a local network 
