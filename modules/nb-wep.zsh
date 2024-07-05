@@ -133,17 +133,28 @@ nb-wep-se-tools() {
 
     __info "Available tools:"
     echo "1) Storm-Breaker - information gathering about the victm including: geolocation (mobile), device information, social media data extraction, access microphone, access webcam, make screenshots"
-    echo "2) "
+    echo "2) Seeker - access current phone's GPS location if available"
     echo "3) "
     echo "4) "
     echo
     local choice && __askvar choice "CHOICE"
 
     case $choice in
-        1) tool="seeker" ;;
-        2) tool="stormbreaker" ;;
-        3) tool="zphishter" ;;
-        4) tool="blackeye" ;;
-        *) __err "Invalid selection"; return ;;
+        1) 
+          tool="sudo python3 st.py"
+          __info "Forward port to external network using ngrok:"
+          __ok "  ngrok http 2525"
+          ;;
+        2) 
+          tool="seeker"
+          ;;
+        3) 
+          tool="zphishter"
+          ;;
+        4) 
+          tool="blackeye"
+          ;;
+        *) 
+          __err "Invalid selection"; return ;;
     esac
 }
