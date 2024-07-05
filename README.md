@@ -39,7 +39,7 @@ Nobility helps you remember how to use every tool in your arsenal and doesn't hi
 * **Dependency Installers**: Includes installers for dependencies, ensuring a smooth and hassle-free setup process
 
 ## Distributions Compatibility
-Although Nobility only requires zsh to run successfully, the compatibility with system-specific commands like `nb-install` may vary depending on your operating system.
+Although Nobility only requires zsh shell to run successfully, the compatibility with system-specific commands like `nb-install` may vary depending on your operating system.
 * **Arch Linux**: Very supported and thoroughly tested for all features.
 * **Debian**: Mostly supported; while most functionalities work well, the `nb-install-*` commands have not been specifically tested on this platform and their compatibility may vary.
 * **macOS**: Partially supported; the `nb-install-*` commands will not work and it's recommended to avoid using them on this platform.
@@ -215,6 +215,6 @@ nb-ad-dump-secrets
 # GPP Attack
 nb-ad-gpp
 
-# Dump NTDS
+# Dump NTDS database
 nb-ad-dump-ntds
 ```
