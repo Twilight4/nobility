@@ -47,7 +47,9 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  nb-recon-org-                  Commands for organization files and data
  nb-recon-user-                 Commands for searching person's data
  nb-recon-github-               Commands for searching github repositories
- nb-recon-networks-             Commands for identiying an organization's networks nb-recon-domains-              Commands for horizontal domain enumeration nb-recon-subs-                 Commands for vertical sub-domain enumeration External Enumeration Phase
+ nb-recon-networks-             Commands for identiying an organization's networks 
+ nb-recon-domains-              Commands for horizontal domain enumeration 
+ nb-recon-subs-                 Commands for vertical sub-domain enumeration External Enumeration Phase
  --------------------------
  nb-enum-web-                   Enumerate web servers and services
  nb-enum-web-aws-               Enumerate AWS hosted services
@@ -83,7 +85,7 @@ using the nb-<namespace>-install commands or install all dependencies using nb-i
  ---------------------------------------------------
  nb-ad-kerb-                    Commands for attacking kerberos
  nb-ad-smb-                     Commands for SMB services enumeration
- nb-ad-smb-relay                Commands for SMB relay AD attack
+ nb-ad-smb-relay-               Commands for SMB relay AD attack
  nb-ad-rce-                     Commands for RCE on target system
  nb-ad-cve-                     Commands for exploiting systems vulnerable to modern CVEs
  nb-ad-dump-                    Commands for dumping windows hashes in domain

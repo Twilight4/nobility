@@ -24,6 +24,10 @@ nb-wep-user-anarchy             use username-anarchy to create common username p
 nb-wep-user-generator           use username_generator.py to create common username permutations based on the full names 
 nb-wep-user-l2username          use linkedin2username to create common username permutations based on the full names 
 
+Misc
+------------------------
+nb-wep-se-tools                show available social engineering tools from the list and run selected one
+
 DOC
 }
 
@@ -33,6 +37,11 @@ nb-wep-install() {
 
     nb-install-username-anarchy
     nb-install-username-generator
+    #seeker
+    #stormbreaker
+    #ngrok
+    #zphisher
+    #blackeye
 }
 
 nb-wep-pass-cewl() {
@@ -117,4 +126,26 @@ nb-wep-pass-policy() {
 
     # remove no numbers
     #sed -ri '/[0-9]+/!d' $filename
+}
+
+nb-wep-se-tools() {
+    __check-project
+
+    __info "Available tools:"
+    __cyan "1) curl - Command line tool and library for transferring data with URLs"
+    __cyan "2) git - Distributed version control system"
+    __cyan "3) htop - Interactive process viewer for Unix systems"
+    __cyan "4) jq - Command-line JSON processor"
+    __cyan "5) tree - Display directories as trees (with optional color/HTML output)"
+
+    read -p "Enter the number of the tool you want to use: " tool_number
+
+    case $tool_number in
+        1) tool="curl" ;;
+        2) tool="git" ;;
+        3) tool="htop" ;;
+        4) tool="jq" ;;
+        5) tool="tree" ;;
+        *) __err "Invalid selection"; return ;;
+    esac
 }
