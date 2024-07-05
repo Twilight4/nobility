@@ -10,14 +10,14 @@ nb-ad-enum
 ------------
 The nb-ad-enum namespace contains commands for enumerating and exploiting Active Directory server.
 
-Protocol Attacks
-----------------
+Brute Force Attacks
+-------------------
 nb-ad-enum-brute-hydra                brute force password/login for a user account with hydra
 nb-ad-enum-brute-cme                  brute force password/login for a user account with cme
 nb-ad-enum-pass-spray                 perform password spraying
 
 Initial Passive Enumeration
-------------------------------------
+---------------------------
 nb-ad-enum-responder                 starts responder with passive analysis mode enabled (passively listen to the network)
 nb-ad-enum-fping                     fping active checks to validates which hosts are active on a network subnet
 
@@ -43,7 +43,7 @@ nb-ad-enum-auth-enum4-users          dump users list using enum4linux
 nb-ad-enum-auth-cme-pass-pol         use crackmapexec to retrieve password policy
 
 Authenticated Domain Enumeration
-------------------------------------
+--------------------------------
 nb-ad-enum-auth-cme-groups           use crackmapexec with authentication to enumerate domain groups
 nb-ad-enum-auth-cme-loggedon         use crackmapexec with authentication to enumerate logged-on users
 nb-ad-enum-auth-ldapdomaindump       enumerate with ldapdomaindump
@@ -363,8 +363,7 @@ nb-ad-enum-auth-ldapdomaindump() {
     __ask "Enter a password for authentication"
     nb-vars-set-pass
 
-    print -z "ldapdomaindump ${__DCHOST} -u "${__DOMAIN}\\${__USER}" -p "${__PASS}" -o $(__dcpath)/ldapdomaindump"
-    __info "Output saved in 'ldapdomaindump' directory"
+    print -z "ldapdomaindump ${__DCHOST} -u '${__DOMAIN}\\\\${__USER}' -p '${__PASS}' -o $(__dcpath)/ldapdomaindump"
 }
 
 nb-ad-enum-auth-bloodhound() {
