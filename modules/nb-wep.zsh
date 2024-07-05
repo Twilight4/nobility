@@ -144,15 +144,35 @@ nb-wep-se-tools() {
           tool="sudo python3 st.py"
           __info "Forward port to external network using ngrok:"
           __ok "  ngrok http 2525"
+
+          # Check if tool is installed
+          if ! which st.py > /dev/null; then
+            __err "Storm-Breaker is not installed."
+          fi
           ;;
         2) 
           tool="seeker"
+
+          # Check if tool is installed
+          if ! which seeker > /dev/null; then
+            __err "Seeker is not installed."
+          fi
           ;;
         3) 
           tool="zphishter"
+
+          # Check if tool is installed
+          if ! which zphishter > /dev/null; then
+            __err "Zphishter is not installed."
+          fi
           ;;
         4) 
           tool="blackeye"
+
+          # Check if tool is installed
+          if ! which blackeye > /dev/null; then
+            __err "Blackeye is not installed."
+          fi
           ;;
         *) 
           __err "Invalid selection"; return ;;
