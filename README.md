@@ -5,7 +5,7 @@
   - [Installation](#Installation)
     - [Installation Method #1: Manually](#Installation-Method-1-Manually)
     - [Installation Method #2: Oh-my-zsh](#Installation-Method-2-Oh-my-zsh)
-    - [Tip: Zsh completion menu](#Tip:-Zsh-completion-menu)
+    - [Tip: Zsh completion menu](#Tip-Zsh-completion-menu)
     - [Updating](#Updating)
 - [Getting Started](#Getting-Started)
   - [Installing Dependencies](#Installing-Dependencies)
