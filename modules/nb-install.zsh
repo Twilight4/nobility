@@ -48,6 +48,8 @@ nb-install-windapsearch
 nb-install-username-anarchy
 nb-install-username-generator
 nb-install-invoke-powershelltcp
+nb-install-stormbreaker
+nb-install-zphisher
 
 DOC
 }
@@ -745,3 +747,44 @@ nb-install-invoke-powershelltcp-append() {
         __warn "Operation cancelled by user."
     fi
 }
+
+nb-install-stormbreaker() {
+    local name="Storm-Breaker"
+    local url="https://github.com/ultrasecurity/$name"
+    local p="$__TOOLS/$name"
+
+    __info "$name"
+
+    if [[ ! -d $p ]]
+    then
+        git clone $url $p
+        pushd $p
+        __info "install packages using package manager:"
+        cat requirements.txt
+    else
+        __warn "already installed in $p"
+        pushd $p 
+        git pull
+        popd
+    fi
+}
+
+nb-install-zphisher() {
+    local name="zphisher"
+    local url="https://github.com/htr-tech/$name"
+    local p="$__TOOLS/$name"
+
+    __info "$name"
+
+    if [[ ! -d $p ]]
+    then
+        git clone $url $p
+        sudo ln -s $p/zphisher.sh /usr/bin/zphisher
+    else
+        __warn "already installed in $p"
+        pushd $p 
+        git pull
+        popd
+    fi
+}
+

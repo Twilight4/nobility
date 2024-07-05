@@ -37,8 +37,6 @@ nb-wep-install() {
 
     nb-install-username-anarchy
     nb-install-username-generator
-    #stormbreaker
-    #zphisher
 }
 
 nb-wep-pass-cewl() {
@@ -139,15 +137,13 @@ nb-wep-se-tools() {
     case $choice in
         1) 
           # Check if tool is installed
-          if ! which st.py > /dev/null; then
+          if ! which /opt/Storm-Breaker/st.py > /dev/null; then
             __err "Storm-Breaker is not installed."
+            exit 1
           fi
 
           # Run the tool
-          clear
-          __info "Forward port to external network using ngrok:"
-          __ok "  ngrok http 2525"
-          pushd "/opt/Storm-Breaker/" &> /dev/null
+          pushd "${__TOOLS}/Storm-Breaker" &> /dev/null
           sudo python3 st.py
           popd &> /dev/null
           ;;
@@ -155,6 +151,7 @@ nb-wep-se-tools() {
           # Check if tool is installed
           if ! which seeker > /dev/null; then
             __err "Seeker is not installed."
+            exit 1
           fi
 
           # Run the tool
