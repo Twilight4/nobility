@@ -132,20 +132,18 @@ nb-wep-se-tools() {
     __check-project
 
     __info "Available tools:"
-    __cyan "1) curl - Command line tool and library for transferring data with URLs"
-    __cyan "2) git - Distributed version control system"
-    __cyan "3) htop - Interactive process viewer for Unix systems"
-    __cyan "4) jq - Command-line JSON processor"
-    __cyan "5) tree - Display directories as trees (with optional color/HTML output)"
+    echo "1) Storm-Breaker - information gathering about the victm including: geolocation (mobile), device information, social media data extraction, access microphone, access webcam, make screenshots"
+    echo "2) "
+    echo "3) "
+    echo "4) "
+    echo
+    local choice && __askvar choice "CHOICE"
 
-    read -p "Enter the number of the tool you want to use: " tool_number
-
-    case $tool_number in
-        1) tool="curl" ;;
-        2) tool="git" ;;
-        3) tool="htop" ;;
-        4) tool="jq" ;;
-        5) tool="tree" ;;
+    case $choice in
+        1) tool="seeker" ;;
+        2) tool="stormbreaker" ;;
+        3) tool="zphishter" ;;
+        4) tool="blackeye" ;;
         *) __err "Invalid selection"; return ;;
     esac
 }
