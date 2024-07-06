@@ -22,6 +22,7 @@ Enumeration
 ANON Session
 ------------
 nb-enum-ldap-anon-search-ctb                general all query but ctb (cut the bullshit)
+nb-enum-ldap-anon-wsearch-all               dump all attributes from LDAP (look for passwords in descriptions or other fields)
 nb-enum-ldap-anon-search-users              use ldap anonymous search to enumerate valid usernames
 nb-enum-ldap-anon-wsearch-users             use windapsearch.py to enumerate users
 nb-enum-ldap-anon-search-pass-pol           retrieve password policy using ldapsearch
@@ -32,6 +33,7 @@ nb-enum-ldap-anon-wsearch-privileged-users  use windapsearch.py to enumerate pri
 AUTH Session
 ------------
 nb-enum-ldap-auth-search-ctb                general all query but ctb (cut the bullshit)
+nb-enum-ldap-auth-wsearch-all               dump all attributes from LDAP (look for passwords in descriptions or other fields)
 nb-enum-ldap-auth-search-users              use authenticated ldapsearch to enumerate valid usernames
 nb-enum-ldap-auth-wsearch-users             use windapsearch.py to enumerate users
 nb-enum-ldap-auth-search-pass-pol           retrieve password policy using ldapsearch
@@ -105,6 +107,26 @@ nb-enum-ldap-auth-wsearch-privileged-users() {
 }
 
 nb-enum-ldap-anon-wsearch-privileged-users() {
+    __check-project
+    nb-vars-set-domain
+
+	  __ask "Enter the IP address of the target DC server"
+    nb-vars-set-dchost
+
+    print -z "windapsearch.py --dc-ip ${__DCHOST} -d ${__DOMAIN} -PU | tee $(__dcpath)/wsearch-users.txt"
+}
+
+nb-enum-ldap-anon-wsearch-all() {
+    __check-project
+    nb-vars-set-domain
+
+	  __ask "Enter the IP address of the target DC server"
+    nb-vars-set-dchost
+
+    print -z "windapsearch.py -d ${__DOMAIN} --dc-ip ${__DCHOST} -U --full | grep Password | tee $(__dcpath)/wsearch-users.txt"
+}
+
+nb-enum-ldap-auth-wsearch-all() {
     __check-project
     nb-vars-set-domain
 
