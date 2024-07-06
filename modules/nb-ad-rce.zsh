@@ -10,13 +10,17 @@ nb-ad-rce
 ----------
 The nb-ad-rce namespace provides commands for getting shells/remote code execution on a target system.
 
+Scanning
+--------
+nb-ad-rce-nmap-winrm           scan hosts for open winrm port
+
 Brute Force Attacks
 -------------------
 nb-ad-rce-brute-hydra                brute force password/login for a user account with hydra
 nb-ad-rce-brute-cme                  brute force password/login for a user account with cme
-nb-ad-rce-pass-spray                 perform password spraying
+nb-ad-rce-pass-spray                 perform password spraying in a domain
 nb-ad-rce-brute-winrm                brute force password/login for a user account for winrm
-nb-ad-rce-cme-pass                   pass the password/hash
+nb-ad-rce-cme-pass                   pass the password/hash on a network subnet
 
 Getting Shells
 --------------
@@ -25,7 +29,6 @@ nb-ad-rce-evil-winrm           connect via winrm to a target host
 nb-ad-rce-psexec               connect via psexec to a target host
 nb-ad-rce-wmiexec              connect via wmiexec to a target host
 nb-ad-rce-psexec-msf           connect via metasploit's psexec to a target host
-nb-ad-rce-nmap-winrm           scan hosts for open winrm port
 
 DOC
 }
@@ -423,4 +426,3 @@ nb-ad-rce-cme-pass() {
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
     fi
 }
-
