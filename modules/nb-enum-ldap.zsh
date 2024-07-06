@@ -123,17 +123,19 @@ nb-enum-ldap-anon-wsearch-all() {
 	  __ask "Enter the IP address of the target DC server"
     nb-vars-set-dchost
 
-    print -z "windapsearch.py -d ${__DOMAIN} --dc-ip ${__DCHOST} -U --full | grep Password | tee $(__dcpath)/wsearch-users.txt"
+    print -z "windapsearch.py -d ${__DOMAIN} --dc-ip ${__DCHOST} -U --full | grep Password | tee $(__dcpath)/wsearch-all.txt"
 }
 
 nb-enum-ldap-auth-wsearch-all() {
     __check-project
     nb-vars-set-domain
+    nb-vars-set-user
+    nb-vars-set-pass
 
 	  __ask "Enter the IP address of the target DC server"
     nb-vars-set-dchost
 
-    print -z "windapsearch.py --dc-ip ${__DCHOST} -d ${__DOMAIN} -PU | tee $(__dcpath)/wsearch-users.txt"
+    print -z "windapsearch.py -u '${__USER}@${__DOMAIN}' -p '${__PASS}' --dc-ip ${__DCHOST} -U --full | grep Password | tee $(__dcpath)/wsearch-all.txt"
 }
 
 nb-enum-ldap-anon-search-users() {
