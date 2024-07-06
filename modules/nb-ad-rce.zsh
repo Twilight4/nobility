@@ -10,11 +10,17 @@ nb-ad-rce
 ----------
 The nb-ad-rce namespace provides commands for getting shells/remote code execution on a target system.
 
-Commands
---------
+Brute Force Attacks
+-------------------
+nb-ad-rce-brute-hydra                brute force password/login for a user account with hydra
+nb-ad-rce-brute-cme                  brute force password/login for a user account with cme
+nb-ad-rce-pass-spray                 perform password spraying
+nb-ad-rce-brute-winrm                brute force password/login for a user account for winrm
+
+Getting Shells
+--------------
 nb-ad-rce-freerdp              connect via freerdp to a target host
 nb-ad-rce-evil-winrm           connect via winrm to a target host
-nb-ad-rce-cme-winrm            connect via cme winrm to a target host
 nb-ad-rce-psexec               connect via psexec to a target host
 nb-ad-rce-wmiexec              connect via wmiexec to a target host
 nb-ad-rce-psexec-msf           connect via metasploit's psexec to a target host
