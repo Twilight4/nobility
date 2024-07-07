@@ -48,7 +48,7 @@ python -c 'import pty; pty.spawn("/bin/bash")'   # select the available python v
 Ctrl-Z
 
 # In host system
-stty raw -echo
+stty -a
 fg
 #2x Return
 
@@ -56,7 +56,7 @@ fg
 reset
 export SHELL=bash
 export TERM=xterm-256color
-stty rows <num> columns <cols>
+stty rows <ROWS> columns <COLS>
 DOC
 }
 
