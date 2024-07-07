@@ -13,7 +13,8 @@ The nb-enum-ldap namespace contains commands for scanning and enumerating LDAP s
 Check Authentication
 --------------------
 nb-enum-ldap-nmap-sweep                     scan a network for services
-nb-enum-ldap-search-anon                    connect with anonymous bind and query ldap
+nb-enum-ldap-search-anon                    check if LDAP anonymous binds are permitted using ldapsearch
+nb-enum-ldap-wsearch-anon                   check if LDAP anonymous binds are permitted using windapsearch
 nb-enum-ldap-search-auth                    connect with authenticated bind and query ldap
 nb-enum-ldap-search-ctx                     query ldap naming contexts
 
@@ -266,6 +267,15 @@ nb-enum-ldap-search-anon() {
     local dn && __askvar dn DN
 
     print -z "ldapsearch -x -H ldap://${__DCHOST}:389 -s sub -b \"${dn}\" "
+}
+
+nb-enum-ldap-wsearch-anon() {
+    __check-project
+
+	  __ask "Enter the IP address of the target DC server"
+    nb-vars-set-dchost
+
+    print -z "python windapsearch.py -u "" --dc-ip ${__DCHOST}"
 }
 
 nb-enum-ldap-search-auth() {

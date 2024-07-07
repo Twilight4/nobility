@@ -717,7 +717,7 @@ nb-install-username-generator() {
 }
 
 nb-install-arch-generic() {
-    paru --needed -S nmap metasploit postgresql gobuster whatweb exploitdb masscan john bloodhound python-bloodhound python-neo4j sliver-bin hydra enum4linux smbmap hashid hashcat evil-winrm ldapdomaindump kerbrute
+    paru --needed -S nmap metasploit postgresql gobuster whatweb exploitdb masscan john bloodhound python-bloodhound python-neo4j sliver-bin hydra enum4linux smbmap hashid hashcat evil-winrm ldapdomaindump kerbrute responder
     pip3 install impacket
 }
 
