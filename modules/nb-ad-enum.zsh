@@ -43,7 +43,6 @@ nb-ad-enum-auth-ldapdomaindump       enumerate with ldapdomaindump
 nb-ad-enum-auth-cme-groups           use crackmapexec with authentication to enumerate domain groups
 nb-ad-enum-auth-cme-loggedon         use crackmapexec with authentication to enumerate logged-on users
 nb-ad-enum-auth-cme-petipotam        use crackmapexec petipotam module
-nb-ad-enum-auth-cme-command          the password/hash and execute command
 
 DOC
 }
@@ -375,43 +374,6 @@ nb-ad-enum-auth-bloodhound() {
     #pushd $(__netpath) &> /dev/null
     print -z "sudo bloodhound-python -d ${__DOMAIN} -u ${__USER} -p '${__PASS}' -ns ${__DCHOST} -c all"
     #popd &> /dev/null
-}
-
-nb-ad-enum-auth-cme-command() {
-    __check-project
-    nb-vars-set-network
-    nb-vars-set-user
-
-    __ask "Enter command to execute"
-    local cm && __askvar cm "COMMAND"
-
-    __ask "Do you want to log in using a password or a hash? (p/h)"
-    local login && __askvar login "LOGIN_OPTION"
-
-    if [[ $login == "p" ]]; then
-        __ask "Do you want to add a domain? (y/n)"
-        local add_domain && __askvar add_domain "ADD_DOMAIN_OPTION"
-
-        if [[ $add_domain == "y" ]]; then
-            __ask "Enter the domain"
-            nb-vars-set-domain
-            __ask "Enter a password for authentication"
-            nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' -x $cm | tee $(__netpath)/cme-command-sweep.txt"
-        else
-            __ask "Enter a password for authentication"
-            nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' -x $cm | tee $(__netpath)/cme-command-sweep.txt"
-        fi
-    elif [[ $login == "h" ]]; then
-        echo
-        __ask "Enter the NTLM hash for authentication"
-        __check-hash
-        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -x $cm | tee $(__netpath)/cme-command-sweep.txt"
-    else
-        echo
-        __err "Invalid option. Please choose 'p' for password or 'h' for hash."
-    fi
 }
 
 nb-ad-enum-auth-cme-petipotam() {

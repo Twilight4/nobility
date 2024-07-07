@@ -239,7 +239,7 @@ nb-enum-web-brute-login-post() {
 nb-enum-web-brute-default-post() {
     nb-vars-set-rhost
     nb-vars-set-wordlist
-    __ask "Enter the URI for the post request, ex: /path"
+    __ask "Enter the URI for the post request (without the domain), ex: /path"
     local uri && __askvar uri URI
     local uf && __askvar uf USER_FIELD
     local pf && __askvar pf PASSWORD_FIELD

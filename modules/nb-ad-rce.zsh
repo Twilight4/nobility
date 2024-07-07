@@ -428,7 +428,7 @@ nb-ad-rce-cme-pass() {
     fi
 }
 
-nb-ad-enum-auth-cme-command() {
+nb-ad-rce-cme-command() {
     __check-project
     nb-vars-set-network
     nb-vars-set-user
