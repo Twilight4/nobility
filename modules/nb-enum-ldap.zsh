@@ -30,6 +30,7 @@ nb-enum-ldap-anon-search-pass-pol           retrieve password policy using ldaps
 nb-enum-ldap-anon-search-kerb               use authenticated ldapsearch to enumerate kerberoastable accounts
 nb-enum-ldap-anon-wsearch-domain-admins     use windapsearch.py to enumerate domain admin users
 nb-enum-ldap-anon-wsearch-privileged-users  use windapsearch.py to enumerate privileged users
+nb-enum-ldap-anon-wsearch-group-rmu         use windapsearch.py to enumerate users in Remote Management Users group
 
 AUTH Session
 ------------
@@ -41,6 +42,7 @@ nb-enum-ldap-auth-search-pass-pol           retrieve password policy using ldaps
 nb-enum-ldap-auth-search-kerb               use authenticated ldapsearch to enumerate kerberoastable accounts
 nb-enum-ldap-auth-wsearch-domain-admins     use windapsearch.py to enumerate domain admin users
 nb-enum-ldap-auth-wsearch-privileged-users  use windapsearch.py to enumerate privileged users
+nb-enum-ldap-auth-wsearch-group-rmu         use windapsearch.py to enumerate users in Remote Management Users group
 
 Commands
 --------
@@ -58,7 +60,7 @@ nb-enum-ldap-anon-wsearch-users() {
 	  __ask "Enter the IP address of the target DC controller"
     nb-vars-set-dchost
 
-    print -z "windapsearch.py -d ${__DOMAIN} --dc-ip ${__DCHOST} -U | tee $(__dcpath)/wsearch-users.txt"
+    print -z "windapsearch.py -d ${__DOMAIN} --dc-ip ${__DCHOST} -U --admin-objects | tee $(__dcpath)/wsearch-users.txt"
 }
 
 nb-enum-ldap-auth-wsearch-domain-admins() {
@@ -105,6 +107,28 @@ nb-enum-ldap-auth-wsearch-privileged-users() {
     nb-vars-set-dchost
 
     print -z "windapsearch.py --dc-ip ${__DCHOST} -u '${__USER}@${__DOMAIN}' -p '${__PASS}' -PU | tee $(__dcpath)/wsearch-users.txt"
+}
+
+nb-enum-ldap-anon-wsearch-group-rmu() {
+    __check-project
+    nb-vars-set-domain
+
+	  __ask "Enter the IP address of the target DC server"
+    nb-vars-set-dchost
+
+    print -z "windapsearch.py -u "" --dc-ip ${__DCHOST} -d ${__DOMAIN} -U -m \"Remote Management Users\" | tee $(__dcpath)/wsearch-rmu-users.txt"
+}
+
+nb-enum-ldap-auth-wsearch-group-rmu() {
+    __check-project
+    nb-vars-set-user
+    nb-vars-set-pass
+    nb-vars-set-domain
+
+	  __ask "Enter the IP address of the target DC server"
+    nb-vars-set-dchost
+
+    print -z "windapsearch.py --dc-ip ${__DCHOST} -u '${__USER}@${__DOMAIN}' -p ${__PASS} -U -m \"Remote Management Users\" | tee $(__dcpath)/wsearch-rmu-users.txt"
 }
 
 nb-enum-ldap-anon-wsearch-privileged-users() {
