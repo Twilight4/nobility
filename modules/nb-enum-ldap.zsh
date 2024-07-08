@@ -61,7 +61,7 @@ nb-enum-ldap-anon-wsearch-users() {
     nb-vars-set-dchost
 
     #print -z "windapsearch.py -u '' -d ${__DOMAIN} --dc-ip ${__DCHOST} -U --admin-objects | tee $(__dcpath)/wsearch-users.txt"
-    print -z "windapsearch.py -u '' --dc-ip ${__DCHOST} -d ${__DOMAIN} -U | grep '@' | cut -d ' ' -f 2 | cut -d '@' -f 1 | uniq > users.txt"
+    print -z "windapsearch.py -u '' --dc-ip ${__DCHOST} -d ${__DOMAIN} -U | grep '@' | cut -d ' ' -f 2 | cut -d '@' -f 1 | uniq | tee users.txt"
 }
 
 nb-enum-ldap-auth-wsearch-domain-admins() {
@@ -96,7 +96,7 @@ nb-enum-ldap-auth-wsearch-users() {
     nb-vars-set-dchost
 
     #print -z "windapsearch.py --dc-ip ${__DCHOST} -u '${__USER}@${__DOMAIN}' -p '${__PASS}' -U | tee $(__dcpath)/wsearch-users.txt"
-    print -z "windapsearch.py -u '${__USER}@${__DOMAIN}' --dc-ip ${__DCHOST} -p '${__PASS}' -U | grep '@' | cut -d ' ' -f 2 | cut -d '@' -f 1 | uniq > users.txt"
+    print -z "windapsearch.py -u '${__USER}@${__DOMAIN}' --dc-ip ${__DCHOST} -p '${__PASS}' -U | grep '@' | cut -d ' ' -f 2 | cut -d '@' -f 1 | uniq | tee users.txt"
 }
 
 nb-enum-ldap-auth-wsearch-privileged-users() {
