@@ -155,18 +155,14 @@ nb-ad-smb-auth-smbmap-download-pat() {
   nb-vars-set-user
   nb-vars-set-pass
   nb-vars-set-domain
-  __ask "Enter the pattern (ex. xml)"
-  local pat && __askvar file pat
-  print -z "smbmap -u '${__USER}' -p '${__PASS}' -d ${__DOMAIN} -H ${__RHOST} -r ${__SHARE} -A $pat --no-banner"
+  print -z "smbmap -u '${__USER}' -p '${__PASS}' -d ${__DOMAIN} -H ${__RHOST} -r ${__SHARE} -A '(xlsx|docx|txt|xml)' --no-banner"
 }
 
 nb-ad-smb-null-smbmap-download-pat() {
   __check-project
   __check-share
   nb-vars-set-rhost
-  __ask "Enter the pattern (ex. xml)"
-  local pat && __askvar file pat
-  print -z "smbmap -H ${__RHOST} -u '' -p '' -r ${__SHARE} -A $pat --no-banner"
+  print -z "smbmap -H ${__RHOST} -u '' -p '' -r ${__SHARE} -A '(xlsx|docx|txt|xml)' --no-banner"
 }
 
 nb-ad-smb-null-smbmap-upload() {

@@ -60,7 +60,8 @@ nb-enum-ldap-anon-wsearch-users() {
 	  __ask "Enter the IP address of the target DC controller"
     nb-vars-set-dchost
 
-    print -z "windapsearch.py -d ${__DOMAIN} --dc-ip ${__DCHOST} -U --admin-objects | tee $(__dcpath)/wsearch-users.txt"
+    #print -z "windapsearch.py -u '' -d ${__DOMAIN} --dc-ip ${__DCHOST} -U --admin-objects | tee $(__dcpath)/wsearch-users.txt"
+    print -z "windapsearch.py -u '' --dc-ip ${__DCHOST} -d ${__DOMAIN} -U | grep '@' | cut -d ' ' -f 2 | cut -d '@' -f 1 | uniq > users.txt"
 }
 
 nb-enum-ldap-auth-wsearch-domain-admins() {
@@ -82,7 +83,7 @@ nb-enum-ldap-anon-wsearch-domain-admins() {
 	  __ask "Enter the IP address of the target DC controller"
     nb-vars-set-dchost
 
-    print -z "windapsearch.py --dc-ip ${__DCHOST} -d ${__DOMAIN} --da | tee $(__dcpath)/wsearch-domain-admins.txt"
+    print -z "windapsearch.py -u '' --dc-ip ${__DCHOST} -d ${__DOMAIN} --da | tee $(__dcpath)/wsearch-domain-admins.txt"
 }
 
 nb-enum-ldap-auth-wsearch-users() {
@@ -94,7 +95,8 @@ nb-enum-ldap-auth-wsearch-users() {
 	  __ask "Enter the IP address of the target DC controller"
     nb-vars-set-dchost
 
-    print -z "windapsearch.py --dc-ip ${__DCHOST} -u '${__USER}@${__DOMAIN}' -p '${__PASS}' -U | tee $(__dcpath)/wsearch-users.txt"
+    #print -z "windapsearch.py --dc-ip ${__DCHOST} -u '${__USER}@${__DOMAIN}' -p '${__PASS}' -U | tee $(__dcpath)/wsearch-users.txt"
+    print -z "windapsearch.py -u '${__USER}@${__DOMAIN}' --dc-ip ${__DCHOST} -p '${__PASS}' -U | grep '@' | cut -d ' ' -f 2 | cut -d '@' -f 1 | uniq > users.txt"
 }
 
 nb-enum-ldap-auth-wsearch-privileged-users() {
@@ -116,7 +118,7 @@ nb-enum-ldap-anon-wsearch-group-rmu() {
 	  __ask "Enter the IP address of the target DC server"
     nb-vars-set-dchost
 
-    print -z "windapsearch.py -u "" --dc-ip ${__DCHOST} -d ${__DOMAIN} -U -m \"Remote Management Users\" | tee $(__dcpath)/wsearch-rmu-users.txt"
+    print -z "windapsearch.py -u '' --dc-ip ${__DCHOST} -d ${__DOMAIN} -U -m \"Remote Management Users\" | tee $(__dcpath)/wsearch-rmu-users.txt"
 }
 
 nb-enum-ldap-auth-wsearch-group-rmu() {
@@ -138,7 +140,7 @@ nb-enum-ldap-anon-wsearch-privileged-users() {
 	  __ask "Enter the IP address of the target DC server"
     nb-vars-set-dchost
 
-    print -z "windapsearch.py --dc-ip ${__DCHOST} -d ${__DOMAIN} -PU | tee $(__dcpath)/wsearch-users.txt"
+    print -z "windapsearch.py -u '' --dc-ip ${__DCHOST} -d ${__DOMAIN} -PU | tee $(__dcpath)/wsearch-users.txt"
 }
 
 nb-enum-ldap-anon-wsearch-all() {
@@ -148,7 +150,7 @@ nb-enum-ldap-anon-wsearch-all() {
 	  __ask "Enter the IP address of the target DC server"
     nb-vars-set-dchost
 
-    print -z "windapsearch.py -d ${__DOMAIN} --dc-ip ${__DCHOST} -U --full | grep Password | tee $(__dcpath)/wsearch-all.txt"
+    print -z "windapsearch.py -u '' -d ${__DOMAIN} --dc-ip ${__DCHOST} -U --full | grep Password | tee $(__dcpath)/wsearch-all.txt"
 }
 
 nb-enum-ldap-auth-wsearch-all() {

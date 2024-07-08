@@ -381,6 +381,24 @@ nb-install-winpeas() {
     fi
 }
 
+nb-install-wordlist-englishbasic() {
+    local eng="$(pwd)/english-basic.txt"
+
+    # Check if file already exists
+    if [ -f "$eng" ]; then
+        __warn "english-basic.txt already installed in $eng"
+        return
+    fi
+
+    __cyan "This will install english-basic.txt in currentw working directory"
+    __ask "CONTINUE?"
+    if __check-proceed; then
+        wget https://raw.githubusercontent.com/insidetrust/statistically-likely-usernames/master/weak-corporate-passwords/english-basic.txt -O "$eng"
+    else
+        __warn "Operation cancelled by user."
+    fi
+}
+
 nb-install-linpeas() {
     local lin="$SV/linpeas.sh"
 
