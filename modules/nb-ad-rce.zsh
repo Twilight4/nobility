@@ -307,7 +307,7 @@ nb-ad-rce-pass-spray() {
 	  __ask "Enter the password for spraying"
     local pw && __askvar pw PASSWORD
 
-    print -z "kerbrute passwordspray -d ${__DOMAIN} --dc ${__DCHOST} $ul '$pw' -o $(__dcpath)/kerbrute-password-spray.txt"
+    print -z "kerbrute passwordspray -d ${__DOMAIN} --dc ${__DCHOST} $ul '$pw' --user-as-pass -o $(__dcpath)/kerbrute-password-spray.txt"
 }
 
 nb-ad-rce-brute-cme() {
