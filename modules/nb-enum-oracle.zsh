@@ -7,8 +7,23 @@ nb-enum-oracle-help() {
     cat << "DOC" | bat --plain --language=help
 
 nb-enum-oracle
---------------s
+--------------
 The nb-enum-oracle namespace contains commands for scanning and enumerating Oracle services and databases.
+
+Sid brute force
+-----------------
+nb-enum-oracle-sidguess          tnscmd password brute force
+nb-enum-oracle-hydra-sid         brute force passwords
+nb-enum-oracle-msf-sid
+nb-enum-oracle-odat-sidguess
+
+ODAT
+----
+nb-enum-oracle-odat              odat anonymous enumeration
+nb-enum-oracle-odat-upload       odat anonymous enumeration
+nb-enum-oracle-odat-exec         odat anonymous enumeration
+nb-enum-oracle-odat-creds        odat authenticated enumeration
+nb-enum-oracle-odat-passwords    odat password brute
 
 Commands
 --------
@@ -16,15 +31,10 @@ nb-enum-oracle-install           installs dependencies
 nb-enum-oracle-nmap-sweep        scan a network for services
 nb-enum-oracle-tcpdump           capture traffic to and from a host
 nb-enum-oracle-sqlplus           sqlplus client
-nb-enum-oracle-odat              odat anonymous enumeration
-nb-enum-oracle-odat-creds        odat authenticated enumeration
-nb-enum-oracle-odat-passwords    odat password brute
 nb-enum-oracle-version           tnscmd version query
 nb-enum-oracle-status            tnscmd status query
-nb-enum-oracle-sidguess          tnscmd password brute force
 nb-enum-oracle-oscanner          oscanner enumeration
 nb-enum-oracle-hydra-listener    brute force passwords 
-nb-enum-oracle-hydra-sid         brute force passwords
 
 DOC
 }
