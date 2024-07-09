@@ -57,12 +57,19 @@ nb-enum-oracle-odat-upload() {
     nb-vars-set-rhost
     nb-vars-set-user
     nb-vars-set-pass
-    local f && __askvar f "FILE_TO_UPLOAD"
+    __ask "Enter file to in current working directory to upload"
+    local f && __askvar f "FILE"
     print -z "./odat-libc2.17-x86_64 externaltable -s ${__RHOST} -p 1521 -U ${__USER} -P ${__PASS} -d XE --sysdba --exec /temp $f"
 }
 
 nb-enum-oracle-odat-exec() {
-
+    __check-project
+    nb-vars-set-rhost
+    nb-vars-set-user
+    nb-vars-set-pass
+    __ask "Enter file to in current working directory to execute"
+    local f && __askvar f "FILE"
+    print -z "./odat-libc2.17-x86_64 utlfile -s ${__RHOST} -p 1521 -d XE -U ${__USER} -P ${__PASS} --sysdba --putFile /temp $f ./$f"
 }
 
 
