@@ -51,6 +51,7 @@ nb-enum-web-dirs-ffuf() {
     __check-project
     nb-vars-set-url
     nb-vars-set-wordlist
+    __ask "Enter number of threads (default 40)"
     __check-threads
     print -z "ffuf -c -p 0.1 -t ${__THREADS} -H \"User-Agent: Mozilla\" -fs 5602 -fc 404 -w ${__WORDLIST} -u http://${__URL}/FUZZ -o $(__urlpath)/ffuf-dirs.csv -of csv"
 }
@@ -59,6 +60,8 @@ nb-enum-web-dirs-gobuster() {
     __check-project
     nb-vars-set-url
     nb-vars-set-wordlist
+
+    __ask "Enter number of threads (default 10)"
     __check-threads
     print -z "gobuster dir -u ${__URL} -a \"${__UA}\" -t ${__THREADS} -w ${__WORDLIST} -o $(__urlpath)/gobuster-dirs.txt "
 }

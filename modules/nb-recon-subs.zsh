@@ -83,10 +83,9 @@ nb-recon-subs-subfinder() {
 nb-recon-subs-ffuf() {
     __check-project
     nb-vars-set-domain
-    nb-vars-set-url
     nb-vars-set-wordlist
     __check-threads
-    print -z "ffuf -c -p 0.1 -t ${__THREADS} -H \"Host: FUZZ.${__DOMAIN}\" -fs 5602 -fc 404 -w ${__WORDLIST} -u ${__URL} -o $(__dompath)/ffuf-subs.csv -of csv"
+    print -z "ffuf -c -p 0.1 -t ${__THREADS} -H \"Host: FUZZ.${__DOMAIN}\" -fs 5602 -fc 404 -w ${__WORDLIST} -u ${__DOMAIN} -o $(__dompath)/ffuf-subs.csv -of csv"
 }
 
 nb-recon-subs-assetfinder() {

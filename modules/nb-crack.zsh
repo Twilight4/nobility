@@ -28,7 +28,7 @@ DOC
 
 nb-crack-install() {
   __info "Running $0..."
-  __pkgs hashcat john libcompress-raw-lzma-perl
+  __pkgs hashcat john libcompress-raw-lzma-perl clinfo pocl
 }
 
 nb-crack-hashcat() {

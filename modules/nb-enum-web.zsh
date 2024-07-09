@@ -95,7 +95,10 @@ nb-enum-web-crawl() {
     nb-vars-set-url
     nb-vars-set-wordlist
     local w && __askpath w WORDLIST /usr/share/seclists/Discovery/Web-Content/raft-small-directories-lowercase.txt
+
+    __ask "Enter number of threads (default 40)"
     __check-threads
+
     local d && __askvar d "RECURSION DEPTH"
     print -z "ffuf -c -p 0.1 -t ${__THREADS} -recursion -recursion-depth ${d} -H \"User-Agent: Mozilla\" -fc 404 -w ${w} -u ${__URL}/FUZZ -o $(__urlpath)/ffuf-crawl.csv -of csv"
 }
@@ -108,6 +111,8 @@ nb-enum-web-vhosts-gobuster() {
     __check-project
     nb-vars-set-url
     local w && __askpath w WORDLIST /usr/share/seclists/Discovery/DNS/namelist.txt
+
+    __ask "Enter number of threads (default 10)"
     __check-threads
     print -z "gobuster vhost -u http://${__URL} -w ${w} -a \"${__UA}\" -t ${__THREADS} -o $(__urlpath)/vhosts-gobuster.txt"
 }
@@ -115,8 +120,9 @@ nb-enum-web-vhosts-gobuster() {
 nb-enum-web-vhosts-ffuf() {
     __check-project
     nb-vars-set-domain
-    nb-vars-set-url
     local w && __askpath w WORDLIST /usr/share/seclists/Discovery/DNS/namelist.txt
+
+    __ask "Enter number of threads (default 40)"
     __check-threads
     local s && __askvar s SUBDOMAIN
 
@@ -127,13 +133,13 @@ nb-enum-web-vhosts-ffuf() {
     length=${cl//$'\n'/}
 
     # Print the content length
-    __info "Content Length: $length"
+    __info "$length"
 
     # Information
     __info "Add the gathered vhosts/subdomains to /etc/hosts"
     __ok "nb-project-host"
 
-    print -z "ffuf -c -p 0.1 -fc 404 -fs $length -u http://${__URL} -w ${w}:FUZZ -t ${__THREADS} -H \"HOST: FUZZ.${__DOMAIN}\" -o $(__urlpath)/vhosts-ffuf.csv -of csv"
+    print -z "ffuf -c -p 0.1 -fc 404 -fs $length -u http://${__DOMAIN} -w ${w}:FUZZ -t ${__THREADS} -H \"HOST: FUZZ.${__DOMAIN}\" -o $(__urlpath)/vhosts-ffuf.csv -of csv"
 }
 
 
