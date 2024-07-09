@@ -14,14 +14,14 @@ Sid brute force
 -----------------
 nb-enum-oracle-sidguess          tnscmd password brute force
 nb-enum-oracle-hydra-sid         brute force passwords
-nb-enum-oracle-msf-sid
+nb-enum-oracle-msf-sid           brute force sid with metasploit
 nb-enum-oracle-odat-sidguess
 
 ODAT
 ----
 nb-enum-oracle-odat              odat anonymous enumeration
-nb-enum-oracle-odat-upload       odat anonymous enumeration
-nb-enum-oracle-odat-exec         odat anonymous enumeration
+nb-enum-oracle-odat-upload       odat 
+nb-enum-oracle-odat-exec         odat 
 nb-enum-oracle-odat-creds        odat authenticated enumeration
 nb-enum-oracle-odat-passwords    odat password brute
 
@@ -38,6 +38,36 @@ nb-enum-oracle-hydra-listener    brute force passwords
 
 DOC
 }
+
+nb-enum-oracle-msf-sid() {
+    __check-project
+    nb-vars-set-rhost
+    local cmd="use scanner/oracle/sid_brute; set RHOST ${__RHOST}; run"
+    print -z "msfconsole -n -q -x \"${cmd}\""
+}
+
+nb-enum-oracle-odat-sidguess() {
+    __check-project
+    nb-vars-set-rhost
+    print -z "odat sidguesser -s ${__RHOST} -p 1521"
+}
+
+nb-enum-oracle-odat-upload() {
+
+}
+
+nb-enum-oracle-odat-exec() {
+
+}
+
+
+
+
+
+
+
+
+
 
 nb-enum-oracle-install() {
     __info "Running $0..."
@@ -111,7 +141,7 @@ nb-enum-oracle-status(){
 
 nb-enum-oracle-sidguess(){
     nb-vars-set-rhost
-    print -z "sidguess host=${__RHOST} port=1521 sidfile=sid.txt"
+    print -z "sidguess -p 1521 -i ${__RHOST} -d /usr/share/seclists/Fuzzing/Databases/OracleDB-SID.txt"
 }
 
 nb-enum-oracle-oscanner() {
