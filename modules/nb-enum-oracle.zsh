@@ -13,9 +13,9 @@ The nb-enum-oracle namespace contains commands for scanning and enumerating Orac
 Sid brute force
 -----------------
 nb-enum-oracle-sidguess          tnscmd password brute force
+nb-enum-oracle-msf-sid           brute force sids with metasploit
+nb-enum-oracle-odat-sidguess     brute force sids with odat sidguess
 nb-enum-oracle-hydra-sid         brute force passwords
-nb-enum-oracle-msf-sid           brute force sid with metasploit
-nb-enum-oracle-odat-sidguess
 
 ODAT
 ----
@@ -115,10 +115,10 @@ nb-enum-oracle-tcpdump() {
 
 nb-enum-oracle-sqlplus() {
     nb-vars-set-rhost
+    nb-vars-set-user
+    nb-vars-set-pass
     local sid && __askvar sid "SID(DATABASE)"
-    local u && __askvar u "USER"
-    local p && __askvar [u] "PASSWORD"
-    print -z "sqlplus ${u}/${p}@${__RHOST}:1521/${sid} as sysdba"
+    print -z "sqlplus ${__USER}/${__PASS}@${__RHOST}:1521/${sid} as sysdba"
 }
 
 nb-enum-oracle-odat() {
@@ -128,10 +128,10 @@ nb-enum-oracle-odat() {
 
 nb-enum-oracle-odat-creds() {
     nb-vars-set-rhost
+    nb-vars-set-user
+    nb-vars-set-pass
     local sid && __askvar sid "SID(DATABASE)"
-    local u && __askvar u "USER"
-    local p && __askvar [u] "PASSWORD"
-    print -z "odat all -s ${__RHOST} -p 1521 -d ${sid} -U ${u} -P ${p}"
+    print -z "odat all -s ${__RHOST} -p 1521 -d ${sid} -U ${__USER} -P ${__PASS}"
 }
 
 nb-enum-oracle-odat-passwords() {
