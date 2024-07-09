@@ -17,9 +17,9 @@ nb-enum-oracle-msf-sid           brute force sids with metasploit
 nb-enum-oracle-odat-sidguess     brute force sids with odat sidguess
 nb-enum-oracle-hydra-sid         brute force passwords
 
-ODAT
-----
-nb-enum-oracle-odat              odat anonymous enumeration
+Oracle Database Attack Tool (ODAT)
+----------------------------------
+nb-enum-oracle-odat-all          odat anonymous enumeration and gather information about the Oracle database services and its components
 nb-enum-oracle-odat-upload       odat 
 nb-enum-oracle-odat-exec         odat 
 nb-enum-oracle-odat-creds        odat authenticated enumeration
@@ -96,10 +96,10 @@ nb-enum-oracle-nmap-sweep() {
 
     if [[ $scan == "h" ]]; then
       nb-vars-set-rhost
-      print -z "sudo grc nmap -v -n -Pn -sS -p 1521 ${__RHOST} -oA $(__hostpath)/oracle-sweep"
+      print -z "sudo grc nmap -v -n -Pn -sV -p 1521 --open ${__RHOST} -oA $(__hostpath)/oracle-sweep"
     elif [[ $scan == "n" ]]; then
       nb-vars-set-network
-      print -z "sudo grc nmap -v -n -Pn -sS -p 1521 ${__NETWORK} -oA $(__netpath)/oracle-sweep"
+      print -z "sudo grc nmap -v -n -Pn -sV -p 1521 --open ${__NETWORK} -oA $(__netpath)/oracle-sweep"
     else
         echo
         __err "Invalid option. Please choose 'n' for network or 'h' for host."
@@ -121,7 +121,7 @@ nb-enum-oracle-sqlplus() {
     print -z "sqlplus ${__USER}/${__PASS}@${__RHOST}:1521/${sid} as sysdba"
 }
 
-nb-enum-oracle-odat() {
+nb-enum-oracle-odat-all() {
     nb-vars-set-rhost
     print -z "odat all -s ${__RHOST}"
 }
@@ -137,7 +137,7 @@ nb-enum-oracle-odat-creds() {
 nb-enum-oracle-odat-passwords() {
     nb-vars-set-rhost
     local sid && __askvar sid "SID(DATABASE)"
-    __info "cat /usr/share/metasploit-framework/data/wordlists/oracle_default_userpass.txt | sed -e "s/[[:space:]]/\\\/g""
+    __info "cat /usr/share/metasploit-framework/data/wordlists/oracle_default_userpass.txt | sed -e \"s/[[:space:]]/\\\/g\""
     print -z "odat passwordguesser -s ${__RHOST} -d ${sid} --accounts-file accounts.txt"
 }
 
