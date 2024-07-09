@@ -308,7 +308,17 @@ nb-ad-rce-pass-spray() {
 	  __ask "Enter the password for spraying"
     local pw && __askvar pw PASSWORD
 
-    print -z "kerbrute passwordspray -d ${__DOMAIN} --dc ${__DCHOST} $ul '$pw' --user-as-pass -o $(__dcpath)/kerbrute-password-spray.txt"
+    __ask "Do you want to use username as password? (y/n)"
+    local ua && __askvar ua USER_AS_PASS
+
+    if [[ $ua == "y" ]]; then
+      print -z "kerbrute passwordspray -d ${__DOMAIN} --dc ${__DCHOST} $ul '$pw' --user-as-pass -o $(__dcpath)/kerbrute-password-spray.txt"
+    elif [[ $ua == "n" ]]; then
+      print -z "kerbrute passwordspray -d ${__DOMAIN} --dc ${__DCHOST} $ul '$pw' -o $(__dcpath)/kerbrute-password-spray.txt"
+    else
+      echo
+      __err "Invalid option. Please choose 'y' or 'n'."
+    fi
 }
 
 nb-ad-rce-brute-cme() {
