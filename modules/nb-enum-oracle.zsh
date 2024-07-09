@@ -53,7 +53,12 @@ nb-enum-oracle-odat-sidguess() {
 }
 
 nb-enum-oracle-odat-upload() {
-
+    __check-project
+    nb-vars-set-rhost
+    nb-vars-set-user
+    nb-vars-set-pass
+    local f && __askvar f "FILE_TO_UPLOAD"
+    print -z "./odat-libc2.17-x86_64 externaltable -s ${__RHOST} -p 1521 -U ${__USER} -P ${__PASS} -d XE --sysdba --exec /temp $f"
 }
 
 nb-enum-oracle-odat-exec() {
