@@ -12,10 +12,11 @@ The nb-ad-rce namespace provides commands for getting shells/remote code executi
 
 Brute Force Attacks
 -------------------
-nb-ad-rce-brute-hydra          brute force password/login for a user account with hydra
 nb-ad-rce-brute-cme            brute force password/login for a user account with cme
-nb-ad-rce-pass-spray           perform password spraying in a domain
+nb-ad-rce-brute-hydra          brute force password/login for a user account with hydra
 nb-ad-rce-brute-winrm          brute force password/login for a user account for winrm
+nb-ad-rce-pass-spray           use kerbrute to perform password spraying
+nb-ad-rce-users-spray          use kerbrute to brute force valid usernames 
 
 Getting Shells
 --------------
@@ -462,5 +463,25 @@ nb-ad-rce-cme-command() {
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
+    fi
+}
+
+nb-ad-rce-users-spray() {
+    __check-project
+    nb-vars-set-domain
+	  __ask "Enter the IP address of the target DC server"
+    nb-vars-set-dchost
+
+    __ask "Do you wanna manually specify wordlists? (y/n)"
+    local sw && __askvar sw "SPECIFY_WORDLIST"
+
+    if [[ $sw == "y" ]]; then
+      __ask "Select a user list"
+      __askpath ul FILE $HOME/desktop/projects/
+
+      print -z "sudo kerbrute userenum -d ${__DOMAIN} --dc ${__DCHOST} $ul -o $(__dcpath)/kerbrute-user-enum.txt"
+    else
+      nb-vars-set-wordlist
+      print -z "sudo kerbrute userenum -d ${__DOMAIN} --dc ${__DCHOST} ${__WORDLIST} -o $(__dcpath)/kerbrute-user-enum.txt"
     fi
 }
