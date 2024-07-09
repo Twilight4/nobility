@@ -19,7 +19,6 @@ Enumerating Users
 ====================================
 NULL Session
 ------------
-nb-ad-enum-kerbrute-users            use kerbrute to brute force valid usernames 
 nb-ad-enum-null-getadusers           use GetADUsers.py to enumerate valid usernames
 nb-ad-enum-null-cme-users            use crackmapexec to enumerate valid usernames
 nb-ad-enum-null-cme-rid              use crackmapexec to enumerate valid usernames by rid bruteforcing
@@ -304,26 +303,6 @@ nb-ad-enum-null-cme-pass-pol() {
         print -z "crackmapexec smb ${__RHOST} -u '' -d ${__DOMAIN} -p '' --pass-pol | tee $(__hostpath)/cme-pass-pol.txt"
     else
         print -z "crackmapexec smb ${__RHOST} -u '' -p '' --pass-pol | tee $(__hostpath)/cme-pass-pol.txt"
-    fi
-}
-
-nb-ad-enum-kerbrute-users() {
-    __check-project
-    nb-vars-set-domain
-	  __ask "Enter the IP address of the target DC server"
-    nb-vars-set-dchost
-
-    __ask "Do you wanna manually specify wordlists? (y/n)"
-    local sw && __askvar sw "SPECIFY_WORDLIST"
-
-    if [[ $sw == "y" ]]; then
-      __ask "Select a user list"
-      __askpath ul FILE $HOME/desktop/projects/
-
-      print -z "sudo kerbrute userenum -d ${__DOMAIN} --dc ${__DCHOST} $ul -o $(__dcpath)/kerbrute-user-enum.txt"
-    else
-      nb-vars-set-wordlist
-      print -z "sudo kerbrute userenum -d ${__DOMAIN} --dc ${__DCHOST} ${__WORDLIST} -o $(__dcpath)/kerbrute-user-enum.txt"
     fi
 }
 
