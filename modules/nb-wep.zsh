@@ -27,6 +27,7 @@ nb-wep-user-l2username          use linkedin2username to create common username 
 Misc
 ------------------------
 nb-wep-se-tools                show available social engineering tools from the list and run selected one
+nb-wep-pwd-tools                show available social engineering tools from the list and run selected one
 
 DOC
 }
@@ -49,14 +50,10 @@ nb-wep-pass-cewl() {
     print -z "cewl ${__URL} -d $d -m $m --lowercase -w cewl-wordlist"
 }
 
-nb-wep-pass-pwdology() {
-    __check-project
-
-}
-
 nb-wep-user-l2username() {
     __check-project
 
+    print -z "linkedin2username.py -c COMPANY [-n DOMAIN] [-d DEPTH] [-s SLEEP] [-k KEYWORDS] [-g] [-o OUTPUT]"
 }
 
 nb-wep-pass-rule() {
@@ -144,6 +141,75 @@ nb-wep-se-tools() {
           pushd "${__TOOLS}/Storm-Breaker" &> /dev/null
           sudo python3 st.py
           popd &> /dev/null
+          ;;
+        2) 
+          # Check if tool is installed
+          if ! which seeker > /dev/null; then
+            __err "Seeker is not installed."
+            exit 1
+          fi
+
+          # Run the tool
+          clear
+          sudo seeker
+          ;;
+        3) 
+          # Check if tool is installed
+          if ! which zphisher > /dev/null; then
+            __err "Zphisher is not installed. Install with: nb-install-zphisher."
+          fi
+
+          # Run the tool
+          clear
+          zphisher
+          ;;
+        4) 
+          # Check if tool is installed
+          if ! which blackeye > /dev/null; then
+            __err "Blackeye is not installed."
+          fi
+
+          # Run the tool
+          clear
+          blackeye
+          ;;
+        5) 
+          # Check if tool is installed
+          if ! which setoolkit > /dev/null; then
+            __err "Set is not installed."
+          fi
+
+          # Run the tool
+          clear
+          sudo setoolkit
+          ;;
+        *) 
+          __err "Invalid selection"; return ;;
+    esac
+}
+
+nb-wep-pwd-tools() {
+    __check-project
+
+    __info "Available tools"
+    echo "1) Storm-Breaker - Access Webcam & Microphone & Location Finder"
+    echo "2) Seeker - Accurately Locate Smartphones using Social Engineering"
+    echo "3) Zphisher - Phishing tool with 30+ templates"
+    echo "4) Blackeye - Another Skiddie phishing tool"
+    echo "5) SET - Social Engineering Toolkit"
+    echo
+    local choice && __askvar choice "CHOICE"
+
+    case $choice in
+        1) 
+          # Check if tool is installed
+          if ! which pwdology.py > /dev/null; then
+            __err "Pwdology is not installed. Install with: nb-install-pwdology"
+            exit 1
+          fi
+
+          # Run the tool
+          pwdlogy.py
           ;;
         2) 
           # Check if tool is installed
