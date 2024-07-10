@@ -12,6 +12,7 @@ The nb-recon-user namespace provides commands to search for user data.
 
 Commands
 --------
+nb-recon-user-social-analyzer    command to analyze and find a person's profile in 1000 social media websites
 nb-recon-user-socials            command to open social media websites with the provided name
 nb-recon-user-email              command to check for valid email address
 nb-recon-user-geolocation        command to search for gelocation data
@@ -21,8 +22,17 @@ nb-recon-user-breached           command to search for breached data
 nb-recon-user-google             command to search for google dorks
 nb-recon-user-phone              command to check for valid phone number
 nb-recon-user-username           command to search for valid usernames
+nb-recon-user-install            command to install tools dependencies
 
 DOC
+}
+
+nb-recon-user-install() {
+
+}
+
+nb-recon-user-social-analyzer() {
+
 }
 
 nb-recon-user-socials() {
