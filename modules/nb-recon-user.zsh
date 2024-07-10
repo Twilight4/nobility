@@ -13,6 +13,7 @@ The nb-recon-user namespace provides commands to search for user data.
 Commands
 --------
 nb-recon-user-social-analyzer    command to analyze and find a person's profile in 1000 social media websites
+nb-recon-user-socialpwned        command to get the emails, from a target, published in social networks such as Instagram, Linkedin and Twitter
 nb-recon-user-socials            command to open social media websites with the provided name
 nb-recon-user-email              command to check for valid email address
 nb-recon-user-geolocation        command to search for gelocation data
@@ -28,12 +29,17 @@ DOC
 }
 
 nb-recon-user-install() {
-    __pkgs social-analyzer sherlock osintgram
+    __pkgs social-analyzer sherlock osintgram socialpwned
 }
 
 nb-recon-user-social-analyzer() {
     __check-project
-    print -z "social-analyzer --username"
+    print -z "social-analyzer -h"
+}
+
+nb-recon-user-socialpwned() {
+    __check-project
+    print -z "socialpwned -h"
 }
 
 nb-recon-user-socials() {

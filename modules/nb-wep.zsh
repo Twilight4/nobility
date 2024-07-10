@@ -12,7 +12,7 @@ The wep namespace provides commands for weaponization/target profiling such as c
 
 Password Profiling
 ------------------
-nb-wep-pwd-tools                show available social engineering tools from the list and run selected one
+nb-wep-pwd-tools                show available interactive password wordlist generator tools from the list and run selected one
 nb-wep-pass-rule                use hashcat rules to generated rule-based wordlist 
 nb-wep-pass-policy              tailor the wordlist according to the password policy
 
