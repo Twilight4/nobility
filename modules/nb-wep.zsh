@@ -8,7 +8,7 @@ nb-wep-help() {
 
 nb-wep
 -------
-The wep namespace provides commands for weaponization/target profiling such as custom password and user lists permutations.
+The wep namespace provides commands for weaponization/target profiling such as custom password and wordlists permutations.
 
 Password Profiling
 ------------------
@@ -19,7 +19,6 @@ nb-wep-pass-policy              tailor the wordlist according to the password po
 Username Profiling
 ------------------
 nb-wep-se-tools                 show available social engineering tools from the list and run selected one
-nb-wep-user-social-analyzer     API, CLI, and Web App for analyzing and finding a person's profile in 1000 social media \ websites
 nb-wep-user-anarchy             use username-anarchy to create common username permutations based on the full names 
 nb-wep-user-generator           use username_generator.py to create common username permutations based on the full names 
 nb-wep-user-l2username          use linkedin2username to create common username permutations based on the full names 
@@ -102,6 +101,7 @@ nb-wep-se-tools() {
     echo "3) Zphisher - Phishing tool with 30+ templates"
     echo "4) Blackeye - Another Skiddie phishing tool"
     echo "5) SET - Social Engineering Toolkit"
+    echo "6) "
     echo
     local choice && __askvar choice "CHOICE"
 
@@ -159,6 +159,16 @@ nb-wep-se-tools() {
           clear
           sudo setoolkit
           ;;
+        6)
+          # Check if tools is installed
+          if ! which socialfish > /dev/null; then
+            __err "Socialfish is not installed."
+          fi
+
+          # Run the tool
+          nb-vars-set-user
+          nb-vars-set-pass
+          socialfish ${__USER} ${__PASS}
         *) 
           __err "Invalid selection"; return ;;
     esac
