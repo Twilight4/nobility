@@ -101,7 +101,7 @@ nb-wep-se-tools() {
     echo "3) Zphisher - Phishing tool with 30+ templates"
     echo "4) Blackeye - Another Skiddie phishing tool"
     echo "5) SET - Social Engineering Toolkit"
-    echo "6) "
+    echo "6) Socialfish - Phishing Tool & Information Collector "
     echo
     local choice && __askvar choice "CHOICE"
 
@@ -166,6 +166,7 @@ nb-wep-se-tools() {
           fi
 
           # Run the tool
+          clear
           nb-vars-set-user
           nb-vars-set-pass
           socialfish ${__USER} ${__PASS}

@@ -28,11 +28,12 @@ DOC
 }
 
 nb-recon-user-install() {
-
+    __pkgs social-analyzer sherlock osintgram
 }
 
 nb-recon-user-social-analyzer() {
-
+    __check-project
+    print -z "social-analyzer --username"
 }
 
 nb-recon-user-socials() {
@@ -77,4 +78,5 @@ nb-recon-user-socials() {
 nb-recon-user-username() {
     #sherlock
     #whatsmyname
+    #osintgram
 }
