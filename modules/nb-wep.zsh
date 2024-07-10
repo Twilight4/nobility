@@ -13,13 +13,13 @@ The wep namespace provides commands for weaponization/target profiling such as c
 Password Profiling
 ------------------
 nb-wep-pwd-tools                show available social engineering tools from the list and run selected one
-nb-wep-pass-cewl                scrape the website for keywords and generate custom wordlist
 nb-wep-pass-rule                use hashcat rules to generated rule-based wordlist 
 nb-wep-pass-policy              tailor the wordlist according to the password policy
 
 Username Profiling
 ------------------
 nb-wep-se-tools                 show available social engineering tools from the list and run selected one
+nb-wep-user-social-analyzer     API, CLI, and Web App for analyzing and finding a person's profile in 1000 social media \ websites
 nb-wep-user-anarchy             use username-anarchy to create common username permutations based on the full names 
 nb-wep-user-generator           use username_generator.py to create common username permutations based on the full names 
 nb-wep-user-l2username          use linkedin2username to create common username permutations based on the full names 
@@ -29,20 +29,7 @@ DOC
 
 nb-wep-install() {
     __info "Running $0..."
-    __pkgs cewl hashcat cupp seeker blackeye ngrok set
-}
-
-nb-wep-pass-cewl() {
-    __check-project
-    nb-vars-set-url
-
-    __ask "Enter depth of spidering (default 2)"
-    local d && __askvar d "DEPTH"
-
-    __ask "Enter minimum word length (default 3)"
-    local m && __askvar m "LENGTH"
-
-    print -z "cewl ${__URL} -d $d -m $m --lowercase -w cewl-wordlist"
+    __pkgs hashcat cupp seeker blackeye ngrok set
 }
 
 nb-wep-user-l2username() {
@@ -109,7 +96,7 @@ nb-wep-pass-policy() {
 nb-wep-se-tools() {
     __check-project
 
-    __info "Available tools"
+    __ask "Available tools"
     echo "1) Storm-Breaker - Access Webcam & Microphone & Location Finder"
     echo "2) Seeker - Accurately Locate Smartphones using Social Engineering"
     echo "3) Zphisher - Phishing tool with 30+ templates"
@@ -180,7 +167,7 @@ nb-wep-se-tools() {
 nb-wep-pwd-tools() {
     __check-project
 
-    __info "Available tools"
+    __ask "Available tools"
     echo "1) Pwdology - A victims-profile-based wordlist generating tool for social engineers and security researchers"
     echo "2) Cupp - use cupp to generate custom profiled passwords"
     echo
