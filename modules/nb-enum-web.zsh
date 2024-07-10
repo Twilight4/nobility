@@ -124,22 +124,23 @@ nb-enum-web-vhosts-ffuf() {
 
     __ask "Enter number of threads (default 40)"
     __check-threads
-    local s && __askvar s SUBDOMAIN
+    #local s && __askvar s SUBDOMAIN
 
     # Run the curl command and extract the Content-Length number
-    cl=$(curl -s -I http://${__URL} -H "HOST: $s" | grep "Content-Length:")
+    #cl=$(curl -s -I http://${__URL} -H "HOST: $s" | grep "Content-Length:")
 
     # Remove any trailing newline character
-    length=${cl//$'\n'/}
+    #length=${cl//$'\n'/}
 
     # Print the content length
-    __info "$length"
+    #__info "$length"
 
     # Information
     __info "Add the gathered vhosts/subdomains to /etc/hosts"
     __ok "nb-project-host"
 
-    print -z "ffuf -c -p 0.1 -fc 404 -fs $length -u http://${__DOMAIN} -w ${w}:FUZZ -t ${__THREADS} -H \"HOST: FUZZ.${__DOMAIN}\" -o $(__urlpath)/vhosts-ffuf.csv -of csv"
+    #print -z "ffuf -c -p 0.1 -fc 404 -fs $length -u http://${__DOMAIN} -w ${w}:FUZZ -t ${__THREADS} -H \"HOST: FUZZ.${__DOMAIN}\" -o $(__urlpath)/vhosts-ffuf.csv -of csv"
+    print -z "ffuf -c -p 0.1 -fc 404 -u http://${__DOMAIN} -w ${w}:FUZZ -t ${__THREADS} -H \"HOST: FUZZ.${__DOMAIN}\" -o $(__urlpath)/vhosts-ffuf.csv -of csv"
 }
 
 

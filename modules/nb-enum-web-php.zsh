@@ -35,6 +35,8 @@ nb-enum-web-php-ffuf() {
     __check-project
     nb-vars-set-url
     nb-vars-set-wordlist
+
+    __ask "Enter number of threads (default 40)"
     __check-threads
     local d && __askvar d "RECURSION DEPTH"
     print -z "ffuf -c -p 0.1 -t ${__THREADS} -recursion -recursion-depth ${d} -H \"User-Agent: Mozilla\" -fc 404 -w ${__WORDLIST} -u ${__URL}/FUZZ -e ${__EXT_PHP} -o $(__urlpath)/ffuf-dirs-php.csv -of csv"

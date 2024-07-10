@@ -21,7 +21,7 @@ Commands - enumeration
 nb-recon-subs-amass-enum       enumerate subdomains into amass db (api keys help)
 nb-recon-subs-amass-diff       track changes between last 2 enumerations using amass db
 nb-recon-subs-amass-names      list gathered subs in the amass db
-nb-recon-subs-crt.sh           gather subdomains from crt.sh
+nb-recon-subs-crt-sh           gather subdomains from crt.sh
 nb-recon-subs-subfinder        gather subdomains from sources (api keys help)
 nb-recon-subs-ffuf             gather subdomains with ffuf
 nb-recon-subs-assetfinder      gather subdomains from sources (api keys help)
@@ -67,7 +67,7 @@ nb-recon-subs-amass-names() {
     print -z "amass db -names -d ${__DOMAIN} -dir ${__PROJECT}/amass | tee -a $(__dompath)/subs.txt"
 }
 
-nb-recon-subs-crt.sh() {
+nb-recon-subs-crt-sh() {
     __check-project
     nb-vars-set-domain
     print -z "curl -s 'https://crt.sh/?q=%.${__DOMAIN}' | grep -i \"${__DOMAIN}\" | cut -d '>' -f2 | cut -d '<' -f1 | grep -v \" \" | sort -u | tee -a  $(__dompath)/subs.txt "
@@ -84,6 +84,9 @@ nb-recon-subs-ffuf() {
     __check-project
     nb-vars-set-domain
     nb-vars-set-wordlist
+
+
+    __ask "Enter number of threads (default 40)"
     __check-threads
     print -z "ffuf -c -p 0.1 -t ${__THREADS} -H \"Host: FUZZ.${__DOMAIN}\" -fs 5602 -fc 404 -w ${__WORDLIST} -u ${__DOMAIN} -o $(__dompath)/ffuf-subs.csv -of csv"
 }
