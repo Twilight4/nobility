@@ -11,23 +11,18 @@ nb-wep
 The wep namespace provides commands for weaponization/target profiling such as custom password and user lists permutations.
 
 Password Profiling
-------------------------
+------------------
+nb-wep-pwd-tools                show available social engineering tools from the list and run selected one
 nb-wep-pass-cewl                scrape the website for keywords and generate custom wordlist
-nb-wep-pass-pwdology            generate custom password list with pwdology
-nb-wep-pass-cupp                use cupp to generate custom profiled passwords
 nb-wep-pass-rule                use hashcat rules to generated rule-based wordlist 
 nb-wep-pass-policy              tailor the wordlist according to the password policy
 
 Username Profiling
-------------------------
+------------------
+nb-wep-se-tools                 show available social engineering tools from the list and run selected one
 nb-wep-user-anarchy             use username-anarchy to create common username permutations based on the full names 
 nb-wep-user-generator           use username_generator.py to create common username permutations based on the full names 
 nb-wep-user-l2username          use linkedin2username to create common username permutations based on the full names 
-
-Misc
-------------------------
-nb-wep-se-tools                show available social engineering tools from the list and run selected one
-nb-wep-pwd-tools                show available social engineering tools from the list and run selected one
 
 DOC
 }
@@ -87,12 +82,6 @@ nb-wep-user-generator() {
     local filename && __askpath filename "FILENAME"
     
     print -z "python3 /opt/username_generator/username_generator.py -w $filename > gen-users.txt"
-}
-
-nb-wep-pass-cupp() {
-    __check-project
-
-    print -z "cupp -i"
 }
 
 nb-wep-pass-policy() {
@@ -192,65 +181,33 @@ nb-wep-pwd-tools() {
     __check-project
 
     __info "Available tools"
-    echo "1) Storm-Breaker - Access Webcam & Microphone & Location Finder"
-    echo "2) Seeker - Accurately Locate Smartphones using Social Engineering"
-    echo "3) Zphisher - Phishing tool with 30+ templates"
-    echo "4) Blackeye - Another Skiddie phishing tool"
-    echo "5) SET - Social Engineering Toolkit"
+    echo "1) Pwdology - A victims-profile-based wordlist generating tool for social engineers and security researchers"
+    echo "2) Cupp - use cupp to generate custom profiled passwords"
     echo
     local choice && __askvar choice "CHOICE"
 
     case $choice in
         1) 
           # Check if tool is installed
-          if ! which pwdology.py > /dev/null; then
-            __err "Pwdology is not installed. Install with: nb-install-pwdology"
+          if ! which pwdology > /dev/null; then
+            __err "Pwdology is not installed."
             exit 1
           fi
 
           # Run the tool
-          pwdlogy.py
+          clear
+          pwdlogy
           ;;
         2) 
           # Check if tool is installed
-          if ! which seeker > /dev/null; then
-            __err "Seeker is not installed."
+          if ! which cupp > /dev/null; then
+            __err "Cupp is not installed."
             exit 1
           fi
 
           # Run the tool
           clear
-          sudo seeker
-          ;;
-        3) 
-          # Check if tool is installed
-          if ! which zphisher > /dev/null; then
-            __err "Zphisher is not installed. Install with: nb-install-zphisher."
-          fi
-
-          # Run the tool
-          clear
-          zphisher
-          ;;
-        4) 
-          # Check if tool is installed
-          if ! which blackeye > /dev/null; then
-            __err "Blackeye is not installed."
-          fi
-
-          # Run the tool
-          clear
-          blackeye
-          ;;
-        5) 
-          # Check if tool is installed
-          if ! which setoolkit > /dev/null; then
-            __err "Set is not installed."
-          fi
-
-          # Run the tool
-          clear
-          sudo setoolkit
+          cupp -i
           ;;
         *) 
           __err "Invalid selection"; return ;;
