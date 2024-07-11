@@ -306,18 +306,18 @@ nb-crack-john-img-luks() {
 
     # Add 1 to the offset
     new_offset=$((offset + 1))
-    
-    # Print the result
-    __ok "Payload offset is $offset. New offset is $new_offset."
 
     # Check if the offset is found
     if [ -z "$new_offset" ]; then
         __error "Payload offset not found."
         exit 1
+    else
+        # Print the result
+        __ok "Payload offset is $offset. New offset is $new_offset."
     fi
 
     # Export the hash from disk image
-    __info "Exporting header from the disk image"
+    __info "Exporting header from the disk image..."
     dd if=$d of=header bs=512 count=$new_offset
 
     # Check if the header file was created
