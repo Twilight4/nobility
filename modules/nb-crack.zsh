@@ -21,6 +21,7 @@ nb-crack-john-zip         crack a password protected zip archive
 nb-crack-john-7z          crack a password protected 7z archive
 nb-crack-john-rar         crack a password protected rar archive
 nb-crack-john-ssh         crack ssh key passwords
+nb-crack-john-img-luks    crack a LUKS-encrypted disk image
 nb-crack-install          installs necessary dependencies
 
 DOC
@@ -182,7 +183,7 @@ nb-crack-john-zip() {
 
   # Check if the zip file exists
   if [[ -f "$d" ]]; then
-    __info "Generating the has of the zip file using zip2john..."
+    __info "Generating the hash of the zip file using zip2john..."
     zip2john $d > zip_hash.txt
     __ok "Generated the hash of the zip file as zip_hash.txt"
 
@@ -216,7 +217,7 @@ nb-crack-john-7z() {
 
   # Check if the 7z file exists
   if [[ -f "$d" ]]; then
-    __info "Generating the has of the 7z file using 7z2john..."
+    __info "Generating the hash of the 7z file using 7z2john..."
     7z2john $d > 7z_hash.txt
     __ok "Generated the hash of the 7z file as 7z_hash.txt"
 
@@ -244,7 +245,7 @@ nb-crack-john-rar() {
 
   # Check if the rar file exists
   if [[ -f "$d" ]]; then
-    __info "Generating the has of the file using rar2john..."
+    __info "Generating the hash of the file using rar2john..."
     rar2john $d > rar_hash.txt
     __ok "Generated the hash of the file as rar_hash.txt"
 
@@ -279,6 +280,40 @@ nb-crack-john-ssh() {
     echo
     __info "To show the cracked hash use: john id_rsa_hash.txt --show"
     print -z "john --wordlist=${__PASSLIST} id_rsa_hash.txt"
+  else
+    __err "File does not exist: $d. Exiting."
+    return
+  fi
+}
+
+nb-crack-john-img-luks() {
+  __check-project
+
+  # Prompt the user for the full path to the zip file
+  __ask "Set the full path to the disk image file."
+  local d && __askpath d "PATH_TO_FILE" $PJ/
+
+  # Check if the path contains the tilde character
+  if [[ "$d" == "~"* ]]; then
+    __err "~ not allowed, use the full path"
+    return
+  fi
+
+  # Check if the disk image file exists
+  if [[ -f "$d" ]]; then
+    __info "Checking payload offset of the disk image..."
+    offset=$(cryptsetup luksDump $d | grep "Payload offset | awk '{print $3}'")
+
+    # Add 1 to the offset
+    new_offset=$((offset + 1))
+    
+    # Print the result
+    __ok "Payload offset is $offset. New offset is $new_offset."
+
+    # Run John the Ripper with the provided wordlist on the generated hash
+    __info "Exporting header from the disk image"
+    dd if=$d of=header bs=512 count=$new_offset
+
   else
     __err "File does not exist: $d. Exiting."
     return
