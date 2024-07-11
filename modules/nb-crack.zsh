@@ -329,6 +329,9 @@ nb-crack-hashcat-img-luks() {
     fi
 
     # Crack the hash
+    __info "You can mount the disk using commands:"
+    __ok "  sudo cryptsetup luksOpen $d dump"
+    __ok "  sudo mount /dev/mapper/dump /mnt"
     print -z "hashcat -m 14600 -a 0 -w 3 header /usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt"
   else
     __err "File does not exist: $d. Exiting."
