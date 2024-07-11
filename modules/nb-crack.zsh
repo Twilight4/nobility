@@ -21,7 +21,7 @@ nb-crack-john-zip         crack a password protected zip archive
 nb-crack-john-7z          crack a password protected 7z archive
 nb-crack-john-rar         crack a password protected rar archive
 nb-crack-john-ssh         crack ssh key passwords
-nb-crack-john-img-luks    crack a LUKS-encrypted disk image
+nb-crack-hashcat-img-luks    crack a LUKS-encrypted disk image
 nb-crack-install          installs necessary dependencies
 
 DOC
@@ -286,7 +286,7 @@ nb-crack-john-ssh() {
   fi
 }
 
-nb-crack-john-img-luks() {
+nb-crack-hashcat-img-luks() {
   __check-project
 
   # Prompt the user for the full path to the zip file
