@@ -310,10 +310,26 @@ nb-crack-john-img-luks() {
     # Print the result
     __ok "Payload offset is $offset. New offset is $new_offset."
 
-    # Run John the Ripper with the provided wordlist on the generated hash
+    # Check if the offset is found
+    if [ -z "$new_offset" ]; then
+        __error "Payload offset not found."
+        exit 1
+    fi
+
+    # Export the hash from disk image
     __info "Exporting header from the disk image"
     dd if=$d of=header bs=512 count=$new_offset
 
+    # Check if the header file was created
+    if [ -f "header" ]; then
+        __ok "Header successfully exported."
+    else
+        __err "Failed to export header."
+        exit 1
+    fi
+
+    # Crack the hash
+    print -z "hashcat -m 14600 -a 0 -w 3 header /usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt"
   else
     __err "File does not exist: $d. Exiting."
     return
