@@ -285,17 +285,17 @@ nb-ad-smb-auth-cme-spider() {
             nb-vars-set-domain
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' -M spider_plus --share '${__SHARE}' | tee $(__netpath)/cme-shares-spider-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u '${__USER}' -d ${__DOMAIN} -p '${__PASS}' -M spider_plus --share '${__SHARE}' | tee $(__netpath)/cme-shares-spider-sweep.txt"
         else
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' -M spider_plus --share '${__SHARE}' | tee $(__netpath)/cme-shares-spider-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u '${__USER}' -p '${__PASS}' -M spider_plus --share '${__SHARE}' | tee $(__netpath)/cme-shares-spider-sweep.txt"
         fi
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
         __check-hash
-  	    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -M spider_plus --share '${__SHARE}' | tee $(__netpath)/cme-shares-spider-sweep.txt"
+  	    print -z "crackmapexec smb ${__NETWORK} -u '${__USER}' -H ${__HASH} --local-auth -M spider_plus --share '${__SHARE}' | tee $(__netpath)/cme-shares-spider-sweep.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
@@ -320,17 +320,17 @@ nb-ad-smb-auth-cme-list() {
             nb-vars-set-domain
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' --shares | tee $(__netpath)/cme-shares-enum-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u '${__USER}' -d ${__DOMAIN} -p '${__PASS}' --shares | tee $(__netpath)/cme-shares-enum-sweep.txt"
         else
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' --shares | tee $(__netpath)/cme-shares-enum-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u '${__USER}' -p '${__PASS}' --shares | tee $(__netpath)/cme-shares-enum-sweep.txt"
         fi
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
         __check-hash
-  	    print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth --shares | tee $(__netpath)/cme-shares-enum-sweep.txt"
+  	    print -z "crackmapexec smb ${__NETWORK} -u '${__USER}' -H ${__HASH} --local-auth --shares | tee $(__netpath)/cme-shares-enum-sweep.txt"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
@@ -388,7 +388,6 @@ nb-ad-smb-auth-smbclient.py-connect() {
   nb-vars-set-rhost
   nb-vars-set-user
   nb-vars-set-pass
-  __check-share
   print -r -z "smbclient.py ${__USER}:${__PASS}@${__RHOST}"
 }
 
