@@ -50,6 +50,7 @@ Connecting to Service
 -------------------------------------
 nb-ad-smb-null-smbclient-connect     connect with a null session
 nb-ad-smb-auth-smbclient-connect     connect with an authenticated session
+nb-ad-smb-auth-smbclient.py-connect  connect with impacket smbclient.py authenticated session
 
 Download / Upload
 ====================================
@@ -380,6 +381,15 @@ nb-ad-smb-auth-smbclient-connect() {
   nb-vars-set-pass
   __check-share
   print -r -z "smbclient //${__RHOST}/${__SHARE} -U ${__USER}%${__PASS} "
+}
+
+nb-ad-smb-auth-smbclient.py-connect() {
+  __check-project
+  nb-vars-set-rhost
+  nb-vars-set-user
+  nb-vars-set-pass
+  __check-share
+  print -r -z "smbclient.py ${__USER}:${__PASS}@${__RHOST}"
 }
 
 nb-ad-smb-auth-mount() {
