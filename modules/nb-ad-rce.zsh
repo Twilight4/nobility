@@ -391,11 +391,11 @@ nb-ad-rce-cme-pass() {
             nb-vars-set-domain
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' | tee $(__netpath)/cme-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u '${__USER}' -d ${__DOMAIN} -p '${__PASS}' | tee $(__netpath)/cme-sweep.txt"
         else
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' | tee $(__netpath)/cme-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u '${__USER}' -p '${__PASS}' | tee $(__netpath)/cme-sweep.txt"
         fi
     elif [[ $login == "h" ]]; then
         echo

