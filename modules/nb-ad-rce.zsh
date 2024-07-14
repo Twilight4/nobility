@@ -31,6 +31,7 @@ Misc
 nb-ad-rce-nmap-winrm           scan hosts for open winrm port
 nb-ad-rce-cme-pass             pass the password/hash on a network subnet
 nb-ad-rce-cme-command          pass the password/hash on a network subnet and execute command
+nb-ad-rce-smbpass              change the password for a user using impacket's smbpass.py
 
 DOC
 }
@@ -463,4 +464,18 @@ nb-ad-rce-users-spray() {
       nb-vars-set-wordlist
       print -z "sudo kerbrute userenum -d ${__DOMAIN} --dc ${__DCHOST} ${__WORDLIST} -o $(__dcpath)/kerbrute-user-enum.txt"
     fi
+}
+
+nb-ad-rce-smbpass() {
+    __check-project
+    nb-vars-set-domain
+	  __ask "Enter the IP address of the target DC server"
+    nb-vars-set-dchost
+    nb-vars-set-user
+    nb-vars-set-pass
+
+    __ask "Enter the new password"
+    local sw && __askvar sw "NEW_PASS"
+
+    print -z "smbpasswd.py ${__DOMAIN}/${__USER}:${__PASS}@${__DCHOST} -newpass 'Password6'"
 }
