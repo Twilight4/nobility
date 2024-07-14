@@ -129,7 +129,15 @@ nb-enum-ldap-auth-wsearch-group-gm() {
     nb-vars-set-user
     nb-vars-set-pass
 
-    print -z "windapsearch.py -u '${__USER}@${__DOMAIN} -p ${__PASS} --dc-ip ${__RHOST} -U --attrs cn,memberof | tee $(__dcpath)/wsearch-gm-users.txt"
+    print -z "windapsearch.py -u '${__USER}@${__DOMAIN}' -p '${__PASS}' --dc-ip ${__RHOST} -U --attrs cn,memberof | tee $(__dcpath)/wsearch-gm-users.txt"
+}
+
+nb-enum-ldap-anon-wsearch-group-gm() {
+    __check-project
+    nb-vars-set-rhost
+    nb-vars-set-domain
+
+    print -z "windapsearch.py -d ${__DOMAIN} --dc-ip ${__RHOST} -U --attrs cn,memberof | tee $(__dcpath)/wsearch-gm-users.txt"
 }
 
 nb-enum-ldap-auth-wsearch-group-rmu() {
