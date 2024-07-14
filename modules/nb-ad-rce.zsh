@@ -391,17 +391,17 @@ nb-ad-rce-cme-pass() {
             nb-vars-set-domain
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u '${__USER}' -d ${__DOMAIN} -p '${__PASS}' | tee $(__netpath)/cme-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u '${__USER}' -d ${__DOMAIN} -p '${__PASS}'"
         else
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u '${__USER}' -p '${__PASS}' | tee $(__netpath)/cme-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u '${__USER}' -p '${__PASS}'"
         fi
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
         __check-hash
-        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth | tee $(__netpath)/cme-sweep.txt"
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
@@ -428,17 +428,17 @@ nb-ad-rce-cme-command() {
             nb-vars-set-domain
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' -x "$cm" | tee $(__netpath)/cme-command-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -d ${__DOMAIN} -p '${__PASS}' -x '$cm'"
         else
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' -x "$cm" | tee $(__netpath)/cme-command-sweep.txt"
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' -x "$cm""
         fi
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
         __check-hash
-        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -x "$cm" | tee $(__netpath)/cme-command-sweep.txt"
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -x "$cm""
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."
