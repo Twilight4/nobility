@@ -43,6 +43,7 @@ nb-enum-ldap-auth-search-kerb               use authenticated ldapsearch to enum
 nb-enum-ldap-auth-wsearch-domain-admins     use windapsearch.py to enumerate domain admin users
 nb-enum-ldap-auth-wsearch-privileged-users  use windapsearch.py to enumerate privileged users
 nb-enum-ldap-auth-wsearch-group-rmu         use windapsearch.py to enumerate users in Remote Management Users group
+nb-enum-ldap-auth-wsearch-group-gm          use windapsearch.py to enumerate gorup memberships         
 
 Commands
 --------
@@ -119,6 +120,16 @@ nb-enum-ldap-anon-wsearch-group-rmu() {
     nb-vars-set-dchost
 
     print -z "windapsearch.py -u '' --dc-ip ${__DCHOST} -d ${__DOMAIN} -U -m \"Remote Management Users\" | tee $(__dcpath)/wsearch-rmu-users.txt"
+}
+
+nb-enum-ldap-auth-wsearch-group-gm() {
+    __check-project
+    nb-vars-set-rhost
+    nb-vars-set-domain
+    nb-vars-set-user
+    nb-vars-set-pass
+
+    print -z "windapsearch.py -u '${__USER}@${__DOMAIN} -p ${__PASS} --dc-ip ${__RHOST} -U --attrs cn,memberof | tee $(__dcpath)/wsearch-gm-users.txt"
 }
 
 nb-enum-ldap-auth-wsearch-group-rmu() {
