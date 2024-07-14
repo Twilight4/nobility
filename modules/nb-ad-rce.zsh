@@ -475,7 +475,7 @@ nb-ad-rce-smbpass() {
     nb-vars-set-pass
 
     __ask "Enter the new password"
-    local sw && __askvar sw "NEW_PASS"
+    local np && __askvar np "NEW_PASS"
 
-    print -z "smbpasswd.py ${__DOMAIN}/${__USER}:${__PASS}@${__DCHOST} -newpass 'Password6'"
+    print -z "smbpasswd.py ${__DOMAIN}/${__USER}:'${__PASS}'@${__DCHOST} -newpass '$np'"
 }
