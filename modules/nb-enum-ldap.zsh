@@ -31,6 +31,7 @@ nb-enum-ldap-anon-search-kerb               use authenticated ldapsearch to enum
 nb-enum-ldap-anon-wsearch-domain-admins     use windapsearch.py to enumerate domain admin users
 nb-enum-ldap-anon-wsearch-privileged-users  use windapsearch.py to enumerate privileged users
 nb-enum-ldap-anon-wsearch-group-rmu         use windapsearch.py to enumerate users in Remote Management Users group
+nb-enum-ldap-anon-wsearch-group-gm          use windapsearch.py to enumerate group memberships         
 
 AUTH Session
 ------------
@@ -43,7 +44,7 @@ nb-enum-ldap-auth-search-kerb               use authenticated ldapsearch to enum
 nb-enum-ldap-auth-wsearch-domain-admins     use windapsearch.py to enumerate domain admin users
 nb-enum-ldap-auth-wsearch-privileged-users  use windapsearch.py to enumerate privileged users
 nb-enum-ldap-auth-wsearch-group-rmu         use windapsearch.py to enumerate users in Remote Management Users group
-nb-enum-ldap-auth-wsearch-group-gm          use windapsearch.py to enumerate gorup memberships         
+nb-enum-ldap-auth-wsearch-group-gm          use windapsearch.py to enumerate group memberships         
 
 Commands
 --------
@@ -128,6 +129,7 @@ nb-enum-ldap-auth-wsearch-group-gm() {
     nb-vars-set-domain
     nb-vars-set-user
     nb-vars-set-pass
+    __info "To check the nested group memberships, use flag '-G' instead of '-U'"
 
     print -z "windapsearch.py -u '${__USER}@${__DOMAIN}' -p '${__PASS}' --dc-ip ${__RHOST} -U --attrs cn,memberof | tee $(__dcpath)/wsearch-gm-users.txt"
 }
@@ -136,6 +138,7 @@ nb-enum-ldap-anon-wsearch-group-gm() {
     __check-project
     nb-vars-set-rhost
     nb-vars-set-domain
+    __info "To check the nested group memberships, use flag '-G' instead of '-U'"
 
     print -z "windapsearch.py -d ${__DOMAIN} --dc-ip ${__RHOST} -U --attrs cn,memberof | tee $(__dcpath)/wsearch-gm-users.txt"
 }
