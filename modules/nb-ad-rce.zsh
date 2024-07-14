@@ -432,13 +432,13 @@ nb-ad-rce-cme-command() {
         else
             __ask "Enter a password for authentication"
             nb-vars-set-pass
-            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' -x "$cm""
+            print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -p '${__PASS}' -x '$cm'"
         fi
     elif [[ $login == "h" ]]; then
         echo
         __ask "Enter the NTLM hash for authentication"
         __check-hash
-        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -x "$cm""
+        print -z "crackmapexec smb ${__NETWORK} -u ${__USER} -H ${__HASH} --local-auth -x '$cm'"
     else
         echo
         __err "Invalid option. Please choose 'p' for password or 'h' for hash."

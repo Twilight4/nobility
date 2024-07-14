@@ -301,7 +301,7 @@ nb-enum-ldap-wsearch-anon() {
 	  __ask "Enter the IP address of the target DC server"
     nb-vars-set-dchost
 
-    print -z "python windapsearch.py -u "" --dc-ip ${__DCHOST}"
+    print -z "windapsearch.py -u "" --dc-ip ${__DCHOST}"
 }
 
 nb-enum-ldap-search-auth() {
