@@ -181,6 +181,7 @@ nb-wep-pwd-tools() {
     __ask "Available tools"
     echo "1) Pwdology - A victims-profile-based wordlist generating tool for social engineers and security researchers"
     echo "2) Cupp - use cupp to generate custom profiled passwords"
+    echo "3) Crunch - wordlist generator that creates custom password lists using a combination of characters"
     echo
     local choice && __askvar choice "CHOICE"
 
@@ -206,6 +207,17 @@ nb-wep-pwd-tools() {
           # Run the tool
           clear
           cupp -i
+          ;;
+        3)
+          # Check if tool is installed
+          if ! which crunch > /dev/null; then
+            __err "Crunch is not installed."
+            exit 1
+          fi
+
+          # Run the tool
+          clear
+          print -z "crunch -h"
           ;;
         *) 
           __err "Invalid selection"; return ;;
