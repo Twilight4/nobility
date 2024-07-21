@@ -39,7 +39,7 @@ Nobility helps you remember how to use every tool in your arsenal and doesn't hi
 * **Dependency Installers**: Includes installers for dependencies, ensuring a smooth and hassle-free setup process
 
 ## Distributions Compatibility
-Although Nobility only requires zsh shell to run successfully, the compatibility with system-specific commands like `nb-install` may vary depending on your operating system.
+Although Nobility only requires zsh shell to run successfully, the compatibility with system-specific commands like `nb-install` may vary depending on your linux distribution.
 * **Arch Linux**: Very supported and thoroughly tested for all features.
 * **Debian**: Mostly supported; while most functionalities work well, the `nb-install-*` commands have not been specifically tested on this platform and their compatibility may vary.
 * **macOS**: Partially supported; the `nb-install-*` commands will not work and it's recommended to avoid using them on this platform.
@@ -75,7 +75,7 @@ source ~/.zshrc
 Simply run the `nb-update` command. Assuming you did not modify any of the content in the nobility directory, this should pull the latest code from this GitHub repo, after which you can run nobility modules as usual.
 
 ### Tip: Zsh completion menu
-For enhanced completion selection menu I use [fzf-tab](https://github.com/Aloxaf/fzf-tab).
+For enhanced completion selection menu I recommend [fzf-tab](https://github.com/Aloxaf/fzf-tab) zsh plugin.
 
 ![screenshot](https://i.imgur.com/Mff6FUg.png)
 
