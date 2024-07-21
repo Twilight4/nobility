@@ -45,7 +45,7 @@ Although Nobility only requires zsh shell to run successfully, the compatibility
 * **macOS**: Partially supported; the `nb-install-*` commands will not work and it's recommended to avoid using them on this platform.
 
 ## Installation
-Nobility only requires [Zsh](https://github.com/zsh-users/zsh).
+Nobility only requires [Zsh](https://github.com/zsh-users/zsh) shell.
 
 ### Installation Method #1: Manually
 ```bash
@@ -72,20 +72,20 @@ source ~/.zshrc
 ```
 
 ### Updating
-Simply run the `nb-update` command. Assuming you did not modify any of the content in the nobility directory, this should pull the latest code from this GitHub repo, after which you can run nobility modules as usual.
+Simply run the `nb-update` command. If you did not modify any of the content in the nobility directory, this will pull the latest code from this GitHub repository, after which you can run nobility modules as usual.
 
 ### Tip: Zsh completion menu
-For enhanced completion selection menu I recommend [fzf-tab](https://github.com/Aloxaf/fzf-tab) zsh plugin.
+For enhanced completion selection menu I recommend [fzf-tab](https://github.com/Aloxaf/fzf-tab) plugin.
 
 ![screenshot](https://i.imgur.com/Mff6FUg.png)
 
 # Getting Started
 Nobility categorizes commands into namespaces, denoted by the `nb-` prefix, exemplified by commands like `nb-enum-web` or `nb-recon-domains`. To see an overview of all namespaces simply use `nb-help` command. 
 
-Each namespace features its own dedicated help command, such as `nb-enum-web-help` which provides a listing of available commands. All commands support tab completion and search. 
+Each namespace features its own dedicated help command, such as `nb-enum-web-help` which provides a listing of available web enumeration commands. All commands support tab completion and search. 
 
 ## Installing Dependencies
-To set up the necessary dependencies for each namespace, execute the `nb-<namespace>-install` command. This command ensures the installation of all tools relevant to the specified namespace. For installation of tools across all namespaces, use the `nb-install-all` command.
+To set up the necessary dependencies for each namespace, execute the `nb-<NAMESPACE>-install` command. This command ensures the installation of all tools relevant to the specified namespace. For installation of tools across all namespaces, use the `nb-install-all` command.
 
 ## Workflow Design
 Nobility is designed to offer a sophisticated and flexible workflow. It eliminates the conventional, tedious process of manually navigating through notes, searching for commands, copying, pasting, and adjusting values before execution. 
@@ -96,16 +96,14 @@ This approach enables you to compose your workflow dynamically, adapting to spec
 
 ## Example Workflow
 ### Variables
+Namespaces take care of managing the variable commands for you by default e.g. commands such as `nb-vars-save` are used to persist the vars in other terminal sessions and `nb-vars-load` to load the previously saved vars in new terminal sessions, one useful command is `nb-vars-clear` used to clear all the saved variables.
+
+It's recommended to set the `nb-vars-load` command in the `.zshrc` file to run load the vars on startup:
 ```bash
-# Each time you use nb-vars-set-* command or within a namespace,
-# you can persist the vars in other terminal sessions using command (namespaces should include this by default):
-nb-vars-save
-
-# To load previously saved vars (use in new terminal sessions), use command: (you can set this command in .zshrc file):
-nb-vars-load
-
-# You can always clear the variables with command:
-nb-vars-clear
+# Load nobility variables quietly
+if [ -d ~/.config/zsh/plugins/nobility ]; then
+    nb-vars-load &>/dev/null
+fi
 ```
 
 ### Pre-Engagement
