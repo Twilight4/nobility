@@ -736,12 +736,25 @@ nb-install-username-generator() {
 }
 
 nb-install-arch-generic() {
-    paru --needed -S nmap metasploit postgresql gobuster whatweb exploitdb masscan john bloodhound python-bloodhound python-neo4j sliver-bin hydra enum4linux smbmap hashid hashcat evil-winrm ldapdomaindump kerbrute responder clinfo pocl
-    pip3 install impacket
+    __cyan "This will install all necessary pentesting tools."
+    __ask "CONTINUE?"
+    if __check-proceed; then
+        paru --needed -S nmap metasploit postgresql gobuster whatweb exploitdb masscan john bloodhound python-bloodhound python-neo4j sliver-bin hydra enum4linux smbmap hashid hashcat evil-winrm ldapdomaindump kerbrute responder clinfo pocl
+        pip3 install impacket
+    else
+        __warn "Operation cancelled by user."
+    fi
 }
 
 nb-install-arch-categories() {
-    paru -S athena-anti-forensic athena-backdoor athena-automation athena-bluetooth athena-dos athena-exploitation athena-fingerprint athena-keylogger athena-misc athena-networking athena-packer athena-recon athena-scanner athena-social athena-spoof athena-stego athena-windows athena-wireless
+    __cyan "This will install all pentesting categories."
+    __cyan "Ensure you have free disk space before proceeding."
+    __ask "CONTINUE?"
+    if __check-proceed; then
+        paru -S athena-anti-forensic athena-backdoor athena-automation athena-bluetooth athena-dos athena-exploitation athena-fingerprint athena-keylogger athena-misc athena-networking athena-packer athena-recon athena-scanner athena-social athena-spoof athena-stego athena-windows athena-wireless
+    else
+        __warn "Operation cancelled by user."
+    fi
 }
 
 nb-install-invoke-powershelltcp() {
