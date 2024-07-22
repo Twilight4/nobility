@@ -749,11 +749,27 @@ nb-install-arch-generic() {
 nb-install-arch-categories() {
     __cyan "This will install all pentesting categories."
     __cyan "Ensure you have free disk space before proceeding."
-    __ask "CONTINUE?"
+
+    # Ask if repositories are enabled
+    # Ask if repositories are enabled
+    echo
+    __ask "Did you enable the Athena repositories at https://athenaos.org/en/configuration/repositories/? (y/n)"
+    local response && __askvar response "RESPONSE"
+    if [[ ! "$response" =~ ^[Yy]$ ]]; then
+        echo
+        __warn "Athena repositories need to be enabled before proceeding."
+        __warn "Operation cancelled."
+        return 1
+    fi
+
+    # Ask if the user wants to continue
+    echo
+    __ask "CONTINUE? (y/n)"
     if __check-proceed; then
         paru -S athena-anti-forensic athena-backdoor athena-automation athena-bluetooth athena-dos athena-exploitation athena-fingerprint athena-keylogger athena-misc athena-networking athena-packer athena-recon athena-scanner athena-social athena-spoof athena-stego athena-windows athena-wireless
     else
         __warn "Operation cancelled by user."
+        return 1
     fi
 }
 
