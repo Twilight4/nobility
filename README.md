@@ -191,7 +191,7 @@ nb-enum-dns-dnsrecon
 nb-recon-org-theharvester
 ```
 
-### Active Directory Auditing
+### Active Directory
 ```bash
 # SMB Relay
 nb-ad-smb-relay-enum
