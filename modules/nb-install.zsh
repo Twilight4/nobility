@@ -753,7 +753,7 @@ nb-install-arch-categories() {
     # Ask if repositories are enabled
     # Ask if repositories are enabled
     echo
-    __ask "Did you enable the Athena repositories at https://athenaos.org/en/configuration/repositories/? (y/n)"
+    __ask "Did you enable the Athena repositories at https://athenaos.org/en/configuration/repositories/ ? (y/n)"
     local response && __askvar response "RESPONSE"
     if [[ ! "$response" =~ ^[Yy]$ ]]; then
         echo
