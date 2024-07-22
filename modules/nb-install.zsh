@@ -739,6 +739,10 @@ nb-install-arch-generic() {
     pip3 install impacket
 }
 
+nb-install-arch-categories() {
+    paru -S athena-anti-forensic athena-backdoor athena-automation athena-bluetooth athena-dos athena-exploitation athena-fingerprint athena-keylogger athena-misc athena-networking athena-packer athena-recon athena-scanner athena-social athena-spoof athena-stego athena-windows athena-wireless
+}
+
 nb-install-invoke-powershelltcp() {
     local pws="$SV/Invoke-PowerShellTcp.ps1"
 
