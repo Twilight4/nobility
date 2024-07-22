@@ -21,7 +21,8 @@ Tools
 -----
 These installers are for individual tools.
 
-nb-install-generic
+nb-install-arch-generic
+nb-install-arch-categories
 nb-install-seclists
 nb-install-payloadallthethings
 nb-install-github-search
