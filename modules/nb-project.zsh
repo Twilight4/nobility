@@ -39,10 +39,10 @@ nb-project-start() {
     local fullpath=$HOME/desktop/projects/${cname}
 
     # create dir structure
-    mkdir -p ${fullpath}/{data,logs,misc,wireless,scope,client-supplied-info/emails,files/{downloads,uploads},tool-output}
+    mkdir -p ${fullpath}/{enumeration,logs,misc,wireless,scope,client-supplied-info/emails,files/{downloads,uploads},tool-output}
 
     # create empty files
-    touch ${fullpath}/data/{creds.txt,users.list,pass.list,computers.list,DA-users.list,EA-users.list}
+    touch ${fullpath}/enumeration/{creds.txt,users.list,pass.list,computers.list,DA-users.list,EA-users.list}
 
     # set project to be tool-output
     __PROJECT=${fullpath}/tool-output
