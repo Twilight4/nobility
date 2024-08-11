@@ -17,13 +17,8 @@ nb-enum-network-nmap-hostnames            use nmap to get list of hostnames
 nb-enum-network-ping-linux-hosts          use ping to get the list of IPs on a network subnet
 nb-enum-network-netdiscover               sweep a network subnet using netdiscover
 nb-enum-network-arp-scan                  sweep a network subnet using arp-scan
-
-Ping Sweep
-----------
 nb-enum-network-ping-msf                  sweep a network subnet with ping requests
 nb-enum-network-ping-linux                sweep a network subnet with ping requests on linux
-nb-enum-network-ping-windows-cmd          sweep a network subnet with ping requests on windows
-nb-enum-network-ping-windows-pwsh         sweep a network subnet with ping requests on windows powershell
 
 Open Ports Discovery
 --------------------
@@ -350,20 +345,4 @@ nb-enum-network-ping-linux-hosts() {
     __ask "Enter the network without the last digit like this: 192.168.0."
     local sb && __askvar sb NETWORK_SUBNET
     print -z "for i in \$(seq 254); do ping $sb\$i -c1 -W1 & done | grep from | awk '{print \$4}' | cut -d: -f1"
-}
-
-nb-enum-network-ping-windows-cmd() {
-    __ask "Network with subnet ex. 10.0.0.0/23"
-    local sb && __askvar sb NETWORK_SUBNET
-
-    __info "Use the following command in windows cmd:"
-    __ok "for /L %i in (1 1 254) do ping $sb.%i -n 1 -w 100"
-}
-
-nb-enum-network-ping-windows-pwsh() {
-    __ask "Network with subnet ex. 10.0.0.0/23"
-    local sb && __askvar sb NETWORK_SUBNET
-
-    __info "Use the following command in windows powershell:"
-    __ok "1..254 | % {\"172.16.5.\$(\$_): \$(Test-Connection -count 1 -comp \"$sb\".\$(\$_) -quiet)\"}"
 }

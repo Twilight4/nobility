@@ -25,8 +25,6 @@ nb-ad-rce-evil-winrm           connect via winrm to a target host
 nb-ad-rce-psexec               connect via psexec to a target host
 nb-ad-rce-wmiexec              connect via wmiexec to a target host
 nb-ad-rce-psexec-msf           connect via metasploit's psexec to a target host
-nb-ad-rce-psremoting           connect via PSRemoting to a target host
-nb-ad-rce-winrs                connect via winrs to a target host
 
 Misc
 ----
@@ -147,61 +145,6 @@ nb-ad-rce-psexec-msf() {
       echo
       __err "Invalid option. Please choose 'p' for password or 'h' for hash."
   fi
-}
-
-nb-ad-rce-psremoting() {
-    __check-project
-    __ask "Enter the hostname of a target machine"
-    nb-vars-set-rhost
-
-    __ask "Do you want to connect or check access to the machine (l/c)"
-    local login && __askvar login "LOGIN_OPTION"
-
-    if [[ $login == "l" ]]; then
-      __COMMAND="Enter-PSSession -ComputerName ${__RHOST}"
-      echo $__COMMAND | wl-copy
-      __info "Command copied to clipboard"
-      __ok "$__COMMAND"
-      echo
-      __info "Situational awareness:"
-      __ok "\$env:username"
-      __ok "\$env:computername"
-    elif [[ $login == "c" ]]; then
-      __COMMAND="Invoke-Command -ScriptBlock {$env:username;$env:computername} -ComputerName ${__RHOST}"
-      echo $__COMMAND | wl-copy
-      __info "Command copied to clipboard"
-      __ok "$__COMMAND"
-    else
-      echo
-      __err "Invalid option. Please choose 'l' for login or 'c' for checking access."
-    fi
-}
-
-nb-ad-rce-winrs() {
-    __check-project
-    __ask "Enter the hostname of a target machine"
-    nb-vars-set-rhost
-
-    __ask "Do you want to connect or check access to the machine (l/c)"
-    local login && __askvar login "LOGIN_OPTION"
-
-    if [[ $login == "l" ]]; then
-      __COMMAND="winrs -r:${__RHOST} cmd"
-      echo $__COMMAND | wl-copy
-      __info "Command copied to clipboard:"
-      __ok "$__COMMAND"
-      echo
-      __info "Situational awareness:"
-      __ok "set username"
-      __ok "set computername"
-    elif [[ $login == "c" ]]; then
-      __COMMAND="winrs -r:${__RHOST} cmd /c \"set computername && set username\""
-      echo $__COMMAND | wl-copy
-      __info "Command copied to clipboard"
-    else
-      echo
-      __err "Invalid option. Please choose 'l' for login or 'c' for checking access."
-    fi
 }
 
 nb-ad-rce-freerdp() {
