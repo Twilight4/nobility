@@ -14,6 +14,7 @@ PowerView Enumeration
 ---------------------
 nb-ad-pwsh-enum-domain                     PowerView domain enumeration commands
 nb-ad-pwsh-enum-userhunt                   PowerView user session hunting enumeration commands
+nb-ad-pwsh-enum-users                      PowerView user and computer enumeration commands
 
 PowerShell Commands
 -------------------
@@ -34,6 +35,45 @@ nb-ad-pwsh-ping                sweep a network subnet with ping requests on wind
 nb-ad-cmd-ping                 sweep a network subnet with ping requests on windows
 
 DOC
+}
+
+nb-ad-pwsh-enum-users() {
+    clear
+
+    __warn "Load PowerView with:"
+    __ok ". .\\PowerView.ps1"
+    __ok "nb-pwsh-file-download    - Execute in memory"
+
+    echo
+    __ask "PowerView Users and Computers Enumeration Commands:"
+    echo "1. Get the description field from the users"
+    echo "2. List all computers and their OS versions"
+    echo "3. List all users"
+    echo "4. List member computers in the domain"
+    echo "5. List members of the Domain Admins group"
+    echo "6. List members of the Enterprise Admins group"
+    echo "7. Return to previous menu"
+    echo
+    echo -n "Choose a command to copy: "
+    read choice
+
+    case $choice in
+        1) __COMMAND="Get-NetUser | Select-Object samaccountname,description";;
+        2) __COMMAND="Get-NetComputer | select samaccountname, operatingsystem, operatingsystemversion";;
+        3) __COMMAND="Get-DomainUser | select -ExpandProperty samaccountname";;
+        4) __COMMAND="Get-DomainComputer | select -ExpandProperty dnshostname";;
+        5) __COMMAND="Get-DomainGroupMember -Identity \"Domain Admins\"";;
+        6) __COMMAND="Get-DomainGroupMember -Identity \"Enterprise Admins\" -Domain moneycorp.local";;
+        7) return;;
+        *) echo "Invalid option"; sleep 1; nb-ad-pwsh-enum-users; return;;
+    esac
+
+    echo "$__COMMAND" | wl-copy
+    __info "Command copied to clipboard:"
+    __ok "$__COMMAND"
+    echo
+    sleep 1
+    nb-ad-pwsh-enum-users
 }
 
 nb-ad-pwsh-enum-userhunt() {
