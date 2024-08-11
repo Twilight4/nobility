@@ -12,7 +12,7 @@ The nb-ad-pwsh namespace contains commands for powershell/powerviwe commands to 
 
 Commands
 --------
-nb-ad-pwsh-av-bypass                       av evasion powershell commands
+nb-ad-pwsh-av-bypass                       AV evasion powershell commands
 
 DOC
 }
