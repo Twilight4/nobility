@@ -98,21 +98,29 @@ nb-ad-pwsh-enum-acls() {
 
     echo
     __ask "PowerView check for domain PrivEsc vectors:"
-    echo "1. Kerberoastable users"
-    echo "2. Check if user has DCSync rights"
-    echo "3. Unconstrained delegation"
-    echo "4. Constrained delegation for user"
-    echo "5. Constrained delegation for machine"
-    echo "6. Resource-based constrained delegation"
-    echo "7. AS-REP Roast"
-    echo "8. Return to previous menu"
+    echo "1. Kerberoast"
+    echo "2. Targeted kerberoasting - SET SPN"
+    echo "3. Check if user has DCSync rights"
+    echo "4. Unconstrained delegation"
+    echo "5. Constrained delegation for user"
+    echo "6. Constrained delegation for machine"
+    echo "7. Resource-based constrained delegation"
+    echo "8. AS-REP Roast"
+    echo "9. Return to previous menu"
     echo
     echo -n "Choose a command to copy: "
     read choice
 
     case $choice in
-        1) __COMMAND="Get-DomainUser -SPN";;
+        1) 
+          echo
+          __info "Check kerberoastable users"
+          __COMMAND="Get-DomainUser -SPN";;
         2) 
+          echo
+          __info "Enumerate the permissions for RDPUsers on ACLs"
+          __COMMAND="Find-InterestingDomainAcl -ResolveGUIDs | ?{\$_.IdentityReferenceName -match \"RDPUsers\"}";;
+        3) 
           echo
           __ask "Enter user to check for DCsync rights"
           nb-vars-set-user
@@ -120,18 +128,33 @@ nb-ad-pwsh-enum-acls() {
           local dn && __askvar dn DN
           __COMMAND="Get-DomainObjectAcl -SearchBase \"${dn}\" -SearchScope Base -ResolveGUIDs | ?{(\$_.ObjectAceType -match 'replication-get') -or (\$_.ActiveDirectoryRights -match 'GenericAll')} | ForEach-Object {\$_ | Add-Member NoteProperty 'IdentityName' \$(Convert-SidToName \$_.SecurityIdentifier);\$_} | ?{\$_.IdentityName -match \"${__USER}\"}"
           ;;
-        3) __COMMAND="Get-DomainComputer -Unconstrained | select -ExpandProperty name";;
-        4) __COMMAND="Get-DomainUser -TrustedToAuth";;
-        5) __COMMAND="Get-DomainComputer -TrustedToAuth";;
-        6) __COMMAND="Find-InterestingDomainACL | ?{\$_.identityreferencename -match 'ciadmin'}";;
-        7) __COMMAND="Get-DomainUser -PreauthNotRequired -Verbose";;
-        8) return;;
+        4)
+          echo
+          __info "Check which machine allows for unconstrained delegeation"
+          __COMMAND="Get-DomainComputer -Unconstrained | select -ExpandProperty name";;
+        5) 
+          echo
+          __info "Enumerate users in the domain for whom Constrained Delegation is enabled"
+          __COMMAND="Get-DomainUser -TrustedToAuth";;
+        6) 
+          echo
+          __info "Enumerate computer accounts in the domain for which Constrained Delegation is enabled"
+          __COMMAND="Get-DomainComputer -TrustedToAuth";;
+        7) 
+          echo
+          nb-vars-set-user
+          echo
+          __info "Find a computer object in dcorp domain where we have Write permissions"
+          __COMMAND="Find-InterestingDomainACL | ?{\$_.identityreferencename -match '${__USER}'}";;
+        8) 
+          echo
+          __info "Enumerate accounts with Kerberos Preauth disabled"
+          __COMMAND="Get-DomainUser -PreauthNotRequired -Verbose";;
+        9) return;;
         *) echo "Invalid option"; sleep 1; nb-ad-pwsh-enum-acls; return;;
     esac
 
     echo "$__COMMAND" | wl-copy
-    echo
-    __info "Command copied to clipboard:"
     __ok "$__COMMAND"
 }
 
