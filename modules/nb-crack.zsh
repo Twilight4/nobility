@@ -13,6 +13,7 @@ The crack namespace provides commands for crackign password hashes.
 Commands
 --------
 nb-crack-hashcat          crack password hash using hashcat with provided hash format
+nb-crack-hashcat-b64      crack password hash using hashcat with provided hash format and best64 rule
 nb-crack-hashcat-list     crack password from provided hashlist
 nb-crack-john             john alternative with hash format detection
 nb-crack-john-list        john alternative with hash format detection for provided hashlist
@@ -30,6 +31,77 @@ DOC
 nb-crack-install() {
   __info "Running $0..."
   __pkgs hashcat john libcompress-raw-lzma-perl clinfo pocl
+}
+
+nb-crack-hashcat-b64() {
+  __check-project
+	__ask "Enter the hash"
+	__check-hash
+
+  # use hashid for hash identification
+  # Capture the output of hashid command and extract the third line
+  #ht=$(hashid ${__HASH} | awk 'NR==15{print $2}')
+  #if [ $? -eq 0 ]; then
+  #  __info "Hash type: $ht"
+  #fi
+
+
+# use hash-identifier for hash identification
+# Create an expect script to interact with hash-identifier
+expect << EOF > output.txt
+spawn hash-identifier
+expect " HASH: "
+send "${__HASH}\r"
+expect {
+    "Possible Hashs:" {
+        send_user "\nHash type identified\n"
+    }
+}
+expect " HASH: "
+send "exit\r"
+expect eof
+EOF
+
+# Filter and save the relevant hash type information
+ht=$(awk '/Possible Hashs:/ {getline; print $2}' output.txt)
+
+# Check if hash type was identified
+if [ -z "$ht" ]; then
+  __err "Could not identify hash type"
+  exit 1
+fi
+
+# Use the identified hash type with hashcat
+__info "Hash type: $ht"
+
+  # Determine hash mode based on hash type
+  if [[ $ht == *"MD5"* ]]; then
+      md=0
+  elif [[ $ht == *"SHA-1"* ]]; then
+      md=100
+  elif [[ $ht == *"NTLM"* ]]; then
+      md=1000
+  elif [[ $ht == *"sha512crypt $6$, SHA512 (Unix)"* ]]; then
+      md=1800
+  elif [[ $ht == *"bcrypt $2*$, Blowfish (Unix)"* ]]; then
+      md=3200
+  elif [[ $ht == *"NTLMv1"* ]]; then
+      md=5500
+  elif [[ $ht == *"NTLMv2"* ]]; then
+      md=5600
+  elif [[ $ht == *"Kerberos 5 TGS-REP etype 23"* ]]; then
+      md=13100
+  elif [[ $ht == *"Kerberos 5, etype 23, AS-REP"* ]]; then
+      md=18200
+  else
+      __warn "Hash type not recognized. Enter hashcat type for the hash mode:"
+      __ask "  hashcat --help | grep <HASH_TYPE>"
+      echo
+      local md && __askvar md "HASHCAT MODE"
+  fi
+
+  echo
+  print -z "hashcat -O -a 0 -m $md ${__HASH} ${__PASSLIST} -r /usr/share/doc/hashcat/rules/best64.rule -o $(__netpath)/hashcat-cracked.txt"
 }
 
 nb-crack-hashcat() {

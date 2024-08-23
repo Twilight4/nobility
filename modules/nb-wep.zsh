@@ -178,7 +178,7 @@ nb-wep-se-tools() {
 nb-wep-pwd-tools() {
     __check-project
 
-    __ask "Available tools"
+    __ask "Available tools:"
     echo "1) Pwdology - A victims-profile-based wordlist generating tool for social engineers and security researchers"
     echo "2) Cupp - use cupp to generate custom profiled passwords"
     echo "3) Crunch - wordlist generator that creates custom password lists using a combination of characters"
@@ -190,6 +190,7 @@ nb-wep-pwd-tools() {
           # Check if tool is installed
           if ! which pwdology > /dev/null; then
             __err "Pwdology is not installed."
+            sleep 2
             exit 1
           fi
 
@@ -201,6 +202,7 @@ nb-wep-pwd-tools() {
           # Check if tool is installed
           if ! which cupp > /dev/null; then
             __err "Cupp is not installed."
+            sleep 2
             exit 1
           fi
 
@@ -212,6 +214,7 @@ nb-wep-pwd-tools() {
           # Check if tool is installed
           if ! which crunch > /dev/null; then
             __err "Crunch is not installed."
+            sleep 2
             exit 1
           fi
 

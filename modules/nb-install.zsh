@@ -739,7 +739,7 @@ nb-install-arch-generic() {
     __cyan "This will install all necessary pentesting tools."
     __ask "CONTINUE?"
     if __check-proceed; then
-        paru --needed -S nmap metasploit postgresql gobuster whatweb exploitdb masscan john bloodhound python-bloodhound python-neo4j sliver-bin hydra enum4linux smbmap hashid hashcat evil-winrm ldapdomaindump kerbrute responder clinfo pocl
+        paru --needed -S nmap metasploit postgresql gobuster whatweb exploitdb masscan john bloodhound python-bloodhound python-neo4j sliver-bin hydra enum4linux smbmap hashid hashcat evil-winrm ldapdomaindump kerbrute responder clinfo pocl windows-binaries
         pip3 install impacket
     else
         __warn "Operation cancelled by user."
@@ -750,7 +750,6 @@ nb-install-arch-categories() {
     __cyan "This will install all pentesting categories."
     __cyan "Ensure you have free disk space before proceeding."
 
-    # Ask if repositories are enabled
     # Ask if repositories are enabled
     echo
     __ask "Did you enable the Athena repositories at https://athenaos.org/en/configuration/repositories/ ? (y/n)"
