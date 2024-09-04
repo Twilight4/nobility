@@ -101,7 +101,8 @@ nb-wep-se-tools() {
     echo "3) Zphisher - Phishing tool with 30+ templates"
     echo "4) Blackeye - Another Skiddie phishing tool"
     echo "5) SET - Social Engineering Toolkit"
-    echo "6) Socialfish - Phishing Tool & Information Collector "
+    echo "6) Socialfish - Phishing Tool & Information Collector"
+    echo "7) Maskphish - Hide phishing link to make them look legitimate"
     echo
     local choice && __askvar choice "CHOICE"
 
@@ -170,6 +171,16 @@ nb-wep-se-tools() {
           nb-vars-set-user
           nb-vars-set-pass
           socialfish ${__USER} ${__PASS}
+          ;;
+        7)
+          # Check if tools is installed
+          if ! which maskphish > /dev/null; then
+            __err "Maskphish is not installed."
+          fi
+
+          # Run the tool
+          clear
+          maskphish
         *) 
           __err "Invalid selection"; return ;;
     esac
