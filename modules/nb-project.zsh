@@ -42,7 +42,7 @@ nb-project-start() {
     mkdir -p ${fullpath}/{enumeration,logs,misc,wireless,scope,client-supplied-info/emails,files/{downloads,uploads},tool-output}
 
     # create empty files
-    touch ${fullpath}/enumeration/{basic-info.txt,creds.txt,users.list,pass.list,computers.list}
+    touch ${fullpath}/enumeration/{basic-info.txt,sessions.txt,groups.txt,creds.txt,users.list,pass.list,computers.txt}
 
     # set project to be tool-output
     __PROJECT=${fullpath}/tool-output
