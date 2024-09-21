@@ -512,22 +512,20 @@ nb-install-rustscan() {
 }
 
 nb-install-nessus() {
-    # Download the binary
-    curl --request GET \
-      --url 'https://www.tenable.com/downloads/api/v2/pages/nessus/files/Nessus-10.7.2-debian10_amd64.deb' \
-      --output ~/downloads/Nessus-10.7.2-debian10_amd64.deb
-
     # Install the nessus package
-    sudo dpkg -i ~/downloads/Nessus-*debian10_amd64.deb
+    paru -S nessus
 
     # Start nesssus service
     sudo systemctl start nessusd.service
+    __info 'Nessusd service started.'
 
+    echo
     __info 'Fill the email to get there the activation code:'
     __info '    https://www.tenable.com/products/nessus/nessus-essentials'
 
-    __info 'Then go to https://kali:8834/ - select Nessus Essentials for the free version, and then enter the activation code'
-    __info 'If you get Nessus Invalid Field: Bad Format - check if theres no leading space in the activation code form'
+    echo
+    __info 'Navigate to https://127.0.0.1:8834/ - select Nessus Essentials for the free version, and then enter the activation code.'
+    __info 'If you get Nessus Invalid Field: Bad Format - check if theres no leading space in the activation code form.'
 }
 
 nb-install-dnscat2() {
