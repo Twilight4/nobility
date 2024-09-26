@@ -51,6 +51,7 @@ nb-install-username-generator
 nb-install-invoke-powershelltcp
 nb-install-stormbreaker
 nb-install-zphisher
+nb-install-kali-whoami
 
 DOC
 }
@@ -837,8 +838,36 @@ nb-install-zphisher() {
     then
         git clone $url $p
         sudo ln -s $p/zphisher.sh /usr/bin/zphisher
+        echo
+        __info "Zphisher installed successfully."
     else
         __warn "already installed in $p"
+        pushd $p 
+        git pull
+        popd
+    fi
+}
+
+nb-install-kali-whoami() {
+    local name="kali-whoami"
+    local url="https://github.com/omer-dogan/$name"
+    local p="$__TOOLS/$name"
+
+    __info "$name"
+
+    if [[ ! -d $p ]]
+    then
+        sudo mkdir -p $__TOOLS/$name
+        sudo git clone $url $p
+        cd $p
+        sudo make install
+        echo
+        __info "kali-whoami installed successfully."
+        __info "sudo kali-whoami --help"
+    else
+        __warn "already installed in $p"
+        echo
+        __info "sudo kali-whoami --help"
         pushd $p 
         git pull
         popd
