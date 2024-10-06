@@ -738,7 +738,7 @@ nb-install-arch-generic() {
     __cyan "This will install all necessary pentesting tools."
     __ask "CONTINUE?"
     if __check-proceed; then
-        paru --needed -S nmap metasploit postgresql gobuster whatweb exploitdb masscan john bloodhound python-bloodhound python-neo4j sliver-bin hydra enum4linux smbmap hashid haidi hashcat evil-winrm ldapdomaindump kerbrute responder clinfo pocl windows-binaries
+        paru --needed -S nmap metasploit postgresql gobuster whatweb exploitdb masscan john bloodhound python-bloodhound python-neo4j sliver-bin hydra enum4linux smbmap hashid haidi hashcat evil-winrm ldapdomaindump kerbrute responder clinfo pocl windows-binaries netscanner
         pip3 install impacket
     else
         __warn "Operation cancelled by user."
