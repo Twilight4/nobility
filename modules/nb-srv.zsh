@@ -232,7 +232,7 @@ nb-srv-smtp() {
 nb-srv-updog() {
   pushd "$HOME/desktop/server" &> /dev/null
   __info "Serving content at $(hip) in $PWD"
-  updog -p 443 --ssl -p $(__rand 10)
+  updog -p 443 --ssl --password $(__rand 10)
   popd &> /dev/null
 }
 
